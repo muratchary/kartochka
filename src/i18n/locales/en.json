@@ -1,0 +1,36 @@
+{
+  "tabs": {
+    "home": "Home",
+    "vaccinations": "Vaccinations",
+    "growth": "Growth",
+    "milestones": "Milestones",
+    "settings": "Settings"
+  },
+  "home": {
+    "title": "Kartochka",
+    "subtitle": "Your child's health, in one place."
+  },
+  "vaccinations": {
+    "title": "Vaccinations",
+    "empty": "No vaccinations logged yet."
+  },
+  "growth": {
+    "title": "Growth",
+    "empty": "No growth entries yet."
+  },
+  "milestones": {
+    "title": "Milestones",
+    "empty": "No milestones tracked yet."
+  },
+  "settings": {
+    "title": "Settings",
+    "languageSection": "Language",
+    "restartRequired": "Please close and reopen the app for the language change to take full effect.",
+    "ok": "OK"
+  },
+  "languages": {
+    "en": "English",
+    "ru": "Русский",
+    "ar": "العربية"
+  }
+}

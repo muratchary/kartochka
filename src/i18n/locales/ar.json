@@ -1,0 +1,36 @@
+{
+  "tabs": {
+    "home": "الرئيسية",
+    "vaccinations": "التطعيمات",
+    "growth": "النمو",
+    "milestones": "التطور",
+    "settings": "الإعدادات"
+  },
+  "home": {
+    "title": "كارتوتشكا",
+    "subtitle": "صحة طفلك في مكان واحد."
+  },
+  "vaccinations": {
+    "title": "التطعيمات",
+    "empty": "لم تتم إضافة أي تطعيمات بعد."
+  },
+  "growth": {
+    "title": "النمو",
+    "empty": "لا توجد سجلات نمو بعد."
+  },
+  "milestones": {
+    "title": "التطور",
+    "empty": "لم يتم تتبع أي معالم بعد."
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "languageSection": "اللغة",
+    "restartRequired": "يرجى إغلاق التطبيق وإعادة فتحه ليطبق تغيير اللغة بالكامل.",
+    "ok": "حسناً"
+  },
+  "languages": {
+    "en": "English",
+    "ru": "Русский",
+    "ar": "العربية"
+  }
+}
