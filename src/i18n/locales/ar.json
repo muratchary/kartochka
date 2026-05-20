@@ -1,16 +1,20 @@
 {
+  "brand": {
+    "name": "كارتوشكا",
+    "tagline": "سجل صحي لطفلك، سيشكرك عليه طبيب الأطفال"
+  },
   "tabs": {
     "home": "الرئيسية",
-    "vaccinations": "التطعيمات",
+    "vaccines": "التطعيمات",
     "growth": "النمو",
-    "milestones": "التطور",
-    "settings": "الإعدادات"
+    "milestones": "النماء",
+    "more": "المزيد"
   },
   "home": {
-    "title": "كارتوتشكا",
+    "title": "كارتوشكا",
     "subtitle": "صحة طفلك في مكان واحد."
   },
-  "vaccinations": {
+  "vaccines": {
     "title": "التطعيمات",
     "empty": "لم تتم إضافة أي تطعيمات بعد."
   },
@@ -19,11 +23,11 @@
     "empty": "لا توجد سجلات نمو بعد."
   },
   "milestones": {
-    "title": "التطور",
+    "title": "النماء",
     "empty": "لم يتم تتبع أي معالم بعد."
   },
-  "settings": {
-    "title": "الإعدادات",
+  "more": {
+    "title": "المزيد",
     "languageSection": "اللغة",
     "restartRequired": "يرجى إغلاق التطبيق وإعادة فتحه ليطبق تغيير اللغة بالكامل.",
     "ok": "حسناً"
@@ -32,5 +36,11 @@
     "en": "English",
     "ru": "Русский",
     "ar": "العربية"
+  },
+  "common": {
+    "save": "حفظ",
+    "continue": "متابعة",
+    "markDone": "تم",
+    "exportPdf": "PDF للطبيب"
   }
 }

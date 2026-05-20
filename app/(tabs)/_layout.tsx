@@ -2,11 +2,26 @@ import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
+import { colors } from '../../src/theme';
+import { useFont } from '../../src/theme/useFont';
+
 export default function TabsLayout() {
   const { t } = useTranslation();
+  const font = useFont();
+
+  const tabBarLabelStyle = {
+    fontFamily: font(700),
+    fontSize: 10.5,
+  };
 
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: '#2563eb' }}>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: colors.teal,
+        tabBarInactiveTintColor: colors.ink3,
+        tabBarLabelStyle,
+        tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
+      }}>
       <Tabs.Screen
         name="index"
         options={{
@@ -15,9 +30,9 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="vaccinations"
+        name="vaccines"
         options={{
-          title: t('tabs.vaccinations'),
+          title: t('tabs.vaccines'),
           tabBarIcon: ({ color, size }) => <Ionicons name="medkit-outline" color={color} size={size} />,
         }}
       />
@@ -36,10 +51,10 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="more"
         options={{
-          title: t('tabs.settings'),
-          tabBarIcon: ({ color, size }) => <Ionicons name="settings-outline" color={color} size={size} />,
+          title: t('tabs.more'),
+          tabBarIcon: ({ color, size }) => <Ionicons name="ellipsis-horizontal-outline" color={color} size={size} />,
         }}
       />
     </Tabs>

@@ -4,17 +4,17 @@ import { StyleSheet, Text, View } from 'react-native';
 import { colors, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
-export default function GrowthScreen() {
+export default function VaccinesScreen() {
   const { t } = useTranslation();
   const font = useFont();
 
   return (
     <View style={styles.container}>
       <Text style={[styles.title, { fontFamily: font(typography.title.weight) }]}>
-        {t('growth.title')}
+        {t('vaccines.title')}
       </Text>
       <Text style={[styles.empty, { fontFamily: font(typography.body.weight) }]}>
-        {t('growth.empty')}
+        {t('vaccines.empty')}
       </Text>
     </View>
   );

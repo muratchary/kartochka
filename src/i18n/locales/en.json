@@ -1,17 +1,21 @@
 {
+  "brand": {
+    "name": "Kartochka",
+    "tagline": "The child health record your pediatrician will thank you for"
+  },
   "tabs": {
     "home": "Home",
-    "vaccinations": "Vaccinations",
+    "vaccines": "Vaccines",
     "growth": "Growth",
     "milestones": "Milestones",
-    "settings": "Settings"
+    "more": "More"
   },
   "home": {
     "title": "Kartochka",
     "subtitle": "Your child's health, in one place."
   },
-  "vaccinations": {
-    "title": "Vaccinations",
+  "vaccines": {
+    "title": "Vaccines",
     "empty": "No vaccinations logged yet."
   },
   "growth": {
@@ -22,8 +26,8 @@
     "title": "Milestones",
     "empty": "No milestones tracked yet."
   },
-  "settings": {
-    "title": "Settings",
+  "more": {
+    "title": "More",
     "languageSection": "Language",
     "restartRequired": "Please close and reopen the app for the language change to take full effect.",
     "ok": "OK"
@@ -32,5 +36,11 @@
     "en": "English",
     "ru": "Русский",
     "ar": "العربية"
+  },
+  "common": {
+    "save": "Save",
+    "continue": "Continue",
+    "markDone": "Mark done",
+    "exportPdf": "Doctor's PDF"
   }
 }
