@@ -11,8 +11,44 @@
     "more": "Ещё"
   },
   "home": {
-    "title": "Карточка",
-    "subtitle": "Здоровье вашего ребёнка в одном месте."
+    "greeting": {
+      "morning": "Доброе утро",
+      "afternoon": "Добрый день",
+      "evening": "Добрый вечер",
+      "night": "Доброй ночи"
+    },
+    "nextVaccine": {
+      "label": "Следующая прививка",
+      "empty": "Все прививки в графике.",
+      "overdueDays_one": "Просрочено на {{count}} день",
+      "overdueDays_few": "Просрочено на {{count}} дня",
+      "overdueDays_many": "Просрочено на {{count}} дней",
+      "dueToday": "Сегодня",
+      "dueInDays_one": "Через {{count}} день",
+      "dueInDays_few": "Через {{count}} дня",
+      "dueInDays_many": "Через {{count}} дней",
+      "statusOverdue": "Просрочено",
+      "statusDueSoon": "Скоро",
+      "statusUpcoming": "Запланировано",
+      "doseLabel": "Доза {{number}} из {{total}}",
+      "details": "Подробнее",
+      "markDone": "Отметить"
+    },
+    "growth": {
+      "label": "Рост",
+      "empty": "Измерений пока нет.",
+      "addCta": "Добавить измерение"
+    },
+    "milestones": {
+      "label": "Развитие",
+      "empty": "Начнётся, когда отметите первый этап.",
+      "viewAll": "Открыть"
+    },
+    "pdf": {
+      "title": "PDF для педиатра",
+      "description": "Чистый отчёт для следующего визита к врачу.",
+      "cta": "Создать"
+    }
   },
   "vaccines": {
     "title": "Прививки",

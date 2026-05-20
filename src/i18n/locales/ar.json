@@ -11,8 +11,42 @@
     "more": "المزيد"
   },
   "home": {
-    "title": "كارتوشكا",
-    "subtitle": "صحة طفلك في مكان واحد."
+    "greeting": {
+      "morning": "صباح الخير",
+      "afternoon": "نهارك سعيد",
+      "evening": "مساء الخير",
+      "night": "ليلة سعيدة"
+    },
+    "nextVaccine": {
+      "label": "التطعيم القادم",
+      "empty": "جميع التطعيمات في موعدها.",
+      "overdueDays_one": "متأخر بيوم واحد",
+      "overdueDays_other": "متأخر بـ {{count}} يوم",
+      "dueToday": "اليوم",
+      "dueInDays_one": "بعد يوم واحد",
+      "dueInDays_other": "بعد {{count}} يوم",
+      "statusOverdue": "متأخر",
+      "statusDueSoon": "قريباً",
+      "statusUpcoming": "قادم",
+      "doseLabel": "الجرعة {{number}} من {{total}}",
+      "details": "التفاصيل",
+      "markDone": "تم"
+    },
+    "growth": {
+      "label": "النمو",
+      "empty": "لا توجد قياسات بعد.",
+      "addCta": "إضافة قياس"
+    },
+    "milestones": {
+      "label": "النماء",
+      "empty": "يبدأ التتبع عند تسجيل أول معلم.",
+      "viewAll": "عرض الكل"
+    },
+    "pdf": {
+      "title": "PDF للطبيب",
+      "description": "تقرير نظيف وقابل للطباعة لزيارتك القادمة لطبيب الأطفال.",
+      "cta": "إنشاء"
+    }
   },
   "vaccines": {
     "title": "التطعيمات",

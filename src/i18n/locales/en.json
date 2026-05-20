@@ -11,8 +11,42 @@
     "more": "More"
   },
   "home": {
-    "title": "Kartochka",
-    "subtitle": "Your child's health, in one place."
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening",
+      "night": "Good night"
+    },
+    "nextVaccine": {
+      "label": "Next vaccination",
+      "empty": "All vaccinations up to date.",
+      "overdueDays_one": "Overdue by {{count}} day",
+      "overdueDays_other": "Overdue by {{count}} days",
+      "dueToday": "Due today",
+      "dueInDays_one": "Due in {{count}} day",
+      "dueInDays_other": "Due in {{count}} days",
+      "statusOverdue": "Overdue",
+      "statusDueSoon": "Due soon",
+      "statusUpcoming": "Upcoming",
+      "doseLabel": "Dose {{number}} of {{total}}",
+      "details": "Details",
+      "markDone": "Mark done"
+    },
+    "growth": {
+      "label": "Growth",
+      "empty": "No measurements yet.",
+      "addCta": "Add measurement"
+    },
+    "milestones": {
+      "label": "Milestones",
+      "empty": "Tracking starts when you check the first one off.",
+      "viewAll": "View all"
+    },
+    "pdf": {
+      "title": "Doctor's PDF",
+      "description": "A clean printable report for your next pediatrician visit.",
+      "cta": "Create"
+    }
   },
   "vaccines": {
     "title": "Vaccines",
