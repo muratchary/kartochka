@@ -1,0 +1,132 @@
+{
+  "countryCode": "KZ",
+  "countryName": {
+    "en": "Kazakhstan",
+    "ru": "Казахстан",
+    "ar": "كازاخستان"
+  },
+  "sourceUrl": "https://adilet.zan.kz/rus/docs/P2000000612",
+  "lastReviewedOn": "2026-05-21",
+  "vaccines": [
+    {
+      "code": "HepB",
+      "displayName": {
+        "en": "Hepatitis B",
+        "ru": "Гепатит B (ВГВ)",
+        "ar": "التهاب الكبد ب"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 0.1, "earliestAgeMonths": 0.03, "latestAgeMonths": 0.13 },
+        { "doseNumber": 2, "recommendedAgeMonths": 2 },
+        { "doseNumber": 3, "recommendedAgeMonths": 4 }
+      ]
+    },
+    {
+      "code": "BCG",
+      "displayName": {
+        "en": "BCG (Tuberculosis)",
+        "ru": "БЦЖ (туберкулёз)",
+        "ar": "بي سي جي (السل)"
+      },
+      "description": {
+        "en": "Single dose at days 1-4 of life. BCG revaccination at 6 years appears to have been removed in the 2024 revision — please confirm.",
+        "ru": "Одна доза на 1-4 день жизни. Ревакцинация БЦЖ в 6 лет, по-видимому, исключена из календаря в редакции 2024 года — уточните.",
+        "ar": "جرعة واحدة في اليوم 1-4. يبدو أن إعادة التطعيم في 6 سنوات قد أُلغيت في تنقيح 2024 — يرجى التأكيد."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 0.1, "earliestAgeMonths": 0.03, "latestAgeMonths": 0.13 }
+      ]
+    },
+    {
+      "code": "PCV",
+      "displayName": {
+        "en": "Pneumococcal",
+        "ru": "Пневмококковая инфекция",
+        "ar": "المكورات الرئوية"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 12, "earliestAgeMonths": 12, "latestAgeMonths": 15 }
+      ]
+    },
+    {
+      "code": "DTaP",
+      "displayName": {
+        "en": "DTaP (Diphtheria, Tetanus, acellular Pertussis)",
+        "ru": "АбКДС (дифтерия, столбняк, ацеллюлярный коклюш)",
+        "ar": "التطعيم الثلاثي اللاخلوي"
+      },
+      "description": {
+        "en": "Kazakhstan uses an acellular pertussis formulation (АбКДС). 6-year dose: per Decree #612 the column is 'pertussis-diphtheria-tetanus', but some clinic materials state АДС-М (no pertussis component). Please confirm.",
+        "ru": "В Казахстане применяется ацеллюлярный коклюшный компонент (АбКДС). Доза в 6 лет: согласно постановлению №612 — против коклюша-дифтерии-столбняка, но в некоторых поликлиниках указывают АДС-М (без коклюша). Уточните.",
+        "ar": "تستخدم كازاخستان لقاحاً لاخلوياً للسعال الديكي (АбКДС). جرعة 6 سنوات: قد تكون АДС-М (بدون السعال الديكي) — يرجى التأكيد."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 3 },
+        { "doseNumber": 3, "recommendedAgeMonths": 4 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 },
+        { "doseNumber": 5, "recommendedAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "Polio",
+      "displayName": {
+        "en": "Polio",
+        "ru": "Полиомиелит",
+        "ar": "شلل الأطفال"
+      },
+      "description": {
+        "en": "Primary doses delivered as IPV inside hexavalent (АбКДС-ВГВ-Хиб-ИПВ); OPV given concurrently from 3 months onward and as standalone booster at 12-15 months. Confirm IPV/OPV per-dose mix against current MoH protocol.",
+        "ru": "Первичные дозы вводятся как ИПВ в составе гексавалентной вакцины (АбКДС-ВГВ-Хиб-ИПВ); ОПВ — параллельно с 3 месяцев и отдельной ревакцинацией в 12-15 месяцев. Уточните разделение ИПВ/ОПВ по дозам.",
+        "ar": "الجرعات الأساسية تُعطى كـ IPV ضمن اللقاح السداسي؛ OPV يُعطى بالتوازي من 3 أشهر وكجرعة معززة في 12-15 شهراً."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 3 },
+        { "doseNumber": 3, "recommendedAgeMonths": 4 },
+        { "doseNumber": 4, "recommendedAgeMonths": 12, "earliestAgeMonths": 12, "latestAgeMonths": 15 },
+        { "doseNumber": 5, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "Hib",
+      "displayName": {
+        "en": "Haemophilus influenzae type b",
+        "ru": "Гемофильная инфекция (Хиб)",
+        "ar": "المستدمية النزلية ب"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 3 },
+        { "doseNumber": 3, "recommendedAgeMonths": 4 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "MMR",
+      "displayName": {
+        "en": "MMR (Measles, Mumps, Rubella)",
+        "ru": "КПК / ҚҚП (корь, паротит, краснуха)",
+        "ar": "ام ام ار (الحصبة، النكاف، الحصبة الألمانية)"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 12, "earliestAgeMonths": 12, "latestAgeMonths": 15 },
+        { "doseNumber": 2, "recommendedAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "HepA",
+      "displayName": {
+        "en": "Hepatitis A",
+        "ru": "Гепатит A (ВГА)",
+        "ar": "التهاب الكبد أ"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 24 },
+        { "doseNumber": 2, "recommendedAgeMonths": 30 }
+      ]
+    }
+  ]
+}

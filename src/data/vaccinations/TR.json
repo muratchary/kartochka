@@ -1,0 +1,161 @@
+{
+  "countryCode": "TR",
+  "countryName": {
+    "en": "Türkiye",
+    "ru": "Турция",
+    "ar": "تركيا"
+  },
+  "sourceUrl": "https://asi.saglik.gov.tr/depo/2025/asi_takvimi/asi_takvimi_2025.pdf",
+  "lastReviewedOn": "2026-05-21",
+  "vaccines": [
+    {
+      "code": "HepB",
+      "displayName": {
+        "en": "Hepatitis B",
+        "ru": "Гепатит B",
+        "ar": "التهاب الكبد ب"
+      },
+      "description": {
+        "en": "Birth dose monovalent. Doses 2-5 are delivered via hexavalent (DTaP-IPV-Hib-HepB).",
+        "ru": "Доза при рождении — моновалентная. Дозы 2-5 — в составе гексавалентной вакцины.",
+        "ar": "جرعة الولادة أحادية التكافؤ. الجرعات 2-5 ضمن اللقاح السداسي."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 0, "earliestAgeMonths": 0, "latestAgeMonths": 0.04 },
+        { "doseNumber": 2, "recommendedAgeMonths": 2 },
+        { "doseNumber": 3, "recommendedAgeMonths": 4 },
+        { "doseNumber": 4, "recommendedAgeMonths": 6 },
+        { "doseNumber": 5, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "BCG",
+      "displayName": {
+        "en": "BCG (Tuberculosis)",
+        "ru": "БЦЖ (туберкулёз)",
+        "ar": "بي سي جي (السل)"
+      },
+      "description": {
+        "en": "Türkiye gives BCG at the end of the 2nd month, NOT at birth as in many other countries.",
+        "ru": "В Турции БЦЖ ставится в конце 2-го месяца, а не при рождении.",
+        "ar": "تركيا تعطي BCG في نهاية الشهر الثاني، وليس عند الولادة."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 }
+      ]
+    },
+    {
+      "code": "DTaP",
+      "displayName": {
+        "en": "DTaP (Diphtheria, Tetanus, acellular Pertussis)",
+        "ru": "АДС-К (дифтерия, столбняк, ацеллюлярный коклюш)",
+        "ar": "اللقاح الثلاثي اللاخلوي"
+      },
+      "description": {
+        "en": "Doses 1-4 delivered via hexavalent (DTaP-IPV-Hib-HepB) at 2, 4, 6, and 18 months. Dose 5 is a combined DTaP-IPV booster at age 4 / 1st grade.",
+        "ru": "Дозы 1-4 — в составе гексавалентной вакцины (2, 4, 6, 18 мес.). Доза 5 — комбинированная АДС-К-ИПВ в 4 года / 1 класс.",
+        "ar": "الجرعات 1-4 ضمن اللقاح السداسي. الجرعة 5 معززة عند 4 سنوات / الصف الأول."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 },
+        { "doseNumber": 5, "recommendedAgeMonths": 48, "earliestAgeMonths": 48, "latestAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "Polio",
+      "displayName": {
+        "en": "Polio (IPV + OPV)",
+        "ru": "Полиомиелит (ИПВ + ОПВ)",
+        "ar": "شلل الأطفال"
+      },
+      "description": {
+        "en": "IPV at 2, 4, 6, 18 months and 4 years (via combined vaccines). OPV at 6 and 18 months.",
+        "ru": "ИПВ в 2, 4, 6, 18 мес. и 4 года; ОПВ в 6 и 18 мес.",
+        "ar": "IPV عند 2 و 4 و 6 و 18 شهراً و 4 سنوات؛ OPV عند 6 و 18 شهراً."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 },
+        { "doseNumber": 5, "recommendedAgeMonths": 48, "earliestAgeMonths": 48, "latestAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "Hib",
+      "displayName": {
+        "en": "Haemophilus influenzae type b",
+        "ru": "Гемофильная инфекция (Хиб)",
+        "ar": "المستدمية النزلية ب"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "PCV",
+      "displayName": {
+        "en": "Pneumococcal (PCV13)",
+        "ru": "Пневмококковая инфекция (PCV13)",
+        "ar": "لقاح المكورات الرئوية"
+      },
+      "description": {
+        "en": "Most sources describe a 3+1 schedule (2, 4, 6 months + booster at 12 months). One secondary source suggests 2+1 (2, 4 + 12 months); please confirm against the current MoH PDF.",
+        "ru": "Большинство источников указывают схему 3+1 (2, 4, 6 + 12 мес. ревакцинация). Один источник указывает 2+1 (2, 4 + 12 мес.) — уточните.",
+        "ar": "معظم المصادر تشير إلى جدول 3+1؛ مصدر آخر يشير إلى 2+1 — يرجى التأكيد."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 12 }
+      ]
+    },
+    {
+      "code": "MMR",
+      "displayName": {
+        "en": "MMR (Measles, Mumps, Rubella)",
+        "ru": "КПК (корь, паротит, краснуха)",
+        "ar": "ام ام ار (الحصبة، النكاف، الحصبة الألمانية)"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 12 },
+        { "doseNumber": 2, "recommendedAgeMonths": 48, "earliestAgeMonths": 48, "latestAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "Varicella",
+      "displayName": {
+        "en": "Varicella (Chickenpox)",
+        "ru": "Ветряная оспа",
+        "ar": "الجديري المائي"
+      },
+      "description": {
+        "en": "Single dose at 12 months in the universal MoH schedule. Turkish pediatric societies recommend a 2nd dose at 4-6 years, but it is NOT state-funded; private/paid.",
+        "ru": "Одна доза в 12 мес. в государственном календаре. Турецкие педиатрические общества рекомендуют 2-ю дозу в 4-6 лет, но за свой счёт.",
+        "ar": "جرعة واحدة في 12 شهراً ضمن الجدول الرسمي؛ الجرعة الثانية توصي بها جمعيات طب الأطفال لكنها ليست ممولة حكومياً."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 12 }
+      ]
+    },
+    {
+      "code": "HepA",
+      "displayName": {
+        "en": "Hepatitis A",
+        "ru": "Гепатит A",
+        "ar": "التهاب الكبد أ"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 18 },
+        { "doseNumber": 2, "recommendedAgeMonths": 24 }
+      ]
+    }
+  ]
+}

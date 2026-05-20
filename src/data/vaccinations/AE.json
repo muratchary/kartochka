@@ -1,0 +1,199 @@
+{
+  "countryCode": "AE",
+  "countryName": {
+    "en": "United Arab Emirates",
+    "ru": "ОАЭ",
+    "ar": "الإمارات العربية المتحدة"
+  },
+  "sourceUrl": "https://dha.gov.ae/uploads/102024/Clinical%20Guideline%20for%20Best%20Practice%20in%20Immunization20241028945.pdf",
+  "lastReviewedOn": "2026-05-21",
+  "vaccines": [
+    {
+      "code": "BCG",
+      "displayName": {
+        "en": "BCG (Tuberculosis)",
+        "ru": "БЦЖ (туберкулёз)",
+        "ar": "لقاح السل (BCG)"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 0, "earliestAgeMonths": 0, "latestAgeMonths": 0.04 }
+      ]
+    },
+    {
+      "code": "HepB",
+      "displayName": {
+        "en": "Hepatitis B",
+        "ru": "Гепатит B",
+        "ar": "لقاح التهاب الكبد B"
+      },
+      "description": {
+        "en": "Birth dose is monovalent; doses 2-4 delivered via hexavalent (DTaP+Hib+IPV+HepB).",
+        "ru": "Доза при рождении — моновалентная; дозы 2-4 — в составе гексавалентной вакцины.",
+        "ar": "جرعة الولادة أحادية التكافؤ؛ الجرعات 2-4 ضمن اللقاح السداسي."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 0, "earliestAgeMonths": 0, "latestAgeMonths": 0.04 },
+        { "doseNumber": 2, "recommendedAgeMonths": 2 },
+        { "doseNumber": 3, "recommendedAgeMonths": 4 },
+        { "doseNumber": 4, "recommendedAgeMonths": 6 }
+      ]
+    },
+    {
+      "code": "DTaP",
+      "displayName": {
+        "en": "DTaP (Diphtheria, Tetanus, acellular Pertussis)",
+        "ru": "АДС-К (дифтерия, столбняк, ацеллюлярный коклюш)",
+        "ar": "اللقاح الثلاثي اللاخلوي"
+      },
+      "description": {
+        "en": "Delivered via hexavalent (2, 4 mo), pentavalent (6 mo), combined (18 mo), and combined DTaP-IPV (5-6 yrs).",
+        "ru": "Вводится в составе гексавалентной (2, 4 мес.), пентавалентной (6 мес.), комбинированной (18 мес.) и комбинированной АДС-К-ИПВ (5-6 лет) вакцин.",
+        "ar": "يُعطى ضمن لقاحات مدمجة سداسية وخماسية في الجرعات الأولى."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 },
+        { "doseNumber": 5, "recommendedAgeMonths": 60, "earliestAgeMonths": 60, "latestAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "Hib",
+      "displayName": {
+        "en": "Haemophilus influenzae type b",
+        "ru": "Гемофильная инфекция (Хиб)",
+        "ar": "المستدمية النزلية ب"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "Polio",
+      "displayName": {
+        "en": "Polio (IPV + OPV)",
+        "ru": "Полиомиелит (ИПВ + ОПВ)",
+        "ar": "شلل الأطفال"
+      },
+      "description": {
+        "en": "IPV at 2 mo, 4 mo, 18 mo, and 5-6 yrs (via combined vaccines); OPV boosters at 6 mo, 18 mo, and 5-6 yrs.",
+        "ru": "ИПВ в 2, 4, 18 мес. и 5-6 лет (в составе комбинированных вакцин); ОПВ-ревакцинации в 6 мес., 18 мес. и 5-6 лет.",
+        "ar": "IPV عند 2 و 4 و 18 شهراً و 5-6 سنوات؛ OPV عند 6 و 18 شهراً و 5-6 سنوات."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 },
+        { "doseNumber": 5, "recommendedAgeMonths": 60, "earliestAgeMonths": 60, "latestAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "PCV",
+      "displayName": {
+        "en": "Pneumococcal (PCV15 or PCV20)",
+        "ru": "Пневмококковая инфекция",
+        "ar": "لقاح المكورات الرئوية المقترن"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "Rotavirus",
+      "displayName": {
+        "en": "Rotavirus",
+        "ru": "Ротавирусная инфекция",
+        "ar": "لقاح فيروس الروتا"
+      },
+      "description": {
+        "en": "2 doses (RV1/Rotarix) or 3 doses (RV5/RotaTeq) depending on product. Pediatrician should confirm which is in use.",
+        "ru": "2 дозы (RV1/Rotarix) или 3 дозы (RV5/RotaTeq) — зависит от используемой вакцины.",
+        "ar": "جرعتان أو ثلاث جرعات حسب نوع اللقاح."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 }
+      ]
+    },
+    {
+      "code": "MMR",
+      "displayName": {
+        "en": "MMR (Measles, Mumps, Rubella)",
+        "ru": "КПК (корь, паротит, краснуха)",
+        "ar": "لقاح الحصبة والنكاف والحصبة الألمانية"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 12 },
+        { "doseNumber": 2, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "Varicella",
+      "displayName": {
+        "en": "Varicella (Chickenpox)",
+        "ru": "Ветряная оспа",
+        "ar": "لقاح الجديري المائي"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 12 },
+        { "doseNumber": 2, "recommendedAgeMonths": 60, "earliestAgeMonths": 60, "latestAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "MenACWY",
+      "displayName": {
+        "en": "Meningococcal ACWY",
+        "ru": "Менингококковая инфекция (ACWY)",
+        "ar": "لقاح المكورات السحائية الرباعي"
+      },
+      "description": {
+        "en": "First of three lifetime doses at 12 months; further doses at 10-11 yrs and 16-18 yrs (outside 0-6 scope).",
+        "ru": "Первая из трёх пожизненных доз — в 12 мес.; следующие — в 10-11 и 16-18 лет.",
+        "ar": "الجرعة الأولى عند 12 شهراً؛ الجرعتان التاليتان في 10-11 و 16-18 سنة."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 12 }
+      ]
+    },
+    {
+      "code": "Influenza",
+      "displayName": {
+        "en": "Seasonal Influenza",
+        "ru": "Грипп (сезонный)",
+        "ar": "لقاح الإنفلونزا الموسمية"
+      },
+      "description": {
+        "en": "Annual seasonal vaccination from 6 months onward. The app shows only the first dose; recurring annual doses handled separately.",
+        "ru": "Ежегодная сезонная вакцинация с 6 месяцев. Приложение показывает только первую дозу.",
+        "ar": "تطعيم موسمي سنوي من عمر 6 أشهر."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 6 }
+      ]
+    },
+    {
+      "code": "RSV-mAb",
+      "displayName": {
+        "en": "RSV monoclonal antibody (e.g. nirsevimab)",
+        "ru": "Моноклональные антитела к РСВ (например, нирсевимаб)",
+        "ar": "الأجسام المضادة لفيروس RSV"
+      },
+      "description": {
+        "en": "Seasonal — for infants born 1 September to 1 March whose mother did not receive RSV vaccine in pregnancy.",
+        "ru": "Сезонная — для детей, родившихся с 1 сентября по 1 марта, если мать не получила вакцину против РСВ во время беременности.",
+        "ar": "موسمي — للأطفال المولودين بين 1 سبتمبر و 1 مارس."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 0, "earliestAgeMonths": 0, "latestAgeMonths": 0.04 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "countryCode": "SA",
+  "countryName": {
+    "en": "Saudi Arabia",
+    "ru": "Саудовская Аравия",
+    "ar": "المملكة العربية السعودية"
+  },
+  "sourceUrl": "https://www.moh.gov.sa/en/HealthAwareness/EducationalContent/vaccination/Pages/vaccination1.aspx",
+  "lastReviewedOn": "2026-05-21",
+  "vaccines": [
+    {
+      "code": "HepB",
+      "displayName": {
+        "en": "Hepatitis B",
+        "ru": "Гепатит B",
+        "ar": "الكبدي ب"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 0, "earliestAgeMonths": 0, "latestAgeMonths": 0.04 },
+        { "doseNumber": 2, "recommendedAgeMonths": 2 },
+        { "doseNumber": 3, "recommendedAgeMonths": 4 },
+        { "doseNumber": 4, "recommendedAgeMonths": 6 }
+      ]
+    },
+    {
+      "code": "BCG",
+      "displayName": {
+        "en": "BCG (Tuberculosis)",
+        "ru": "БЦЖ (туберкулёз)",
+        "ar": "السل"
+      },
+      "description": {
+        "en": "KSA gives BCG at 6 months, NOT at birth — unusual compared to most countries. Confirmed on the MoH vaccination card (rev. December 2019) and reproduced in a 2021 Saudi nationwide study. Pediatrician should confirm this remains current practice.",
+        "ru": "В КСА БЦЖ вводится в 6 месяцев (НЕ при рождении) — необычно по сравнению с большинством стран. Подтверждено картой Минздрава (ред. дек. 2019) и национальным исследованием 2021 г.",
+        "ar": "تُعطى BCG في 6 أشهر (ليس عند الولادة) — على خلاف معظم الدول. يرجى التأكيد."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 6 }
+      ]
+    },
+    {
+      "code": "Rotavirus",
+      "displayName": {
+        "en": "Rotavirus",
+        "ru": "Ротавирусная инфекция",
+        "ar": "فيروس الروتا"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 }
+      ]
+    },
+    {
+      "code": "DTaP",
+      "displayName": {
+        "en": "DTaP (Diphtheria, Tetanus, acellular Pertussis)",
+        "ru": "АДС-К (дифтерия, столбняк, ацеллюлярный коклюш)",
+        "ar": "الثلاثي البكتيري"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 },
+        { "doseNumber": 5, "recommendedAgeMonths": 48, "earliestAgeMonths": 48, "latestAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "Hib",
+      "displayName": {
+        "en": "Haemophilus influenzae type b",
+        "ru": "Гемофильная инфекция (Хиб)",
+        "ar": "المستديمة النزلية"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "PCV",
+      "displayName": {
+        "en": "Pneumococcal",
+        "ru": "Пневмококковая инфекция",
+        "ar": "العقدية الرئوية المدمج"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 12 }
+      ]
+    },
+    {
+      "code": "Polio",
+      "displayName": {
+        "en": "Polio (IPV + OPV)",
+        "ru": "Полиомиелит (ИПВ + ОПВ)",
+        "ar": "شلل الأطفال"
+      },
+      "description": {
+        "en": "IPV at 2 and 4 months; OPV at 6, 12, 18 months and 4-6 years.",
+        "ru": "ИПВ в 2 и 4 мес.; ОПВ в 6, 12, 18 мес. и в 4-6 лет.",
+        "ar": "IPV عند 2 و 4 أشهر؛ OPV عند 6 و 12 و 18 شهراً و 4-6 سنوات."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 12 },
+        { "doseNumber": 5, "recommendedAgeMonths": 18 },
+        { "doseNumber": 6, "recommendedAgeMonths": 48, "earliestAgeMonths": 48, "latestAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "Measles",
+      "displayName": {
+        "en": "Measles (monovalent)",
+        "ru": "Корь (моновалентная)",
+        "ar": "الحصبة المفردة"
+      },
+      "description": {
+        "en": "Saudi schedule has a single monovalent measles dose at 9 months before the MMR doses at 12 and 18 months.",
+        "ru": "В календаре КСА предусмотрена одна доза моновалентной коревой вакцины в 9 мес., до доз КПК в 12 и 18 мес.",
+        "ar": "جرعة الحصبة المفردة في 9 أشهر قبل جرعتي MMR."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 9 }
+      ]
+    },
+    {
+      "code": "MenACWY",
+      "displayName": {
+        "en": "Meningococcal ACWY",
+        "ru": "Менингококковая инфекция (ACWY)",
+        "ar": "الحمى الشوكية الرباعي المدمج"
+      },
+      "description": {
+        "en": "Saudi Arabia was an early universal adopter of MenACWY (Hajj-related epidemiology). Doses at 9 and 12 months in 0-6 scope; third dose at age 18 (outside scope).",
+        "ru": "КСА — один из первых, кто включил MenACWY в плановый календарь (из-за рисков, связанных с хаджем).",
+        "ar": "جرعتان في 9 و 12 شهراً؛ الجرعة الثالثة في 18 سنة."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 9 },
+        { "doseNumber": 2, "recommendedAgeMonths": 12 }
+      ]
+    },
+    {
+      "code": "MMR",
+      "displayName": {
+        "en": "MMR (Measles, Mumps, Rubella)",
+        "ru": "КПК (корь, паротит, краснуха)",
+        "ar": "الثلاثي الفيروسي"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 12 },
+        { "doseNumber": 2, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "HepA",
+      "displayName": {
+        "en": "Hepatitis A",
+        "ru": "Гепатит A",
+        "ar": "الكبدي أ"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 18 },
+        { "doseNumber": 2, "recommendedAgeMonths": 24 }
+      ]
+    },
+    {
+      "code": "Varicella",
+      "displayName": {
+        "en": "Varicella (Chickenpox)",
+        "ru": "Ветряная оспа",
+        "ar": "الجديري المائي"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 18 },
+        { "doseNumber": 2, "recommendedAgeMonths": 48, "earliestAgeMonths": 48, "latestAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "Influenza",
+      "displayName": {
+        "en": "Seasonal Influenza",
+        "ru": "Грипп (сезонный)",
+        "ar": "الإنفلونزا"
+      },
+      "description": {
+        "en": "Annual seasonal vaccination from 6 months. Recurring annual doses not modelled here.",
+        "ru": "Ежегодная сезонная вакцинация с 6 месяцев.",
+        "ar": "تطعيم موسمي سنوي من عمر 6 أشهر."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 6 }
+      ]
+    }
+  ]
+}
