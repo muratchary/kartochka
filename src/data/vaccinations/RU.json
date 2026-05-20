@@ -1,0 +1,125 @@
+{
+  "countryCode": "RU",
+  "countryName": {
+    "en": "Russia",
+    "ru": "Россия",
+    "ar": "روسيا"
+  },
+  "sourceUrl": "https://base.garant.ru/403258640/",
+  "lastReviewedOn": "2026-05-21",
+  "vaccines": [
+    {
+      "code": "HepB",
+      "displayName": {
+        "en": "Hepatitis B",
+        "ru": "Гепатит B",
+        "ar": "التهاب الكبد ب"
+      },
+      "description": {
+        "en": "Standard schedule 0-1-6 months. A risk-group scheme of 0-1-2-12 months also exists for higher-risk infants.",
+        "ru": "Обычная схема: 0-1-6 месяцев. Для групп риска применяется схема 0-1-2-12 месяцев.",
+        "ar": "الجدول القياسي 0-1-6 أشهر. توجد جرعة خاصة لمجموعات الخطر بجدول 0-1-2-12 شهراً."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 0, "earliestAgeMonths": 0, "latestAgeMonths": 0.04 },
+        { "doseNumber": 2, "recommendedAgeMonths": 1 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 }
+      ]
+    },
+    {
+      "code": "BCG",
+      "displayName": {
+        "en": "BCG (Tuberculosis)",
+        "ru": "БЦЖ (туберкулёз)",
+        "ar": "بي سي جي (السل)"
+      },
+      "description": {
+        "en": "Given in days 3-7 of life. BCG-M (reduced dose) is used in regions with lower TB incidence and for at-risk newborns.",
+        "ru": "Делается на 3-7 день жизни. В регионах с низкой заболеваемостью и для новорождённых из групп риска применяется БЦЖ-М (уменьшенная доза).",
+        "ar": "تُعطى في اليوم 3-7 من الحياة. تُستخدم BCG-M في المناطق ذات الإصابة المنخفضة وللمواليد من مجموعات الخطر."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 0.17, "earliestAgeMonths": 0.1, "latestAgeMonths": 0.23 }
+      ]
+    },
+    {
+      "code": "PCV",
+      "displayName": {
+        "en": "Pneumococcal",
+        "ru": "Пневмококковая инфекция",
+        "ar": "المكورات الرئوية"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 2 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4.5 },
+        { "doseNumber": 3, "recommendedAgeMonths": 15 }
+      ]
+    },
+    {
+      "code": "DTP",
+      "displayName": {
+        "en": "DTP (Diphtheria, Tetanus, Pertussis)",
+        "ru": "АКДС (дифтерия, коклюш, столбняк)",
+        "ar": "التطعيم الثلاثي (الدفتيريا، التيتانوس، السعال الديكي)"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 3 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4.5 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "Polio",
+      "displayName": {
+        "en": "Polio",
+        "ru": "Полиомиелит",
+        "ar": "شلل الأطفال"
+      },
+      "description": {
+        "en": "Doses 1-3 use inactivated polio vaccine (IPV). Revaccinations at 18 months, 20 months, and 6 years typically use oral polio vaccine (OPV).",
+        "ru": "Первые три дозы — инактивированная вакцина (ИПВ). Ревакцинации в 18 месяцев, 20 месяцев и 6 лет — обычно живая вакцина (ОПВ).",
+        "ar": "الجرعات 1-3 تستخدم لقاح شلل الأطفال غير المنشط (IPV). تستخدم الجرعات المعززة في 18 شهراً و 20 شهراً و 6 سنوات لقاح شلل الأطفال الفموي (OPV)."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 3 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4.5 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 },
+        { "doseNumber": 5, "recommendedAgeMonths": 20 },
+        { "doseNumber": 6, "recommendedAgeMonths": 72 }
+      ]
+    },
+    {
+      "code": "Hib",
+      "displayName": {
+        "en": "Haemophilus influenzae type b",
+        "ru": "Гемофильная инфекция (тип b)",
+        "ar": "المستدمية النزلية ب"
+      },
+      "description": {
+        "en": "Universal for all children since December 2021 (previously risk groups only).",
+        "ru": "С декабря 2021 года плановая прививка для всех детей (ранее только для групп риска).",
+        "ar": "إلزامي لجميع الأطفال منذ ديسمبر 2021 (كان سابقاً لمجموعات الخطر فقط)."
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 3 },
+        { "doseNumber": 2, "recommendedAgeMonths": 4.5 },
+        { "doseNumber": 3, "recommendedAgeMonths": 6 },
+        { "doseNumber": 4, "recommendedAgeMonths": 18 }
+      ]
+    },
+    {
+      "code": "MMR",
+      "displayName": {
+        "en": "MMR (Measles, Mumps, Rubella)",
+        "ru": "КПК (корь, паротит, краснуха)",
+        "ar": "ام ام ار (الحصبة، النكاف، الحصبة الألمانية)"
+      },
+      "doses": [
+        { "doseNumber": 1, "recommendedAgeMonths": 12 },
+        { "doseNumber": 2, "recommendedAgeMonths": 72 }
+      ]
+    }
+  ]
+}
