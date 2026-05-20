@@ -37,10 +37,52 @@
     "ru": "Русский",
     "ar": "العربية"
   },
+  "countries": {
+    "RU": "Russia",
+    "KZ": "Kazakhstan",
+    "UZ": "Uzbekistan",
+    "AE": "United Arab Emirates",
+    "SA": "Saudi Arabia",
+    "TR": "Türkiye"
+  },
   "common": {
     "save": "Save",
     "continue": "Continue",
     "markDone": "Mark done",
-    "exportPdf": "Doctor's PDF"
+    "exportPdf": "Doctor's PDF",
+    "change": "Change",
+    "back": "Back"
+  },
+  "onboarding": {
+    "welcome": {
+      "cta": "Get started",
+      "privacy": "Your child's data stays on this phone. Cloud backup is optional."
+    },
+    "country": {
+      "title": "Choose your country",
+      "subtitle": "We'll load the vaccination schedule and reminder dates for that country.",
+      "stepLabel": "Step 2 of 4"
+    },
+    "language": {
+      "title": "Choose your language",
+      "subtitle": "You can change this later in More.",
+      "stepLabel": "Step 3 of 4"
+    },
+    "addChild": {
+      "title": "Add your child",
+      "subtitle": "Just the basics. You can edit later.",
+      "stepLabel": "Step 4 of 4",
+      "nameLabel": "Name",
+      "namePlaceholder": "First name",
+      "dobLabel": "Date of birth",
+      "dobPick": "Choose date",
+      "sexLabel": "Sex",
+      "sexHelp": "WHO growth curves are sex-specific. This is only used for that.",
+      "sexBoy": "Boy",
+      "sexGirl": "Girl",
+      "sexUnspecified": "Prefer not to say",
+      "countryStripPrefix": "Schedule:",
+      "saveCta": "Save and continue"
+    }
   }
 }

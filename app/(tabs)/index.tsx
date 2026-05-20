@@ -1,12 +1,19 @@
+import { Redirect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
   const font = useFont();
+  const hasChildren = useChildrenStore((s) => s.children.length > 0);
+
+  if (!hasChildren) {
+    return <Redirect href="/onboarding/welcome" />;
+  }
 
   return (
     <View style={styles.container}>

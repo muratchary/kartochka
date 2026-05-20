@@ -1,6 +1,6 @@
 import type { SupportedLanguage } from '../i18n';
 
-export type Sex = 'male' | 'female';
+export type Sex = 'male' | 'female' | 'unspecified';
 
 export type IsoDate = string;
 export type IsoDateTime = string;
