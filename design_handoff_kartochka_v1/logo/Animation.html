@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Kartochka — Animated logo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --teal:     #2A7F7F;
+    --teal-d:   #1F6363;
+    --teal-s:   #E8F1F0;
+    --teal-l:   #BFD7D5;
+    --amber:    #F0A848;
+    --bg:       #FAFAF7;
+    --surface:  #FFFFFF;
+    --ink:      #1A2E2E;
+    --ink2:     #5A6E6E;
+    --ink3:     #8FA0A0;
+    --border:   #E0E5E5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: "Nunito", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .page { max-width: 1180px; margin: 0 auto; padding: 56px 48px 96px; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 800; letter-spacing: 0.14em;
+    color: var(--teal); text-transform: uppercase;
+    padding: 5px 12px; border: 1px solid var(--teal-l);
+    border-radius: 999px; background: var(--teal-s);
+  }
+  h1 { font-size: 42px; font-weight: 800; letter-spacing: -0.7px;
+    margin: 16px 0 8px; line-height: 1.1; }
+  p.lede { font-size: 17px; color: var(--ink2); max-width: 720px;
+    margin: 0; line-height: 1.55; font-weight: 500; }
+
+  .grid {
+    margin-top: 44px;
+    display: grid; gap: 22px;
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 18px; overflow: hidden; display: flex; flex-direction: column;
+  }
+  .card-head { padding: 18px 22px 14px; border-bottom: 1px solid var(--border); }
+  .card-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 999px;
+    background: var(--teal-s); color: var(--teal);
+    font-weight: 800; font-size: 11px;
+  }
+  .card-head h2 { margin: 8px 0 2px; font-size: 19px; font-weight: 800;
+    letter-spacing: -0.3px; }
+  .card-head p { margin: 0; font-size: 13.5px; color: var(--ink2);
+    font-weight: 500; line-height: 1.5; }
+
+  .stage {
+    flex: 1; display: grid; place-items: center;
+    padding: 32px 24px;
+    background:
+      linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.02) 100%),
+      repeating-linear-gradient(45deg, transparent 0 12px, rgba(0,0,0,0.015) 12px 13px);
+    position: relative; min-height: 280px;
+  }
+  .stage.dark {
+    background:
+      linear-gradient(180deg, var(--teal-d) 0%, #102E2E 100%);
+  }
+
+  .controls {
+    display: flex; gap: 8px; padding: 14px 22px;
+    border-top: 1px solid var(--border);
+    background: rgba(0,0,0,0.015);
+  }
+  .btn {
+    height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--ink); font: 600 13px/1 "Nunito";
+    cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+    transition: background .12s;
+  }
+  .btn:hover { background: var(--teal-s); border-color: var(--teal-l); }
+  .btn.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .btn.primary:hover { background: var(--teal-d); }
+  .duration { margin-left: auto; font-size: 12px; color: var(--ink3); font-weight: 700;
+    letter-spacing: 0.2px; align-self: center; font-variant-numeric: tabular-nums; }
+
+  /* ───────────── Animated logo ───────────── */
+  /*
+    The mark is one SVG with named parts. Each variant assigns a different
+    animation timeline by toggling a class on the host. We animate four parts:
+      .stem (line)                              — grows up via stroke-dashoffset
+      .leaf-l, .leaf-r (paths)                  — unfold via scale + opacity
+      .bud (circle)                              — pops in last, then breathes
+  */
+
+  .seed { display: block; overflow: visible; }
+  .seed .bg { fill: var(--teal); }
+  .seed .stem {
+    fill: none; stroke: #FFFFFF; stroke-width: 14; stroke-linecap: round;
+    stroke-dasharray: 80; stroke-dashoffset: 80;
+  }
+  .seed .leaf-l, .seed .leaf-r { fill: #FFFFFF; transform-box: fill-box;
+    transform-origin: center; transform: scale(0); opacity: 0; }
+  .seed .leaf-l { transform-origin: 100% 50%; }   /* attached on stem side */
+  .seed .leaf-r { transform-origin:   0% 50%; }
+  .seed .bud { fill: var(--amber); transform-box: fill-box;
+    transform-origin: center; transform: scale(0); }
+
+  /* ===== Variant 1 — grow-in then idle (splash) ===== */
+  .seed.grow .bg          { animation: bg-pop 320ms cubic-bezier(.2,.7,.3,1.1) both; }
+  .seed.grow .stem        { animation: stem-grow 520ms cubic-bezier(.5,0,.3,1) 240ms both,
+                                       sway 4200ms ease-in-out 1700ms infinite; }
+  .seed.grow .leaf-l      { animation: leaf-unfold 460ms cubic-bezier(.34,1.56,.64,1) 620ms both,
+                                       sway-leaf-l 4200ms ease-in-out 1700ms infinite; }
+  .seed.grow .leaf-r      { animation: leaf-unfold 460ms cubic-bezier(.34,1.56,.64,1) 720ms both,
+                                       sway-leaf-r 4200ms ease-in-out 1700ms infinite; }
+  .seed.grow .bud         { animation: bud-pop 540ms cubic-bezier(.34,1.56,.64,1) 900ms both,
+                                       bud-pulse 2600ms ease-in-out 2000ms infinite; }
+
+  /* ===== Variant 2 — idle loading loop only ===== */
+  .seed.idle .stem        { stroke-dashoffset: 0; animation: sway 4200ms ease-in-out infinite; }
+  .seed.idle .leaf-l      { transform: scale(1); opacity: 1; animation: sway-leaf-l 4200ms ease-in-out infinite; }
+  .seed.idle .leaf-r      { transform: scale(1); opacity: 1; animation: sway-leaf-r 4200ms ease-in-out infinite; }
+  .seed.idle .bud         { transform: scale(1); animation: bud-pulse 2600ms ease-in-out infinite; }
+
+  /* ===== Variant 3 — busy spinner (orbiting dot) ===== */
+  .seed.spin .stem        { stroke-dashoffset: 0; }
+  .seed.spin .leaf-l, .seed.spin .leaf-r { transform: scale(1); opacity: 1; }
+  .seed.spin .bud         { transform: scale(1); }
+  .seed.spin .orbit       { animation: orbit 1100ms linear infinite; }
+  .seed:not(.spin) .orbit { display: none; }
+
+  /* ───────── keyframes ───────── */
+  @keyframes bg-pop {
+    0%   { transform: scale(0.6); opacity: 0; }
+    60%  { transform: scale(1.06); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+  @keyframes stem-grow {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes leaf-unfold {
+    0%   { transform: scale(0); opacity: 0; }
+    60%  { opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes bud-pop {
+    0%   { transform: scale(0); }
+    60%  { transform: scale(1.25); }
+    100% { transform: scale(1); }
+  }
+  @keyframes sway {
+    0%, 100% { transform: rotate(0deg); }
+    50%      { transform: rotate(-1.5deg); }
+  }
+  @keyframes sway-leaf-l {
+    0%, 100% { transform: scale(1) rotate(0deg);  }
+    50%      { transform: scale(1) rotate(-3deg); }
+  }
+  @keyframes sway-leaf-r {
+    0%, 100% { transform: scale(1) rotate(0deg);  }
+    50%      { transform: scale(1) rotate(3deg);  }
+  }
+  @keyframes bud-pulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.12); }
+  }
+  @keyframes orbit {
+    from { transform: rotate(0deg) }
+    to   { transform: rotate(360deg) }
+  }
+  /* the stem within sway needs an origin at its anchor */
+  .seed .anim-grouper { transform-box: fill-box; transform-origin: 50% 100%; }
+
+  /* prefers-reduced-motion: kill all animations to single end-state */
+  @media (prefers-reduced-motion: reduce) {
+    .seed *, .seed { animation: none !important; }
+    .seed .stem { stroke-dashoffset: 0; }
+    .seed .leaf-l, .seed .leaf-r { transform: scale(1); opacity: 1; }
+    .seed .bud { transform: scale(1); }
+  }
+
+  /* ───────────── Splash-screen demo (full phone frame) ───────────── */
+  .splash-section { margin-top: 56px; }
+  .splash-stage {
+    display: flex; gap: 24px; align-items: center; padding: 24px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+  }
+  .phone {
+    width: 280px; height: 580px; border-radius: 36px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.12), 0 0 0 8px #111 inset, 0 0 0 9px #000 inset;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px;
+  }
+  .phone .notch {
+    position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+    width: 90px; height: 26px; border-radius: 18px; background: #000;
+  }
+  .phone .home-ind {
+    position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+    width: 100px; height: 4px; border-radius: 100px; background: rgba(0,0,0,0.25);
+  }
+  .phone .wm {
+    margin-top: 8px; font-weight: 800; font-size: 26px; color: var(--ink);
+    letter-spacing: -0.5px;
+  }
+  .phone .tag {
+    font-size: 12px; color: var(--ink2); font-weight: 600; line-height: 1.4;
+    text-align: center; max-width: 200px;
+  }
+  .phone .loader-dots {
+    position: absolute; bottom: 60px; display: flex; gap: 6px;
+  }
+  .phone .loader-dots span {
+    width: 6px; height: 6px; border-radius: 999px; background: var(--teal);
+    animation: dot-pulse 1200ms ease-in-out infinite;
+  }
+  .phone .loader-dots span:nth-child(2) { animation-delay: 150ms; }
+  .phone .loader-dots span:nth-child(3) { animation-delay: 300ms; }
+  @keyframes dot-pulse {
+    0%, 100% { opacity: 0.25; transform: scale(1);    }
+    50%      { opacity: 1;    transform: scale(1.18); }
+  }
+
+  .splash-explain { flex: 1; }
+  .splash-explain h2 { margin: 0 0 10px; font-size: 24px; font-weight: 800; letter-spacing: -0.4px; }
+  .splash-explain p  { margin: 0 0 14px; font-size: 14px; color: var(--ink2); line-height: 1.6; font-weight: 500; max-width: 460px; }
+  .timeline { margin-top: 6px; display: flex; flex-direction: column; gap: 6px; }
+  .timeline .row {
+    display: grid; grid-template-columns: 70px 1fr; gap: 12px;
+    font-size: 13px; font-weight: 600;
+    padding: 8px 12px; background: var(--bg);
+    border-radius: 8px;
+  }
+  .timeline .row b { color: var(--teal); font-variant-numeric: tabular-nums; font-weight: 800; }
+
+  /* ───────────── Spec block ───────────── */
+  .spec {
+    margin-top: 56px; padding: 28px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+  }
+  .spec h2 { margin: 0 0 10px; font-size: 22px; font-weight: 800; letter-spacing: -0.3px; }
+  .spec p  { margin: 0 0 16px; font-size: 14px; color: var(--ink2); line-height: 1.6; font-weight: 500; }
+  .spec-grid { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+  .spec-grid table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .spec-grid th { text-align: left; padding: 8px 10px; background: var(--bg);
+    font-weight: 800; color: var(--ink2); letter-spacing: 0.3px;
+    text-transform: uppercase; font-size: 11px; }
+  .spec-grid td { padding: 8px 10px; border-bottom: 1px solid var(--border);
+    font-weight: 600; }
+  .spec-grid td:last-child { color: var(--ink2); }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px;
+    background: var(--teal-s); color: var(--teal-d); padding: 1px 6px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <span class="eyebrow"><span style="width:6px;height:6px;border-radius:999px;background:var(--teal);display:inline-block"></span> Brand · motion</span>
+  <h1>The seedling, animated.</h1>
+  <p class="lede">
+    The mark has a natural growth choreography: stem rises, leaves unfold, bud
+    blossoms. Three variants — a one-shot grow-in for app launch, a calm idle
+    loop for any loading state, and a busy spinner for short waits.
+  </p>
+
+  <!-- ─────── 3 variants side-by-side ─────── -->
+  <div class="grid">
+
+    <!-- 1: grow-in -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-num">01</span>
+        <h2>Grow-in</h2>
+        <p>App launch. Plays once over ~1.4s, then breathes. Choreographed: bg pops → stem grows up → leaves unfold (l, then r) → amber bud blossoms with a soft overshoot.</p>
+      </div>
+      <div class="stage" id="stage-grow">
+        <svg id="seed-grow" class="seed grow" width="180" height="180" viewBox="0 0 232 232" aria-label="Kartochka seedling — grow-in">
+          <g class="anim-grouper">
+            <rect class="bg" width="232" height="232" rx="51"/>
+            <line class="stem" x1="116" y1="178" x2="116" y2="110"/>
+            <path class="leaf-l" d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z"/>
+            <path class="leaf-r" d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z"/>
+            <circle class="bud" cx="116" cy="90" r="11"/>
+          </g>
+        </svg>
+      </div>
+      <div class="controls">
+        <button class="btn primary" onclick="replay('seed-grow')">Replay</button>
+        <span class="duration">1400 ms</span>
+      </div>
+    </div>
+
+    <!-- 2: idle loop -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-num">02</span>
+        <h2>Idle</h2>
+        <p>Long loads, content fetching, or any waiting state. Leaves sway, bud pulses gently. No motion sickness — peak rotation is 3°.</p>
+      </div>
+      <div class="stage" id="stage-idle">
+        <svg id="seed-idle" class="seed idle" width="120" height="120" viewBox="0 0 232 232" aria-label="Kartochka seedling — idle loop">
+          <rect class="bg" width="232" height="232" rx="51"/>
+          <line class="stem" x1="116" y1="178" x2="116" y2="110"/>
+          <path class="leaf-l" d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z"/>
+          <path class="leaf-r" d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z"/>
+          <circle class="bud" cx="116" cy="90" r="11"/>
+        </svg>
+      </div>
+      <div class="controls">
+        <button class="btn" onclick="replay('seed-idle')">Replay</button>
+        <span class="duration">4200 ms loop</span>
+      </div>
+    </div>
+
+    <!-- 3: spinner -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-num">03</span>
+        <h2>Busy</h2>
+        <p>Short waits (network, save). A small dot orbits the bud. Snappier rhythm than idle. Use inline at 24–48 px.</p>
+      </div>
+      <div class="stage" id="stage-spin">
+        <svg id="seed-spin" class="seed spin" width="80" height="80" viewBox="0 0 232 232" aria-label="Kartochka seedling — busy">
+          <rect class="bg" width="232" height="232" rx="51"/>
+          <line class="stem" x1="116" y1="178" x2="116" y2="110"/>
+          <path class="leaf-l" d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z"/>
+          <path class="leaf-r" d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z"/>
+          <circle class="bud" cx="116" cy="90" r="11"/>
+          <g class="orbit" style="transform-box: fill-box; transform-origin: 116px 116px">
+            <circle cx="116" cy="36" r="6" fill="#F0A848"/>
+          </g>
+        </svg>
+      </div>
+      <div class="controls">
+        <button class="btn" onclick="replay('seed-spin')">Replay</button>
+        <span class="duration">1100 ms loop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────── Splash demo in a phone ─────── -->
+  <section class="splash-section">
+    <div class="splash-stage">
+      <div class="phone">
+        <div class="notch"></div>
+        <svg id="seed-splash" class="seed grow" width="120" height="120" viewBox="0 0 232 232">
+          <g class="anim-grouper">
+            <rect class="bg" width="232" height="232" rx="51"/>
+            <line class="stem" x1="116" y1="178" x2="116" y2="110"/>
+            <path class="leaf-l" d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z"/>
+            <path class="leaf-r" d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z"/>
+            <circle class="bud" cx="116" cy="90" r="11"/>
+          </g>
+        </svg>
+        <div class="wm">Карточка</div>
+        <div class="tag">Медкарта ребёнка,<br/>которую оценит педиатр</div>
+        <div class="loader-dots"><span></span><span></span><span></span></div>
+        <div class="home-ind"></div>
+      </div>
+      <div class="splash-explain">
+        <h2>Splash sequence</h2>
+        <p>
+          What the parent sees on cold-launch. The mark grows in over ~1.4 s, the
+          wordmark + tagline fade in alongside, and the dots take over once
+          everything's onscreen. Total time-to-content target: <strong>under 2 s</strong>.
+        </p>
+        <div class="timeline">
+          <div class="row"><b>0 ms</b><span>Background squircle pops in</span></div>
+          <div class="row"><b>240</b><span>Stem grows up from the base</span></div>
+          <div class="row"><b>620</b><span>Left leaf unfolds</span></div>
+          <div class="row"><b>720</b><span>Right leaf unfolds</span></div>
+          <div class="row"><b>900</b><span>Amber bud blossoms (overshoot)</span></div>
+          <div class="row"><b>1700</b><span>Mark settles into the calm sway loop</span></div>
+        </div>
+        <div style="margin-top:14px">
+          <button class="btn primary" onclick="replay('seed-splash')">Replay sequence</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────── Implementation spec ─────── -->
+  <section class="spec">
+    <h2>How to ship this in the Expo app</h2>
+    <p>
+      All three variants are pure SVG + CSS keyframes. To port to React Native:
+      use <code>react-native-svg</code> for the mark and either <code>react-native-reanimated</code>
+      (recommended) or <code>Animated</code> to drive <code>strokeDashoffset</code>, <code>scale</code>,
+      and <code>rotate</code> on the four named parts. Same timeline values as below.
+    </p>
+    <div class="spec-grid">
+      <table>
+        <tr><th>Part</th><th>Property</th><th>Delay → end</th></tr>
+        <tr><td><code>bg</code></td><td>scale 0.6 → 1 (overshoot 1.06)</td><td>0 → 320 ms</td></tr>
+        <tr><td><code>stem</code></td><td>strokeDashoffset 80 → 0</td><td>240 → 760 ms</td></tr>
+        <tr><td><code>leaf-l</code></td><td>scale 0 → 1 (overshoot)</td><td>620 → 1080 ms</td></tr>
+        <tr><td><code>leaf-r</code></td><td>scale 0 → 1 (overshoot)</td><td>720 → 1180 ms</td></tr>
+        <tr><td><code>bud</code></td><td>scale 0 → 1 (overshoot 1.25)</td><td>900 → 1440 ms</td></tr>
+        <tr><td>then loop</td><td>sway ±1.5° / leaves ±3° / bud pulse 1→1.12</td><td>4200 ms / 2600 ms</td></tr>
+      </table>
+      <table>
+        <tr><th>Variant</th><th>Use when…</th><th>Size</th></tr>
+        <tr><td>Grow-in</td><td>Cold launch only. Never re-plays in-session.</td><td>96–160 px</td></tr>
+        <tr><td>Idle</td><td>Skeleton screens, slow fetches, sync.</td><td>48–96 px</td></tr>
+        <tr><td>Busy</td><td>Inline, button states, short waits.</td><td>24–48 px</td></tr>
+      </table>
+    </div>
+    <p style="margin-top:16px;font-size:13px;color:var(--ink3)">
+      All variants honour <code>prefers-reduced-motion: reduce</code> — the mark
+      snaps to its final state with no motion. The Expo port should mirror this
+      by reading <code>AccessibilityInfo.isReduceMotionEnabled()</code>.
+    </p>
+  </section>
+
+</div>
+
+<script>
+function replay(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  // Force a reflow so CSS animation restarts cleanly.
+  const cls = el.className;
+  el.className = '';
+  void el.offsetWidth;
+  el.className = cls;
+}
+</script>
+</body>
+</html>

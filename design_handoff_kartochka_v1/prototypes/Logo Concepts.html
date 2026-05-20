@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1240" />
+<title>Kartochka — Logo Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-900: #1A2E2E;
+    --teal-700: #2A7F7F;
+    --teal-500: #3FA0A0;
+    --teal-50:  #E8F1F0;
+    --amber:    #F0A848;
+    --amber-700:#D88E2E;
+    --bg:       #FAFAF7;
+    --surface:  #FFFFFF;
+    --text:     #1A2E2E;
+    --text-2:   #5A6E6E;
+    --text-3:   #8A9A9A;
+    --border:   #E0E5E5;
+    --border-2: #EDF0F0;
+    --success:  #4A9D6E;
+    --warning:  #E89B3C;
+    --error:    #C75959;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Nunito", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 56px 48px 96px;
+  }
+  /* --------- header --------- */
+  .doc-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.14em;
+    color: var(--teal-700); text-transform: uppercase;
+    padding: 6px 12px; border: 1px solid var(--teal-500);
+    border-radius: 999px; background: var(--teal-50);
+  }
+  .doc-eyebrow .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--teal-700); }
+  h1.doc-title {
+    font-size: 44px; font-weight: 800; letter-spacing: -0.02em;
+    margin: 18px 0 10px; line-height: 1.1;
+  }
+  p.doc-sub {
+    font-size: 17px; color: var(--text-2);
+    max-width: 720px; margin: 0 0 8px; line-height: 1.55;
+  }
+  .meta-row {
+    display: flex; gap: 18px; margin-top: 22px; flex-wrap: wrap;
+    color: var(--text-3); font-size: 13px;
+  }
+  .meta-row b { color: var(--text-2); font-weight: 600; }
+
+  /* --------- system bar (palette + type) --------- */
+  .system-bar {
+    margin: 40px 0 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: grid; gap: 20px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .system-bar h3 {
+    margin: 0 0 12px; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-3);
+  }
+  .swatches { display: flex; gap: 10px; }
+  .sw { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+  .sw .chip {
+    width: 56px; height: 56px; border-radius: 10px;
+    border: 1px solid var(--border-2);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.02);
+  }
+  .sw .name { font-size: 11px; color: var(--text-2); }
+  .sw .hex  { font-size: 11px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+  .type-row { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+  .type-row .lat { font-family: "Nunito"; font-weight: 800; font-size: 30px; letter-spacing: -0.01em; }
+  .type-row .cyr { font-family: "Nunito"; font-weight: 800; font-size: 30px; letter-spacing: -0.01em; }
+  .type-row .ar  { font-family: "IBM Plex Sans Arabic"; font-weight: 700; font-size: 30px; direction: rtl; }
+  .type-row .lbl { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.12em; }
+
+  /* --------- concept cards --------- */
+  .concepts {
+    display: grid; gap: 28px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .concept {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .concept-head {
+    padding: 22px 24px 18px;
+    border-bottom: 1px solid var(--border-2);
+  }
+  .concept-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 999px;
+    background: var(--teal-50); color: var(--teal-700);
+    font-weight: 800; font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .concept h2 {
+    margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .concept .tagline {
+    margin: 4px 0 0; font-size: 13px; color: var(--text-2); font-style: italic;
+  }
+
+  .icon-stage {
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(180deg, #F4F2EC 0%, #ECEAE4 100%);
+    display: grid; place-items: center;
+    position: relative;
+    border-bottom: 1px solid var(--border-2);
+  }
+  .icon-stage .grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(26,46,46,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,46,46,0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: center;
+    pointer-events: none;
+  }
+  .app-icon {
+    width: 232px; height: 232px;
+    border-radius: 52px; /* iOS-ish squircle look */
+    position: relative;
+    z-index: 1;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 24px 40px -20px rgba(26,46,46,0.35),
+      0 4px 12px -4px rgba(26,46,46,0.18);
+    overflow: hidden;
+  }
+  .stage-caption {
+    position: absolute; bottom: 14px; left: 16px; right: 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 2;
+    font-size: 11px; color: var(--text-3);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  .variants {
+    padding: 22px 24px 26px;
+    display: grid; gap: 18px;
+  }
+  .var-row {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .var-row .var-label {
+    font-size: 11px; color: var(--text-3);
+    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+  }
+  .var-row .var-target {
+    background: var(--bg);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    min-height: 64px;
+  }
+  .var-row .var-target.dark {
+    background: var(--teal-900);
+    border: none;
+  }
+  .var-row .wordmark-text {
+    font-weight: 800; font-size: 22px; letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .var-row .wordmark-text.on-dark { color: #FFF; }
+  .mono-grid {
+    display: flex; gap: 10px; align-items: center;
+  }
+  .mono-tile {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: grid; place-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .mono-tile.tealfill { background: var(--teal-700); border-color: var(--teal-700); }
+  .mono-tile.amberfill { background: var(--amber); border-color: var(--amber); }
+
+  .thumb-strip {
+    display: flex; gap: 10px; align-items: center;
+  }
+  .thumb {
+    width: 60px; height: 60px; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 6px 14px -8px rgba(26,46,46,0.45);
+  }
+  .thumb-xs {
+    width: 28px; height: 28px; border-radius: 7px; overflow: hidden;
+    box-shadow: 0 2px 4px rgba(26,46,46,0.2);
+  }
+  .thumb-row-label {
+    font-size: 11px; color: var(--text-3); margin-left: 4px;
+  }
+
+  .rationale {
+    padding: 0 24px 26px;
+  }
+  .rationale h4 {
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-3); font-weight: 700;
+    margin: 0 0 8px;
+  }
+  .rationale ul {
+    margin: 0; padding: 0; list-style: none;
+    display: grid; gap: 10px;
+  }
+  .rationale li {
+    font-size: 14px; color: var(--text); line-height: 1.5;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .rationale li::before {
+    content: ""; display: block; flex: none;
+    width: 6px; height: 6px; margin-top: 8px;
+    border-radius: 999px; background: var(--teal-500);
+  }
+  .pros-cons {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-top: 14px;
+  }
+  .pc {
+    border-radius: 10px; padding: 10px 12px;
+    font-size: 12px; line-height: 1.5;
+  }
+  .pc.pro  { background: rgba(74,157,110,0.08); color: #2E6B4A; }
+  .pc.con  { background: rgba(199,89,89,0.06);  color: #8C3D3D; }
+  .pc b { display: block; font-weight: 700; margin-bottom: 4px;
+          letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px; }
+
+  /* --------- footer note --------- */
+  .footer-note {
+    margin-top: 44px; padding: 20px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    font-size: 14px; color: var(--text-2); line-height: 1.6;
+  }
+  .footer-note b { color: var(--text); }
+  .footer-note .kbd {
+    display: inline-block;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px;
+    padding: 2px 6px; border-radius: 6px;
+    background: var(--teal-50); color: var(--teal-700);
+    border: 1px solid var(--border);
+  }
+
+  /* --------- arabic test row --------- */
+  .lang-tests {
+    margin-top: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 22px;
+    display: grid; grid-template-columns: 110px 1fr 1fr 1fr; gap: 20px;
+    align-items: center;
+  }
+  .lang-tests .lt-head {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-3); font-weight: 700;
+  }
+  .lang-tests .lt-cell {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .lang-tests .lt-cell .lt-label {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .lang-tests .lt-cell .lt-sample {
+    font-size: 22px; font-weight: 700; color: var(--text);
+  }
+  .lang-tests .lt-cell.ar .lt-sample {
+    font-family: "IBM Plex Sans Arabic"; direction: rtl;
+  }
+
+</style>
+</head>
+<body>
+<div class="page" data-screen-label="Logo Concepts">
+
+  <!-- HEADER -->
+  <div class="doc-eyebrow"><span class="dot"></span> Phase 1 · Brand exploration</div>
+  <h1 class="doc-title">Kartochka — three logo directions.</h1>
+  <p class="doc-sub">
+    Each concept is shown as an iOS-style app icon, a horizontal wordmark for splash &amp; headers,
+    a single-glyph monogram for favicons, and a 60&nbsp;×&nbsp;60&nbsp;px thumbnail check so we know
+    it survives the App Store grid.
+  </p>
+  <div class="meta-row">
+    <span><b>Mark:</b> Cyrillic-first, Latin- &amp; Arabic-safe</span>
+    <span><b>Primary:</b> #2A7F7F teal</span>
+    <span><b>Accent:</b> #F0A848 amber (CTA only)</span>
+    <span><b>No</b> faces · pink · powder blue</span>
+  </div>
+
+  <!-- SYSTEM BAR -->
+  <section class="system-bar" aria-label="System">
+    <div>
+      <h3>Palette</h3>
+      <div class="swatches">
+        <div class="sw"><div class="chip" style="background:#2A7F7F"></div><span class="name">Teal</span><span class="hex">#2A7F7F</span></div>
+        <div class="sw"><div class="chip" style="background:#1A2E2E"></div><span class="name">Ink</span><span class="hex">#1A2E2E</span></div>
+        <div class="sw"><div class="chip" style="background:#F0A848"></div><span class="name">Amber</span><span class="hex">#F0A848</span></div>
+        <div class="sw"><div class="chip" style="background:#FAFAF7;border-color:#E0E5E5"></div><span class="name">Paper</span><span class="hex">#FAFAF7</span></div>
+        <div class="sw"><div class="chip" style="background:#FFFFFF;border-color:#E0E5E5"></div><span class="name">Surface</span><span class="hex">#FFFFFF</span></div>
+        <div class="sw"><div class="chip" style="background:#4A9D6E"></div><span class="name">Success</span><span class="hex">#4A9D6E</span></div>
+      </div>
+    </div>
+    <div>
+      <h3>Type — Nunito + IBM Plex Sans Arabic</h3>
+      <div class="type-row">
+        <div>
+          <div class="lat">Kartochka</div>
+          <div class="lbl">Nunito 800 · Latin</div>
+        </div>
+        <div>
+          <div class="cyr">Карточка</div>
+          <div class="lbl">Nunito 800 · Cyrillic</div>
+        </div>
+        <div>
+          <div class="ar">كارتوشكا</div>
+          <div class="lbl">Plex Arabic 700</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================== -->
+  <!-- CONCEPTS                                            -->
+  <!-- =================================================== -->
+  <section class="concepts">
+
+    <!-- ============================================= -->
+    <!-- CONCEPT 1 — SHIELD К                          -->
+    <!-- ============================================= -->
+    <article class="concept" aria-label="Concept 1">
+      <div class="concept-head">
+        <span class="concept-num">01</span>
+        <h2>Shield&nbsp;К</h2>
+        <p class="tagline">Protection + record, in one glyph.</p>
+      </div>
+
+      <div class="icon-stage">
+        <div class="grid-bg"></div>
+        <div class="app-icon">
+          <!-- Shield K -->
+          <svg viewBox="0 0 232 232" width="232" height="232" xmlns="http://www.w3.org/2000/svg" aria-label="Kartochka Shield K">
+            <defs>
+              <linearGradient id="c1bg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#2F8A8A"/>
+                <stop offset="1" stop-color="#226B6B"/>
+              </linearGradient>
+            </defs>
+            <rect width="232" height="232" fill="url(#c1bg)"/>
+            <!-- inner shield silhouette -->
+            <path d="M116 40
+                     L172 60
+                     L172 124
+                     C172 158 148 184 116 196
+                     C84 184 60 158 60 124
+                     L60 60 Z"
+                  fill="rgba(255,255,255,0.06)"
+                  stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+            <!-- Cyrillic K, structured as a shield-vertical with two diagonals -->
+            <g fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="86" y1="74" x2="86" y2="174"/>
+              <line x1="86" y1="120" x2="146" y2="74"/>
+              <line x1="86" y1="120" x2="146" y2="174"/>
+            </g>
+            <!-- amber checkmark / pulse dot at intersection -->
+            <circle cx="86" cy="120" r="10" fill="#F0A848"/>
+          </svg>
+        </div>
+        <div class="stage-caption">
+          <span>App icon · 1024 master</span>
+          <span>Squircle preview</span>
+        </div>
+      </div>
+
+      <div class="variants">
+        <!-- WORDMARK -->
+        <div class="var-row">
+          <div class="var-label">Wordmark</div>
+          <div class="var-target">
+            <!-- mini mark -->
+            <svg width="32" height="32" viewBox="0 0 232 232" aria-hidden="true">
+              <rect width="232" height="232" rx="48" fill="#2A7F7F"/>
+              <g fill="none" stroke="#FFF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="86" y1="74" x2="86" y2="174"/>
+                <line x1="86" y1="120" x2="146" y2="74"/>
+                <line x1="86" y1="120" x2="146" y2="174"/>
+              </g>
+              <circle cx="86" cy="120" r="14" fill="#F0A848"/>
+            </svg>
+            <div class="wordmark-text">Kartochka</div>
+          </div>
+        </div>
+        <div class="var-row">
+          <div class="var-label">On dark</div>
+          <div class="var-target dark">
+            <svg width="32" height="32" viewBox="0 0 232 232" aria-hidden="true">
+              <rect width="232" height="232" rx="48" fill="#FFFFFF"/>
+              <g fill="none" stroke="#2A7F7F" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="86" y1="74" x2="86" y2="174"/>
+                <line x1="86" y1="120" x2="146" y2="74"/>
+                <line x1="86" y1="120" x2="146" y2="174"/>
+              </g>
+              <circle cx="86" cy="120" r="14" fill="#F0A848"/>
+            </svg>
+            <div class="wordmark-text on-dark">Kartochka</div>
+          </div>
+        </div>
+
+        <!-- MONOGRAM -->
+        <div class="var-row">
+          <div class="var-label">Monogram</div>
+          <div class="mono-grid">
+            <div class="mono-tile tealfill">
+              <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true">
+                <g fill="none" stroke="#FFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="34" y1="22" x2="34" y2="78"/>
+                  <line x1="34" y1="50" x2="68" y2="22"/>
+                  <line x1="34" y1="50" x2="68" y2="78"/>
+                </g>
+                <circle cx="34" cy="50" r="6" fill="#F0A848"/>
+              </svg>
+            </div>
+            <div class="mono-tile">
+              <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true">
+                <g fill="none" stroke="#2A7F7F" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="34" y1="22" x2="34" y2="78"/>
+                  <line x1="34" y1="50" x2="68" y2="22"/>
+                  <line x1="34" y1="50" x2="68" y2="78"/>
+                </g>
+                <circle cx="34" cy="50" r="6" fill="#F0A848"/>
+              </svg>
+            </div>
+            <span class="thumb-row-label">teal · outline</span>
+          </div>
+        </div>
+
+        <!-- 60x60 THUMB CHECK -->
+        <div class="var-row">
+          <div class="var-label">App Store 60×60</div>
+          <div class="thumb-strip">
+            <div class="thumb">
+              <svg viewBox="0 0 232 232" width="60" height="60">
+                <rect width="232" height="232" fill="#2A7F7F"/>
+                <g fill="none" stroke="#FFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="86" y1="74" x2="86" y2="174"/>
+                  <line x1="86" y1="120" x2="146" y2="74"/>
+                  <line x1="86" y1="120" x2="146" y2="174"/>
+                </g>
+                <circle cx="86" cy="120" r="10" fill="#F0A848"/>
+              </svg>
+            </div>
+            <div class="thumb-xs">
+              <svg viewBox="0 0 232 232" width="28" height="28">
+                <rect width="232" height="232" fill="#2A7F7F"/>
+                <g fill="none" stroke="#FFF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="86" y1="74" x2="86" y2="174"/>
+                  <line x1="86" y1="120" x2="146" y2="74"/>
+                  <line x1="86" y1="120" x2="146" y2="174"/>
+                </g>
+                <circle cx="86" cy="120" r="12" fill="#F0A848"/>
+              </svg>
+            </div>
+            <span class="thumb-row-label">60px · 28px</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rationale">
+        <h4>Concept</h4>
+        <ul>
+          <li>The Cyrillic <b>К</b> doubles as a shield — its diagonals fan open like protecting arms.</li>
+          <li>The amber dot at the joint is a quiet nod to a vaccination mark / completion check.</li>
+          <li>Reads as a strong Latin <b>K</b> too. Arabic readers see a clear geometric mark, not a foreign letter.</li>
+        </ul>
+        <div class="pros-cons">
+          <div class="pc pro"><b>Strength</b>Survives 60px. Loud and distinctive in the App Store grid.</div>
+          <div class="pc con"><b>Risk</b>Letter-first marks can read clinical. Needs warm pairing in app.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============================================= -->
+    <!-- CONCEPT 2 — SEEDLING                          -->
+    <!-- ============================================= -->
+    <article class="concept" aria-label="Concept 2">
+      <div class="concept-head">
+        <span class="concept-num">02</span>
+        <h2>Seedling</h2>
+        <p class="tagline">Growth, gently. No letter, no language.</p>
+      </div>
+
+      <div class="icon-stage">
+        <div class="grid-bg"></div>
+        <div class="app-icon">
+          <svg viewBox="0 0 232 232" width="232" height="232" xmlns="http://www.w3.org/2000/svg" aria-label="Kartochka Seedling">
+            <defs>
+              <linearGradient id="c2bg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#F4F2EC"/>
+                <stop offset="1" stop-color="#E8E4D8"/>
+              </linearGradient>
+            </defs>
+            <rect width="232" height="232" fill="url(#c2bg)"/>
+            <!-- soft teal vessel -->
+            <circle cx="116" cy="116" r="80" fill="#2A7F7F"/>
+            <!-- stem -->
+            <path d="M116 170 L116 110" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" fill="none"/>
+            <!-- left leaf -->
+            <path d="M116 124
+                     C100 110 78 110 70 96
+                     C84 88 108 90 116 110 Z"
+                  fill="#FFFFFF"/>
+            <!-- right leaf -->
+            <path d="M116 118
+                     C132 100 156 102 168 88
+                     C162 74 134 70 116 102 Z"
+                  fill="#FFFFFF"/>
+            <!-- amber sprout dot -->
+            <circle cx="116" cy="90" r="9" fill="#F0A848"/>
+            <!-- subtle base line -->
+            <path d="M84 170 L148 170" stroke="rgba(255,255,255,0.4)" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="stage-caption">
+          <span>App icon · 1024 master</span>
+          <span>Soft on warm paper</span>
+        </div>
+      </div>
+
+      <div class="variants">
+        <div class="var-row">
+          <div class="var-label">Wordmark</div>
+          <div class="var-target">
+            <svg width="32" height="32" viewBox="0 0 232 232" aria-hidden="true">
+              <rect width="232" height="232" rx="48" fill="#2A7F7F"/>
+              <path d="M116 170 L116 110" stroke="#FFF" stroke-width="14" stroke-linecap="round"/>
+              <path d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z" fill="#FFF"/>
+              <path d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z" fill="#FFF"/>
+              <circle cx="116" cy="90" r="12" fill="#F0A848"/>
+            </svg>
+            <div class="wordmark-text">Kartochka</div>
+          </div>
+        </div>
+        <div class="var-row">
+          <div class="var-label">On dark</div>
+          <div class="var-target dark">
+            <svg width="32" height="32" viewBox="0 0 232 232" aria-hidden="true">
+              <rect width="232" height="232" rx="48" fill="#FFF"/>
+              <path d="M116 170 L116 110" stroke="#2A7F7F" stroke-width="14" stroke-linecap="round"/>
+              <path d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z" fill="#2A7F7F"/>
+              <path d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z" fill="#2A7F7F"/>
+              <circle cx="116" cy="90" r="12" fill="#F0A848"/>
+            </svg>
+            <div class="wordmark-text on-dark">Kartochka</div>
+          </div>
+        </div>
+
+        <div class="var-row">
+          <div class="var-label">Monogram</div>
+          <div class="mono-grid">
+            <div class="mono-tile tealfill">
+              <svg width="28" height="28" viewBox="0 0 232 232" aria-hidden="true">
+                <path d="M116 178 L116 110" stroke="#FFF" stroke-width="18" stroke-linecap="round"/>
+                <path d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z" fill="#FFF"/>
+                <path d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z" fill="#FFF"/>
+                <circle cx="116" cy="90" r="14" fill="#F0A848"/>
+              </svg>
+            </div>
+            <div class="mono-tile">
+              <svg width="28" height="28" viewBox="0 0 232 232" aria-hidden="true">
+                <path d="M116 178 L116 110" stroke="#2A7F7F" stroke-width="18" stroke-linecap="round"/>
+                <path d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z" fill="#2A7F7F"/>
+                <path d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z" fill="#2A7F7F"/>
+                <circle cx="116" cy="90" r="14" fill="#F0A848"/>
+              </svg>
+            </div>
+            <span class="thumb-row-label">teal · outline</span>
+          </div>
+        </div>
+
+        <div class="var-row">
+          <div class="var-label">App Store 60×60</div>
+          <div class="thumb-strip">
+            <div class="thumb">
+              <svg viewBox="0 0 232 232" width="60" height="60">
+                <rect width="232" height="232" fill="#F4F2EC"/>
+                <circle cx="116" cy="116" r="80" fill="#2A7F7F"/>
+                <path d="M116 170 L116 110" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+                <path d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z" fill="#FFF"/>
+                <path d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z" fill="#FFF"/>
+                <circle cx="116" cy="90" r="9" fill="#F0A848"/>
+              </svg>
+            </div>
+            <div class="thumb-xs">
+              <svg viewBox="0 0 232 232" width="28" height="28">
+                <rect width="232" height="232" fill="#F4F2EC"/>
+                <circle cx="116" cy="116" r="80" fill="#2A7F7F"/>
+                <path d="M116 170 L116 110" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+                <path d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z" fill="#FFF"/>
+                <path d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z" fill="#FFF"/>
+              </svg>
+            </div>
+            <span class="thumb-row-label">60px · 28px</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rationale">
+        <h4>Concept</h4>
+        <ul>
+          <li>A two-leaf sprout: the universal symbol of early growth — pre-verbal, pre-cultural.</li>
+          <li>The two leaves cradle a single amber bud, the only warm color: a hint of the child without depicting one.</li>
+          <li>Zero language load. Reads identically in Moscow, Riyadh, Tashkent.</li>
+        </ul>
+        <div class="pros-cons">
+          <div class="pc pro"><b>Strength</b>Warmest of the three. Calmest in the App Store grid.</div>
+          <div class="pc con"><b>Risk</b>Sprouts are common in wellness apps — risk of blending in.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============================================= -->
+    <!-- CONCEPT 3 — PULSE CARD                        -->
+    <!-- ============================================= -->
+    <article class="concept" aria-label="Concept 3">
+      <div class="concept-head">
+        <span class="concept-num">03</span>
+        <h2>Pulse Card</h2>
+        <p class="tagline">Literal nod to «карточка» — a record, alive.</p>
+      </div>
+
+      <div class="icon-stage">
+        <div class="grid-bg"></div>
+        <div class="app-icon">
+          <svg viewBox="0 0 232 232" width="232" height="232" xmlns="http://www.w3.org/2000/svg" aria-label="Kartochka Pulse Card">
+            <defs>
+              <linearGradient id="c3bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#2F8A8A"/>
+                <stop offset="1" stop-color="#1F6868"/>
+              </linearGradient>
+            </defs>
+            <rect width="232" height="232" fill="url(#c3bg)"/>
+            <!-- back card (slightly offset) -->
+            <rect x="58" y="74" width="116" height="100" rx="14"
+                  fill="rgba(255,255,255,0.16)"/>
+            <!-- front card -->
+            <rect x="50" y="62" width="132" height="116" rx="16"
+                  fill="#FFFFFF"/>
+            <!-- header strip on the card -->
+            <rect x="50" y="62" width="132" height="22" rx="16" fill="#F0A848"/>
+            <rect x="50" y="76" width="132" height="8" fill="#F0A848"/>
+            <!-- pulse line -->
+            <path d="M62 138
+                     L82 138
+                     L92 118
+                     L104 158
+                     L116 108
+                     L128 148
+                     L138 138
+                     L170 138"
+                  fill="none" stroke="#2A7F7F" stroke-width="7"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- two record lines below -->
+            <rect x="62" y="156" width="50" height="6" rx="3" fill="#E0E5E5"/>
+            <rect x="62" y="166" width="80" height="6" rx="3" fill="#E0E5E5"/>
+          </svg>
+        </div>
+        <div class="stage-caption">
+          <span>App icon · 1024 master</span>
+          <span>Card + heartbeat</span>
+        </div>
+      </div>
+
+      <div class="variants">
+        <div class="var-row">
+          <div class="var-label">Wordmark</div>
+          <div class="var-target">
+            <svg width="32" height="32" viewBox="0 0 232 232" aria-hidden="true">
+              <rect width="232" height="232" rx="48" fill="#2A7F7F"/>
+              <rect x="50" y="62" width="132" height="116" rx="16" fill="#FFF"/>
+              <rect x="50" y="62" width="132" height="22" rx="16" fill="#F0A848"/>
+              <rect x="50" y="76" width="132" height="8" fill="#F0A848"/>
+              <path d="M62 138 L82 138 L92 118 L104 158 L116 108 L128 148 L138 138 L170 138"
+                    fill="none" stroke="#2A7F7F" stroke-width="8"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="wordmark-text">Kartochka</div>
+          </div>
+        </div>
+        <div class="var-row">
+          <div class="var-label">On dark</div>
+          <div class="var-target dark">
+            <svg width="32" height="32" viewBox="0 0 232 232" aria-hidden="true">
+              <rect width="232" height="232" rx="48" fill="#FFF"/>
+              <rect x="50" y="62" width="132" height="116" rx="16" fill="#2A7F7F"/>
+              <rect x="50" y="62" width="132" height="22" rx="16" fill="#F0A848"/>
+              <rect x="50" y="76" width="132" height="8" fill="#F0A848"/>
+              <path d="M62 138 L82 138 L92 118 L104 158 L116 108 L128 148 L138 138 L170 138"
+                    fill="none" stroke="#FFF" stroke-width="8"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="wordmark-text on-dark">Kartochka</div>
+          </div>
+        </div>
+
+        <div class="var-row">
+          <div class="var-label">Monogram</div>
+          <div class="mono-grid">
+            <div class="mono-tile tealfill">
+              <svg width="32" height="32" viewBox="0 0 232 232" aria-hidden="true">
+                <rect x="48" y="60" width="136" height="120" rx="20" fill="#FFF"/>
+                <rect x="48" y="60" width="136" height="26" rx="20" fill="#F0A848"/>
+                <rect x="48" y="78" width="136" height="10" fill="#F0A848"/>
+                <path d="M62 140 L88 140 L100 116 L116 162 L132 116 L144 140 L172 140"
+                      fill="none" stroke="#2A7F7F" stroke-width="10"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="mono-tile">
+              <svg width="32" height="32" viewBox="0 0 232 232" aria-hidden="true">
+                <rect x="48" y="60" width="136" height="120" rx="20" fill="none" stroke="#2A7F7F" stroke-width="10"/>
+                <path d="M62 140 L88 140 L100 116 L116 162 L132 116 L144 140 L172 140"
+                      fill="none" stroke="#2A7F7F" stroke-width="10"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="thumb-row-label">teal · outline</span>
+          </div>
+        </div>
+
+        <div class="var-row">
+          <div class="var-label">App Store 60×60</div>
+          <div class="thumb-strip">
+            <div class="thumb">
+              <svg viewBox="0 0 232 232" width="60" height="60">
+                <rect width="232" height="232" fill="#2A7F7F"/>
+                <rect x="50" y="62" width="132" height="116" rx="16" fill="#FFF"/>
+                <rect x="50" y="62" width="132" height="22" rx="16" fill="#F0A848"/>
+                <rect x="50" y="76" width="132" height="8" fill="#F0A848"/>
+                <path d="M62 138 L82 138 L92 118 L104 158 L116 108 L128 148 L138 138 L170 138"
+                      fill="none" stroke="#2A7F7F" stroke-width="7"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="thumb-xs">
+              <svg viewBox="0 0 232 232" width="28" height="28">
+                <rect width="232" height="232" fill="#2A7F7F"/>
+                <rect x="50" y="62" width="132" height="116" rx="20" fill="#FFF"/>
+                <rect x="50" y="62" width="132" height="30" rx="20" fill="#F0A848"/>
+                <path d="M62 140 L88 140 L100 116 L116 162 L132 116 L144 140 L172 140"
+                      fill="none" stroke="#2A7F7F" stroke-width="12"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="thumb-row-label">60px · 28px</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rationale">
+        <h4>Concept</h4>
+        <ul>
+          <li>A medical record card with a heartbeat — both halves of the product in one mark.</li>
+          <li>"Карточка" literally means "card" in Russian; the icon names itself for the launch market.</li>
+          <li>Amber header strip echoes the PDF-export button — the icon previews the value prop.</li>
+        </ul>
+        <div class="pros-cons">
+          <div class="pc pro"><b>Strength</b>Most descriptive — clear what the app does from the icon alone.</div>
+          <div class="pc con"><b>Risk</b>At 28px the pulse line softens. Needs the bold monogram version.</div>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ============================================= -->
+  <!-- ARABIC + CYRILLIC LOCKUP TEST                  -->
+  <!-- ============================================= -->
+  <section class="lang-tests" aria-label="Lockup multilingual">
+    <div class="lt-head">Wordmark<br/>multi-script</div>
+
+    <!-- Latin -->
+    <div class="lt-cell">
+      <span class="lt-label">Latin · Nunito 800</span>
+      <span class="lt-sample" style="display:flex;align-items:center;gap:8px;">
+        <svg width="28" height="28" viewBox="0 0 232 232" aria-hidden="true">
+          <rect width="232" height="232" rx="48" fill="#2A7F7F"/>
+          <g fill="none" stroke="#FFF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="86" y1="74" x2="86" y2="174"/>
+            <line x1="86" y1="120" x2="146" y2="74"/>
+            <line x1="86" y1="120" x2="146" y2="174"/>
+          </g>
+          <circle cx="86" cy="120" r="14" fill="#F0A848"/>
+        </svg>
+        Kartochka
+      </span>
+    </div>
+
+    <!-- Cyrillic -->
+    <div class="lt-cell">
+      <span class="lt-label">Cyrillic · Nunito 800</span>
+      <span class="lt-sample" style="display:flex;align-items:center;gap:8px;">
+        <svg width="28" height="28" viewBox="0 0 232 232" aria-hidden="true">
+          <rect width="232" height="232" rx="48" fill="#2A7F7F"/>
+          <g fill="none" stroke="#FFF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="86" y1="74" x2="86" y2="174"/>
+            <line x1="86" y1="120" x2="146" y2="74"/>
+            <line x1="86" y1="120" x2="146" y2="174"/>
+          </g>
+          <circle cx="86" cy="120" r="14" fill="#F0A848"/>
+        </svg>
+        Карточка
+      </span>
+    </div>
+
+    <!-- Arabic RTL -->
+    <div class="lt-cell ar" style="direction:rtl;">
+      <span class="lt-label" style="direction:ltr;text-align:right;">Arabic · Plex Arabic 700 · RTL</span>
+      <span class="lt-sample" style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
+        كارتوشكا
+        <svg width="28" height="28" viewBox="0 0 232 232" aria-hidden="true">
+          <rect width="232" height="232" rx="48" fill="#2A7F7F"/>
+          <g fill="none" stroke="#FFF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="86" y1="74" x2="86" y2="174"/>
+            <line x1="86" y1="120" x2="146" y2="74"/>
+            <line x1="86" y1="120" x2="146" y2="174"/>
+          </g>
+          <circle cx="86" cy="120" r="14" fill="#F0A848"/>
+        </svg>
+      </span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer-note">
+    <b>Up next.</b> Tell me which direction to take into Phase 2 — onboarding + main app.
+    Concept <span class="kbd">01 Shield&nbsp;К</span> reads strongest at 60px and feels the most ownable.
+    Concept <span class="kbd">02 Seedling</span> is the warmest if you want the brand to feel softer
+    than competitors. Concept <span class="kbd">03 Pulse Card</span> is the most literal — best if the
+    icon needs to explain the product without a name.
+    <br/><br/>
+    I can also mix: e.g. take the <b>Seedling</b> icon with the <b>Pulse Card</b>'s amber header strip,
+    or hold the Shield К as the monogram while using the seedling on the marketing site. Say the word.
+  </div>
+
+</div>
+</body>
+</html>
