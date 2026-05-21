@@ -1,0 +1,376 @@
+{
+  "sourceNote": "v1 starter set drafted from CDC 'Learn the Signs. Act Early.' and WHO Multicentre Growth Reference Study milestones. Pediatrician review required before launch.",
+  "lastReviewedOn": "2026-05-21",
+  "milestones": [
+    {
+      "code": "smiles-at-people",
+      "category": "social",
+      "recommendedAgeMonths": 2,
+      "displayName": {
+        "en": "Smiles at people",
+        "ru": "Улыбается людям",
+        "ar": "يبتسم للناس"
+      }
+    },
+    {
+      "code": "holds-head-up",
+      "category": "motor",
+      "recommendedAgeMonths": 2,
+      "displayName": {
+        "en": "Holds head up on tummy",
+        "ru": "Держит голову лёжа на животе",
+        "ar": "يرفع رأسه على بطنه"
+      }
+    },
+    {
+      "code": "coos",
+      "category": "language",
+      "recommendedAgeMonths": 2,
+      "displayName": {
+        "en": "Coos and gurgles",
+        "ru": "Гулит и булькает",
+        "ar": "يصدر أصواتاً ناعمة"
+      }
+    },
+    {
+      "code": "follows-with-eyes",
+      "category": "cognitive",
+      "recommendedAgeMonths": 2,
+      "displayName": {
+        "en": "Follows objects with eyes",
+        "ru": "Следит глазами за предметами",
+        "ar": "يتبع الأشياء بعينيه"
+      }
+    },
+    {
+      "code": "head-steady",
+      "category": "motor",
+      "recommendedAgeMonths": 4,
+      "displayName": {
+        "en": "Holds head steady",
+        "ru": "Уверенно держит голову",
+        "ar": "يثبت رأسه"
+      }
+    },
+    {
+      "code": "smiles-spontaneously",
+      "category": "social",
+      "recommendedAgeMonths": 4,
+      "displayName": {
+        "en": "Smiles spontaneously",
+        "ru": "Улыбается без причины",
+        "ar": "يبتسم تلقائياً"
+      }
+    },
+    {
+      "code": "babbles",
+      "category": "language",
+      "recommendedAgeMonths": 4,
+      "displayName": {
+        "en": "Babbles with expression",
+        "ru": "Лепечет с выражением",
+        "ar": "يصدر مقاطع لفظية"
+      }
+    },
+    {
+      "code": "reaches-for-toys",
+      "category": "motor",
+      "recommendedAgeMonths": 4,
+      "displayName": {
+        "en": "Reaches for toys",
+        "ru": "Тянется к игрушкам",
+        "ar": "يمد يده للألعاب"
+      }
+    },
+    {
+      "code": "rolls-over",
+      "category": "motor",
+      "recommendedAgeMonths": 6,
+      "displayName": {
+        "en": "Rolls over both ways",
+        "ru": "Переворачивается в обе стороны",
+        "ar": "يتقلب في كلا الاتجاهين"
+      }
+    },
+    {
+      "code": "responds-to-name",
+      "category": "social",
+      "recommendedAgeMonths": 6,
+      "displayName": {
+        "en": "Responds to own name",
+        "ru": "Откликается на имя",
+        "ar": "يستجيب لاسمه"
+      }
+    },
+    {
+      "code": "brings-to-mouth",
+      "category": "motor",
+      "recommendedAgeMonths": 6,
+      "displayName": {
+        "en": "Brings things to mouth",
+        "ru": "Тащит предметы в рот",
+        "ar": "يضع الأشياء في فمه"
+      }
+    },
+    {
+      "code": "sits-without-support",
+      "category": "motor",
+      "recommendedAgeMonths": 9,
+      "displayName": {
+        "en": "Sits without support",
+        "ru": "Сидит без поддержки",
+        "ar": "يجلس دون دعم"
+      }
+    },
+    {
+      "code": "peek-a-boo",
+      "category": "social",
+      "recommendedAgeMonths": 9,
+      "displayName": {
+        "en": "Plays peek-a-boo",
+        "ru": "Играет в «ку-ку»",
+        "ar": "يلعب الاختباء"
+      }
+    },
+    {
+      "code": "babbles-mama-baba",
+      "category": "language",
+      "recommendedAgeMonths": 9,
+      "displayName": {
+        "en": "Says \"mama\" / \"baba\"",
+        "ru": "Говорит «мама», «баба»",
+        "ar": "يقول «ماما» و «بابا»"
+      }
+    },
+    {
+      "code": "object-permanence",
+      "category": "cognitive",
+      "recommendedAgeMonths": 9,
+      "displayName": {
+        "en": "Looks for hidden things",
+        "ru": "Ищет спрятанные предметы",
+        "ar": "يبحث عن الأشياء المخفية"
+      }
+    },
+    {
+      "code": "pulls-to-stand",
+      "category": "motor",
+      "recommendedAgeMonths": 12,
+      "displayName": {
+        "en": "Pulls up to stand",
+        "ru": "Встаёт, держась за опору",
+        "ar": "يقف بمساعدة"
+      }
+    },
+    {
+      "code": "first-word",
+      "category": "language",
+      "recommendedAgeMonths": 12,
+      "displayName": {
+        "en": "Says first meaningful word",
+        "ru": "Произносит первое осмысленное слово",
+        "ar": "ينطق أول كلمة ذات معنى"
+      }
+    },
+    {
+      "code": "uses-cup",
+      "category": "motor",
+      "recommendedAgeMonths": 12,
+      "displayName": {
+        "en": "Drinks from a cup",
+        "ru": "Пьёт из чашки",
+        "ar": "يشرب من الكوب"
+      }
+    },
+    {
+      "code": "walks-alone",
+      "category": "motor",
+      "recommendedAgeMonths": 15,
+      "displayName": {
+        "en": "Walks alone",
+        "ru": "Ходит самостоятельно",
+        "ar": "يمشي وحده"
+      }
+    },
+    {
+      "code": "few-words",
+      "category": "language",
+      "recommendedAgeMonths": 15,
+      "displayName": {
+        "en": "Says 3+ words besides \"mama\"/\"baba\"",
+        "ru": "Говорит 3+ слов кроме «мама»/«баба»",
+        "ar": "يقول 3+ كلمات بجانب «ماما»/«بابا»"
+      }
+    },
+    {
+      "code": "walks-up-stairs",
+      "category": "motor",
+      "recommendedAgeMonths": 18,
+      "displayName": {
+        "en": "Walks up stairs holding hand",
+        "ru": "Поднимается по лестнице за руку",
+        "ar": "يصعد الدرج ممسكاً يداً"
+      }
+    },
+    {
+      "code": "points-to-show",
+      "category": "social",
+      "recommendedAgeMonths": 18,
+      "displayName": {
+        "en": "Points to show interest",
+        "ru": "Показывает пальцем, что интересует",
+        "ar": "يشير بإصبعه لإظهار اهتمامه"
+      }
+    },
+    {
+      "code": "scribbles",
+      "category": "motor",
+      "recommendedAgeMonths": 18,
+      "displayName": {
+        "en": "Scribbles on paper",
+        "ru": "Рисует каракули",
+        "ar": "يخربش على الورق"
+      }
+    },
+    {
+      "code": "runs",
+      "category": "motor",
+      "recommendedAgeMonths": 24,
+      "displayName": {
+        "en": "Runs",
+        "ru": "Бегает",
+        "ar": "يجري"
+      }
+    },
+    {
+      "code": "two-word-sentences",
+      "category": "language",
+      "recommendedAgeMonths": 24,
+      "displayName": {
+        "en": "Says 2-word sentences",
+        "ru": "Складывает 2 слова в фразу",
+        "ar": "ينطق جملاً من كلمتين"
+      }
+    },
+    {
+      "code": "kicks-ball",
+      "category": "motor",
+      "recommendedAgeMonths": 24,
+      "displayName": {
+        "en": "Kicks a ball",
+        "ru": "Пинает мяч",
+        "ar": "يركل الكرة"
+      }
+    },
+    {
+      "code": "makes-believe",
+      "category": "cognitive",
+      "recommendedAgeMonths": 30,
+      "displayName": {
+        "en": "Begins make-believe play",
+        "ru": "Начинает играть в воображение",
+        "ar": "يبدأ اللعب التخيلي"
+      }
+    },
+    {
+      "code": "climbs-stairs-alone",
+      "category": "motor",
+      "recommendedAgeMonths": 30,
+      "displayName": {
+        "en": "Climbs stairs alone",
+        "ru": "Поднимается по лестнице сам",
+        "ar": "يصعد الدرج وحده"
+      }
+    },
+    {
+      "code": "full-sentences",
+      "category": "language",
+      "recommendedAgeMonths": 36,
+      "displayName": {
+        "en": "Speaks in full sentences",
+        "ru": "Говорит полными предложениями",
+        "ar": "يتحدث بجمل كاملة"
+      }
+    },
+    {
+      "code": "plays-with-others",
+      "category": "social",
+      "recommendedAgeMonths": 36,
+      "displayName": {
+        "en": "Plays with other children",
+        "ru": "Играет с другими детьми",
+        "ar": "يلعب مع الأطفال الآخرين"
+      }
+    },
+    {
+      "code": "tricycle",
+      "category": "motor",
+      "recommendedAgeMonths": 36,
+      "displayName": {
+        "en": "Pedals a tricycle",
+        "ru": "Крутит педали трёхколёсного велосипеда",
+        "ar": "يقود الدراجة الثلاثية"
+      }
+    },
+    {
+      "code": "hops-one-foot",
+      "category": "motor",
+      "recommendedAgeMonths": 48,
+      "displayName": {
+        "en": "Hops on one foot",
+        "ru": "Прыгает на одной ноге",
+        "ar": "يقفز على قدم واحدة"
+      }
+    },
+    {
+      "code": "tells-stories",
+      "category": "language",
+      "recommendedAgeMonths": 48,
+      "displayName": {
+        "en": "Tells short stories",
+        "ru": "Рассказывает короткие истории",
+        "ar": "يحكي قصصاً قصيرة"
+      }
+    },
+    {
+      "code": "counts-to-four",
+      "category": "cognitive",
+      "recommendedAgeMonths": 48,
+      "displayName": {
+        "en": "Counts to 4",
+        "ru": "Считает до 4",
+        "ar": "يعد إلى 4"
+      }
+    },
+    {
+      "code": "skips",
+      "category": "motor",
+      "recommendedAgeMonths": 60,
+      "displayName": {
+        "en": "Skips",
+        "ru": "Прыгает на ходу",
+        "ar": "يقفز أثناء المشي"
+      }
+    },
+    {
+      "code": "speaks-clearly",
+      "category": "language",
+      "recommendedAgeMonths": 60,
+      "displayName": {
+        "en": "Speaks clearly",
+        "ru": "Говорит ясно",
+        "ar": "يتحدث بوضوح"
+      }
+    },
+    {
+      "code": "counts-to-ten",
+      "category": "cognitive",
+      "recommendedAgeMonths": 60,
+      "displayName": {
+        "en": "Counts to 10",
+        "ru": "Считает до 10",
+        "ar": "يعد إلى 10"
+      }
+    }
+  ]
+}

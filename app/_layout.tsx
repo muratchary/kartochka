@@ -46,9 +46,15 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg } }}>
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="onboarding" />
+      <Stack.Screen name="vaccine/[id]" />
+      <Stack.Screen name="vaccine/mark-done" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="growth/add" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="more/language" />
+      <Stack.Screen name="more/notifications" />
+      <Stack.Screen name="more/children" />
     </Stack>
   );
 }

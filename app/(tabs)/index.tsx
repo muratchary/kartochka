@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Redirect } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -19,6 +19,7 @@ import { useFont } from '../../src/theme/useFont';
 export default function HomeScreen() {
   const { t, i18n } = useTranslation();
   const font = useFont();
+  const router = useRouter();
   const lang = (i18n.language || 'en') as SupportedLanguage;
 
   const children = useChildrenStore((s) => s.children);
@@ -124,13 +125,23 @@ export default function HomeScreen() {
             label={t('home.nextVaccine.details')}
             variant="ghost"
             size="sm"
-            onPress={() => Alert.alert(vaccineName)}
+            onPress={() =>
+              router.push({
+                pathname: '/vaccine/[id]',
+                params: { id: `${vaccine.code}_${dose.doseNumber}` },
+              })
+            }
           />
           <Button
             label={t('home.nextVaccine.markDone')}
             variant="primary"
             size="sm"
-            onPress={() => Alert.alert(t('home.nextVaccine.markDone'))}
+            onPress={() =>
+              router.push({
+                pathname: '/vaccine/mark-done',
+                params: { code: vaccine.code, dose: String(dose.doseNumber) },
+              })
+            }
           />
         </View>
       </Card>
@@ -189,7 +200,7 @@ export default function HomeScreen() {
           label={t('home.pdf.cta')}
           variant="amber"
           size="md"
-          onPress={() => Alert.alert(t('home.pdf.title'))}
+          onPress={() => Alert.alert(t('home.pdf.title'), t('home.pdf.comingSoon'))}
         />
       </View>
     );

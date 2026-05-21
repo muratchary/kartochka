@@ -47,26 +47,137 @@
     "pdf": {
       "title": "PDF для педиатра",
       "description": "Чистый отчёт для следующего визита к врачу.",
-      "cta": "Создать"
+      "cta": "Создать",
+      "comingSoon": "Премиум-функция — скоро будет доступна."
     }
   },
   "vaccines": {
     "title": "Прививки",
-    "empty": "Прививки ещё не добавлены."
+    "empty": "В календаре этой страны прививок нет.",
+    "filters": {
+      "all": "Все",
+      "upcoming": "Скоро",
+      "done": "Готово",
+      "overdue": "Просрочено"
+    },
+    "detail": {
+      "protectsAgainst": "Защищает от",
+      "scheduleSection": "Календарь",
+      "doseLabel": "Доза {{number}} из {{total}}",
+      "given": "Поставлена {{date}}",
+      "givenAt": "В клинике: {{location}}",
+      "givenBatch": "Серия: {{batch}}",
+      "givenNotes": "Заметки",
+      "scheduledFor": "Запланирована на {{date}}",
+      "markDone": "Отметить как сделано",
+      "unMarkDone": "Удалить запись",
+      "postVaccinationCard": "Лёгкие реакции 24-48 часов — это нормально: невысокая температура, капризы, болезненность в месте укола. Если что-то беспокоит — позвоните педиатру."
+    },
+    "markDone": {
+      "title": "Отметить прививку",
+      "subtitle": "Короткая запись для ваших данных. Обязательна только дата.",
+      "dateLabel": "Дата",
+      "locationLabel": "Клиника",
+      "locationPlaceholder": "Необязательно",
+      "batchLabel": "Номер серии",
+      "batchPlaceholder": "Необязательно",
+      "notesLabel": "Заметки",
+      "notesPlaceholder": "Что хотите запомнить",
+      "saveCta": "Сохранить",
+      "cancelCta": "Отмена"
+    },
+    "notification": {
+      "title": "Скоро прививка",
+      "body": "{{vaccine}}, доза {{number}} из {{total}} — завтра"
+    }
   },
   "growth": {
     "title": "Рост",
-    "empty": "Записей о росте пока нет."
+    "empty": "Записей пока нет. Добавьте первое измерение.",
+    "addCta": "Добавить измерение",
+    "addCtaShort": "Добавить",
+    "weightLabel": "Вес",
+    "heightLabel": "Рост",
+    "headLabel": "Окр. головы",
+    "kg": "кг",
+    "cm": "см",
+    "deleteConfirm": "Удалить это измерение?",
+    "delete": "Удалить",
+    "add": {
+      "title": "Новое измерение",
+      "subtitle": "Все поля необязательны. Заполните то, что есть.",
+      "dateLabel": "Дата измерения",
+      "weightLabel": "Вес (кг)",
+      "heightLabel": "Рост (см)",
+      "headLabel": "Окружность головы (см)",
+      "notesLabel": "Заметки",
+      "notesPlaceholder": "Необязательно",
+      "saveCta": "Сохранить",
+      "cancelCta": "Отмена",
+      "atLeastOne": "Заполните хотя бы одно из значений: вес, рост или окружность головы."
+    }
   },
   "milestones": {
     "title": "Развитие",
-    "empty": "Этапы развития пока не отмечены."
+    "subtitle": "Стандартные этапы развития. Отмечайте, когда ребёнок их достигает.",
+    "empty": "Пока ничего не отмечено.",
+    "ageMonths_one": "{{count}} месяц",
+    "ageMonths_few": "{{count}} месяца",
+    "ageMonths_many": "{{count}} месяцев",
+    "ageYears_one": "{{count}} год",
+    "ageYears_few": "{{count}} года",
+    "ageYears_many": "{{count}} лет",
+    "categories": {
+      "motor": "Моторика",
+      "language": "Речь",
+      "social": "Социальное",
+      "cognitive": "Познание"
+    },
+    "tapToMark": "Нажмите, чтобы отметить",
+    "markedOn": "Достигнуто {{date}}",
+    "unmark": "Убрать"
   },
   "more": {
     "title": "Ещё",
+    "sections": {
+      "children": "Дети",
+      "app": "Приложение",
+      "subscription": "Подписка",
+      "about": "О приложении"
+    },
+    "items": {
+      "manageChildren": "Дети",
+      "language": "Язык",
+      "notifications": "Уведомления",
+      "privacy": "Конфиденциальность",
+      "subscription": "Подписка",
+      "supportEmail": "Связаться с поддержкой"
+    },
     "languageSection": "Язык",
     "restartRequired": "Закройте и снова откройте приложение, чтобы изменение языка вступило в силу полностью.",
-    "ok": "ОК"
+    "ok": "ОК",
+    "languageScreen": {
+      "title": "Язык",
+      "subtitle": "Выберите язык приложения."
+    },
+    "notificationsScreen": {
+      "title": "Уведомления",
+      "subtitle": "Мы напомним за день до каждой плановой прививки.",
+      "status": "Напоминания {{state}}",
+      "stateOn": "включены",
+      "stateOff": "выключены",
+      "enableCta": "Включить напоминания",
+      "rescheduleCta": "Обновить напоминания",
+      "openSettings": "Открыть настройки телефона"
+    },
+    "childrenScreen": {
+      "title": "Дети",
+      "subtitle": "Кто записан в этом приложении.",
+      "addCta": "Добавить ребёнка",
+      "premiumNote": "Несколько детей — премиум-функция.",
+      "removeConfirm": "Удалить {{name}} и все записи?",
+      "remove": "Удалить"
+    }
   },
   "languages": {
     "en": "English",
@@ -87,7 +198,13 @@
     "markDone": "Отметить",
     "exportPdf": "PDF для педиатра",
     "change": "Изменить",
-    "back": "Назад"
+    "back": "Назад",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Изменить",
+    "close": "Закрыть",
+    "yes": "Да",
+    "no": "Нет"
   },
   "onboarding": {
     "welcome": {

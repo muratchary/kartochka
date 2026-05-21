@@ -1,0 +1,175 @@
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { Button } from '../../src/components/Button';
+import { DateField } from '../../src/components/DateField';
+import { ScreenTitle } from '../../src/components/ScreenTitle';
+import { useRescheduleReminders } from '../../src/lib/useReminders';
+import { useChildrenStore } from '../../src/stores/childrenStore';
+import { colors, radii, spacing, typography } from '../../src/theme';
+import { useFont } from '../../src/theme/useFont';
+
+function todayIso(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+export default function MarkDoneScreen() {
+  const { t } = useTranslation();
+  const router = useRouter();
+  const font = useFont();
+  const params = useLocalSearchParams<{ code?: string; dose?: string }>();
+
+  const children = useChildrenStore((s) => s.children);
+  const addVaccination = useChildrenStore((s) => s.addVaccination);
+  const rescheduleReminders = useRescheduleReminders();
+  const child = children[0];
+
+  const [date, setDate] = useState<string>(todayIso());
+  const [location, setLocation] = useState('');
+  const [batch, setBatch] = useState('');
+  const [notes, setNotes] = useState('');
+
+  const code = params.code;
+  const doseStr = params.dose;
+  const doseNumber = doseStr ? parseInt(doseStr, 10) : NaN;
+
+  const canSave = !!child && !!code && Number.isFinite(doseNumber) && !!date;
+
+  const handleSave = async () => {
+    if (!canSave || !child || !code) return;
+    addVaccination({
+      childId: child.id,
+      vaccineCode: code,
+      doseNumber,
+      administeredOn: date,
+      locationOfAdministration: location.trim() || undefined,
+      batchNumber: batch.trim() || undefined,
+      notes: notes.trim() || undefined,
+    });
+    await rescheduleReminders(child);
+    router.back();
+  };
+
+  return (
+    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}>
+        <ScrollView
+          contentContainerStyle={styles.scroll}
+          keyboardShouldPersistTaps="handled">
+          <ScreenTitle
+            title={t('vaccines.markDone.title')}
+            subtitle={t('vaccines.markDone.subtitle')}
+          />
+
+          <Text style={[styles.label, { fontFamily: font(700) }]}>
+            {t('vaccines.markDone.dateLabel')}
+          </Text>
+          <DateField value={date} onChange={setDate} maximumDate={new Date()} />
+
+          <Text style={[styles.label, { fontFamily: font(700), marginTop: spacing.lg }]}>
+            {t('vaccines.markDone.locationLabel')}
+          </Text>
+          <TextInput
+            value={location}
+            onChangeText={setLocation}
+            placeholder={t('vaccines.markDone.locationPlaceholder')}
+            placeholderTextColor={colors.ink3}
+            style={[styles.input, { fontFamily: font(600) }]}
+          />
+
+          <Text style={[styles.label, { fontFamily: font(700), marginTop: spacing.lg }]}>
+            {t('vaccines.markDone.batchLabel')}
+          </Text>
+          <TextInput
+            value={batch}
+            onChangeText={setBatch}
+            placeholder={t('vaccines.markDone.batchPlaceholder')}
+            placeholderTextColor={colors.ink3}
+            style={[styles.input, { fontFamily: font(600) }]}
+          />
+
+          <Text style={[styles.label, { fontFamily: font(700), marginTop: spacing.lg }]}>
+            {t('vaccines.markDone.notesLabel')}
+          </Text>
+          <TextInput
+            value={notes}
+            onChangeText={setNotes}
+            placeholder={t('vaccines.markDone.notesPlaceholder')}
+            placeholderTextColor={colors.ink3}
+            multiline
+            numberOfLines={3}
+            style={[styles.input, styles.multiline, { fontFamily: font(600) }]}
+          />
+        </ScrollView>
+
+        <View style={styles.footer}>
+          <Button
+            label={t('vaccines.markDone.cancelCta')}
+            variant="ghost"
+            size="lg"
+            onPress={() => router.back()}
+          />
+          <Button
+            label={t('vaccines.markDone.saveCta')}
+            variant="primary"
+            size="lg"
+            full
+            disabled={!canSave}
+            onPress={handleSave}
+          />
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: colors.bg },
+  scroll: {
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.xxl,
+  },
+  label: {
+    fontSize: typography.caption.fontSize,
+    color: colors.ink2,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: spacing.sm,
+  },
+  input: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radii.md,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md + 2,
+    fontSize: typography.body.fontSize,
+    color: colors.ink,
+  },
+  multiline: {
+    minHeight: 80,
+    textAlignVertical: 'top',
+  },
+  footer: {
+    flexDirection: 'row',
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
+    paddingBottom: spacing.sm,
+    gap: spacing.sm,
+    alignItems: 'center',
+  },
+});

@@ -45,26 +45,135 @@
     "pdf": {
       "title": "PDF للطبيب",
       "description": "تقرير نظيف وقابل للطباعة لزيارتك القادمة لطبيب الأطفال.",
-      "cta": "إنشاء"
+      "cta": "إنشاء",
+      "comingSoon": "ميزة بريميوم — قريباً."
     }
   },
   "vaccines": {
     "title": "التطعيمات",
-    "empty": "لم تتم إضافة أي تطعيمات بعد."
+    "empty": "لا توجد تطعيمات في جدول هذه الدولة.",
+    "filters": {
+      "all": "الكل",
+      "upcoming": "قادم",
+      "done": "تم",
+      "overdue": "متأخر"
+    },
+    "detail": {
+      "protectsAgainst": "يحمي من",
+      "scheduleSection": "الجدول",
+      "doseLabel": "الجرعة {{number}} من {{total}}",
+      "given": "تم في {{date}}",
+      "givenAt": "في {{location}}",
+      "givenBatch": "الدفعة {{batch}}",
+      "givenNotes": "ملاحظات",
+      "scheduledFor": "مجدولة في {{date}}",
+      "markDone": "تم",
+      "unMarkDone": "إزالة السجل",
+      "postVaccinationCard": "تفاعلات خفيفة لمدة 24-48 ساعة طبيعية: حرارة منخفضة، تقلب المزاج، ألم في موقع الحقن. اتصل بطبيب الأطفال إذا كان هناك ما يقلقك."
+    },
+    "markDone": {
+      "title": "تسجيل التطعيم",
+      "subtitle": "تفاصيل سريعة لسجلك. الكل اختياري ما عدا التاريخ.",
+      "dateLabel": "تاريخ الإعطاء",
+      "locationLabel": "العيادة",
+      "locationPlaceholder": "اختياري",
+      "batchLabel": "رقم الدفعة",
+      "batchPlaceholder": "اختياري",
+      "notesLabel": "ملاحظات",
+      "notesPlaceholder": "أي شيء تريد تذكره",
+      "saveCta": "حفظ",
+      "cancelCta": "إلغاء"
+    },
+    "notification": {
+      "title": "تطعيم قادم",
+      "body": "{{vaccine}} الجرعة {{number}} من {{total}} غداً"
+    }
   },
   "growth": {
     "title": "النمو",
-    "empty": "لا توجد سجلات نمو بعد."
+    "empty": "لا توجد قياسات بعد. أضف قياساً للبدء.",
+    "addCta": "إضافة قياس",
+    "addCtaShort": "إضافة",
+    "weightLabel": "الوزن",
+    "heightLabel": "الطول",
+    "headLabel": "محيط الرأس",
+    "kg": "كغ",
+    "cm": "سم",
+    "deleteConfirm": "حذف هذا القياس؟",
+    "delete": "حذف",
+    "add": {
+      "title": "قياس جديد",
+      "subtitle": "جميع الحقول اختيارية. تجاوز ما لا تحتاجه.",
+      "dateLabel": "تاريخ القياس",
+      "weightLabel": "الوزن (كغ)",
+      "heightLabel": "الطول (سم)",
+      "headLabel": "محيط الرأس (سم)",
+      "notesLabel": "ملاحظات",
+      "notesPlaceholder": "اختياري",
+      "saveCta": "حفظ القياس",
+      "cancelCta": "إلغاء",
+      "atLeastOne": "أضف على الأقل الوزن أو الطول أو محيط الرأس."
+    }
   },
   "milestones": {
     "title": "النماء",
-    "empty": "لم يتم تتبع أي معالم بعد."
+    "subtitle": "معالم تطور قياسية. اضغط على معلم عند تحقيقه.",
+    "empty": "لم يتم تسجيل أي معلم بعد.",
+    "ageMonths_one": "شهر واحد",
+    "ageMonths_other": "{{count}} شهراً",
+    "ageYears_one": "سنة واحدة",
+    "ageYears_other": "{{count}} سنوات",
+    "categories": {
+      "motor": "حركي",
+      "language": "لغة",
+      "social": "اجتماعي",
+      "cognitive": "إدراكي"
+    },
+    "tapToMark": "اضغط للتسجيل",
+    "markedOn": "تم في {{date}}",
+    "unmark": "إزالة"
   },
   "more": {
     "title": "المزيد",
+    "sections": {
+      "children": "الأطفال",
+      "app": "التطبيق",
+      "subscription": "الاشتراك",
+      "about": "حول"
+    },
+    "items": {
+      "manageChildren": "الأطفال",
+      "language": "اللغة",
+      "notifications": "التنبيهات",
+      "privacy": "الخصوصية",
+      "subscription": "الاشتراك",
+      "supportEmail": "اتصل بالدعم"
+    },
     "languageSection": "اللغة",
     "restartRequired": "يرجى إغلاق التطبيق وإعادة فتحه ليطبق تغيير اللغة بالكامل.",
-    "ok": "حسناً"
+    "ok": "حسناً",
+    "languageScreen": {
+      "title": "اللغة",
+      "subtitle": "اختر كيف يتحدث التطبيق إليك."
+    },
+    "notificationsScreen": {
+      "title": "التنبيهات",
+      "subtitle": "نرسل تذكيراً قبل يوم واحد من كل تطعيم قادم.",
+      "status": "التذكيرات {{state}}",
+      "stateOn": "مفعّلة",
+      "stateOff": "معطّلة",
+      "enableCta": "تفعيل التذكيرات",
+      "rescheduleCta": "إعادة جدولة التذكيرات",
+      "openSettings": "فتح إعدادات الجهاز"
+    },
+    "childrenScreen": {
+      "title": "الأطفال",
+      "subtitle": "من المسجل في هذا الجهاز.",
+      "addCta": "إضافة طفل",
+      "premiumNote": "إضافة أكثر من طفل واحد ميزة بريميوم.",
+      "removeConfirm": "حذف {{name}} وجميع سجلاته؟",
+      "remove": "حذف"
+    }
   },
   "languages": {
     "en": "English",
@@ -85,7 +194,13 @@
     "markDone": "تم",
     "exportPdf": "PDF للطبيب",
     "change": "تغيير",
-    "back": "رجوع"
+    "back": "رجوع",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "close": "إغلاق",
+    "yes": "نعم",
+    "no": "لا"
   },
   "onboarding": {
     "welcome": {

@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
-import { StyleSheet, View, type ViewStyle } from 'react-native';
+import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { colors, radii, spacing } from '../theme';
 
 interface Props {
   children: ReactNode;
   padding?: number;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 }
 
 export function Card({ children, padding = spacing.lg, style }: Props) {

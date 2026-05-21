@@ -18,6 +18,7 @@ import { ScreenTitle } from '../../src/components/ScreenTitle';
 import { Segmented } from '../../src/components/Segmented';
 import { StepDots } from '../../src/components/StepDots';
 import type { SupportedLanguage } from '../../src/i18n';
+import { useRescheduleReminders } from '../../src/lib/useReminders';
 import { useChildrenStore } from '../../src/stores/childrenStore';
 import { useOnboardingStore } from '../../src/stores/onboardingStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
@@ -48,6 +49,7 @@ export default function AddChildScreen() {
   const resetOnboarding = useOnboardingStore((s) => s.reset);
 
   const addChild = useChildrenStore((s) => s.addChild);
+  const rescheduleReminders = useRescheduleReminders();
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const dobDate = dateOfBirth ? new Date(dateOfBirth) : null;
@@ -65,15 +67,16 @@ export default function AddChildScreen() {
     sex !== null &&
     country !== null;
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!canSave || !country || !sex || !dateOfBirth) return;
-    addChild({
+    const child = addChild({
       name: name.trim(),
       dateOfBirth,
       sex,
       countryCode: country,
     });
     resetOnboarding();
+    await rescheduleReminders(child);
     router.replace('/(tabs)');
   };
 

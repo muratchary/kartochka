@@ -45,26 +45,135 @@
     "pdf": {
       "title": "Doctor's PDF",
       "description": "A clean printable report for your next pediatrician visit.",
-      "cta": "Create"
+      "cta": "Create",
+      "comingSoon": "Premium feature — coming soon."
     }
   },
   "vaccines": {
     "title": "Vaccines",
-    "empty": "No vaccinations logged yet."
+    "empty": "No vaccinations on this country's schedule.",
+    "filters": {
+      "all": "All",
+      "upcoming": "Upcoming",
+      "done": "Done",
+      "overdue": "Overdue"
+    },
+    "detail": {
+      "protectsAgainst": "Protects against",
+      "scheduleSection": "Schedule",
+      "doseLabel": "Dose {{number}} of {{total}}",
+      "given": "Given on {{date}}",
+      "givenAt": "At {{location}}",
+      "givenBatch": "Batch {{batch}}",
+      "givenNotes": "Notes",
+      "scheduledFor": "Scheduled for {{date}}",
+      "markDone": "Mark done",
+      "unMarkDone": "Remove record",
+      "postVaccinationCard": "Mild reactions for 24-48 hours can be normal: low fever, fussiness, soreness at the injection site. Call your pediatrician if anything worries you."
+    },
+    "markDone": {
+      "title": "Mark vaccination done",
+      "subtitle": "Quick details for your records. All optional except the date.",
+      "dateLabel": "Date given",
+      "locationLabel": "Clinic / location",
+      "locationPlaceholder": "Optional",
+      "batchLabel": "Batch number",
+      "batchPlaceholder": "Optional",
+      "notesLabel": "Notes",
+      "notesPlaceholder": "Anything you want to remember",
+      "saveCta": "Save",
+      "cancelCta": "Cancel"
+    },
+    "notification": {
+      "title": "Vaccination coming up",
+      "body": "{{vaccine}} dose {{number}} of {{total}} is due tomorrow"
+    }
   },
   "growth": {
     "title": "Growth",
-    "empty": "No growth entries yet."
+    "empty": "No measurements yet. Add one to start tracking.",
+    "addCta": "Add measurement",
+    "addCtaShort": "Add",
+    "weightLabel": "Weight",
+    "heightLabel": "Height",
+    "headLabel": "Head circ.",
+    "kg": "kg",
+    "cm": "cm",
+    "deleteConfirm": "Delete this measurement?",
+    "delete": "Delete",
+    "add": {
+      "title": "New measurement",
+      "subtitle": "All fields are optional. Skip what you don't need.",
+      "dateLabel": "Measured on",
+      "weightLabel": "Weight (kg)",
+      "heightLabel": "Height (cm)",
+      "headLabel": "Head circumference (cm)",
+      "notesLabel": "Notes",
+      "notesPlaceholder": "Optional",
+      "saveCta": "Save measurement",
+      "cancelCta": "Cancel",
+      "atLeastOne": "Add at least one of weight, height, or head circumference."
+    }
   },
   "milestones": {
     "title": "Milestones",
-    "empty": "No milestones tracked yet."
+    "subtitle": "Standard pediatric milestones. Tap one when your child reaches it.",
+    "empty": "No milestones tracked yet.",
+    "ageMonths_one": "{{count}} month",
+    "ageMonths_other": "{{count}} months",
+    "ageYears_one": "{{count}} year",
+    "ageYears_other": "{{count}} years",
+    "categories": {
+      "motor": "Motor",
+      "language": "Language",
+      "social": "Social",
+      "cognitive": "Cognitive"
+    },
+    "tapToMark": "Tap to mark",
+    "markedOn": "Reached {{date}}",
+    "unmark": "Remove"
   },
   "more": {
     "title": "More",
+    "sections": {
+      "children": "Children",
+      "app": "App",
+      "subscription": "Subscription",
+      "about": "About"
+    },
+    "items": {
+      "manageChildren": "Children",
+      "language": "Language",
+      "notifications": "Notifications",
+      "privacy": "Privacy",
+      "subscription": "Subscription",
+      "supportEmail": "Contact support"
+    },
     "languageSection": "Language",
     "restartRequired": "Please close and reopen the app for the language change to take full effect.",
-    "ok": "OK"
+    "ok": "OK",
+    "languageScreen": {
+      "title": "Language",
+      "subtitle": "Choose how the app speaks to you."
+    },
+    "notificationsScreen": {
+      "title": "Notifications",
+      "subtitle": "We send a reminder one day before each upcoming vaccination.",
+      "status": "Reminders are {{state}}",
+      "stateOn": "on",
+      "stateOff": "off",
+      "enableCta": "Enable reminders",
+      "rescheduleCta": "Reschedule reminders",
+      "openSettings": "Open phone settings"
+    },
+    "childrenScreen": {
+      "title": "Children",
+      "subtitle": "Manage who's on this phone.",
+      "addCta": "Add child",
+      "premiumNote": "Adding more than one child is a premium feature.",
+      "removeConfirm": "Remove {{name}} and all their records?",
+      "remove": "Remove"
+    }
   },
   "languages": {
     "en": "English",
@@ -85,7 +194,13 @@
     "markDone": "Mark done",
     "exportPdf": "Doctor's PDF",
     "change": "Change",
-    "back": "Back"
+    "back": "Back",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No"
   },
   "onboarding": {
     "welcome": {
