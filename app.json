@@ -13,9 +13,11 @@
       "backgroundColor": "#2A7F7F"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.arabcell.kartochka"
     },
     "android": {
+      "package": "com.arabcell.kartochka",
       "adaptiveIcon": {
         "backgroundColor": "#2A7F7F",
         "foregroundImage": "./assets/android-icon-foreground.png"
