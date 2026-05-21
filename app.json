@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.arabcell.kartochka"
+      "bundleIdentifier": "com.arabcell.kartochka",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.arabcell.kartochka",
@@ -34,6 +37,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "eaf0b250-e0c0-41de-9cdb-65d51025b042"
+      }
+    },
+    "owner": "muratchary"
   }
 }
