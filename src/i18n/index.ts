@@ -7,8 +7,9 @@ import { initReactI18next } from 'react-i18next';
 import ar from './locales/ar.json';
 import en from './locales/en.json';
 import ru from './locales/ru.json';
+import tr from './locales/tr.json';
 
-export const SUPPORTED_LANGUAGES = ['en', 'ru', 'ar'] as const;
+export const SUPPORTED_LANGUAGES = ['en', 'ru', 'ar', 'tr'] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 const RTL_LANGUAGES: readonly SupportedLanguage[] = ['ar'];
@@ -53,6 +54,7 @@ export async function initI18n(): Promise<void> {
       en: { translation: en },
       ru: { translation: ru },
       ar: { translation: ar },
+      tr: { translation: tr },
     },
     lng: initialLang,
     fallbackLng: 'en',

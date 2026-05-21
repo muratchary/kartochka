@@ -31,6 +31,7 @@ export default function CountryScreen() {
     const lang = i18n.language;
     if (lang.startsWith('ru')) return 'RU';
     if (lang.startsWith('ar')) return 'AE';
+    if (lang.startsWith('tr')) return 'TR';
     return 'RU';
   }, [i18n.language]);
 

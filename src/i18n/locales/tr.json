@@ -1,0 +1,239 @@
+{
+  "brand": {
+    "name": "Kartochka",
+    "tagline": "Çocuğunuzun sağlık karnesi, pediatristinizin takdir edeceği"
+  },
+  "tabs": {
+    "home": "Ana sayfa",
+    "vaccines": "Aşılar",
+    "growth": "Büyüme",
+    "milestones": "Gelişim",
+    "more": "Diğer"
+  },
+  "home": {
+    "greeting": {
+      "morning": "Günaydın",
+      "afternoon": "İyi günler",
+      "evening": "İyi akşamlar",
+      "night": "İyi geceler"
+    },
+    "nextVaccine": {
+      "label": "Sıradaki aşı",
+      "empty": "Tüm aşılar güncel.",
+      "overdueDays_one": "1 gün gecikti",
+      "overdueDays_other": "{{count}} gün gecikti",
+      "dueToday": "Bugün",
+      "dueInDays_one": "1 gün sonra",
+      "dueInDays_other": "{{count}} gün sonra",
+      "statusOverdue": "Gecikmiş",
+      "statusDueSoon": "Yakında",
+      "statusUpcoming": "Planlanmış",
+      "doseLabel": "Doz {{number}} / {{total}}",
+      "details": "Detay",
+      "viewSchedule": "Aşı takvimi",
+      "markDone": "Yapıldı"
+    },
+    "growth": {
+      "label": "Büyüme",
+      "empty": "Henüz ölçüm yok.",
+      "addCta": "Ölçüm ekle"
+    },
+    "milestones": {
+      "label": "Gelişim",
+      "empty": "İlk gelişim aşamasını işaretlediğinizde başlar.",
+      "viewAll": "Tümünü gör"
+    },
+    "pdf": {
+      "title": "Doktor PDF'i",
+      "description": "Bir sonraki çocuk doktoru ziyaretiniz için temiz, yazdırılabilir bir rapor.",
+      "cta": "Oluştur",
+      "comingSoon": "Premium özellik — yakında."
+    }
+  },
+  "vaccines": {
+    "title": "Aşılar",
+    "empty": "Bu ülkenin takviminde aşı yok.",
+    "filters": {
+      "all": "Hepsi",
+      "upcoming": "Yakında",
+      "done": "Yapıldı",
+      "overdue": "Gecikti"
+    },
+    "detail": {
+      "protectsAgainst": "Şuna karşı koruma sağlar",
+      "scheduleSection": "Takvim",
+      "doseLabel": "Doz {{number}} / {{total}}",
+      "given": "{{date}} tarihinde yapıldı",
+      "givenAt": "Yer: {{location}}",
+      "givenBatch": "Seri: {{batch}}",
+      "givenNotes": "Notlar",
+      "scheduledFor": "{{date}} için planlandı",
+      "markDone": "Yapıldı olarak işaretle",
+      "unMarkDone": "Kaydı sil",
+      "postVaccinationCard": "Hafif tepkiler 24-48 saat boyunca normal olabilir: hafif ateş, huzursuzluk, enjeksiyon yerinde hassasiyet. Endişe verici bir durum varsa çocuk doktorunuzu arayın."
+    },
+    "markDone": {
+      "title": "Aşıyı işaretle",
+      "subtitle": "Kayıtlarınız için kısa detaylar. Sadece tarih zorunlu.",
+      "dateLabel": "Yapıldığı tarih",
+      "locationLabel": "Klinik / yer",
+      "locationPlaceholder": "Opsiyonel",
+      "batchLabel": "Seri numarası",
+      "batchPlaceholder": "Opsiyonel",
+      "notesLabel": "Notlar",
+      "notesPlaceholder": "Hatırlamak istediğiniz herhangi bir şey",
+      "saveCta": "Kaydet",
+      "cancelCta": "İptal"
+    },
+    "notification": {
+      "title": "Yaklaşan aşı",
+      "body": "{{vaccine}} doz {{number}}/{{total}} yarın yapılacak"
+    }
+  },
+  "growth": {
+    "title": "Büyüme",
+    "empty": "Henüz ölçüm yok. Takip için bir ölçüm ekleyin.",
+    "addCta": "Ölçüm ekle",
+    "addCtaShort": "Ekle",
+    "weightLabel": "Ağırlık",
+    "heightLabel": "Boy",
+    "headLabel": "Baş çevresi",
+    "kg": "kg",
+    "cm": "cm",
+    "deleteConfirm": "Bu ölçüm silinsin mi?",
+    "delete": "Sil",
+    "add": {
+      "title": "Yeni ölçüm",
+      "subtitle": "Tüm alanlar isteğe bağlı. İhtiyacınız olmayanı atlayın.",
+      "dateLabel": "Ölçüm tarihi",
+      "weightLabel": "Ağırlık (kg)",
+      "heightLabel": "Boy (cm)",
+      "headLabel": "Baş çevresi (cm)",
+      "notesLabel": "Notlar",
+      "notesPlaceholder": "Opsiyonel",
+      "saveCta": "Ölçümü kaydet",
+      "cancelCta": "İptal",
+      "atLeastOne": "Ağırlık, boy veya baş çevresinden en az birini ekleyin."
+    }
+  },
+  "milestones": {
+    "title": "Gelişim",
+    "subtitle": "Standart pediatrik gelişim aşamaları. Çocuğunuz bir aşamaya ulaştığında dokunun.",
+    "empty": "Henüz hiçbir gelişim aşaması işaretlenmedi.",
+    "ageMonths_one": "1 ay",
+    "ageMonths_other": "{{count}} ay",
+    "ageYears_one": "1 yaş",
+    "ageYears_other": "{{count}} yaş",
+    "categories": {
+      "motor": "Motor",
+      "language": "Dil",
+      "social": "Sosyal",
+      "cognitive": "Bilişsel"
+    },
+    "tapToMark": "İşaretlemek için dokunun",
+    "markedOn": "{{date}} tarihinde ulaştı",
+    "unmark": "Kaldır"
+  },
+  "more": {
+    "title": "Diğer",
+    "sections": {
+      "children": "Çocuklar",
+      "app": "Uygulama",
+      "subscription": "Abonelik",
+      "about": "Hakkında"
+    },
+    "items": {
+      "manageChildren": "Çocuklar",
+      "language": "Dil",
+      "notifications": "Bildirimler",
+      "privacy": "Gizlilik",
+      "subscription": "Abonelik",
+      "supportEmail": "Destek ile iletişim"
+    },
+    "languageSection": "Dil",
+    "restartRequired": "Dil değişikliğinin tam olarak uygulanması için lütfen uygulamayı kapatıp yeniden açın.",
+    "ok": "Tamam",
+    "languageScreen": {
+      "title": "Dil",
+      "subtitle": "Uygulamanın size nasıl hitap edeceğini seçin."
+    },
+    "notificationsScreen": {
+      "title": "Bildirimler",
+      "subtitle": "Yaklaşan her aşıdan bir gün önce hatırlatma gönderiyoruz.",
+      "status": "Hatırlatmalar {{state}}",
+      "stateOn": "açık",
+      "stateOff": "kapalı",
+      "enableCta": "Hatırlatmaları aç",
+      "rescheduleCta": "Hatırlatmaları yenile",
+      "openSettings": "Telefon ayarlarını aç"
+    },
+    "childrenScreen": {
+      "title": "Çocuklar",
+      "subtitle": "Bu telefonda kayıtlı kim var.",
+      "addCta": "Çocuk ekle",
+      "premiumNote": "Birden fazla çocuk eklemek premium bir özelliktir.",
+      "removeConfirm": "{{name}} ve tüm kayıtları silinsin mi?",
+      "remove": "Sil"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "ru": "Русский",
+    "ar": "العربية",
+    "tr": "Türkçe"
+  },
+  "countries": {
+    "RU": "Rusya",
+    "KZ": "Kazakistan",
+    "UZ": "Özbekistan",
+    "AE": "Birleşik Arap Emirlikleri",
+    "SA": "Suudi Arabistan",
+    "TR": "Türkiye"
+  },
+  "common": {
+    "save": "Kaydet",
+    "continue": "Devam",
+    "markDone": "Yapıldı",
+    "exportPdf": "Doktor PDF'i",
+    "change": "Değiştir",
+    "back": "Geri",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "close": "Kapat",
+    "yes": "Evet",
+    "no": "Hayır"
+  },
+  "onboarding": {
+    "welcome": {
+      "cta": "Başla",
+      "privacy": "Çocuğunuzun verileri bu telefonda kalır. Bulut yedekleme isteğe bağlıdır."
+    },
+    "country": {
+      "title": "Ülkenizi seçin",
+      "subtitle": "O ülkenin aşı takvimini ve hatırlatma tarihlerini yükleyeceğiz.",
+      "stepLabel": "Adım 2 / 4"
+    },
+    "language": {
+      "title": "Dilinizi seçin",
+      "subtitle": "Diğer sekmesinden sonra değiştirebilirsiniz.",
+      "stepLabel": "Adım 3 / 4"
+    },
+    "addChild": {
+      "title": "Çocuğunuzu ekleyin",
+      "subtitle": "Sadece temel bilgiler. Sonra düzenleyebilirsiniz.",
+      "stepLabel": "Adım 4 / 4",
+      "nameLabel": "İsim",
+      "namePlaceholder": "Adı",
+      "dobLabel": "Doğum tarihi",
+      "dobPick": "Tarih seç",
+      "sexLabel": "Cinsiyet",
+      "sexHelp": "DSÖ büyüme eğrileri cinsiyete göre ayrıdır. Bu yalnızca onun için kullanılır.",
+      "sexBoy": "Erkek",
+      "sexGirl": "Kız",
+      "sexUnspecified": "Belirtmek istemiyorum",
+      "countryStripPrefix": "Takvim:",
+      "saveCta": "Kaydet ve devam et"
+    }
+  }
+}

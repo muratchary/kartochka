@@ -52,7 +52,7 @@ primarily in Russia, Kazakhstan, Uzbekistan, UAE, Saudi Arabia, and Turkey.
 - Telehealth integration
 
 ## Languages
-- v1.0: Russian (ru), Arabic (ar), English (en)
+- v1.0: Russian (ru), Arabic (ar), English (en), Turkish (tr)
 - v1.1: Turkmen (tk), Uzbek (uz), Kazakh (kk)
 
 ## Country vaccination schedules to support at launch
