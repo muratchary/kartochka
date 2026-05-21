@@ -30,6 +30,7 @@
       "statusUpcoming": "Upcoming",
       "doseLabel": "Dose {{number}} of {{total}}",
       "details": "Details",
+      "viewSchedule": "View schedule",
       "markDone": "Mark done"
     },
     "growth": {

@@ -88,16 +88,14 @@ export default function VaccinesScreen() {
         </Text>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.filterRow}>
+      <View style={styles.filterRow}>
         {(['all', 'upcoming', 'done', 'overdue'] as Filter[]).map((f) => (
           <Pressable
             key={f}
             onPress={() => setFilter(f)}
             style={[styles.chip, filter === f && styles.chipActive]}>
             <Text
+              numberOfLines={1}
               style={{
                 fontFamily: font(700),
                 fontSize: 13,
@@ -107,7 +105,7 @@ export default function VaccinesScreen() {
             </Text>
           </Pressable>
         ))}
-      </ScrollView>
+      </View>
 
       {filtered.length === 0 ? (
         <Text style={[styles.empty, { fontFamily: font(typography.body.weight) }]}>
@@ -195,13 +193,15 @@ const styles = StyleSheet.create({
     color: colors.ink,
   },
   filterRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     paddingHorizontal: spacing.lg,
     gap: spacing.sm,
     paddingBottom: spacing.md,
   },
   chip: {
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md + 2,
+    paddingVertical: spacing.sm - 2,
     borderRadius: radii.pill,
     backgroundColor: colors.surface,
     borderWidth: 1,

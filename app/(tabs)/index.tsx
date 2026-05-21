@@ -122,15 +122,10 @@ export default function HomeScreen() {
         </Text>
         <View style={styles.cardActions}>
           <Button
-            label={t('home.nextVaccine.details')}
+            label={t('home.nextVaccine.viewSchedule')}
             variant="ghost"
             size="sm"
-            onPress={() =>
-              router.push({
-                pathname: '/vaccine/[id]',
-                params: { id: `${vaccine.code}_${dose.doseNumber}` },
-              })
-            }
+            onPress={() => router.push('/vaccines')}
           />
           <Button
             label={t('home.nextVaccine.markDone')}

@@ -32,6 +32,7 @@
       "statusUpcoming": "Запланировано",
       "doseLabel": "Доза {{number}} из {{total}}",
       "details": "Подробнее",
+      "viewSchedule": "Календарь",
       "markDone": "Отметить"
     },
     "growth": {

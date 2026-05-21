@@ -1,5 +1,5 @@
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
@@ -31,20 +31,33 @@ function parseNum(s: string): number | undefined {
   return Number.isFinite(n) ? n : undefined;
 }
 
-export default function AddGrowthScreen() {
+function toStr(n: number | undefined): string {
+  return n == null ? '' : String(n);
+}
+
+export default function AddOrEditGrowthScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const font = useFont();
+  const params = useLocalSearchParams<{ id?: string }>();
 
   const children = useChildrenStore((s) => s.children);
+  const growthEntries = useChildrenStore((s) => s.growthEntries);
   const addGrowthEntry = useChildrenStore((s) => s.addGrowthEntry);
+  const updateGrowthEntry = useChildrenStore((s) => s.updateGrowthEntry);
   const child = children[0];
 
-  const [date, setDate] = useState<string>(todayIso());
-  const [weight, setWeight] = useState('');
-  const [height, setHeight] = useState('');
-  const [head, setHead] = useState('');
-  const [notes, setNotes] = useState('');
+  const existing = useMemo(
+    () => (params.id ? growthEntries.find((g) => g.id === params.id) : undefined),
+    [params.id, growthEntries],
+  );
+  const isEdit = !!existing;
+
+  const [date, setDate] = useState<string>(existing?.measuredOn ?? todayIso());
+  const [weight, setWeight] = useState(toStr(existing?.weightKg));
+  const [height, setHeight] = useState(toStr(existing?.heightCm));
+  const [head, setHead] = useState(toStr(existing?.headCircumferenceCm));
+  const [notes, setNotes] = useState(existing?.notes ?? '');
 
   if (!child) {
     router.back();
@@ -59,14 +72,24 @@ export default function AddGrowthScreen() {
       Alert.alert(t('growth.add.atLeastOne'));
       return;
     }
-    addGrowthEntry({
-      childId: child.id,
-      measuredOn: date,
-      weightKg,
-      heightCm,
-      headCircumferenceCm,
-      notes: notes.trim() || undefined,
-    });
+    if (isEdit && existing) {
+      updateGrowthEntry(existing.id, {
+        measuredOn: date,
+        weightKg,
+        heightCm,
+        headCircumferenceCm,
+        notes: notes.trim() || undefined,
+      });
+    } else {
+      addGrowthEntry({
+        childId: child.id,
+        measuredOn: date,
+        weightKg,
+        heightCm,
+        headCircumferenceCm,
+        notes: notes.trim() || undefined,
+      });
+    }
     router.back();
   };
 
@@ -144,7 +167,7 @@ export default function AddGrowthScreen() {
             onPress={() => router.back()}
           />
           <Button
-            label={t('growth.add.saveCta')}
+            label={isEdit ? t('common.save') : t('growth.add.saveCta')}
             variant="primary"
             size="lg"
             full

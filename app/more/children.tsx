@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Button } from '../../src/components/Button';
 import { Card } from '../../src/components/Card';
 import { ScreenTitle } from '../../src/components/ScreenTitle';
 import type { SupportedLanguage } from '../../src/i18n';
@@ -72,6 +73,14 @@ export default function ChildrenSettingsScreen() {
             );
           })}
         </View>
+
+        <Button
+          label={t('more.childrenScreen.addCta')}
+          variant="primary"
+          size="lg"
+          full
+          onPress={() => router.push('/more/add-child')}
+        />
 
         <Text style={[styles.premiumNote, { fontFamily: font(typography.caption.weight) }]}>
           {t('more.childrenScreen.premiumNote')}

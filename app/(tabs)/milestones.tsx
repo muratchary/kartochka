@@ -73,6 +73,7 @@ export default function MilestonesScreen() {
               {group.milestones.map((m) => {
                 const record = recordsByCode.get(m.code);
                 const checked = !!record;
+                const description = m.description?.[lang] ?? m.description?.en;
                 return (
                   <Pressable
                     key={m.code}
@@ -82,25 +83,34 @@ export default function MilestonesScreen() {
                       name={checked ? 'checkmark-circle' : 'ellipse-outline'}
                       size={22}
                       color={checked ? colors.success : colors.ink3}
+                      style={styles.itemIcon}
                     />
                     <View style={styles.itemText}>
-                      <Text
-                        style={[
-                          styles.itemName,
-                          { fontFamily: font(checked ? 700 : 600) },
-                          checked && styles.itemNameChecked,
-                        ]}>
-                        {m.displayName[lang] ?? m.displayName.en}
-                      </Text>
+                      <View style={styles.itemHeaderRow}>
+                        <Text
+                          style={[
+                            styles.itemName,
+                            { fontFamily: font(checked ? 700 : 600) },
+                            checked && styles.itemNameChecked,
+                          ]}>
+                          {m.displayName[lang] ?? m.displayName.en}
+                        </Text>
+                        <View style={styles.categoryPill}>
+                          <Text style={[styles.categoryPillText, { fontFamily: font(700) }]}>
+                            {t(`milestones.categories.${m.category}`)}
+                          </Text>
+                        </View>
+                      </View>
+                      {description ? (
+                        <Text style={[styles.itemDescription, { fontFamily: font(600) }]}>
+                          {description}
+                        </Text>
+                      ) : null}
                       {record ? (
-                        <Text style={[styles.itemDate, { fontFamily: font(600) }]}>
+                        <Text style={[styles.itemDate, { fontFamily: font(700) }]}>
                           {t('milestones.markedOn', { date: formatDate(new Date(record.achievedOn), lang) })}
                         </Text>
-                      ) : (
-                        <Text style={[styles.itemCategory, { fontFamily: font(600) }]}>
-                          {t(`milestones.categories.${m.category}`)}
-                        </Text>
-                      )}
+                      ) : null}
                     </View>
                   </Pressable>
                 );
@@ -161,7 +171,7 @@ const styles = StyleSheet.create({
   items: { gap: spacing.sm },
   item: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     padding: spacing.md,
     backgroundColor: colors.surface,
     borderRadius: radii.lg,
@@ -169,13 +179,36 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     gap: spacing.md,
   },
+  itemIcon: { marginTop: 2 },
   itemChecked: {
     backgroundColor: colors.successSoft,
     borderColor: colors.success,
   },
-  itemText: { flex: 1 },
-  itemName: { fontSize: 14, color: colors.ink },
+  itemText: { flex: 1, gap: 4 },
+  itemHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.sm,
+  },
+  itemName: { fontSize: 14, color: colors.ink, flex: 1 },
   itemNameChecked: { color: colors.ink },
-  itemCategory: { fontSize: 11, color: colors.ink3, marginTop: 2 },
-  itemDate: { fontSize: 11, color: colors.success, marginTop: 2 },
+  categoryPill: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+    borderRadius: radii.pill,
+    backgroundColor: colors.tealSoft,
+  },
+  categoryPillText: {
+    fontSize: 10,
+    color: colors.tealDark,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  itemDescription: {
+    fontSize: 12,
+    color: colors.ink2,
+    lineHeight: 17,
+  },
+  itemDate: { fontSize: 11, color: colors.success, fontWeight: '700' as const, marginTop: 2 },
 });

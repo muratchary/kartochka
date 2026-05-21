@@ -55,6 +55,7 @@ export default function RootLayout() {
       <Stack.Screen name="more/language" />
       <Stack.Screen name="more/notifications" />
       <Stack.Screen name="more/children" />
+      <Stack.Screen name="more/add-child" options={{ presentation: 'modal' }} />
     </Stack>
   );
 }

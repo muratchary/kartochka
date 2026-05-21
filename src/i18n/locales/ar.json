@@ -30,6 +30,7 @@
       "statusUpcoming": "قادم",
       "doseLabel": "الجرعة {{number}} من {{total}}",
       "details": "التفاصيل",
+      "viewSchedule": "الجدول",
       "markDone": "تم"
     },
     "growth": {

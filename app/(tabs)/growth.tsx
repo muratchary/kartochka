@@ -68,15 +68,28 @@ export default function GrowthScreen() {
         <>
           <ScrollView contentContainerStyle={styles.list}>
             {entries.map((entry) => (
-              <Card key={entry.id} style={{ padding: spacing.lg }}>
-                <View style={styles.cardHeader}>
-                  <Text style={[styles.date, { fontFamily: font(typography.h2.weight) }]}>
-                    {formatDate(new Date(entry.measuredOn), lang)}
-                  </Text>
-                  <Pressable hitSlop={8} onPress={() => handleDelete(entry.id)}>
-                    <Ionicons name="trash-outline" size={18} color={colors.ink3} />
-                  </Pressable>
-                </View>
+              <Pressable
+                key={entry.id}
+                onPress={() =>
+                  router.push({ pathname: '/growth/add', params: { id: entry.id } })
+                }>
+                <Card style={{ padding: spacing.lg }}>
+                  <View style={styles.cardHeader}>
+                    <Text style={[styles.date, { fontFamily: font(typography.h2.weight) }]}>
+                      {formatDate(new Date(entry.measuredOn), lang)}
+                    </Text>
+                    <View style={styles.cardActions}>
+                      <Ionicons name="pencil-outline" size={18} color={colors.ink3} />
+                      <Pressable
+                        hitSlop={8}
+                        onPress={(e) => {
+                          e.stopPropagation();
+                          handleDelete(entry.id);
+                        }}>
+                        <Ionicons name="trash-outline" size={18} color={colors.ink3} />
+                      </Pressable>
+                    </View>
+                  </View>
                 <View style={styles.metrics}>
                   {entry.weightKg != null && (
                     <Metric
@@ -100,12 +113,13 @@ export default function GrowthScreen() {
                     />
                   )}
                 </View>
-                {entry.notes ? (
-                  <Text style={[styles.notes, { fontFamily: font(typography.body.weight) }]}>
-                    {entry.notes}
-                  </Text>
-                ) : null}
-              </Card>
+                  {entry.notes ? (
+                    <Text style={[styles.notes, { fontFamily: font(typography.body.weight) }]}>
+                      {entry.notes}
+                    </Text>
+                  ) : null}
+                </Card>
+              </Pressable>
             ))}
           </ScrollView>
           <Pressable style={styles.fab} onPress={() => router.push('/growth/add')}>
@@ -167,6 +181,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: spacing.md,
+  },
+  cardActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
   },
   date: { fontSize: typography.h2.fontSize, color: colors.ink },
   metrics: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.lg },
