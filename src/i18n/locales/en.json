@@ -102,6 +102,8 @@
     "cm": "cm",
     "deleteConfirm": "Delete this measurement?",
     "delete": "Delete",
+    "chartNeedMore": "Add another measurement to see the trend.",
+    "chartTitle": "Over time",
     "add": {
       "title": "New measurement",
       "subtitle": "All fields are optional. Skip what you don't need.",

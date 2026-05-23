@@ -102,6 +102,8 @@
     "cm": "cm",
     "deleteConfirm": "Bu ölçüm silinsin mi?",
     "delete": "Sil",
+    "chartNeedMore": "Eğilimi görmek için başka bir ölçüm ekleyin.",
+    "chartTitle": "Zaman içinde",
     "add": {
       "title": "Yeni ölçüm",
       "subtitle": "Tüm alanlar isteğe bağlı. İhtiyacınız olmayanı atlayın.",
