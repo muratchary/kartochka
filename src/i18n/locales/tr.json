@@ -235,7 +235,7 @@
       "sexHelp": "DSÖ büyüme eğrileri cinsiyete göre ayrıdır. Bu yalnızca onun için kullanılır.",
       "sexBoy": "Erkek",
       "sexGirl": "Kız",
-      "sexUnspecified": "Belirtmek istemiyorum",
+      "sexUnspecified": "Belirtmedim",
       "countryStripPrefix": "Takvim:",
       "saveCta": "Kaydet ve devam et"
     }

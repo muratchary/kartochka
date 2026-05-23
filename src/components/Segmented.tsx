@@ -26,9 +26,12 @@ export function Segmented<T extends string>({ options, value, onChange }: Props<
             onPress={() => onChange(opt.value)}
             style={[styles.option, active && styles.optionActive]}>
             <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.85}
               style={{
                 fontFamily: font(active ? 700 : 600),
-                fontSize: 14,
+                fontSize: 13,
                 color: active ? colors.surface : colors.ink2,
               }}>
               {opt.label}
@@ -50,7 +53,9 @@ const styles = StyleSheet.create({
   },
   option: {
     flex: 1,
-    paddingVertical: spacing.sm + 2,
+    minHeight: 40,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.xs,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: radii.sm + 2,

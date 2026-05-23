@@ -235,7 +235,7 @@
       "sexHelp": "WHO growth curves are sex-specific. This is only used for that.",
       "sexBoy": "Boy",
       "sexGirl": "Girl",
-      "sexUnspecified": "Prefer not to say",
+      "sexUnspecified": "Not specified",
       "countryStripPrefix": "Schedule:",
       "saveCta": "Save and continue"
     }
