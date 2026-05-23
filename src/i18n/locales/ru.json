@@ -105,6 +105,13 @@
       "done": "Готово",
       "overdue": "Просрочено"
     },
+    "groupOverdue": "Просрочено",
+    "groupDueSoon": "Скоро",
+    "groupUpcoming": "Запланировано",
+    "groupDone": "Готово",
+    "groupCount_one": "{{count}} доза",
+    "groupCount_few": "{{count}} дозы",
+    "groupCount_many": "{{count}} доз",
     "detail": {
       "protectsAgainst": "Защищает от",
       "scheduleSection": "Календарь",

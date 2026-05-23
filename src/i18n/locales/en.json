@@ -100,6 +100,12 @@
       "done": "Done",
       "overdue": "Overdue"
     },
+    "groupOverdue": "Overdue",
+    "groupDueSoon": "Due soon",
+    "groupUpcoming": "Upcoming",
+    "groupDone": "Done",
+    "groupCount_one": "{{count}} dose",
+    "groupCount_other": "{{count}} doses",
     "detail": {
       "protectsAgainst": "Protects against",
       "scheduleSection": "Schedule",

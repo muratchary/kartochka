@@ -100,6 +100,12 @@
       "done": "Yapıldı",
       "overdue": "Gecikti"
     },
+    "groupOverdue": "Gecikmiş",
+    "groupDueSoon": "Yakında",
+    "groupUpcoming": "Planlanmış",
+    "groupDone": "Yapıldı",
+    "groupCount_one": "1 doz",
+    "groupCount_other": "{{count}} doz",
     "detail": {
       "protectsAgainst": "Şuna karşı koruma sağlar",
       "scheduleSection": "Takvim",

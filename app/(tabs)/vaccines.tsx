@@ -14,6 +14,7 @@ import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
 type Filter = 'all' | 'upcoming' | 'done' | 'overdue';
+type RowStatus = 'overdue' | 'due-soon' | 'upcoming' | 'done';
 
 interface DoseRow {
   vaccineCode: string;
@@ -22,11 +23,17 @@ interface DoseRow {
   totalDoses: number;
   recommendedAgeMonths: number;
   dueDate: Date;
-  status: DueStatus | 'done';
+  status: RowStatus;
   daysFromNow: number;
 }
 
+interface Group {
+  status: RowStatus;
+  rows: DoseRow[];
+}
+
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
+const GROUP_ORDER: RowStatus[] = ['overdue', 'due-soon', 'upcoming', 'done'];
 
 export default function VaccinesScreen() {
   const { t, i18n } = useTranslation();
@@ -51,6 +58,7 @@ export default function VaccinesScreen() {
         const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths);
         const daysFromNow = Math.round((dueDate.getTime() - now) / MS_PER_DAY);
         const done = records.some((r) => r.vaccineCode === v.code && r.doseNumber === dose.doseNumber);
+        const status: RowStatus = done ? 'done' : normalizeStatus(statusFromDays(daysFromNow));
         result.push({
           vaccineCode: v.code,
           vaccineName: v.displayName[lang] ?? v.displayName.en,
@@ -58,12 +66,11 @@ export default function VaccinesScreen() {
           totalDoses: v.doses.length,
           recommendedAgeMonths: dose.recommendedAgeMonths,
           dueDate,
-          status: done ? 'done' : statusFromDays(daysFromNow),
+          status,
           daysFromNow,
         });
       }
     }
-    result.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
     return result;
   }, [child, vaccinations, lang]);
 
@@ -72,10 +79,29 @@ export default function VaccinesScreen() {
     if (filter === 'done') return rows.filter((r) => r.status === 'done');
     if (filter === 'overdue') return rows.filter((r) => r.status === 'overdue');
     if (filter === 'upcoming') {
-      return rows.filter((r) => r.status === 'due-soon' || r.status === 'upcoming' || r.status === 'far-future');
+      return rows.filter((r) => r.status === 'due-soon' || r.status === 'upcoming');
     }
     return rows;
   }, [rows, filter]);
+
+  const groups = useMemo<Group[]>(() => {
+    const map: Record<RowStatus, DoseRow[]> = {
+      overdue: [],
+      'due-soon': [],
+      upcoming: [],
+      done: [],
+    };
+    for (const r of filtered) map[r.status].push(r);
+    // Within each group: due-soon/upcoming/overdue sort ascending by date; done sort descending (most recent first)
+    for (const s of GROUP_ORDER) {
+      map[s].sort((a, b) =>
+        s === 'done' ? b.dueDate.getTime() - a.dueDate.getTime() : a.dueDate.getTime() - b.dueDate.getTime(),
+      );
+    }
+    return GROUP_ORDER.map((status) => ({ status, rows: map[status] })).filter(
+      (g) => g.rows.length > 0,
+    );
+  }, [filtered]);
 
   if (!child) return <Redirect href="/onboarding/welcome" />;
 
@@ -106,39 +132,68 @@ export default function VaccinesScreen() {
         ))}
       </View>
 
-      {filtered.length === 0 ? (
+      {groups.length === 0 ? (
         <Text style={[styles.empty, { fontFamily: font(typography.body.weight) }]}>
           {t('vaccines.empty')}
         </Text>
       ) : (
         <ScrollView contentContainerStyle={styles.list}>
-          {filtered.map((row) => (
-            <Pressable
-              key={`${row.vaccineCode}-${row.doseNumber}`}
-              onPress={() =>
-                router.push({
-                  pathname: '/vaccine/[id]',
-                  params: { id: `${row.vaccineCode}_${row.doseNumber}` },
-                })
-              }
-              style={styles.row}>
-              <View style={styles.rowIcon}>
-                <Ionicons name={iconFor(row.status)} size={20} color={colorFor(row.status)} />
-              </View>
-              <View style={styles.rowText}>
-                <Text style={[styles.rowName, { fontFamily: font(700) }]} numberOfLines={1}>
-                  {row.vaccineName}
+          {groups.map((group) => (
+            <View key={group.status} style={styles.group}>
+              <View style={styles.groupHeader}>
+                <View style={[styles.groupDot, { backgroundColor: dotColorFor(group.status) }]} />
+                <Text style={[styles.groupTitle, { fontFamily: font(700) }]}>
+                  {t(groupTitleKey(group.status))}
                 </Text>
-                <Text style={[styles.rowMeta, { fontFamily: font(600) }]}>
-                  {t('vaccines.detail.doseLabel', {
-                    number: row.doseNumber,
-                    total: row.totalDoses,
-                  })}{' '}
-                  · {formatDate(row.dueDate, lang)}
+                <Text style={[styles.groupCount, { fontFamily: font(typography.caption.weight) }]}>
+                  {t('vaccines.groupCount', { count: group.rows.length })}
                 </Text>
               </View>
-              <Pill label={t(statusLabelKey(row.status))} tone={toneFor(row.status)} />
-            </Pressable>
+              <View style={styles.groupRows}>
+                {group.rows.map((row) => (
+                  <Pressable
+                    key={`${row.vaccineCode}-${row.doseNumber}`}
+                    onPress={() =>
+                      router.push({
+                        pathname: '/vaccine/[id]',
+                        params: { id: `${row.vaccineCode}_${row.doseNumber}` },
+                      })
+                    }
+                    style={[styles.row, rowStyleFor(row.status)]}>
+                    <View
+                      style={[styles.rowIcon, { backgroundColor: iconBgFor(row.status) }]}>
+                      <Ionicons
+                        name={iconFor(row.status)}
+                        size={18}
+                        color={iconFgFor(row.status)}
+                      />
+                    </View>
+                    <View style={styles.rowText}>
+                      <Text
+                        style={[
+                          styles.rowName,
+                          { fontFamily: font(700), color: rowTextColorFor(row.status) },
+                        ]}
+                        numberOfLines={1}>
+                        {row.vaccineName}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.rowMeta,
+                          { fontFamily: font(600), color: rowMetaColorFor(row.status) },
+                        ]}>
+                        {t('vaccines.detail.doseLabel', {
+                          number: row.doseNumber,
+                          total: row.totalDoses,
+                        })}{' '}
+                        · {formatDate(row.dueDate, lang)}
+                      </Text>
+                    </View>
+                    <Pill label={shortLabelFor(row.status, t)} tone={toneFor(row.status)} />
+                  </Pressable>
+                ))}
+              </View>
+            </View>
           ))}
         </ScrollView>
       )}
@@ -146,37 +201,105 @@ export default function VaccinesScreen() {
   );
 }
 
-function statusLabelKey(status: DoseRow['status']): string {
-  if (status === 'done') return 'vaccines.filters.done';
-  if (status === 'overdue') return 'home.nextVaccine.statusOverdue';
-  if (status === 'due-soon') return 'home.nextVaccine.statusDueSoon';
-  return 'home.nextVaccine.statusUpcoming';
+function normalizeStatus(s: DueStatus): RowStatus {
+  if (s === 'overdue') return 'overdue';
+  if (s === 'due-soon') return 'due-soon';
+  return 'upcoming';
 }
 
-function toneFor(status: DoseRow['status']): PillTone {
-  if (status === 'done') return 'success';
-  if (status === 'overdue') return 'error';
-  if (status === 'due-soon') return 'warning';
-  return 'neutral';
+function groupTitleKey(s: RowStatus): string {
+  switch (s) {
+    case 'overdue':
+      return 'vaccines.groupOverdue';
+    case 'due-soon':
+      return 'vaccines.groupDueSoon';
+    case 'upcoming':
+      return 'vaccines.groupUpcoming';
+    case 'done':
+      return 'vaccines.groupDone';
+  }
 }
 
-function iconFor(status: DoseRow['status']) {
+function shortLabelFor(s: RowStatus, t: (k: string) => string): string {
+  switch (s) {
+    case 'overdue':
+      return t('home.nextVaccine.statusOverdue');
+    case 'due-soon':
+      return t('home.nextVaccine.statusDueSoon');
+    case 'upcoming':
+      return t('home.nextVaccine.statusUpcoming');
+    case 'done':
+      return t('vaccines.filters.done');
+  }
+}
+
+function toneFor(status: RowStatus): PillTone {
+  switch (status) {
+    case 'done':
+      return 'success';
+    case 'overdue':
+      return 'error';
+    case 'due-soon':
+      return 'warning';
+    case 'upcoming':
+      return 'neutral';
+  }
+}
+
+function iconFor(status: RowStatus) {
   if (status === 'done') return 'checkmark-circle' as const;
-  if (status === 'overdue') return 'alert-circle-outline' as const;
-  if (status === 'due-soon') return 'time-outline' as const;
+  if (status === 'overdue') return 'alert-circle' as const;
+  if (status === 'due-soon') return 'time' as const;
   return 'ellipse-outline' as const;
 }
 
-function colorFor(status: DoseRow['status']): string {
+function dotColorFor(status: RowStatus): string {
   if (status === 'done') return colors.success;
   if (status === 'overdue') return colors.error;
   if (status === 'due-soon') return colors.warning;
-  return colors.ink3;
+  return colors.teal;
+}
+
+function iconBgFor(status: RowStatus): string {
+  if (status === 'done') return colors.successSoft;
+  if (status === 'overdue') return colors.errorSoft;
+  if (status === 'due-soon') return colors.warningSoft;
+  return colors.tealSoft;
+}
+
+function iconFgFor(status: RowStatus): string {
+  if (status === 'done') return colors.success;
+  if (status === 'overdue') return colors.error;
+  if (status === 'due-soon') return colors.warning;
+  return colors.teal;
+}
+
+function rowStyleFor(status: RowStatus) {
+  switch (status) {
+    case 'overdue':
+      return { backgroundColor: colors.errorSoft, borderColor: '#E9C9C9' };
+    case 'due-soon':
+      return { backgroundColor: colors.warningSoft, borderColor: '#EBD3A8' };
+    case 'done':
+      return { backgroundColor: colors.successSoft, borderColor: '#D0E5D8' };
+    case 'upcoming':
+      return { backgroundColor: colors.surface, borderColor: colors.border };
+  }
+}
+
+function rowTextColorFor(status: RowStatus): string {
+  if (status === 'done') return colors.ink2;
+  return colors.ink;
+}
+
+function rowMetaColorFor(status: RowStatus): string {
+  if (status === 'done') return colors.ink3;
+  return colors.ink2;
 }
 
 function formatDate(date: Date, lang: SupportedLanguage): string {
   try {
-    const locale = lang === 'ru' ? 'ru' : lang === 'ar' ? 'ar' : 'en';
+    const locale = lang === 'ru' ? 'ru' : lang === 'ar' ? 'ar' : lang === 'tr' ? 'tr' : 'en';
     return date.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
   } catch {
     return date.toISOString().slice(0, 10);
@@ -213,7 +336,7 @@ const styles = StyleSheet.create({
   list: {
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.xxl,
-    gap: spacing.sm,
+    gap: spacing.lg,
   },
   empty: {
     fontSize: typography.body.fontSize,
@@ -222,25 +345,41 @@ const styles = StyleSheet.create({
     marginTop: spacing.xxl,
     paddingHorizontal: spacing.xl,
   },
+  group: { gap: spacing.sm },
+  groupHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.xs,
+  },
+  groupDot: { width: 8, height: 8, borderRadius: 4 },
+  groupTitle: {
+    fontSize: 13,
+    color: colors.ink,
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+  },
+  groupCount: {
+    fontSize: typography.caption.fontSize,
+    color: colors.ink3,
+  },
+  groupRows: { gap: spacing.sm },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: spacing.md,
-    backgroundColor: colors.surface,
     borderRadius: radii.lg,
     borderWidth: 1,
-    borderColor: colors.border,
     gap: spacing.md,
   },
   rowIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.bg,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
   rowText: { flex: 1 },
-  rowName: { fontSize: 15, color: colors.ink },
-  rowMeta: { fontSize: 12, color: colors.ink2, marginTop: 2 },
+  rowName: { fontSize: 15 },
+  rowMeta: { fontSize: 12, marginTop: 2 },
 });
