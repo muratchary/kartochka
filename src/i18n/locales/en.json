@@ -280,6 +280,16 @@
     "SA": "Saudi Arabia",
     "TR": "Türkiye"
   },
+  "tutorial": {
+    "step1Title": "Your daily glance",
+    "step1Body": "Each month's most important things land here — overdue shots, what's coming up, recent activity.",
+    "step2Title": "Next vaccination",
+    "step2Body": "See what's coming next at a glance. Tap 'Mark done' the moment your pediatrician gives the shot.",
+    "step3Title": "Reminders",
+    "step3Body": "Tap the bell to see scheduled reminders. Turn them on in More → Notifications to get pinged the day before.",
+    "next": "Next",
+    "gotIt": "Got it"
+  },
   "common": {
     "save": "Save",
     "continue": "Continue",

@@ -280,6 +280,16 @@
     "SA": "Suudi Arabistan",
     "TR": "Türkiye"
   },
+  "tutorial": {
+    "step1Title": "Günlük özet",
+    "step1Body": "Ayın en önemli şeyleri burada — gecikmiş aşılar, yaklaşanlar, son etkinlik.",
+    "step2Title": "Sıradaki aşı",
+    "step2Body": "Sıradaki aşıyı bir bakışta gör. Doktor yaptığı anda 'Yapıldı' düğmesine bas.",
+    "step3Title": "Hatırlatmalar",
+    "step3Body": "Çana dokunarak planlanmış hatırlatmaları gör. Diğer → Bildirimler'den açarak bir gün önceden bildirim al.",
+    "next": "İleri",
+    "gotIt": "Anladım"
+  },
   "common": {
     "save": "Kaydet",
     "continue": "Devam",

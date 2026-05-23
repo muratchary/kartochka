@@ -20,8 +20,10 @@ interface ChildrenState {
   growthEntries: GrowthEntry[];
   milestones: MilestoneRecord[];
   selectedChildId: string | null;
+  tutorialSeen: boolean;
 
   setSelectedChild: (id: string) => void;
+  markTutorialSeen: () => void;
 
   addChild: (input: NewChild) => Child;
   updateChild: (id: string, patch: Partial<NewChild>) => void;
@@ -58,8 +60,10 @@ export const useChildrenStore = create<ChildrenState>()(
       growthEntries: [],
       milestones: [],
       selectedChildId: null,
+      tutorialSeen: false,
 
       setSelectedChild: (id) => set({ selectedChildId: id }),
+      markTutorialSeen: () => set({ tutorialSeen: true }),
 
       addChild: (input) => {
         const child: Child = { ...input, id: newId(), createdAt: now(), updatedAt: now() };
@@ -289,6 +293,7 @@ export const useChildrenStore = create<ChildrenState>()(
           growthEntries: [],
           milestones: [],
           selectedChildId: null,
+          tutorialSeen: false,
         });
       },
     }),

@@ -9,6 +9,7 @@ import { Button } from '../../src/components/Button';
 import { Card } from '../../src/components/Card';
 import { ChildHeader } from '../../src/components/ChildHeader';
 import { Pill, type PillTone } from '../../src/components/Pill';
+import { Tutorial } from '../../src/components/Tutorial';
 import type { SupportedLanguage } from '../../src/i18n';
 import { STANDARD_MILESTONES } from '../../src/lib/milestones';
 import { exportChildPdf } from '../../src/lib/pdfExport';
@@ -34,6 +35,8 @@ export default function HomeScreen() {
   const vaccinations = useChildrenStore((s) => s.vaccinations);
   const growthEntries = useChildrenStore((s) => s.growthEntries);
   const milestones = useChildrenStore((s) => s.milestones);
+  const tutorialSeen = useChildrenStore((s) => s.tutorialSeen);
+  const markTutorialSeen = useChildrenStore((s) => s.markTutorialSeen);
 
   const handleExportPdf = async () => {
     if (!child) return;
@@ -133,6 +136,7 @@ export default function HomeScreen() {
           <PdfCtaCard />
         </View>
       </ScrollView>
+      <Tutorial visible={!tutorialSeen} onFinish={markTutorialSeen} />
     </SafeAreaView>
   );
 
