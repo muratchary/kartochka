@@ -27,6 +27,7 @@ export interface VaccinationRecord {
   locationOfAdministration?: string;
   batchNumber?: string;
   notes?: string;
+  photoUri?: string;
   createdAt: IsoDateTime;
   updatedAt: IsoDateTime;
 }

@@ -151,6 +151,11 @@
       "batchPlaceholder": "Необязательно",
       "notesLabel": "Заметки",
       "notesPlaceholder": "Что хотите запомнить",
+      "photoLabel": "Фото сертификата",
+      "addPhoto": "Добавить фото",
+      "changePhoto": "Изменить",
+      "removePhoto": "Удалить",
+      "photoPickFailed": "Не удалось открыть выбор фото.",
       "saveCta": "Сохранить",
       "cancelCta": "Отмена"
     },

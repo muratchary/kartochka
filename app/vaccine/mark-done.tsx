@@ -1,9 +1,14 @@
+import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Alert,
+  Image,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -39,7 +44,23 @@ export default function MarkDoneScreen() {
   const [location, setLocation] = useState('');
   const [batch, setBatch] = useState('');
   const [notes, setNotes] = useState('');
+  const [photoUri, setPhotoUri] = useState<string | null>(null);
   const [celebrate, setCelebrate] = useState(false);
+
+  const handlePickPhoto = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 0.7,
+      });
+      if (!result.canceled && result.assets[0]) {
+        setPhotoUri(result.assets[0].uri);
+      }
+    } catch {
+      Alert.alert(t('vaccines.markDone.photoPickFailed'));
+    }
+  };
 
   const code = params.code;
   const doseStr = params.dose;
@@ -57,6 +78,7 @@ export default function MarkDoneScreen() {
       locationOfAdministration: location.trim() || undefined,
       batchNumber: batch.trim() || undefined,
       notes: notes.trim() || undefined,
+      photoUri: photoUri ?? undefined,
     });
     await rescheduleReminders(child);
     setCelebrate(true);
@@ -114,6 +136,38 @@ export default function MarkDoneScreen() {
             numberOfLines={3}
             style={[styles.input, styles.multiline, { fontFamily: font(600) }]}
           />
+
+          <Text style={[styles.label, { fontFamily: font(700), marginTop: spacing.lg }]}>
+            {t('vaccines.markDone.photoLabel')}
+          </Text>
+          {photoUri ? (
+            <View style={styles.photoBox}>
+              <Image source={{ uri: photoUri }} style={styles.photoImage} />
+              <View style={styles.photoActions}>
+                <Pressable onPress={handlePickPhoto} hitSlop={6}>
+                  <Text style={[styles.photoAction, { fontFamily: font(700) }]}>
+                    {t('vaccines.markDone.changePhoto')}
+                  </Text>
+                </Pressable>
+                <Pressable onPress={() => setPhotoUri(null)} hitSlop={6}>
+                  <Text
+                    style={[
+                      styles.photoAction,
+                      { fontFamily: font(700), color: colors.error },
+                    ]}>
+                    {t('vaccines.markDone.removePhoto')}
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+          ) : (
+            <Pressable onPress={handlePickPhoto} style={styles.photoPicker}>
+              <Ionicons name="camera-outline" size={22} color={colors.ink2} />
+              <Text style={[styles.photoPickerText, { fontFamily: font(700) }]}>
+                {t('vaccines.markDone.addPhoto')}
+              </Text>
+            </Pressable>
+          )}
         </ScrollView>
 
         <View style={styles.footer}>
@@ -173,6 +227,45 @@ const styles = StyleSheet.create({
   multiline: {
     minHeight: 80,
     textAlignVertical: 'top',
+  },
+  photoPicker: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    paddingVertical: spacing.lg,
+    paddingHorizontal: spacing.lg,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderStyle: 'dashed',
+    borderRadius: radii.md,
+    justifyContent: 'center',
+  },
+  photoPickerText: {
+    fontSize: typography.body.fontSize,
+    color: colors.ink2,
+  },
+  photoBox: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radii.md,
+    overflow: 'hidden',
+  },
+  photoImage: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'cover',
+  },
+  photoActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+  },
+  photoAction: {
+    fontSize: typography.body.fontSize,
+    color: colors.teal,
   },
   footer: {
     flexDirection: 'row',

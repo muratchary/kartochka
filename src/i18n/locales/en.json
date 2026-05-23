@@ -141,6 +141,11 @@
       "batchPlaceholder": "Optional",
       "notesLabel": "Notes",
       "notesPlaceholder": "Anything you want to remember",
+      "photoLabel": "Photo of certificate",
+      "addPhoto": "Add photo",
+      "changePhoto": "Change",
+      "removePhoto": "Remove",
+      "photoPickFailed": "Couldn't open the photo picker.",
       "saveCta": "Save",
       "cancelCta": "Cancel"
     },

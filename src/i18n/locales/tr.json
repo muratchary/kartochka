@@ -141,6 +141,11 @@
       "batchPlaceholder": "Opsiyonel",
       "notesLabel": "Notlar",
       "notesPlaceholder": "Hatırlamak istediğiniz herhangi bir şey",
+      "photoLabel": "Belge fotoğrafı",
+      "addPhoto": "Fotoğraf ekle",
+      "changePhoto": "Değiştir",
+      "removePhoto": "Kaldır",
+      "photoPickFailed": "Fotoğraf seçici açılamadı.",
       "saveCta": "Kaydet",
       "cancelCta": "İptal"
     },

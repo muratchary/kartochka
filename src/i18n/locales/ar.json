@@ -141,6 +141,11 @@
       "batchPlaceholder": "اختياري",
       "notesLabel": "ملاحظات",
       "notesPlaceholder": "أي شيء تريد تذكره",
+      "photoLabel": "صورة الشهادة",
+      "addPhoto": "إضافة صورة",
+      "changePhoto": "تغيير",
+      "removePhoto": "إزالة",
+      "photoPickFailed": "تعذر فتح اختيار الصور.",
       "saveCta": "حفظ",
       "cancelCta": "إلغاء"
     },

@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '../../src/components/Button';
@@ -151,6 +151,9 @@ export default function VaccineDetailScreen() {
                   {record.notes}
                 </Text>
               ) : null}
+              {record.photoUri ? (
+                <Image source={{ uri: record.photoUri }} style={styles.photo} />
+              ) : null}
             </View>
           ) : (
             <Text style={[styles.bodyText, { fontFamily: font(typography.body.weight) }]}>
@@ -266,6 +269,12 @@ const styles = StyleSheet.create({
   bodyMeta: {
     fontSize: typography.caption.fontSize,
     color: colors.ink2,
+  },
+  photo: {
+    marginTop: spacing.md,
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
   },
   notFound: {
     flex: 1,
