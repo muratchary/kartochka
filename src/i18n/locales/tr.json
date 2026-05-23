@@ -184,6 +184,10 @@
     "chartTitle": "Zaman içinde",
     "chartWhoRef": "Kesik çizgiler: DSÖ referansı (3. · 50. · 97. persentil)",
     "percentile": "Persentil {{value}}",
+    "notification": {
+      "title": "{{name}}'i ölçme zamanı",
+      "body": "Son ölçümden bu yana 6 hafta geçti. {{name}} nasıl büyüyor?"
+    },
     "add": {
       "title": "Yeni ölçüm",
       "subtitle": "Tüm alanlar isteğe bağlı. İhtiyacınız olmayanı atlayın.",
@@ -353,12 +357,6 @@
     "ageMoments_one": "{{count}} yaşında",
     "ageMoments_other": "{{count}} yaşında",
     "dismiss": "Kapat"
-  },
-  "growth": {
-    "notification": {
-      "title": "{{name}}'i ölçme zamanı",
-      "body": "Son ölçümden bu yana 6 hafta geçti. {{name}} nasıl büyüyor?"
-    }
   },
   "onboarding": {
     "welcome": {

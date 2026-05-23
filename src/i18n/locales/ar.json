@@ -184,6 +184,10 @@
     "chartTitle": "عبر الزمن",
     "chartWhoRef": "الخطوط المتقطعة: مرجع منظمة الصحة العالمية (3% · 50% · 97%)",
     "percentile": "الشريحة {{value}}",
+    "notification": {
+      "title": "حان وقت قياس {{name}}",
+      "body": "مرّت 6 أسابيع منذ آخر قياس. كيف ينمو {{name}}؟"
+    },
     "add": {
       "title": "قياس جديد",
       "subtitle": "جميع الحقول اختيارية. تجاوز ما لا تحتاجه.",
@@ -356,12 +360,6 @@
     "ageMoments_many": "{{count}} سنة",
     "ageMoments_other": "{{count}} سنة",
     "dismiss": "إغلاق"
-  },
-  "growth": {
-    "notification": {
-      "title": "حان وقت قياس {{name}}",
-      "body": "مرّت 6 أسابيع منذ آخر قياس. كيف ينمو {{name}}؟"
-    }
   },
   "onboarding": {
     "welcome": {

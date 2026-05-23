@@ -184,6 +184,10 @@
     "chartTitle": "Over time",
     "chartWhoRef": "Dashed lines: WHO reference (3rd · 50th · 97th percentile)",
     "percentile": "Percentile {{value}}",
+    "notification": {
+      "title": "Time to measure {{name}}",
+      "body": "It's been 6 weeks since the last measurement. How is {{name}} growing?"
+    },
     "add": {
       "title": "New measurement",
       "subtitle": "All fields are optional. Skip what you don't need.",
@@ -353,12 +357,6 @@
     "ageMoments_one": "{{count}} year old",
     "ageMoments_other": "{{count}} years old",
     "dismiss": "Close"
-  },
-  "growth": {
-    "notification": {
-      "title": "Time to measure {{name}}",
-      "body": "It's been 6 weeks since the last measurement. How is {{name}} growing?"
-    }
   },
   "onboarding": {
     "welcome": {
