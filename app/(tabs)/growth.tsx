@@ -114,7 +114,21 @@ export default function GrowthScreen() {
                   {labelFor(metric)} ({unitFor(metric)})
                 </Text>
                 {points.length >= 2 ? (
-                  <GrowthChart points={points} metric={metric} height={160} />
+                  <>
+                    <GrowthChart
+                      points={points}
+                      metric={metric}
+                      height={160}
+                      sex={child.sex ?? 'unspecified'}
+                    />
+                    <Text
+                      style={[
+                        styles.whoCaption,
+                        { fontFamily: font(typography.caption.weight) },
+                      ]}>
+                      {t('growth.chartWhoRef')}
+                    </Text>
+                  </>
                 ) : (
                   <View style={styles.chartEmpty}>
                     <Text
@@ -298,6 +312,11 @@ const styles = StyleSheet.create({
     color: colors.ink2,
     textTransform: 'uppercase',
     letterSpacing: typography.eyebrow.letterSpacing,
+  },
+  whoCaption: {
+    fontSize: 10,
+    color: colors.ink3,
+    marginTop: 4,
   },
   chartEmpty: {
     height: 90,

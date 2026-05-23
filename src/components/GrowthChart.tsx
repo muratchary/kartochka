@@ -3,6 +3,7 @@ import Svg, { Circle, G, Line, Path, Text as SvgText } from 'react-native-svg';
 
 import { colors, typography } from '../theme';
 import { useFont } from '../theme/useFont';
+import { WHO_GROWTH, interpolateGrowthPoint } from '../data/whoGrowthStandards';
 
 export type GrowthMetric = 'weight' | 'height' | 'head';
 
@@ -15,11 +16,19 @@ interface Props {
   points: ChartPoint[];
   height?: number;
   metric: GrowthMetric;
+  sex?: 'male' | 'female' | 'unspecified';
 }
 
-const PADDING = { top: 12, right: 18, bottom: 30, left: 44 };
+const PADDING = { top: 12, right: 28, bottom: 30, left: 44 };
 
-export function GrowthChart({ points, height = 220, metric }: Props) {
+// Map chart metric to WHO data key
+function whoSeriesFor(metric: GrowthMetric, sex: 'male' | 'female' | 'unspecified') {
+  const metricKey = metric === 'weight' ? 'weight' : metric === 'height' ? 'length' : 'headcirc';
+  const sexKey = sex === 'female' ? 'girls' : 'boys'; // default boys for unspecified
+  return WHO_GROWTH[metricKey][sexKey];
+}
+
+export function GrowthChart({ points, height = 220, metric, sex = 'unspecified' }: Props) {
   const font = useFont();
   const fontFamily = font(600);
   const boldFamily = font(700);
@@ -31,9 +40,22 @@ export function GrowthChart({ points, height = 220, metric }: Props) {
   const sorted = [...points].sort((a, b) => a.ageMonths - b.ageMonths);
   const xMin = Math.max(0, Math.floor(sorted[0].ageMonths) - 1);
   const xMax = Math.ceil(sorted[sorted.length - 1].ageMonths) + 1;
-  const yValues = sorted.map((p) => p.value);
-  const yMin = Math.floor(Math.min(...yValues) * 0.92);
-  const yMax = Math.ceil(Math.max(...yValues) * 1.08);
+
+  // Compute reference curve points within this age range
+  const whoSeries = whoSeriesFor(metric, sex);
+  const refAgeKeys = Object.keys(whoSeries).map(Number).filter(a => a >= xMin && a <= xMax);
+  // Always include boundary ages for smooth line extensions
+  const allRefAges = Array.from(
+    new Set([xMin, ...refAgeKeys, xMax].filter(a => a >= 0 && a <= 60))
+  ).sort((a, b) => a - b);
+  const refPoints = allRefAges.map(age => ({ age, ...interpolateGrowthPoint(whoSeries, age) }));
+
+  // Y range = union of child data and WHO reference within the age range
+  const yValues = sorted.map(p => p.value);
+  const refYValues = refPoints.flatMap(p => [p.neg2, p.med, p.pos2]);
+  const allY = [...yValues, ...refYValues];
+  const yMin = Math.floor(Math.min(...allY) * 0.97);
+  const yMax = Math.ceil(Math.max(...allY) * 1.03);
   const yRange = Math.max(yMax - yMin, 1);
   const xRange = Math.max(xMax - xMin, 1);
 
@@ -46,6 +68,15 @@ export function GrowthChart({ points, height = 220, metric }: Props) {
           xMax={xMax}
           yMin={yMin}
           yMax={yMax}
+          fontFamily={fontFamily}
+        />
+        <ChartReferenceCurves
+          refPoints={refPoints}
+          height={height}
+          xMin={xMin}
+          xRange={xRange}
+          yMin={yMin}
+          yRange={yRange}
           fontFamily={fontFamily}
         />
         <ChartLine
@@ -167,6 +198,66 @@ function formatXLabel(months: number): string {
   return rem === 0 ? `${years}y` : `${years}y${rem}m`;
 }
 
+type RefPoint = { age: number; neg2: number; med: number; pos2: number };
+
+function ChartReferenceCurves({
+  refPoints,
+  height,
+  xMin,
+  xRange,
+  yMin,
+  yRange,
+  fontFamily,
+}: {
+  refPoints: RefPoint[];
+  height: number;
+  xMin: number;
+  xRange: number;
+  yMin: number;
+  yRange: number;
+  fontFamily: string;
+}) {
+  if (refPoints.length < 2) return null;
+
+  const width = 360;
+  const plotLeft = PADDING.left;
+  const plotRight = width - PADDING.right;
+  const plotTop = PADDING.top;
+  const plotBottom = height - PADDING.bottom;
+
+  const toX = (m: number) =>
+    plotLeft + ((m - xMin) / xRange) * (plotRight - plotLeft);
+  const toY = (v: number) =>
+    plotBottom - ((v - yMin) / yRange) * (plotBottom - plotTop);
+
+  const buildPath = (key: 'neg2' | 'med' | 'pos2') =>
+    refPoints
+      .map((p, i) => `${i === 0 ? 'M' : 'L'} ${toX(p.age)} ${toY(p[key])}`)
+      .join(' ');
+
+  const dNeg2 = buildPath('neg2');
+  const dMed = buildPath('med');
+  const dPos2 = buildPath('pos2');
+
+  // Label y positions at the right edge
+  const lastRef = refPoints[refPoints.length - 1];
+  const labelX = plotRight + 3;
+
+  return (
+    <G>
+      {/* ±2 SD bands (approx 3rd and 97th percentile) */}
+      <Path d={dNeg2} fill="none" stroke={colors.tealLine} strokeWidth={1} strokeDasharray="4 3" />
+      <Path d={dPos2} fill="none" stroke={colors.tealLine} strokeWidth={1} strokeDasharray="4 3" />
+      {/* Median (50th percentile) */}
+      <Path d={dMed} fill="none" stroke={colors.teal} strokeWidth={1} strokeDasharray="4 3" opacity={0.5} />
+      {/* Labels */}
+      <SvgText x={labelX} y={toY(lastRef.pos2) + 3} fontSize={8} fontFamily={fontFamily} fill={colors.ink3} textAnchor="start">97%</SvgText>
+      <SvgText x={labelX} y={toY(lastRef.med) + 3} fontSize={8} fontFamily={fontFamily} fill={colors.ink3} textAnchor="start">50%</SvgText>
+      <SvgText x={labelX} y={toY(lastRef.neg2) + 3} fontSize={8} fontFamily={fontFamily} fill={colors.ink3} textAnchor="start">3%</SvgText>
+    </G>
+  );
+}
+
 function ChartLine({
   sorted,
   height,
@@ -248,7 +339,7 @@ function ChartPoints({
                 fontFamily={fontFamily}
                 fill={colors.ink}
                 textAnchor="middle">
-                {metric === 'weight' ? `${p.value}` : `${p.value}`}
+                {`${p.value}`}
               </SvgText>
             )}
           </G>

@@ -170,6 +170,7 @@
     "delete": "Sil",
     "chartNeedMore": "Eğilimi görmek için başka bir ölçüm ekleyin.",
     "chartTitle": "Zaman içinde",
+    "chartWhoRef": "Kesik çizgiler: DSÖ referansı (3. · 50. · 97. persentil)",
     "add": {
       "title": "Yeni ölçüm",
       "subtitle": "Tüm alanlar isteğe bağlı. İhtiyacınız olmayanı atlayın.",

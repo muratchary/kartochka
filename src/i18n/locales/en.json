@@ -170,6 +170,7 @@
     "delete": "Delete",
     "chartNeedMore": "Add another measurement to see the trend.",
     "chartTitle": "Over time",
+    "chartWhoRef": "Dashed lines: WHO reference (3rd · 50th · 97th percentile)",
     "add": {
       "title": "New measurement",
       "subtitle": "All fields are optional. Skip what you don't need.",
