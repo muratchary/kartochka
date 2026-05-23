@@ -7,6 +7,7 @@ import { useFont } from '../theme/useFont';
 interface Props {
   name: string;
   greeting: string;
+  ageLabel?: string;
   onBellPress?: () => void;
   onSwitchChild?: () => void;
   hasMultipleChildren?: boolean;
@@ -15,6 +16,7 @@ interface Props {
 export function ChildHeader({
   name,
   greeting,
+  ageLabel,
   onBellPress,
   onSwitchChild,
   hasMultipleChildren = false,
@@ -45,6 +47,11 @@ export function ChildHeader({
               <Ionicons name="chevron-down" size={18} color={colors.ink2} style={styles.chevron} />
             )}
           </View>
+          {ageLabel ? (
+            <Text style={[styles.age, { fontFamily: font(typography.caption.weight) }]}>
+              {ageLabel}
+            </Text>
+          ) : null}
         </View>
       </Pressable>
       <Pressable onPress={onBellPress} hitSlop={10} style={styles.bell}>
@@ -95,6 +102,11 @@ const styles = StyleSheet.create({
   },
   chevron: {
     marginStart: spacing.xs,
+  },
+  age: {
+    fontSize: typography.caption.fontSize,
+    color: colors.teal,
+    marginTop: 1,
   },
   bell: {
     width: 40,

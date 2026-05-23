@@ -75,6 +75,19 @@ export default function HomeScreen() {
     return milestones.filter((m) => m.childId === child.id);
   }, [child, milestones]);
 
+  const childAgeLabel = useMemo(() => {
+    if (!child) return '';
+    const totalMonths = Math.floor(
+      (Date.now() - new Date(child.dateOfBirth).getTime()) / (1000 * 60 * 60 * 24 * 30.4375),
+    );
+    if (totalMonths <= 0) return t('home.pdf.ageDays', { count: 1 });
+    if (totalMonths < 24) return t('home.pdf.ageMonths', { count: totalMonths });
+    const years = Math.floor(totalMonths / 12);
+    const rem = totalMonths % 12;
+    if (rem === 0) return t('home.pdf.ageYears', { count: years });
+    return `${t('home.pdf.ageYears', { count: years })} ${t('home.pdf.ageMonths', { count: rem })}`;
+  }, [child, t]);
+
   const monthDigest = useMemo(() => {
     if (!child) {
       return { vaccinesDue: 0, vaccinesOverdue: 0, growthThisMonth: 0, milestonesThisMonth: 0 };
@@ -123,6 +136,7 @@ export default function HomeScreen() {
         <ChildHeader
           name={child.name}
           greeting={greeting}
+          ageLabel={childAgeLabel}
           hasMultipleChildren={children.length > 1}
           onSwitchChild={() => router.push('/switch-child')}
           onBellPress={() => router.push('/notifications')}
