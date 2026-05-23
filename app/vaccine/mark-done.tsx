@@ -13,6 +13,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '../../src/components/Button';
+import { Celebration } from '../../src/components/Celebration';
 import { DateField } from '../../src/components/DateField';
 import { ScreenTitle } from '../../src/components/ScreenTitle';
 import { useRescheduleReminders } from '../../src/lib/useReminders';
@@ -38,6 +39,7 @@ export default function MarkDoneScreen() {
   const [location, setLocation] = useState('');
   const [batch, setBatch] = useState('');
   const [notes, setNotes] = useState('');
+  const [celebrate, setCelebrate] = useState(false);
 
   const code = params.code;
   const doseStr = params.dose;
@@ -57,7 +59,7 @@ export default function MarkDoneScreen() {
       notes: notes.trim() || undefined,
     });
     await rescheduleReminders(child);
-    router.back();
+    setCelebrate(true);
   };
 
   return (
@@ -131,6 +133,15 @@ export default function MarkDoneScreen() {
           />
         </View>
       </KeyboardAvoidingView>
+      <Celebration
+        visible={celebrate}
+        title={t('vaccines.celebrationTitle')}
+        body={t('vaccines.celebrationBody', { name: child?.name ?? '' })}
+        onClose={() => {
+          setCelebrate(false);
+          router.back();
+        }}
+      />
     </SafeAreaView>
   );
 }

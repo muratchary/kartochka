@@ -135,7 +135,9 @@
     "notification": {
       "title": "Yaklaşan aşı",
       "body": "{{vaccine}} doz {{number}}/{{total}} yarın yapılacak"
-    }
+    },
+    "celebrationTitle": "Yapıldı!",
+    "celebrationBody": "{{name}}'in sağlık karnesinde bir adım daha."
   },
   "growth": {
     "title": "Büyüme",

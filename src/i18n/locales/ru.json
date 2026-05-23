@@ -141,7 +141,9 @@
     "notification": {
       "title": "Скоро прививка",
       "body": "{{vaccine}}, доза {{number}} из {{total}} — завтра"
-    }
+    },
+    "celebrationTitle": "Готово!",
+    "celebrationBody": "Ещё один шаг в карте здоровья {{name}}."
   },
   "growth": {
     "title": "Рост",

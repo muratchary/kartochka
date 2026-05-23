@@ -135,7 +135,9 @@
     "notification": {
       "title": "Vaccination coming up",
       "body": "{{vaccine}} dose {{number}} of {{total}} is due tomorrow"
-    }
+    },
+    "celebrationTitle": "Done!",
+    "celebrationBody": "One more step in {{name}}'s health record."
   },
   "growth": {
     "title": "Growth",

@@ -135,7 +135,9 @@
     "notification": {
       "title": "تطعيم قادم",
       "body": "{{vaccine}} الجرعة {{number}} من {{total}} غداً"
-    }
+    },
+    "celebrationTitle": "تم!",
+    "celebrationBody": "خطوة أخرى في سجل صحة {{name}}."
   },
   "growth": {
     "title": "النمو",
