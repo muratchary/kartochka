@@ -10,6 +10,7 @@ import { Card } from '../../src/components/Card';
 import { ChildHeader } from '../../src/components/ChildHeader';
 import { Pill, type PillTone } from '../../src/components/Pill';
 import type { SupportedLanguage } from '../../src/i18n';
+import { exportChildPdf } from '../../src/lib/pdfExport';
 import { getSchedule } from '../../src/lib/schedules';
 import { nextDueVaccine, type DueStatus } from '../../src/lib/vaccinationStatus';
 import { useChildrenStore } from '../../src/stores/childrenStore';
@@ -28,6 +29,22 @@ export default function HomeScreen() {
   const milestones = useChildrenStore((s) => s.milestones);
 
   const child = children[0];
+
+  const handleExportPdf = async () => {
+    if (!child) return;
+    try {
+      await exportChildPdf({
+        child,
+        vaccinations,
+        growthEntries,
+        milestones,
+        lang,
+        t,
+      });
+    } catch {
+      Alert.alert(t('home.pdf.errorTitle'), t('home.pdf.errorBody'));
+    }
+  };
 
   const nextDue = useMemo(() => {
     if (!child) return null;
@@ -195,7 +212,7 @@ export default function HomeScreen() {
           label={t('home.pdf.cta')}
           variant="amber"
           size="md"
-          onPress={() => Alert.alert(t('home.pdf.title'), t('home.pdf.comingSoon'))}
+          onPress={handleExportPdf}
         />
       </View>
     );
