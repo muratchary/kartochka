@@ -27,6 +27,16 @@ export default function MilestonesScreen() {
 
   const groups = useMemo(() => groupMilestonesByAge(), []);
 
+  // Find which age group is "current" for the child
+  const currentGroupAge = useMemo(() => {
+    if (!child) return null;
+    const ageMonths =
+      (Date.now() - new Date(child.dateOfBirth).getTime()) / (1000 * 60 * 60 * 24 * 30.4375);
+    // The last group whose age <= child's age + 1 month buffer
+    const match = [...groups].reverse().find((g) => g.ageMonths <= ageMonths + 1);
+    return match?.ageMonths ?? groups[0].ageMonths;
+  }, [child, groups]);
+
   const reachedForChild = useMemo(
     () => (child ? milestoneRecords.filter((m) => m.childId === child.id) : []),
     [child, milestoneRecords],
@@ -88,11 +98,22 @@ export default function MilestonesScreen() {
           </View>
         </Card>
 
-        {groups.map((group) => (
+        {groups.map((group) => {
+          const isCurrentGroup = group.ageMonths === currentGroupAge;
+          return (
           <View key={group.ageMonths} style={styles.group}>
-            <Text style={[styles.groupTitle, { fontFamily: font(typography.eyebrow.weight) }]}>
-              {ageLabel(group.ageMonths, t)}
-            </Text>
+            <View style={styles.groupHeader}>
+              <Text style={[styles.groupTitle, { fontFamily: font(typography.eyebrow.weight) }]}>
+                {ageLabel(group.ageMonths, t)}
+              </Text>
+              {isCurrentGroup && (
+                <View style={styles.nowBadge}>
+                  <Text style={[styles.nowBadgeText, { fontFamily: font(700) }]}>
+                    {t('milestones.nowBadge')}
+                  </Text>
+                </View>
+              )}
+            </View>
             <View style={styles.items}>
               {group.milestones.map((m) => {
                 const record = recordsByCode.get(m.code);
@@ -141,7 +162,8 @@ export default function MilestonesScreen() {
               })}
             </View>
           </View>
-        ))}
+          );
+        })}
       </ScrollView>
 
       <Celebration
@@ -221,6 +243,23 @@ const styles = StyleSheet.create({
     borderRadius: 999,
   },
   group: { gap: spacing.sm },
+  groupHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  nowBadge: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+    borderRadius: radii.pill,
+    backgroundColor: colors.amber,
+  },
+  nowBadgeText: {
+    fontSize: 10,
+    color: colors.ink,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
   groupTitle: {
     fontSize: typography.eyebrow.fontSize,
     color: colors.ink2,

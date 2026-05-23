@@ -201,6 +201,7 @@
       "social": "اجتماعي",
       "cognitive": "إدراكي"
     },
+    "nowBadge": "الآن",
     "tapToMark": "اضغط للتسجيل",
     "markedOn": "تم في {{date}}",
     "unmark": "إزالة",

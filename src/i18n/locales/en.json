@@ -201,6 +201,7 @@
       "social": "Social",
       "cognitive": "Cognitive"
     },
+    "nowBadge": "Now",
     "tapToMark": "Tap to mark",
     "markedOn": "Reached {{date}}",
     "unmark": "Remove",

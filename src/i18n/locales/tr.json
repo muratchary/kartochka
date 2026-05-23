@@ -201,6 +201,7 @@
       "social": "Sosyal",
       "cognitive": "Bilişsel"
     },
+    "nowBadge": "Şimdi",
     "tapToMark": "İşaretlemek için dokunun",
     "markedOn": "{{date}} tarihinde ulaştı",
     "unmark": "Kaldır",
