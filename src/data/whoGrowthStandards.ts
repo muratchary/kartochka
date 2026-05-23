@@ -192,3 +192,43 @@ export function interpolateGrowthPoint(
     pos2: lerp(series[lo].pos2, series[hi].pos2),
   };
 }
+
+/**
+ * Approximate WHO percentile for a child measurement.
+ * Uses linear z-score interpolation from the –2SD / median / +2SD reference lines.
+ * Returns an integer 1–99, or null if age is outside 0–60 months.
+ */
+export function computeWHOPercentile(
+  value: number,
+  ageMonths: number,
+  whoMetric: 'weight' | 'length' | 'headcirc',
+  sex: 'boys' | 'girls',
+): number | null {
+  if (ageMonths < 0 || ageMonths > 60) return null;
+  const ref = interpolateGrowthPoint(WHO_GROWTH[whoMetric][sex], ageMonths);
+  let z: number;
+  if (value >= ref.med) {
+    const half = ref.pos2 - ref.med;
+    z = half > 0 ? (2 * (value - ref.med)) / half : 0;
+  } else {
+    const half = ref.med - ref.neg2;
+    z = half > 0 ? (2 * (value - ref.med)) / half : 0;
+  }
+  z = Math.max(-4, Math.min(4, z));
+  return Math.max(1, Math.min(99, Math.round(normCDF(z) * 100)));
+}
+
+function normCDF(z: number): number {
+  // Abramowitz & Stegun approximation — max error ~1.5e-7
+  const a1 =  0.254829592;
+  const a2 = -0.284496736;
+  const a3 =  1.421413741;
+  const a4 = -1.453152027;
+  const a5 =  1.061405429;
+  const p  =  0.3275911;
+  const sign = z < 0 ? -1 : 1;
+  const x = Math.abs(z) / Math.SQRT2;
+  const t = 1 / (1 + p * x);
+  const y = 1 - ((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+  return 0.5 * (1 + sign * y);
+}

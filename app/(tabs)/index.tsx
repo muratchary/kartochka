@@ -22,6 +22,7 @@ import {
 } from '../../src/lib/vaccinationStatus';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, spacing, typography } from '../../src/theme';
+import type { MilestoneDefinition } from '../../src/types';
 import { useFont } from '../../src/theme/useFont';
 
 export default function HomeScreen() {
@@ -74,6 +75,16 @@ export default function HomeScreen() {
     if (!child) return [];
     return milestones.filter((m) => m.childId === child.id);
   }, [child, milestones]);
+
+  const nextMilestone = useMemo(() => {
+    if (!child) return null;
+    const reachedCodes = new Set(milestonesForChild.map((m) => m.milestoneCode));
+    return (
+      [...STANDARD_MILESTONES]
+        .sort((a, b) => a.recommendedAgeMonths - b.recommendedAgeMonths)
+        .find((m) => !reachedCodes.has(m.code)) ?? null
+    );
+  }, [child, milestonesForChild]);
 
   const childAgeLabel = useMemo(() => {
     if (!child) return '';
@@ -137,6 +148,7 @@ export default function HomeScreen() {
           name={child.name}
           greeting={greeting}
           ageLabel={childAgeLabel}
+          photoUri={child.photoUri}
           hasMultipleChildren={children.length > 1}
           onSwitchChild={() => router.push('/switch-child')}
           onBellPress={() => router.push('/notifications')}
@@ -146,7 +158,7 @@ export default function HomeScreen() {
           <MonthDigestCard digest={monthDigest} />
           <NextVaccineCard nextDue={nextDue} lang={lang} />
           <GrowthCard latest={latestGrowth} lang={lang} />
-          <MilestonesCard reachedCount={milestonesForChild.length} />
+          <MilestonesCard reachedCount={milestonesForChild.length} nextMilestone={nextMilestone} />
           <PdfCtaCard />
         </View>
       </ScrollView>
@@ -349,9 +361,28 @@ export default function HomeScreen() {
     );
   }
 
-  function MilestonesCard({ reachedCount }: { reachedCount: number }) {
+  function MilestonesCard({
+    reachedCount,
+    nextMilestone: next,
+  }: {
+    reachedCount: number;
+    nextMilestone: MilestoneDefinition | null;
+  }) {
     const total = STANDARD_MILESTONES.length;
     const pct = total === 0 ? 0 : Math.round((reachedCount / total) * 100);
+
+    const nextAgeLabel = next
+      ? next.recommendedAgeMonths < 12
+        ? t('milestones.ageMonths', { count: next.recommendedAgeMonths })
+        : next.recommendedAgeMonths % 12 === 0
+          ? t('milestones.ageYears', { count: next.recommendedAgeMonths / 12 })
+          : `${t('milestones.ageYears', { count: Math.floor(next.recommendedAgeMonths / 12) })} ${t('milestones.ageMonths', { count: next.recommendedAgeMonths % 12 })}`
+      : null;
+
+    const nextName = next
+      ? (next.displayName[lang] ?? next.displayName.en)
+      : null;
+
     return (
       <Card>
         <Text style={[styles.cardLabel, { fontFamily: font(typography.eyebrow.weight) }]}>
@@ -371,6 +402,11 @@ export default function HomeScreen() {
             {t('home.milestones.empty')}
           </Text>
         )}
+        {next && nextName && nextAgeLabel ? (
+          <Text style={[styles.nextMilestone, { fontFamily: font(typography.caption.weight) }]}>
+            {t('home.milestones.nextUp')}: {nextName} ({nextAgeLabel})
+          </Text>
+        ) : null}
         <View style={[styles.cardActions, { marginTop: spacing.sm }]}>
           <Button
             label={t('home.milestones.viewAll')}
@@ -534,6 +570,11 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: colors.teal,
     borderRadius: 999,
+  },
+  nextMilestone: {
+    marginTop: spacing.sm,
+    fontSize: typography.caption.fontSize,
+    color: colors.ink3,
   },
   digestCard: {
     backgroundColor: colors.tealSoft,

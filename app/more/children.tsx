@@ -6,11 +6,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '../../src/components/Button';
 import { Card } from '../../src/components/Card';
+import { ChildAvatar } from '../../src/components/ChildAvatar';
 import { ScreenTitle } from '../../src/components/ScreenTitle';
 import type { SupportedLanguage } from '../../src/i18n';
 import { cancelChildReminders } from '../../src/lib/notifications';
 import { useChildrenStore } from '../../src/stores/childrenStore';
-import { colors, radii, spacing, typography } from '../../src/theme';
+import { colors, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
 export default function ChildrenSettingsScreen() {
@@ -52,7 +53,6 @@ export default function ChildrenSettingsScreen() {
 
         <View style={styles.list}>
           {children.map((c) => {
-            const letter = c.name.trim().charAt(0).toUpperCase() || '?';
             return (
               <Pressable
                 key={c.id}
@@ -61,9 +61,7 @@ export default function ChildrenSettingsScreen() {
                 }>
                 <Card style={{ padding: spacing.lg }}>
                   <View style={styles.row}>
-                    <View style={styles.avatar}>
-                      <Text style={[styles.avatarLetter, { fontFamily: font(800) }]}>{letter}</Text>
-                    </View>
+                    <ChildAvatar name={c.name} photoUri={c.photoUri} size={48} />
                     <View style={{ flex: 1 }}>
                       <Text style={[styles.name, { fontFamily: font(700) }]}>{c.name}</Text>
                       <Text style={[styles.meta, { fontFamily: font(600) }]}>
@@ -135,15 +133,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: spacing.lg,
   },
-  avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: radii.pill,
-    backgroundColor: colors.tealSoft,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarLetter: { fontSize: 20, color: colors.tealDark },
   name: { fontSize: typography.body.fontSize, color: colors.ink },
   meta: { fontSize: typography.caption.fontSize, color: colors.ink2, marginTop: 2 },
   premiumNote: {

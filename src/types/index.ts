@@ -13,6 +13,7 @@ export interface Child {
   dateOfBirth: IsoDate;
   sex: Sex;
   countryCode: string;
+  photoUri?: string;
   createdAt: IsoDateTime;
   updatedAt: IsoDateTime;
 }

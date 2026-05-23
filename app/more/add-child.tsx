@@ -1,8 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -15,6 +17,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '../../src/components/Button';
+import { ChildAvatar } from '../../src/components/ChildAvatar';
 import { DateField } from '../../src/components/DateField';
 import { ScreenTitle } from '../../src/components/ScreenTitle';
 import { Segmented } from '../../src/components/Segmented';
@@ -56,6 +59,32 @@ export default function AddOrEditChildScreen() {
   const [dob, setDob] = useState<string | null>(existing?.dateOfBirth ?? null);
   const [sex, setSex] = useState<Sex | null>(existing?.sex ?? null);
   const [country, setCountry] = useState<string>(defaultCountry);
+  const [photoUri, setPhotoUri] = useState<string | null>(existing?.photoUri ?? null);
+
+  const handlePickPhoto = () => {
+    const options: string[] = [t('vaccines.markDone.addPhoto')];
+    if (photoUri) options.push(t('vaccines.markDone.removePhoto'));
+    options.push(t('common.cancel'));
+    Alert.alert('', '', options.map((label, index) => ({
+      text: label,
+      style: index === options.length - 1 ? 'cancel' : 'default',
+      onPress: async () => {
+        if (index === 0) {
+          const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 0.8,
+          });
+          if (!result.canceled && result.assets[0]) {
+            setPhotoUri(result.assets[0].uri);
+          }
+        } else if (photoUri && index === 1) {
+          setPhotoUri(null);
+        }
+      },
+    })));
+  };
 
   const sexOptions: Array<{ value: Sex; label: string }> = [
     { value: 'male', label: t('onboarding.addChild.sexBoy') },
@@ -73,6 +102,7 @@ export default function AddOrEditChildScreen() {
         dateOfBirth: dob,
         sex,
         countryCode: country,
+        photoUri: photoUri ?? undefined,
       });
       const updated: Child = {
         ...existing,
@@ -80,6 +110,7 @@ export default function AddOrEditChildScreen() {
         dateOfBirth: dob,
         sex,
         countryCode: country,
+        photoUri: photoUri ?? undefined,
         updatedAt: new Date().toISOString(),
       };
       await rescheduleReminders(updated);
@@ -89,6 +120,7 @@ export default function AddOrEditChildScreen() {
         dateOfBirth: dob,
         sex,
         countryCode: country,
+        photoUri: photoUri ?? undefined,
       });
       await rescheduleReminders(child);
     }
@@ -116,6 +148,13 @@ export default function AddOrEditChildScreen() {
             }
             subtitle={t('onboarding.addChild.subtitle')}
           />
+
+          <Pressable onPress={handlePickPhoto} style={styles.avatarPicker}>
+            <ChildAvatar name={name || '?'} photoUri={photoUri} size={72} />
+            <View style={styles.cameraOverlay}>
+              <Ionicons name="camera" size={14} color={colors.surface} />
+            </View>
+          </Pressable>
 
           <Text style={[styles.label, { fontFamily: font(700) }]}>
             {t('onboarding.addChild.nameLabel')}
@@ -200,6 +239,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.md,
     paddingBottom: spacing.xxl,
+  },
+  avatarPicker: {
+    alignSelf: 'center',
+    marginBottom: spacing.xl,
+  },
+  cameraOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    end: 0,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: colors.teal,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: colors.bg,
   },
   label: {
     fontSize: typography.caption.fontSize,

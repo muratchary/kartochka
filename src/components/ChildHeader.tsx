@@ -1,13 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { colors, radii, spacing, typography } from '../theme';
+import { colors, spacing, typography } from '../theme';
 import { useFont } from '../theme/useFont';
+import { ChildAvatar } from './ChildAvatar';
 
 interface Props {
   name: string;
   greeting: string;
   ageLabel?: string;
+  photoUri?: string | null;
   onBellPress?: () => void;
   onSwitchChild?: () => void;
   hasMultipleChildren?: boolean;
@@ -17,12 +19,12 @@ export function ChildHeader({
   name,
   greeting,
   ageLabel,
+  photoUri,
   onBellPress,
   onSwitchChild,
   hasMultipleChildren = false,
 }: Props) {
   const font = useFont();
-  const letter = name.trim().charAt(0).toUpperCase() || '?';
 
   return (
     <View style={styles.row}>
@@ -30,9 +32,7 @@ export function ChildHeader({
         onPress={hasMultipleChildren ? onSwitchChild : undefined}
         style={styles.identity}
         hitSlop={6}>
-        <View style={styles.avatar}>
-          <Text style={[styles.avatarLetter, { fontFamily: font(800) }]}>{letter}</Text>
-        </View>
+        <ChildAvatar name={name} photoUri={photoUri} size={48} />
         <View style={styles.text}>
           <Text style={[styles.greeting, { fontFamily: font(typography.caption.weight) }]}>
             {greeting}
@@ -72,18 +72,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
-  },
-  avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: radii.pill,
-    backgroundColor: colors.tealSoft,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarLetter: {
-    fontSize: 20,
-    color: colors.tealDark,
   },
   text: { flex: 1 },
   greeting: {

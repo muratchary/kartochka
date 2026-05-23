@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../src/components/Button';
 import { Card } from '../../src/components/Card';
 import { GrowthChart, type ChartPoint, type GrowthMetric } from '../../src/components/GrowthChart';
+import { computeWHOPercentile } from '../../src/data/whoGrowthStandards';
 import type { SupportedLanguage } from '../../src/i18n';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import type { GrowthEntry } from '../../src/types';
@@ -38,7 +39,11 @@ export default function GrowthScreen() {
   const chartsByMetric = useMemo(() => {
     if (!child) return [];
     const dob = new Date(child.dateOfBirth).getTime();
+    const whoSex: 'boys' | 'girls' | null =
+      child.sex === 'male' ? 'boys' : child.sex === 'female' ? 'girls' : null;
     return METRICS.map((metric) => {
+      const whoMetric =
+        metric === 'weight' ? 'weight' : metric === 'height' ? 'length' : 'headcirc';
       const points = entries
         .map((e) => {
           const value =
@@ -53,7 +58,21 @@ export default function GrowthScreen() {
           return { ageMonths: Math.max(0, ageMonths), value };
         })
         .filter((p): p is ChartPoint => p !== null);
-      return { metric, points };
+
+      // Percentile for the most recent entry that has this metric
+      let latestPercentile: number | null = null;
+      if (points.length > 0) {
+        const latest = points[0]; // entries sorted newest-first
+        if (whoSex) {
+          latestPercentile = computeWHOPercentile(latest.value, latest.ageMonths, whoMetric as 'weight' | 'length' | 'headcirc', whoSex);
+        } else {
+          const b = computeWHOPercentile(latest.value, latest.ageMonths, whoMetric as 'weight' | 'length' | 'headcirc', 'boys');
+          const g = computeWHOPercentile(latest.value, latest.ageMonths, whoMetric as 'weight' | 'length' | 'headcirc', 'girls');
+          latestPercentile = b != null && g != null ? Math.round((b + g) / 2) : null;
+        }
+      }
+
+      return { metric, points, latestPercentile };
     });
   }, [child, entries]);
 
@@ -104,15 +123,24 @@ export default function GrowthScreen() {
       ) : (
         <>
           <ScrollView contentContainerStyle={styles.list}>
-            {chartsByMetric.map(({ metric, points }) => (
+            {chartsByMetric.map(({ metric, points, latestPercentile }) => (
               <View key={metric} style={styles.chartBlock}>
-                <Text
-                  style={[
-                    styles.eyebrow,
-                    { fontFamily: font(typography.eyebrow.weight) },
-                  ]}>
-                  {labelFor(metric)} ({unitFor(metric)})
-                </Text>
+                <View style={styles.chartEyebrowRow}>
+                  <Text
+                    style={[
+                      styles.eyebrow,
+                      { fontFamily: font(typography.eyebrow.weight) },
+                    ]}>
+                    {labelFor(metric)} ({unitFor(metric)})
+                  </Text>
+                  {latestPercentile != null && (
+                    <View style={styles.percentileBadge}>
+                      <Text style={[styles.percentileBadgeText, { fontFamily: font(600) }]}>
+                        {t('growth.percentile', { value: latestPercentile })}
+                      </Text>
+                    </View>
+                  )}
+                </View>
                 {points.length >= 2 ? (
                   <>
                     <GrowthChart
@@ -174,33 +202,45 @@ export default function GrowthScreen() {
                     </View>
                   </View>
                   <View style={styles.metrics}>
-                    {entry.weightKg != null && (
-                      <Metric
-                        label={t('growth.weightLabel')}
-                        value={`${entry.weightKg} ${t('growth.kg')}`}
-                        delta={deltaFor(entries, idx, 'weightKg')}
-                        unit={t('growth.kg')}
-                        font={font}
-                      />
-                    )}
-                    {entry.heightCm != null && (
-                      <Metric
-                        label={t('growth.heightLabel')}
-                        value={`${entry.heightCm} ${t('growth.cm')}`}
-                        delta={deltaFor(entries, idx, 'heightCm')}
-                        unit={t('growth.cm')}
-                        font={font}
-                      />
-                    )}
-                    {entry.headCircumferenceCm != null && (
-                      <Metric
-                        label={t('growth.headLabel')}
-                        value={`${entry.headCircumferenceCm} ${t('growth.cm')}`}
-                        delta={deltaFor(entries, idx, 'headCircumferenceCm')}
-                        unit={t('growth.cm')}
-                        font={font}
-                      />
-                    )}
+                    {entry.weightKg != null && (() => {
+                      const p = entryPercentile(entry.weightKg!, entry.measuredOn, child.dateOfBirth, 'weight', child.sex);
+                      return (
+                        <Metric
+                          label={t('growth.weightLabel')}
+                          value={`${entry.weightKg} ${t('growth.kg')}`}
+                          delta={deltaFor(entries, idx, 'weightKg')}
+                          unit={t('growth.kg')}
+                          percentileLabel={p != null ? t('growth.percentile', { value: p }) : null}
+                          font={font}
+                        />
+                      );
+                    })()}
+                    {entry.heightCm != null && (() => {
+                      const p = entryPercentile(entry.heightCm!, entry.measuredOn, child.dateOfBirth, 'length', child.sex);
+                      return (
+                        <Metric
+                          label={t('growth.heightLabel')}
+                          value={`${entry.heightCm} ${t('growth.cm')}`}
+                          delta={deltaFor(entries, idx, 'heightCm')}
+                          unit={t('growth.cm')}
+                          percentileLabel={p != null ? t('growth.percentile', { value: p }) : null}
+                          font={font}
+                        />
+                      );
+                    })()}
+                    {entry.headCircumferenceCm != null && (() => {
+                      const p = entryPercentile(entry.headCircumferenceCm!, entry.measuredOn, child.dateOfBirth, 'headcirc', child.sex);
+                      return (
+                        <Metric
+                          label={t('growth.headLabel')}
+                          value={`${entry.headCircumferenceCm} ${t('growth.cm')}`}
+                          delta={deltaFor(entries, idx, 'headCircumferenceCm')}
+                          unit={t('growth.cm')}
+                          percentileLabel={p != null ? t('growth.percentile', { value: p }) : null}
+                          font={font}
+                        />
+                      );
+                    })()}
                   </View>
                   {entry.notes ? (
                     <Text style={[styles.notes, { fontFamily: font(typography.body.weight) }]}>
@@ -225,12 +265,14 @@ function Metric({
   value,
   delta,
   unit,
+  percentileLabel,
   font,
 }: {
   label: string;
   value: string;
   delta?: number | null;
   unit?: string;
+  percentileLabel?: string | null;
   font: (w: 400 | 500 | 600 | 700 | 800) => string;
 }) {
   const showDelta = delta != null && Math.abs(delta) >= 0.05;
@@ -251,6 +293,11 @@ function Metric({
           {unit ? ` ${unit}` : ''}
         </Text>
       )}
+      {percentileLabel != null && (
+        <Text style={[styles.metricPercentile, { fontFamily: font(500) }]}>
+          {percentileLabel}
+        </Text>
+      )}
     </View>
   );
 }
@@ -268,6 +315,26 @@ function deltaFor(
     if (prev != null) return curr - prev;
   }
   return null;
+}
+
+/** Compute WHO percentile for a single growth entry field. */
+function entryPercentile(
+  value: number,
+  measuredOn: string,
+  dateOfBirth: string,
+  whoMetric: 'weight' | 'length' | 'headcirc',
+  sex?: string | null,
+): number | null {
+  const ageMonths =
+    (new Date(measuredOn).getTime() - new Date(dateOfBirth).getTime()) /
+    (1000 * 60 * 60 * 24 * 30.4375);
+  if (ageMonths < 0 || ageMonths > 60) return null;
+  if (sex === 'male') return computeWHOPercentile(value, ageMonths, whoMetric, 'boys');
+  if (sex === 'female') return computeWHOPercentile(value, ageMonths, whoMetric, 'girls');
+  // unspecified: average boys and girls
+  const b = computeWHOPercentile(value, ageMonths, whoMetric, 'boys');
+  const g = computeWHOPercentile(value, ageMonths, whoMetric, 'girls');
+  return b != null && g != null ? Math.round((b + g) / 2) : null;
 }
 
 function formatDate(date: Date, lang: SupportedLanguage): string {
@@ -306,6 +373,21 @@ const styles = StyleSheet.create({
   },
   chartBlock: {
     gap: spacing.xs,
+  },
+  chartEyebrowRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  percentileBadge: {
+    backgroundColor: colors.tealSoft,
+    borderRadius: 99,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+  },
+  percentileBadgeText: {
+    fontSize: 11,
+    color: colors.teal,
   },
   eyebrow: {
     fontSize: typography.eyebrow.fontSize,
@@ -360,6 +442,11 @@ const styles = StyleSheet.create({
   },
   metricDelta: {
     fontSize: 12,
+    marginTop: 2,
+  },
+  metricPercentile: {
+    fontSize: 11,
+    color: colors.teal,
     marginTop: 2,
   },
   notes: {

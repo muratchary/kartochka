@@ -5,9 +5,10 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Card } from '../src/components/Card';
+import { ChildAvatar } from '../src/components/ChildAvatar';
 import { ScreenTitle } from '../src/components/ScreenTitle';
 import { useChildrenStore } from '../src/stores/childrenStore';
-import { colors, radii, spacing, typography } from '../src/theme';
+import { colors, spacing, typography } from '../src/theme';
 import { useFont } from '../src/theme/useFont';
 
 export default function SwitchChildScreen() {
@@ -38,15 +39,12 @@ export default function SwitchChildScreen() {
         />
         <View style={styles.list}>
           {children.map((c) => {
-            const letter = c.name.trim().charAt(0).toUpperCase() || '?';
             const active = c.id === selectedChildId || (!selectedChildId && c.id === children[0]?.id);
             return (
               <Pressable key={c.id} onPress={() => handlePick(c.id)}>
                 <Card style={[styles.card, active && styles.cardActive]}>
                   <View style={styles.row}>
-                    <View style={styles.avatar}>
-                      <Text style={[styles.avatarLetter, { fontFamily: font(800) }]}>{letter}</Text>
-                    </View>
+                    <ChildAvatar name={c.name} photoUri={c.photoUri} size={48} />
                     <View style={{ flex: 1 }}>
                       <Text style={[styles.name, { fontFamily: font(700) }]}>{c.name}</Text>
                       <Text style={[styles.meta, { fontFamily: font(600) }]}>
@@ -88,15 +86,6 @@ const styles = StyleSheet.create({
   card: { padding: spacing.lg },
   cardActive: { borderColor: colors.tealLine, backgroundColor: colors.tealSoft },
   row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: radii.pill,
-    backgroundColor: colors.tealSoft,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarLetter: { fontSize: 20, color: colors.tealDark },
   name: { fontSize: typography.body.fontSize, color: colors.ink },
   meta: { fontSize: typography.caption.fontSize, color: colors.ink2, marginTop: 2 },
 });

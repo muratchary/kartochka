@@ -57,7 +57,8 @@
     "milestones": {
       "label": "Milestones",
       "empty": "Tracking starts when you check the first one off.",
-      "viewAll": "View all"
+      "viewAll": "View all",
+      "nextUp": "Coming up"
     },
     "pdf": {
       "title": "Doctor's PDF",
@@ -171,6 +172,7 @@
     "chartNeedMore": "Add another measurement to see the trend.",
     "chartTitle": "Over time",
     "chartWhoRef": "Dashed lines: WHO reference (3rd · 50th · 97th percentile)",
+    "percentile": "Percentile {{value}}",
     "add": {
       "title": "New measurement",
       "subtitle": "All fields are optional. Skip what you don't need.",

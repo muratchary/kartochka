@@ -57,7 +57,8 @@
     "milestones": {
       "label": "Gelişim",
       "empty": "İlk gelişim aşamasını işaretlediğinizde başlar.",
-      "viewAll": "Tümünü gör"
+      "viewAll": "Tümünü gör",
+      "nextUp": "Sırada"
     },
     "pdf": {
       "title": "Doktor PDF'i",
@@ -171,6 +172,7 @@
     "chartNeedMore": "Eğilimi görmek için başka bir ölçüm ekleyin.",
     "chartTitle": "Zaman içinde",
     "chartWhoRef": "Kesik çizgiler: DSÖ referansı (3. · 50. · 97. persentil)",
+    "percentile": "Persentil {{value}}",
     "add": {
       "title": "Yeni ölçüm",
       "subtitle": "Tüm alanlar isteğe bağlı. İhtiyacınız olmayanı atlayın.",
