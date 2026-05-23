@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Redirect, useRouter } from 'expo-router';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '../../src/components/Button';
@@ -21,7 +21,7 @@ import {
   type DueStatus,
 } from '../../src/lib/vaccinationStatus';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
-import { colors, spacing, typography } from '../../src/theme';
+import { colors, radii, spacing, typography } from '../../src/theme';
 import type { MilestoneDefinition } from '../../src/types';
 import { useFont } from '../../src/theme/useFont';
 
@@ -153,6 +153,14 @@ export default function HomeScreen() {
           onSwitchChild={() => router.push('/switch-child')}
           onBellPress={() => router.push('/notifications')}
         />
+
+        <Pressable style={styles.doctorVisitStrip} onPress={() => router.push('/doctor-card')}>
+          <Ionicons name="medkit-outline" size={16} color={colors.teal} />
+          <Text style={[styles.doctorVisitText, { fontFamily: font(600) }]}>
+            {t('home.doctorVisit')}
+          </Text>
+          <Ionicons name="chevron-forward" size={14} color={colors.teal} style={{ marginStart: 'auto' }} />
+        </Pressable>
 
         <View style={styles.cards}>
           <MonthDigestCard digest={monthDigest} />
@@ -515,6 +523,22 @@ const styles = StyleSheet.create({
     paddingTop: spacing.md,
     paddingBottom: spacing.xxl,
     gap: spacing.lg,
+  },
+  doctorVisitStrip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    backgroundColor: colors.tealSoft,
+    borderRadius: radii.md,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm + 2,
+    marginBottom: spacing.md,
+    borderWidth: 1,
+    borderColor: colors.tealLine,
+  },
+  doctorVisitText: {
+    fontSize: typography.caption.fontSize,
+    color: colors.teal,
   },
   cards: { gap: spacing.md },
   cardHeader: {

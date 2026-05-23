@@ -1,11 +1,12 @@
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '../../src/components/Button';
 import { SeedlingMark } from '../../src/components/brand/SeedlingMark';
 import { Wordmark } from '../../src/components/brand/Wordmark';
+import { useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -13,6 +14,7 @@ export default function WelcomeScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const font = useFont();
+  const seedDemoData = useChildrenStore((s) => s.seedDemoData);
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
@@ -47,6 +49,16 @@ export default function WelcomeScreen() {
           full
           onPress={() => router.push('/onboarding/country')}
         />
+        <Pressable
+          onPress={() => {
+            seedDemoData();
+            router.replace('/(tabs)');
+          }}
+          hitSlop={8}>
+          <Text style={[styles.demoLink, { fontFamily: font(600) }]}>
+            {t('onboarding.welcome.tryDemo')}
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -78,6 +90,12 @@ const styles = StyleSheet.create({
   },
   footer: {
     gap: spacing.md,
+  },
+  demoLink: {
+    fontSize: typography.body.fontSize,
+    color: colors.teal,
+    textAlign: 'center',
+    paddingVertical: spacing.xs,
   },
   privacy: {
     fontSize: typography.caption.fontSize,

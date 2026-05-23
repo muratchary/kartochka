@@ -54,6 +54,7 @@
       "empty": "Henüz ölçüm yok.",
       "addCta": "Ölçüm ekle"
     },
+    "doctorVisit": "Doktor ziyaret kartı",
     "milestones": {
       "label": "Gelişim",
       "empty": "İlk gelişim aşamasını işaretlediğinizde başlar.",
@@ -103,6 +104,14 @@
       "noMilestones": "Henüz hiçbir gelişim aşaması işaretlenmedi.",
       "disclaimer": "Takvim {{source}} kaynağına dayanmaktadır. Bu belge sadece bilgilendirme amaçlıdır ve tıbbi tavsiye değildir."
     }
+  },
+  "doctorCard": {
+    "title": "Ziyaret kartı",
+    "share": "Paylaş",
+    "noData": "—",
+    "nextVaccine": "Sonraki aşı",
+    "allUpToDate": "Hepsi güncel",
+    "preparedWith": "Kartochka ile hazırlandı"
   },
   "vaccines": {
     "title": "Aşılar",
@@ -155,7 +164,9 @@
       "body": "{{vaccine}} doz {{number}}/{{total}} yarın yapılacak"
     },
     "celebrationTitle": "Yapıldı!",
-    "celebrationBody": "{{name}}'in sağlık karnesinde bir adım daha."
+    "celebrationBody": "{{name}}'in sağlık karnesinde bir adım daha.",
+    "catchupTitle": "Yakalama notu",
+    "catchupBody": "Bu doz gecikmiş. En kısa sürede verin — sonraki doz en az 4 hafta sonra olmalıdır."
   },
   "growth": {
     "title": "Büyüme",
@@ -314,6 +325,7 @@
   "onboarding": {
     "welcome": {
       "cta": "Başla",
+      "tryDemo": "Örnek çocukla dene",
       "privacy": "Çocuğunuzun verileri bu telefonda kalır. Bulut yedekleme isteğe bağlıdır."
     },
     "country": {

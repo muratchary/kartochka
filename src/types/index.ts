@@ -53,6 +53,7 @@ export interface MilestoneRecord {
   milestoneCode: string;
   achievedOn: IsoDate;
   notes?: string;
+  photoUri?: string;
   createdAt: IsoDateTime;
   updatedAt: IsoDateTime;
 }

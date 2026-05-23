@@ -38,6 +38,7 @@ interface ChildrenState {
 
   addMilestone: (input: NewMilestoneRecord) => MilestoneRecord;
   removeMilestone: (id: string) => void;
+  updateMilestonePhoto: (id: string, photoUri: string | null) => void;
 
   seedDemoData: () => void;
   clearAll: () => void;
@@ -136,6 +137,15 @@ export const useChildrenStore = create<ChildrenState>()(
       },
       removeMilestone: (id) => {
         set((state) => ({ milestones: state.milestones.filter((m) => m.id !== id) }));
+      },
+      updateMilestonePhoto: (id, photoUri) => {
+        set((state) => ({
+          milestones: state.milestones.map((m) =>
+            m.id === id
+              ? { ...m, photoUri: photoUri ?? undefined, updatedAt: now() }
+              : m,
+          ),
+        }));
       },
 
       seedDemoData: () => {

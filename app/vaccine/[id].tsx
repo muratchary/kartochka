@@ -48,7 +48,16 @@ export default function VaccineDetailScreen() {
     const record = vaccinations.find(
       (r) => r.childId === child.id && r.vaccineCode === parsed.code && r.doseNumber === parsed.doseNumber,
     );
-    const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths);
+    const prevRecord = parsed.doseNumber > 1
+      ? vaccinations.find(
+          (r) => r.childId === child.id && r.vaccineCode === parsed.code && r.doseNumber === parsed.doseNumber - 1,
+        )
+      : null;
+    const dueDate = dueDateForDose(
+      child.dateOfBirth,
+      dose.recommendedAgeMonths,
+      prevRecord?.administeredOn ?? null,
+    );
     const now = Date.now();
     const daysFromNow = Math.round((dueDate.getTime() - now) / (1000 * 60 * 60 * 24));
     const status: Status = record ? 'done' : statusFromDays(daysFromNow);
@@ -162,6 +171,17 @@ export default function VaccineDetailScreen() {
           )}
         </Card>
 
+        {!record && status === 'overdue' ? (
+          <Card style={[styles.descCard, styles.catchupCard]}>
+            <Text style={[styles.eyebrow, { fontFamily: font(typography.eyebrow.weight), color: '#92400E' }]}>
+              {t('vaccines.catchupTitle')}
+            </Text>
+            <Text style={[styles.bodyText, { fontFamily: font(typography.body.weight) }]}>
+              {t('vaccines.catchupBody')}
+            </Text>
+          </Card>
+        ) : null}
+
         {!record ? (
           <Card style={[styles.descCard, styles.reassureCard]}>
             <Text style={[styles.bodyText, { fontFamily: font(typography.body.weight) }]}>
@@ -254,6 +274,7 @@ const styles = StyleSheet.create({
   },
   descCard: { padding: spacing.lg },
   reassureCard: { backgroundColor: colors.tealSoft, borderColor: colors.tealLine },
+  catchupCard: { backgroundColor: '#FFFBEB', borderColor: '#FCD34D' },
   eyebrow: {
     fontSize: typography.eyebrow.fontSize,
     color: colors.ink2,

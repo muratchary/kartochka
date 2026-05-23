@@ -54,6 +54,7 @@
       "empty": "No measurements yet.",
       "addCta": "Add measurement"
     },
+    "doctorVisit": "Doctor visit card",
     "milestones": {
       "label": "Milestones",
       "empty": "Tracking starts when you check the first one off.",
@@ -103,6 +104,14 @@
       "noMilestones": "No milestones marked as reached yet.",
       "disclaimer": "Schedule based on {{source}}. This document is for informational purposes only and is not medical advice."
     }
+  },
+  "doctorCard": {
+    "title": "Visit card",
+    "share": "Share",
+    "noData": "—",
+    "nextVaccine": "Next vaccine",
+    "allUpToDate": "All up to date",
+    "preparedWith": "Prepared with Kartochka"
   },
   "vaccines": {
     "title": "Vaccines",
@@ -155,7 +164,9 @@
       "body": "{{vaccine}} dose {{number}} of {{total}} is due tomorrow"
     },
     "celebrationTitle": "Done!",
-    "celebrationBody": "One more step in {{name}}'s health record."
+    "celebrationBody": "One more step in {{name}}'s health record.",
+    "catchupTitle": "Catch-up note",
+    "catchupBody": "This dose is overdue. Give it as soon as possible — the next dose should be at least 4 weeks after."
   },
   "growth": {
     "title": "Growth",
@@ -314,6 +325,7 @@
   "onboarding": {
     "welcome": {
       "cta": "Get started",
+      "tryDemo": "Explore with a sample child",
       "privacy": "Your child's data stays on this phone. Cloud backup is optional."
     },
     "country": {

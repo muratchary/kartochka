@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import { Redirect } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Card } from '../../src/components/Card';
@@ -22,6 +23,7 @@ export default function MilestonesScreen() {
   const milestoneRecords = useChildrenStore((s) => s.milestones);
   const addMilestone = useChildrenStore((s) => s.addMilestone);
   const removeMilestone = useChildrenStore((s) => s.removeMilestone);
+  const updateMilestonePhoto = useChildrenStore((s) => s.updateMilestonePhoto);
 
   const [celebrate, setCelebrate] = useState(false);
 
@@ -72,6 +74,34 @@ export default function MilestonesScreen() {
       achievedOn: new Date().toISOString().slice(0, 10),
     });
     setCelebrate(true);
+  };
+
+  const handlePhotoPress = (recordId: string, existingUri?: string) => {
+    const options = existingUri
+      ? [t('vaccines.markDone.changePhoto'), t('vaccines.markDone.removePhoto'), t('common.cancel')]
+      : [t('vaccines.markDone.addPhoto'), t('common.cancel')];
+
+    Alert.alert('', '', options.map((label, index) => ({
+      text: label,
+      style: index === options.length - 1 ? 'cancel' : 'default',
+      onPress: async () => {
+        if (label === t('vaccines.markDone.removePhoto')) {
+          updateMilestonePhoto(recordId, null);
+          return;
+        }
+        if (label === t('vaccines.markDone.addPhoto') || label === t('vaccines.markDone.changePhoto')) {
+          const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 0.8,
+          });
+          if (!result.canceled && result.assets[0]) {
+            updateMilestonePhoto(recordId, result.assets[0].uri);
+          }
+        }
+      },
+    })));
   };
 
   return (
@@ -152,9 +182,20 @@ export default function MilestonesScreen() {
                         </Text>
                       ) : null}
                       {record ? (
-                        <Text style={[styles.itemDate, { fontFamily: font(700) }]}>
-                          {t('milestones.markedOn', { date: formatDate(new Date(record.achievedOn), lang) })}
-                        </Text>
+                        <View style={styles.itemBottomRow}>
+                          <Text style={[styles.itemDate, { fontFamily: font(700) }]}>
+                            {t('milestones.markedOn', { date: formatDate(new Date(record.achievedOn), lang) })}
+                          </Text>
+                          <Pressable
+                            hitSlop={8}
+                            onPress={(e) => { e.stopPropagation(); handlePhotoPress(record.id, record.photoUri); }}>
+                            {record.photoUri ? (
+                              <Image source={{ uri: record.photoUri }} style={styles.photoThumb} />
+                            ) : (
+                              <Ionicons name="camera-outline" size={16} color={colors.ink3} />
+                            )}
+                          </Pressable>
+                        </View>
                       ) : null}
                     </View>
                   </Pressable>
@@ -309,4 +350,15 @@ const styles = StyleSheet.create({
     lineHeight: 17,
   },
   itemDate: { fontSize: 11, color: colors.success, fontWeight: '700' as const, marginTop: 2 },
+  itemBottomRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 2,
+  },
+  photoThumb: {
+    width: 32,
+    height: 32,
+    borderRadius: radii.sm,
+  },
 });

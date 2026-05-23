@@ -19,10 +19,20 @@ export interface NextDue {
   daysFromNow: number;
 }
 
-export function dueDateForDose(dateOfBirth: string, recommendedAgeMonths: number): Date {
+export function dueDateForDose(
+  dateOfBirth: string,
+  recommendedAgeMonths: number,
+  prevDoseGivenDate?: string | null,
+  minimumIntervalDays = 28,
+): Date {
   const birth = new Date(dateOfBirth);
-  const daysToAdd = recommendedAgeMonths * DAYS_PER_MONTH;
-  return new Date(birth.getTime() + daysToAdd * MS_PER_DAY);
+  const scheduledDate = new Date(birth.getTime() + recommendedAgeMonths * DAYS_PER_MONTH * MS_PER_DAY);
+  if (prevDoseGivenDate) {
+    const prevGiven = new Date(prevDoseGivenDate);
+    const earliestFromPrev = new Date(prevGiven.getTime() + minimumIntervalDays * MS_PER_DAY);
+    return earliestFromPrev > scheduledDate ? earliestFromPrev : scheduledDate;
+  }
+  return scheduledDate;
 }
 
 export function statusFromDays(daysFromNow: number): DueStatus {
@@ -49,7 +59,17 @@ export function nextDueVaccine(
       );
       if (isDone) continue;
 
-      const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths);
+      // For catch-up: base due date on when the previous dose was actually given
+      const prevRecord = dose.doseNumber > 1
+        ? childRecords.find(
+            (r) => r.vaccineCode === vaccine.code && r.doseNumber === dose.doseNumber - 1,
+          )
+        : null;
+      const dueDate = dueDateForDose(
+        child.dateOfBirth,
+        dose.recommendedAgeMonths,
+        prevRecord?.administeredOn ?? null,
+      );
       const daysFromNow = Math.round((dueDate.getTime() - now.getTime()) / MS_PER_DAY);
       const status = statusFromDays(daysFromNow);
 
