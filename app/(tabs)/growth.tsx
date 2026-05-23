@@ -10,6 +10,7 @@ import { Card } from '../../src/components/Card';
 import { GrowthChart, type ChartPoint, type GrowthMetric } from '../../src/components/GrowthChart';
 import type { SupportedLanguage } from '../../src/i18n';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
+import type { GrowthEntry } from '../../src/types';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -135,7 +136,7 @@ export default function GrowthScreen() {
               ]}>
               {t('growth.title')}
             </Text>
-            {entries.map((entry) => (
+            {entries.map((entry, idx) => (
               <Pressable
                 key={entry.id}
                 onPress={() =>
@@ -163,6 +164,8 @@ export default function GrowthScreen() {
                       <Metric
                         label={t('growth.weightLabel')}
                         value={`${entry.weightKg} ${t('growth.kg')}`}
+                        delta={deltaFor(entries, idx, 'weightKg')}
+                        unit={t('growth.kg')}
                         font={font}
                       />
                     )}
@@ -170,6 +173,8 @@ export default function GrowthScreen() {
                       <Metric
                         label={t('growth.heightLabel')}
                         value={`${entry.heightCm} ${t('growth.cm')}`}
+                        delta={deltaFor(entries, idx, 'heightCm')}
+                        unit={t('growth.cm')}
                         font={font}
                       />
                     )}
@@ -177,6 +182,8 @@ export default function GrowthScreen() {
                       <Metric
                         label={t('growth.headLabel')}
                         value={`${entry.headCircumferenceCm} ${t('growth.cm')}`}
+                        delta={deltaFor(entries, idx, 'headCircumferenceCm')}
+                        unit={t('growth.cm')}
                         font={font}
                       />
                     )}
@@ -199,15 +206,54 @@ export default function GrowthScreen() {
   );
 }
 
-function Metric({ label, value, font }: { label: string; value: string; font: (w: 400 | 500 | 600 | 700 | 800) => string }) {
+function Metric({
+  label,
+  value,
+  delta,
+  unit,
+  font,
+}: {
+  label: string;
+  value: string;
+  delta?: number | null;
+  unit?: string;
+  font: (w: 400 | 500 | 600 | 700 | 800) => string;
+}) {
+  const showDelta = delta != null && Math.abs(delta) >= 0.05;
   return (
     <View style={styles.metric}>
       <Text style={[styles.metricLabel, { fontFamily: font(typography.eyebrow.weight) }]}>
         {label}
       </Text>
       <Text style={[styles.metricValue, { fontFamily: font(700) }]}>{value}</Text>
+      {showDelta && (
+        <Text
+          style={[
+            styles.metricDelta,
+            { color: delta! >= 0 ? colors.success : colors.error, fontFamily: font(600) },
+          ]}>
+          {delta! >= 0 ? '+' : ''}
+          {Math.round(delta! * 10) / 10}
+          {unit ? ` ${unit}` : ''}
+        </Text>
+      )}
     </View>
   );
+}
+
+/** Find the delta for a metric comparing the current entry to the most recent prior entry that has that field. */
+function deltaFor(
+  entries: GrowthEntry[],
+  index: number,
+  field: 'weightKg' | 'heightCm' | 'headCircumferenceCm',
+): number | null {
+  const curr = entries[index][field];
+  if (curr == null) return null;
+  for (let i = index + 1; i < entries.length; i++) {
+    const prev = entries[i][field];
+    if (prev != null) return curr - prev;
+  }
+  return null;
 }
 
 function formatDate(date: Date, lang: SupportedLanguage): string {
@@ -291,6 +337,10 @@ const styles = StyleSheet.create({
   metricValue: {
     fontSize: 18,
     color: colors.ink,
+    marginTop: 2,
+  },
+  metricDelta: {
+    fontSize: 12,
     marginTop: 2,
   },
   notes: {
