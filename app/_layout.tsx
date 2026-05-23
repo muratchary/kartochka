@@ -17,10 +17,14 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { initI18n } from '../src/i18n';
+import { useChildrenStore } from '../src/stores/childrenStore';
 import { colors } from '../src/theme';
 
 export default function RootLayout() {
   const [i18nReady, setI18nReady] = useState(false);
+  const [storeHydrated, setStoreHydrated] = useState(() =>
+    useChildrenStore.persist.hasHydrated(),
+  );
   const [fontsLoaded] = useFonts({
     Nunito_400Regular,
     Nunito_500Medium,
@@ -37,7 +41,14 @@ export default function RootLayout() {
     initI18n().then(() => setI18nReady(true));
   }, []);
 
-  if (!i18nReady || !fontsLoaded) {
+  useEffect(() => {
+    if (storeHydrated) return;
+    const unsub = useChildrenStore.persist.onFinishHydration(() => setStoreHydrated(true));
+    if (useChildrenStore.persist.hasHydrated()) setStoreHydrated(true);
+    return unsub;
+  }, [storeHydrated]);
+
+  if (!i18nReady || !fontsLoaded || !storeHydrated) {
     return (
       <View style={styles.loading}>
         <ActivityIndicator color={colors.teal} />

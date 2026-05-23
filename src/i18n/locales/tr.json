@@ -171,6 +171,8 @@
       "title": "Çocuklar",
       "subtitle": "Bu telefonda kayıtlı kim var.",
       "addCta": "Çocuk ekle",
+      "editCta": "Çocuğu düzenle",
+      "tapToEdit": "Düzenlemek için bir çocuğa dokunun",
       "premiumNote": "Birden fazla çocuk eklemek premium bir özelliktir.",
       "removeConfirm": "{{name}} ve tüm kayıtları silinsin mi?",
       "remove": "Sil"

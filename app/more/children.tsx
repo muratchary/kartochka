@@ -54,25 +54,43 @@ export default function ChildrenSettingsScreen() {
           {children.map((c) => {
             const letter = c.name.trim().charAt(0).toUpperCase() || '?';
             return (
-              <Card key={c.id} style={{ padding: spacing.lg }}>
-                <View style={styles.row}>
-                  <View style={styles.avatar}>
-                    <Text style={[styles.avatarLetter, { fontFamily: font(800) }]}>{letter}</Text>
+              <Pressable
+                key={c.id}
+                onPress={() =>
+                  router.push({ pathname: '/more/add-child', params: { id: c.id } })
+                }>
+                <Card style={{ padding: spacing.lg }}>
+                  <View style={styles.row}>
+                    <View style={styles.avatar}>
+                      <Text style={[styles.avatarLetter, { fontFamily: font(800) }]}>{letter}</Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={[styles.name, { fontFamily: font(700) }]}>{c.name}</Text>
+                      <Text style={[styles.meta, { fontFamily: font(600) }]}>
+                        {formatDate(new Date(c.dateOfBirth), lang)} · {t(`countries.${c.countryCode}`)}
+                      </Text>
+                    </View>
+                    <View style={styles.rowActions}>
+                      <Ionicons name="pencil-outline" size={18} color={colors.ink3} />
+                      <Pressable
+                        hitSlop={8}
+                        onPress={(e) => {
+                          e.stopPropagation();
+                          handleRemove(c.id, c.name);
+                        }}>
+                        <Ionicons name="trash-outline" size={20} color={colors.error} />
+                      </Pressable>
+                    </View>
                   </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={[styles.name, { fontFamily: font(700) }]}>{c.name}</Text>
-                    <Text style={[styles.meta, { fontFamily: font(600) }]}>
-                      {formatDate(new Date(c.dateOfBirth), lang)} · {t(`countries.${c.countryCode}`)}
-                    </Text>
-                  </View>
-                  <Pressable hitSlop={8} onPress={() => handleRemove(c.id, c.name)}>
-                    <Ionicons name="trash-outline" size={20} color={colors.error} />
-                  </Pressable>
-                </View>
-              </Card>
+                </Card>
+              </Pressable>
             );
           })}
         </View>
+
+        <Text style={[styles.tapHint, { fontFamily: font(typography.caption.weight) }]}>
+          {t('more.childrenScreen.tapToEdit')}
+        </Text>
 
         <Button
           label={t('more.childrenScreen.addCta')}
@@ -108,8 +126,15 @@ const styles = StyleSheet.create({
     paddingTop: spacing.md,
     paddingBottom: spacing.xxl,
   },
-  list: { gap: spacing.md, marginBottom: spacing.lg },
+  list: { gap: spacing.md, marginBottom: spacing.md },
   row: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  rowActions: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  tapHint: {
+    fontSize: typography.caption.fontSize,
+    color: colors.ink3,
+    textAlign: 'center',
+    marginBottom: spacing.lg,
+  },
   avatar: {
     width: 48,
     height: 48,

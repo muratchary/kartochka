@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   KeyboardAvoidingView,
@@ -22,7 +22,7 @@ import { useRescheduleReminders } from '../../src/lib/useReminders';
 import { useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
-import type { Sex } from '../../src/types';
+import type { Child, Sex } from '../../src/types';
 
 const COUNTRIES: Array<{ code: string; flag: string }> = [
   { code: 'RU', flag: '🇷🇺' },
@@ -33,19 +33,28 @@ const COUNTRIES: Array<{ code: string; flag: string }> = [
   { code: 'TR', flag: '🇹🇷' },
 ];
 
-export default function AddChildSettingsScreen() {
+export default function AddOrEditChildScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const font = useFont();
+  const params = useLocalSearchParams<{ id?: string }>();
 
   const children = useChildrenStore((s) => s.children);
   const addChild = useChildrenStore((s) => s.addChild);
+  const updateChild = useChildrenStore((s) => s.updateChild);
   const rescheduleReminders = useRescheduleReminders();
-  const defaultCountry = children[0]?.countryCode ?? 'RU';
 
-  const [name, setName] = useState('');
-  const [dob, setDob] = useState<string | null>(null);
-  const [sex, setSex] = useState<Sex | null>(null);
+  const existing = useMemo(
+    () => (params.id ? children.find((c) => c.id === params.id) : undefined),
+    [params.id, children],
+  );
+  const isEdit = !!existing;
+
+  const defaultCountry = existing?.countryCode ?? children[0]?.countryCode ?? 'RU';
+
+  const [name, setName] = useState(existing?.name ?? '');
+  const [dob, setDob] = useState<string | null>(existing?.dateOfBirth ?? null);
+  const [sex, setSex] = useState<Sex | null>(existing?.sex ?? null);
   const [country, setCountry] = useState<string>(defaultCountry);
 
   const sexOptions: Array<{ value: Sex; label: string }> = [
@@ -58,13 +67,31 @@ export default function AddChildSettingsScreen() {
 
   const handleSave = async () => {
     if (!canSave || !dob || !sex) return;
-    const child = addChild({
-      name: name.trim(),
-      dateOfBirth: dob,
-      sex,
-      countryCode: country,
-    });
-    await rescheduleReminders(child);
+    if (isEdit && existing) {
+      updateChild(existing.id, {
+        name: name.trim(),
+        dateOfBirth: dob,
+        sex,
+        countryCode: country,
+      });
+      const updated: Child = {
+        ...existing,
+        name: name.trim(),
+        dateOfBirth: dob,
+        sex,
+        countryCode: country,
+        updatedAt: new Date().toISOString(),
+      };
+      await rescheduleReminders(updated);
+    } else {
+      const child = addChild({
+        name: name.trim(),
+        dateOfBirth: dob,
+        sex,
+        countryCode: country,
+      });
+      await rescheduleReminders(child);
+    }
     router.back();
   };
 
@@ -82,7 +109,11 @@ export default function AddChildSettingsScreen() {
           contentContainerStyle={styles.scroll}
           keyboardShouldPersistTaps="handled">
           <ScreenTitle
-            title={t('more.childrenScreen.addCta')}
+            title={
+              isEdit
+                ? t('more.childrenScreen.editCta')
+                : t('more.childrenScreen.addCta')
+            }
             subtitle={t('onboarding.addChild.subtitle')}
           />
 

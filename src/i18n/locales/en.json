@@ -171,6 +171,8 @@
       "title": "Children",
       "subtitle": "Manage who's on this phone.",
       "addCta": "Add child",
+      "editCta": "Edit child",
+      "tapToEdit": "Tap a child to edit",
       "premiumNote": "Adding more than one child is a premium feature.",
       "removeConfirm": "Remove {{name}} and all their records?",
       "remove": "Remove"
