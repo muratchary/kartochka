@@ -15,6 +15,18 @@
     "growthSummary": "{{weight}} كغ · {{height}} سم",
     "growthOn": "آخر قياس {{date}}",
     "milestonesProgress": "{{done}} من {{total}} مُنجزة",
+    "monthDigest": {
+      "title": "هذا الشهر",
+      "vaccinesDue_one": "تطعيم واحد خلال 30 يوماً",
+      "vaccinesDue_other": "{{count}} تطعيمات خلال 30 يوماً",
+      "vaccinesOverdue_one": "متأخر واحد",
+      "vaccinesOverdue_other": "{{count}} متأخرة",
+      "growthThisMonth_one": "قياس واحد هذا الشهر",
+      "growthThisMonth_other": "{{count}} قياسات هذا الشهر",
+      "milestonesThisMonth_one": "معلم واحد مُنجز هذا الشهر",
+      "milestonesThisMonth_other": "{{count}} معالم مُنجزة هذا الشهر",
+      "allCaughtUp": "لا يوجد شيء مستحق هذا الشهر — كل شيء في موعده."
+    },
     "greeting": {
       "morning": "صباح الخير",
       "afternoon": "نهارك سعيد",

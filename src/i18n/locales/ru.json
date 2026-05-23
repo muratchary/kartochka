@@ -15,6 +15,22 @@
     "growthSummary": "{{weight}} кг · {{height}} см",
     "growthOn": "Последнее измерение {{date}}",
     "milestonesProgress": "Отмечено {{done}} из {{total}}",
+    "monthDigest": {
+      "title": "В этом месяце",
+      "vaccinesDue_one": "{{count}} прививка в ближайшие 30 дней",
+      "vaccinesDue_few": "{{count}} прививки в ближайшие 30 дней",
+      "vaccinesDue_many": "{{count}} прививок в ближайшие 30 дней",
+      "vaccinesOverdue_one": "{{count}} просрочена",
+      "vaccinesOverdue_few": "{{count}} просрочены",
+      "vaccinesOverdue_many": "{{count}} просрочено",
+      "growthThisMonth_one": "{{count}} измерение в этом месяце",
+      "growthThisMonth_few": "{{count}} измерения в этом месяце",
+      "growthThisMonth_many": "{{count}} измерений в этом месяце",
+      "milestonesThisMonth_one": "Отмечен {{count}} этап в этом месяце",
+      "milestonesThisMonth_few": "Отмечено {{count}} этапа в этом месяце",
+      "milestonesThisMonth_many": "Отмечено {{count}} этапов в этом месяце",
+      "allCaughtUp": "В этом месяце ничего не запланировано — всё в графике."
+    },
     "greeting": {
       "morning": "Доброе утро",
       "afternoon": "Добрый день",

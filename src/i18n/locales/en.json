@@ -15,6 +15,18 @@
     "growthSummary": "{{weight}} kg · {{height}} cm",
     "growthOn": "Last measured {{date}}",
     "milestonesProgress": "{{done}} of {{total}} reached",
+    "monthDigest": {
+      "title": "This month",
+      "vaccinesDue_one": "{{count}} vaccine in the next 30 days",
+      "vaccinesDue_other": "{{count}} vaccines in the next 30 days",
+      "vaccinesOverdue_one": "{{count}} overdue",
+      "vaccinesOverdue_other": "{{count}} overdue",
+      "growthThisMonth_one": "{{count}} measurement this month",
+      "growthThisMonth_other": "{{count}} measurements this month",
+      "milestonesThisMonth_one": "{{count}} milestone reached this month",
+      "milestonesThisMonth_other": "{{count}} milestones reached this month",
+      "allCaughtUp": "Nothing due this month — you're caught up."
+    },
     "greeting": {
       "morning": "Good morning",
       "afternoon": "Good afternoon",

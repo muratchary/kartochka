@@ -13,7 +13,12 @@ import type { SupportedLanguage } from '../../src/i18n';
 import { STANDARD_MILESTONES } from '../../src/lib/milestones';
 import { exportChildPdf } from '../../src/lib/pdfExport';
 import { getSchedule } from '../../src/lib/schedules';
-import { nextDueVaccine, type DueStatus } from '../../src/lib/vaccinationStatus';
+import {
+  dueDateForDose,
+  nextDueVaccine,
+  statusFromDays,
+  type DueStatus,
+} from '../../src/lib/vaccinationStatus';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
@@ -67,6 +72,42 @@ export default function HomeScreen() {
     return milestones.filter((m) => m.childId === child.id);
   }, [child, milestones]);
 
+  const monthDigest = useMemo(() => {
+    if (!child) {
+      return { vaccinesDue: 0, vaccinesOverdue: 0, growthThisMonth: 0, milestonesThisMonth: 0 };
+    }
+    const schedule = getSchedule(child.countryCode);
+    const childRecords = vaccinations.filter((v) => v.childId === child.id);
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const monthStartIso = monthStart.toISOString().slice(0, 10);
+    let vaccinesDue = 0;
+    let vaccinesOverdue = 0;
+    if (schedule) {
+      const msNow = now.getTime();
+      for (const v of schedule.vaccines) {
+        for (const dose of v.doses) {
+          const done = childRecords.some(
+            (r) => r.vaccineCode === v.code && r.doseNumber === dose.doseNumber,
+          );
+          if (done) continue;
+          const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths);
+          const days = Math.round((dueDate.getTime() - msNow) / (1000 * 60 * 60 * 24));
+          const status = statusFromDays(days);
+          if (status === 'overdue') vaccinesOverdue += 1;
+          else if (days <= 30) vaccinesDue += 1;
+        }
+      }
+    }
+    const growthThisMonth = growthEntries.filter(
+      (g) => g.childId === child.id && g.measuredOn >= monthStartIso,
+    ).length;
+    const milestonesThisMonth = milestones.filter(
+      (m) => m.childId === child.id && m.achievedOn >= monthStartIso,
+    ).length;
+    return { vaccinesDue, vaccinesOverdue, growthThisMonth, milestonesThisMonth };
+  }, [child, vaccinations, growthEntries, milestones]);
+
   if (!child) {
     return <Redirect href="/onboarding/welcome" />;
   }
@@ -85,6 +126,7 @@ export default function HomeScreen() {
         />
 
         <View style={styles.cards}>
+          <MonthDigestCard digest={monthDigest} />
           <NextVaccineCard nextDue={nextDue} lang={lang} />
           <GrowthCard latest={latestGrowth} lang={lang} />
           <MilestonesCard reachedCount={milestonesForChild.length} />
@@ -93,6 +135,79 @@ export default function HomeScreen() {
       </ScrollView>
     </SafeAreaView>
   );
+
+  function MonthDigestCard({
+    digest,
+  }: {
+    digest: {
+      vaccinesDue: number;
+      vaccinesOverdue: number;
+      growthThisMonth: number;
+      milestonesThisMonth: number;
+    };
+  }) {
+    const lines: Array<{ key: string; text: string; tone: 'ink' | 'error' }> = [];
+    if (digest.vaccinesOverdue > 0) {
+      lines.push({
+        key: 'overdue',
+        text: t('home.monthDigest.vaccinesOverdue', { count: digest.vaccinesOverdue }),
+        tone: 'error',
+      });
+    }
+    if (digest.vaccinesDue > 0) {
+      lines.push({
+        key: 'due',
+        text: t('home.monthDigest.vaccinesDue', { count: digest.vaccinesDue }),
+        tone: 'ink',
+      });
+    }
+    if (digest.growthThisMonth > 0) {
+      lines.push({
+        key: 'growth',
+        text: t('home.monthDigest.growthThisMonth', { count: digest.growthThisMonth }),
+        tone: 'ink',
+      });
+    }
+    if (digest.milestonesThisMonth > 0) {
+      lines.push({
+        key: 'milestones',
+        text: t('home.monthDigest.milestonesThisMonth', { count: digest.milestonesThisMonth }),
+        tone: 'ink',
+      });
+    }
+    return (
+      <Card style={styles.digestCard}>
+        <Text style={[styles.digestEyebrow, { fontFamily: font(typography.eyebrow.weight) }]}>
+          {t('home.monthDigest.title')}
+        </Text>
+        {lines.length === 0 ? (
+          <Text style={[styles.digestAllCaughtUp, { fontFamily: font(700) }]}>
+            {t('home.monthDigest.allCaughtUp')}
+          </Text>
+        ) : (
+          <View style={styles.digestLines}>
+            {lines.map((l) => (
+              <View key={l.key} style={styles.digestLine}>
+                <View
+                  style={[
+                    styles.digestDot,
+                    { backgroundColor: l.tone === 'error' ? colors.error : colors.teal },
+                  ]}
+                />
+                <Text
+                  style={[
+                    styles.digestText,
+                    { fontFamily: font(700), color: l.tone === 'error' ? colors.error : colors.ink },
+                  ]}>
+                  {l.text}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+      </Card>
+    );
+  }
 
   function NextVaccineCard({
     nextDue,
@@ -402,6 +517,26 @@ const styles = StyleSheet.create({
     backgroundColor: colors.teal,
     borderRadius: 999,
   },
+  digestCard: {
+    backgroundColor: colors.tealSoft,
+    borderColor: colors.tealLine,
+    padding: spacing.lg,
+  },
+  digestEyebrow: {
+    fontSize: typography.eyebrow.fontSize,
+    color: colors.tealDark,
+    textTransform: 'uppercase',
+    letterSpacing: typography.eyebrow.letterSpacing,
+    marginBottom: spacing.sm,
+  },
+  digestAllCaughtUp: {
+    fontSize: typography.body.fontSize,
+    color: colors.tealDark,
+  },
+  digestLines: { gap: spacing.xs },
+  digestLine: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  digestDot: { width: 6, height: 6, borderRadius: 3 },
+  digestText: { fontSize: typography.body.fontSize, flex: 1 },
   pdfCard: {
     backgroundColor: colors.amberSoft,
     borderColor: colors.amber,

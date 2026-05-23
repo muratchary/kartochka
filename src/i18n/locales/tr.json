@@ -15,6 +15,18 @@
     "growthSummary": "{{weight}} kg · {{height}} cm",
     "growthOn": "Son ölçüm {{date}}",
     "milestonesProgress": "{{done}} / {{total}} ulaşıldı",
+    "monthDigest": {
+      "title": "Bu ay",
+      "vaccinesDue_one": "1 aşı önümüzdeki 30 günde",
+      "vaccinesDue_other": "{{count}} aşı önümüzdeki 30 günde",
+      "vaccinesOverdue_one": "1 gecikmiş",
+      "vaccinesOverdue_other": "{{count}} gecikmiş",
+      "growthThisMonth_one": "1 ölçüm bu ay",
+      "growthThisMonth_other": "{{count}} ölçüm bu ay",
+      "milestonesThisMonth_one": "Bu ay 1 gelişim aşamasına ulaşıldı",
+      "milestonesThisMonth_other": "Bu ay {{count}} gelişim aşamasına ulaşıldı",
+      "allCaughtUp": "Bu ay yapılacak bir şey yok — her şey güncel."
+    },
     "greeting": {
       "morning": "Günaydın",
       "afternoon": "İyi günler",
