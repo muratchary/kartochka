@@ -9,12 +9,14 @@
       "displayName": {
         "en": "Smiles at people",
         "ru": "Улыбается людям",
-        "ar": "يبتسم للناس"
+        "ar": "يبتسم للناس",
+        "tr": "İnsanlara gülümser"
       },
       "description": {
         "en": "A real smile in response to your face or voice — different from a sleep smile.",
         "ru": "Настоящая улыбка в ответ на ваше лицо или голос — не во сне.",
-        "ar": "ابتسامة حقيقية استجابةً لوجهك أو صوتك — وليست ابتسامة أثناء النوم."
+        "ar": "ابتسامة حقيقية استجابةً لوجهك أو صوتك — وليست ابتسامة أثناء النوم.",
+        "tr": "Yüzünüze veya sesinize gerçek bir gülümseme — uyku gülümsemesinden farklı."
       }
     },
     {
@@ -24,12 +26,14 @@
       "displayName": {
         "en": "Holds head up on tummy",
         "ru": "Держит голову лёжа на животе",
-        "ar": "يرفع رأسه على بطنه"
+        "ar": "يرفع رأسه على بطنه",
+        "tr": "Karnında başını kaldırır"
       },
       "description": {
         "en": "Briefly lifts head while on their tummy. Builds neck and shoulder strength.",
         "ru": "На животе ненадолго поднимает голову. Развивает мышцы шеи и плеч.",
-        "ar": "يرفع رأسه قليلاً أثناء الاستلقاء على بطنه — يقوّي عضلات الرقبة والكتفين."
+        "ar": "يرفع رأسه قليلاً أثناء الاستلقاء على بطنه — يقوّي عضلات الرقبة والكتفين.",
+        "tr": "Karnında yatarken başını kısa süre kaldırır. Boyun ve omuz kaslarını güçlendirir."
       }
     },
     {
@@ -39,12 +43,14 @@
       "displayName": {
         "en": "Coos and gurgles",
         "ru": "Гулит и булькает",
-        "ar": "يصدر أصواتاً ناعمة"
+        "ar": "يصدر أصواتاً ناعمة",
+        "tr": "Gıklar ve mırıldanır"
       },
       "description": {
         "en": "Soft vowel sounds — \"ahh\", \"oooh\". First step toward speech.",
         "ru": "Мягкие гласные звуки — «а-а», «у-у». Первый шаг к речи.",
-        "ar": "أصوات حروف العلة الناعمة — «آه»، «أوه». الخطوة الأولى نحو الكلام."
+        "ar": "أصوات حروف العلة الناعمة — «آه»، «أوه». الخطوة الأولى نحو الكلام.",
+        "tr": "Yumuşak ünlü sesler — «ahh», «ooh». Konuşmaya giden ilk adım."
       }
     },
     {
@@ -54,12 +60,14 @@
       "displayName": {
         "en": "Follows objects with eyes",
         "ru": "Следит глазами за предметами",
-        "ar": "يتبع الأشياء بعينيه"
+        "ar": "يتبع الأشياء بعينيه",
+        "tr": "Gözleriyle nesneleri takip eder"
       },
       "description": {
         "en": "Tracks a moving toy or your face across the midline of their body.",
         "ru": "Прослеживает игрушку или ваше лицо, поворачивая глаза за движением.",
-        "ar": "يتتبع لعبة متحركة أو وجهك من جانب لآخر."
+        "ar": "يتتبع لعبة متحركة أو وجهك من جانب لآخر.",
+        "tr": "Hareketli bir oyuncağı veya yüzünüzü vücudunun ortasından geçerek takip eder."
       }
     },
     {
@@ -69,12 +77,14 @@
       "displayName": {
         "en": "Holds head steady",
         "ru": "Уверенно держит голову",
-        "ar": "يثبت رأسه"
+        "ar": "يثبت رأسه",
+        "tr": "Başını dik tutar"
       },
       "description": {
         "en": "Holds head up without bobbing when held upright or sitting with support.",
         "ru": "Уверенно держит голову, когда вы держите его вертикально или с опорой.",
-        "ar": "يثبت رأسه دون اهتزاز عند حمله بشكل عمودي أو الجلوس بدعم."
+        "ar": "يثبت رأسه دون اهتزاز عند حمله بشكل عمودي أو الجلوس بدعم.",
+        "tr": "Dikey tutulduğunda veya destekli oturduğunda başını sarsmadan tutar."
       }
     },
     {
@@ -84,12 +94,14 @@
       "displayName": {
         "en": "Smiles spontaneously",
         "ru": "Улыбается без причины",
-        "ar": "يبتسم تلقائياً"
+        "ar": "يبتسم تلقائياً",
+        "tr": "Kendiliğinden gülümser"
       },
       "description": {
         "en": "Smiles on their own, especially at familiar faces or in playful moments.",
         "ru": "Улыбается сам, особенно знакомым людям и во время игры.",
-        "ar": "يبتسم من تلقاء نفسه، خاصة للوجوه المألوفة أو في لحظات اللعب."
+        "ar": "يبتسم من تلقاء نفسه، خاصة للوجوه المألوفة أو في لحظات اللعب.",
+        "tr": "Özellikle tanıdık yüzlere veya oyun anlarında kendiliğinden gülümser."
       }
     },
     {
@@ -99,12 +111,14 @@
       "displayName": {
         "en": "Babbles with expression",
         "ru": "Лепечет с выражением",
-        "ar": "يصدر مقاطع لفظية"
+        "ar": "يصدر مقاطع لفظية",
+        "tr": "İfadeyle sesler çıkarır"
       },
       "description": {
         "en": "Strings sounds together with rising/falling tones, almost like talking.",
         "ru": "Связывает звуки с интонацией — почти как разговор.",
-        "ar": "يربط الأصوات معاً بنغمات صاعدة وهابطة، تكاد تكون كلاماً."
+        "ar": "يربط الأصوات معاً بنغمات صاعدة وهابطة، تكاد تكون كلاماً.",
+        "tr": "Sesleri yükselen ve alçalan tonlarla birleştirir — neredeyse konuşuyor gibi."
       }
     },
     {
@@ -114,12 +128,14 @@
       "displayName": {
         "en": "Reaches for toys",
         "ru": "Тянется к игрушкам",
-        "ar": "يمد يده للألعاب"
+        "ar": "يمد يده للألعاب",
+        "tr": "Oyuncaklara uzanır"
       },
       "description": {
         "en": "Stretches out a hand to grab a toy or your finger.",
         "ru": "Протягивает руку, чтобы схватить игрушку или ваш палец.",
-        "ar": "يمد يده ليمسك لعبة أو إصبعك."
+        "ar": "يمد يده ليمسك لعبة أو إصبعك.",
+        "tr": "Bir oyuncağı veya parmağınızı tutmak için elini uzatır."
       }
     },
     {
@@ -129,12 +145,14 @@
       "displayName": {
         "en": "Rolls over both ways",
         "ru": "Переворачивается в обе стороны",
-        "ar": "يتقلب في كلا الاتجاهين"
+        "ar": "يتقلب في كلا الاتجاهين",
+        "tr": "Her iki yöne döner"
       },
       "description": {
         "en": "Rolls from tummy to back and back to tummy. Time to baby-proof.",
         "ru": "Переворачивается со спины на живот и обратно. Время позаботиться о безопасности.",
-        "ar": "يتقلب من البطن إلى الظهر والعكس — وقت تأمين البيت."
+        "ar": "يتقلب من البطن إلى الظهر والعكس — وقت تأمين البيت.",
+        "tr": "Karından sırtüstüne ve tekrar karnına döner. Güvenlik önlemleri alınması zamanı."
       }
     },
     {
@@ -144,12 +162,14 @@
       "displayName": {
         "en": "Responds to own name",
         "ru": "Откликается на имя",
-        "ar": "يستجيب لاسمه"
+        "ar": "يستجيب لاسمه",
+        "tr": "Kendi adına tepki verir"
       },
       "description": {
         "en": "Turns their head or looks up when you call their name.",
         "ru": "Поворачивает голову или поднимает взгляд, когда вы называете его по имени.",
-        "ar": "يلتفت برأسه أو ينظر إليك عند مناداته باسمه."
+        "ar": "يلتفت برأسه أو ينظر إليك عند مناداته باسمه.",
+        "tr": "Adını çağırdığınızda başını çevirir veya yukarı bakar."
       }
     },
     {
@@ -159,12 +179,14 @@
       "displayName": {
         "en": "Brings things to mouth",
         "ru": "Тащит предметы в рот",
-        "ar": "يضع الأشياء في فمه"
+        "ar": "يضع الأشياء في فمه",
+        "tr": "Her şeyi ağzına götürür"
       },
       "description": {
         "en": "Explores everything by mouth — normal and important for development.",
         "ru": "Изучает всё через рот — это нормально и важно для развития.",
-        "ar": "يستكشف كل شيء بفمه — أمر طبيعي ومهم للنمو."
+        "ar": "يستكشف كل شيء بفمه — أمر طبيعي ومهم للنمو.",
+        "tr": "Her şeyi ağzıyla keşfeder — bu normal ve gelişim için önemlidir."
       }
     },
     {
@@ -174,12 +196,14 @@
       "displayName": {
         "en": "Sits without support",
         "ru": "Сидит без поддержки",
-        "ar": "يجلس دون دعم"
+        "ar": "يجلس دون دعم",
+        "tr": "Desteksiz oturur"
       },
       "description": {
         "en": "Sits up straight without hands or pillows propping them.",
         "ru": "Сидит прямо, не опираясь на руки или подушки.",
-        "ar": "يجلس مستقيماً دون مساعدة اليدين أو الوسائد."
+        "ar": "يجلس مستقيماً دون مساعدة اليدين أو الوسائد.",
+        "tr": "Elleri veya yastıklar olmadan dik oturur."
       }
     },
     {
@@ -189,12 +213,14 @@
       "displayName": {
         "en": "Plays peek-a-boo",
         "ru": "Играет в «ку-ку»",
-        "ar": "يلعب الاختباء"
+        "ar": "يلعب الاختباء",
+        "tr": "Saklambaç oynar"
       },
       "description": {
         "en": "Smiles and laughs at peek-a-boo. Shows they remember you are still there.",
         "ru": "Улыбается и смеётся в «ку-ку» — понимает, что вы рядом, даже когда не видно.",
-        "ar": "يبتسم ويضحك عند لعبة الاختباء — يدل على إدراكه لوجودك حتى عند الاختفاء."
+        "ar": "يبتسم ويضحك عند لعبة الاختباء — يدل على إدراكه لوجودك حتى عند الاختفاء.",
+        "tr": "Saklambaçta gülümser ve güler. Hâlâ orada olduğunuzu hatırladığını gösterir."
       }
     },
     {
@@ -204,12 +230,14 @@
       "displayName": {
         "en": "Says \"mama\" / \"baba\"",
         "ru": "Говорит «мама», «баба»",
-        "ar": "يقول «ماما» و «بابا»"
+        "ar": "يقول «ماما» و «بابا»",
+        "tr": "«anne» / «baba» der"
       },
       "description": {
         "en": "Repeats syllables like \"ma-ma\" or \"ba-ba\" — not yet linked to a person.",
         "ru": "Повторяет слоги «ма-ма», «ба-ба» — ещё не связывая с конкретным человеком.",
-        "ar": "يكرر مقاطع مثل «ما-ما» أو «با-با» — دون ربطها بشخص بعد."
+        "ar": "يكرر مقاطع مثل «ما-ما» أو «با-با» — دون ربطها بشخص بعد.",
+        "tr": "«an-ne» veya «ba-ba» gibi heceleri tekrarlar — henüz bir kişiyle ilişkilendirmeden."
       }
     },
     {
@@ -219,12 +247,14 @@
       "displayName": {
         "en": "Looks for hidden things",
         "ru": "Ищет спрятанные предметы",
-        "ar": "يبحث عن الأشياء المخفية"
+        "ar": "يبحث عن الأشياء المخفية",
+        "tr": "Saklanan şeyleri arar"
       },
       "description": {
         "en": "Searches when you hide a toy under a cloth — knows it still exists.",
         "ru": "Ищет, когда вы прячете игрушку под тряпкой — понимает, что она существует.",
-        "ar": "يبحث عند إخفاء لعبة تحت قطعة قماش — يعلم أنها لا تزال موجودة."
+        "ar": "يبحث عند إخفاء لعبة تحت قطعة قماش — يعلم أنها لا تزال موجودة.",
+        "tr": "Bir oyuncağı kumaş altına sakladığınızda arar — hâlâ var olduğunu bilir."
       }
     },
     {
@@ -234,12 +264,14 @@
       "displayName": {
         "en": "Pulls up to stand",
         "ru": "Встаёт, держась за опору",
-        "ar": "يقف بمساعدة"
+        "ar": "يقف بمساعدة",
+        "tr": "Tutunarak ayağa kalkar"
       },
       "description": {
         "en": "Pulls up on furniture or your legs to stand. Cruising along furniture soon follows.",
         "ru": "Подтягивается на мебели или ваших ногах, чтобы встать. Скоро будет ходить вдоль мебели.",
-        "ar": "يستند على الأثاث أو رجليك ليقف — سرعان ما يبدأ بالمشي ممسكاً بالأثاث."
+        "ar": "يستند على الأثاث أو رجليك ليقف — سرعان ما يبدأ بالمشي ممسكاً بالأثاث.",
+        "tr": "Mobilyalara veya bacaklarınıza tutunarak ayağa kalkar. Yakında mobilyaları tutarak yürüyecek."
       }
     },
     {
@@ -249,12 +281,14 @@
       "displayName": {
         "en": "Says first meaningful word",
         "ru": "Произносит первое осмысленное слово",
-        "ar": "ينطق أول كلمة ذات معنى"
+        "ar": "ينطق أول كلمة ذات معنى",
+        "tr": "İlk anlamlı kelimeyi söyler"
       },
       "description": {
         "en": "Uses a word with meaning — \"mama\" for the actual mama, or \"more\", \"no\".",
         "ru": "Использует слово со смыслом — «мама» именно для мамы, или «ещё», «нет».",
-        "ar": "يستخدم كلمة ذات معنى — «ماما» للأم الحقيقية، أو «بعد»، «لا»."
+        "ar": "يستخدم كلمة ذات معنى — «ماما» للأم الحقيقية، أو «بعد»، «لا».",
+        "tr": "Gerçek anlamda kelime kullanır — gerçek annesi için «anne», ya da «daha», «hayır»."
       }
     },
     {
@@ -264,12 +298,14 @@
       "displayName": {
         "en": "Drinks from a cup",
         "ru": "Пьёт из чашки",
-        "ar": "يشرب من الكوب"
+        "ar": "يشرب من الكوب",
+        "tr": "Bardaktan içer"
       },
       "description": {
         "en": "Drinks from an open or sippy cup with some spilling — totally normal.",
         "ru": "Пьёт из открытой чашки или поильника, иногда проливая — это нормально.",
-        "ar": "يشرب من كوب مفتوح أو كوب التعليم مع بعض الانسكاب — أمر طبيعي."
+        "ar": "يشرب من كوب مفتوح أو كوب التعليم مع بعض الانسكاب — أمر طبيعي.",
+        "tr": "Biraz dökerek açık bardaktan veya alıştırma bardağından içer — tamamen normal."
       }
     },
     {
@@ -279,12 +315,14 @@
       "displayName": {
         "en": "Walks alone",
         "ru": "Ходит самостоятельно",
-        "ar": "يمشي وحده"
+        "ar": "يمشي وحده",
+        "tr": "Tek başına yürür"
       },
       "description": {
         "en": "Takes several steps without holding on. Wide stance and falls are typical.",
         "ru": "Делает несколько шагов без опоры. Широкая поза и падения — это норма.",
-        "ar": "يخطو خطوات عدة دون مساعدة — الوقفة الواسعة والسقوط أمر طبيعي."
+        "ar": "يخطو خطوات عدة دون مساعدة — الوقفة الواسعة والسقوط أمر طبيعي.",
+        "tr": "Tutunmadan birkaç adım atar. Geniş duruş ve düşmeler normaldir."
       }
     },
     {
@@ -294,12 +332,14 @@
       "displayName": {
         "en": "Says 3+ words besides \"mama\"/\"baba\"",
         "ru": "Говорит 3+ слов кроме «мама»/«баба»",
-        "ar": "يقول 3+ كلمات بجانب «ماما»/«بابا»"
+        "ar": "يقول 3+ كلمات بجانب «ماما»/«بابا»",
+        "tr": "«anne»/«baba» dışında 3+ kelime söyler"
       },
       "description": {
         "en": "Has a small vocabulary like \"dog\", \"more\", \"up\". Understands many more.",
         "ru": "Знает несколько слов — «собака», «ещё», «вверх». Понимает гораздо больше.",
-        "ar": "لديه مفردات قليلة مثل «كلب»، «بعد»، «فوق». يفهم أكثر بكثير."
+        "ar": "لديه مفردات قليلة مثل «كلب»، «بعد»، «فوق». يفهم أكثر بكثير.",
+        "tr": "Küçük bir kelime dağarcığı var: «köpek», «daha», «yukarı». Çok daha fazlasını anlar."
       }
     },
     {
@@ -309,12 +349,14 @@
       "displayName": {
         "en": "Walks up stairs holding hand",
         "ru": "Поднимается по лестнице за руку",
-        "ar": "يصعد الدرج ممسكاً يداً"
+        "ar": "يصعد الدرج ممسكاً يداً",
+        "tr": "El tutarak merdiven çıkar"
       },
       "description": {
         "en": "Steps up one stair at a time while holding your hand or a rail.",
         "ru": "Поднимается по одной ступеньке за раз, держась за руку или перила.",
-        "ar": "يصعد درجة واحدة في كل مرة ممسكاً بيدك أو بالحاجز."
+        "ar": "يصعد درجة واحدة في كل مرة ممسكاً بيدك أو بالحاجز.",
+        "tr": "Elinizi veya korkuluğu tutarak teker teker merdiven çıkar."
       }
     },
     {
@@ -324,12 +366,14 @@
       "displayName": {
         "en": "Points to show interest",
         "ru": "Показывает пальцем, что интересует",
-        "ar": "يشير بإصبعه لإظهار اهتمامه"
+        "ar": "يشير بإصبعه لإظهار اهتمامه",
+        "tr": "İlgisini göstermek için işaret eder"
       },
       "description": {
         "en": "Points at a bird, a toy, or anything interesting to share it with you.",
         "ru": "Показывает пальцем на птицу, игрушку — чтобы поделиться этим с вами.",
-        "ar": "يشير إلى طائر أو لعبة أو أي شيء مثير ليشاركك إياه."
+        "ar": "يشير إلى طائر أو لعبة أو أي شيء مثير ليشاركك إياه.",
+        "tr": "Sizinle paylaşmak için bir kuş, oyuncak veya ilginç bir şeye parmakla işaret eder."
       }
     },
     {
@@ -339,12 +383,14 @@
       "displayName": {
         "en": "Scribbles on paper",
         "ru": "Рисует каракули",
-        "ar": "يخربش على الورق"
+        "ar": "يخربش على الورق",
+        "tr": "Kağıda karalama yapar"
       },
       "description": {
         "en": "Holds a crayon and makes marks on paper. Doesn't have to look like anything.",
         "ru": "Держит карандаш и рисует на бумаге. Это не должно быть на что-то похоже.",
-        "ar": "يمسك القلم ويخربش على الورق — لا يلزم أن تكون له معنى محدد."
+        "ar": "يمسك القلم ويخربش على الورق — لا يلزم أن تكون له معنى محدد.",
+        "tr": "Bir kalem tutar ve kağıda işaretler bırakır. Bir şeye benzemiyor olması önemli değil."
       }
     },
     {
@@ -354,12 +400,14 @@
       "displayName": {
         "en": "Runs",
         "ru": "Бегает",
-        "ar": "يجري"
+        "ar": "يجري",
+        "tr": "Koşar"
       },
       "description": {
         "en": "Moves faster than a walk and can stop without falling.",
         "ru": "Двигается быстрее, чем шаг, и может остановиться без падения.",
-        "ar": "يتحرك أسرع من المشي ويستطيع التوقف دون أن يقع."
+        "ar": "يتحرك أسرع من المشي ويستطيع التوقف دون أن يقع.",
+        "tr": "Yürüyüşten daha hızlı hareket eder ve düşmeden durabilir."
       }
     },
     {
@@ -369,12 +417,14 @@
       "displayName": {
         "en": "Says 2-word sentences",
         "ru": "Складывает 2 слова в фразу",
-        "ar": "ينطق جملاً من كلمتين"
+        "ar": "ينطق جملاً من كلمتين",
+        "tr": "2 kelimelik cümle kurar"
       },
       "description": {
         "en": "Combines two words like \"more milk\" or \"daddy go\".",
         "ru": "Соединяет два слова — «ещё молока», «папа пошёл».",
-        "ar": "يجمع كلمتين معاً مثل «بعد حليب» أو «بابا روح»."
+        "ar": "يجمع كلمتين معاً مثل «بعد حليب» أو «بابا روح».",
+        "tr": "«daha süt» veya «baba git» gibi iki kelimeyi birleştirir."
       }
     },
     {
@@ -384,12 +434,14 @@
       "displayName": {
         "en": "Kicks a ball",
         "ru": "Пинает мяч",
-        "ar": "يركل الكرة"
+        "ar": "يركل الكرة",
+        "tr": "Topu tekmeleyebilir"
       },
       "description": {
         "en": "Kicks a ball forward without losing balance.",
         "ru": "Пинает мяч вперёд, не теряя равновесия.",
-        "ar": "يركل الكرة إلى الأمام دون أن يفقد توازنه."
+        "ar": "يركل الكرة إلى الأمام دون أن يفقد توازنه.",
+        "tr": "Dengesini kaybetmeden topu ileri doğru tekmeleyebilir."
       }
     },
     {
@@ -399,12 +451,14 @@
       "displayName": {
         "en": "Begins make-believe play",
         "ru": "Начинает играть в воображение",
-        "ar": "يبدأ اللعب التخيلي"
+        "ar": "يبدأ اللعب التخيلي",
+        "tr": "Hayal oyunları oynamaya başlar"
       },
       "description": {
         "en": "Pretends to feed a doll or talk on a toy phone — early imagination.",
         "ru": "Притворяется, что кормит куклу или говорит по игрушечному телефону.",
-        "ar": "يتظاهر بإطعام دمية أو يتحدث في هاتف لعبة — بداية الخيال."
+        "ar": "يتظاهر بإطعام دمية أو يتحدث في هاتف لعبة — بداية الخيال.",
+        "tr": "Bir bebeği besliyormuş gibi ya da oyuncak telefonla konuşuyormuş gibi yapar — erken hayal gücü."
       }
     },
     {
@@ -414,12 +468,14 @@
       "displayName": {
         "en": "Climbs stairs alone",
         "ru": "Поднимается по лестнице сам",
-        "ar": "يصعد الدرج وحده"
+        "ar": "يصعد الدرج وحده",
+        "tr": "Merdiveni tek başına çıkar"
       },
       "description": {
         "en": "Goes up stairs without holding on, one foot per step or both feet.",
         "ru": "Поднимается по лестнице без опоры, по одной ноге на ступеньку или приставным шагом.",
-        "ar": "يصعد الدرج دون مساعدة، قدم لكل درجة أو قدمين معاً."
+        "ar": "يصعد الدرج دون مساعدة، قدم لكل درجة أو قدمين معاً.",
+        "tr": "Tutunmadan merdiven çıkar, her basamağa bir ayak ya da iki ayak birden."
       }
     },
     {
@@ -429,12 +485,14 @@
       "displayName": {
         "en": "Speaks in full sentences",
         "ru": "Говорит полными предложениями",
-        "ar": "يتحدث بجمل كاملة"
+        "ar": "يتحدث بجمل كاملة",
+        "tr": "Tam cümlelerle konuşur"
       },
       "description": {
         "en": "Strings 3+ words into sentences strangers can mostly understand.",
         "ru": "Соединяет 3+ слов в предложения, понятные посторонним.",
-        "ar": "يربط 3+ كلمات في جمل يفهمها الغرباء معظم الوقت."
+        "ar": "يربط 3+ كلمات في جمل يفهمها الغرباء معظم الوقت.",
+        "tr": "Yabancıların büyük çoğunluğunun anlayabileceği 3 veya daha fazla kelimeli cümleler kurar."
       }
     },
     {
@@ -444,12 +502,14 @@
       "displayName": {
         "en": "Plays with other children",
         "ru": "Играет с другими детьми",
-        "ar": "يلعب مع الأطفال الآخرين"
+        "ar": "يلعب مع الأطفال الآخرين",
+        "tr": "Diğer çocuklarla oynar"
       },
       "description": {
         "en": "Plays with rather than just beside other kids. Sharing is still hard.",
         "ru": "Играет с детьми, а не просто рядом. Делиться пока ещё трудно.",
-        "ar": "يلعب مع أطفال آخرين وليس فقط بجانبهم — المشاركة لا تزال صعبة."
+        "ar": "يلعب مع أطفال آخرين وليس فقط بجانبهم — المشاركة لا تزال صعبة.",
+        "tr": "Sadece yanlarında değil, diğer çocuklarla birlikte oynar. Paylaşmak hâlâ zordur."
       }
     },
     {
@@ -459,12 +519,14 @@
       "displayName": {
         "en": "Pedals a tricycle",
         "ru": "Крутит педали трёхколёсного велосипеда",
-        "ar": "يقود الدراجة الثلاثية"
+        "ar": "يقود الدراجة الثلاثية",
+        "tr": "Üç tekerlekli bisiklet sürer"
       },
       "description": {
         "en": "Pushes the pedals to make a tricycle move forward.",
         "ru": "Нажимает на педали, чтобы трёхколёсный велосипед поехал вперёд.",
-        "ar": "يضغط على الدواسات ليحرّك الدراجة الثلاثية إلى الأمام."
+        "ar": "يضغط على الدواسات ليحرّك الدراجة الثلاثية إلى الأمام.",
+        "tr": "Üç tekerlekli bisikleti ileri doğru hareket ettirmek için pedal basar."
       }
     },
     {
@@ -474,12 +536,14 @@
       "displayName": {
         "en": "Hops on one foot",
         "ru": "Прыгает на одной ноге",
-        "ar": "يقفز على قدم واحدة"
+        "ar": "يقفز على قدم واحدة",
+        "tr": "Tek ayakla sıçrar"
       },
       "description": {
         "en": "Balances and hops 2-3 times on one foot.",
         "ru": "Удерживает равновесие и подпрыгивает 2-3 раза на одной ноге.",
-        "ar": "يحافظ على توازنه ويقفز 2-3 مرات على قدم واحدة."
+        "ar": "يحافظ على توازنه ويقفز 2-3 مرات على قدم واحدة.",
+        "tr": "Tek ayakta dengede durarak 2-3 kez sıçrar."
       }
     },
     {
@@ -489,12 +553,14 @@
       "displayName": {
         "en": "Tells short stories",
         "ru": "Рассказывает короткие истории",
-        "ar": "يحكي قصصاً قصيرة"
+        "ar": "يحكي قصصاً قصيرة",
+        "tr": "Kısa hikayeler anlatır"
       },
       "description": {
         "en": "Tells a short story about their day or retells a familiar tale.",
         "ru": "Рассказывает короткую историю о дне или повторяет знакомую сказку.",
-        "ar": "يحكي قصة قصيرة عن يومه أو يعيد سرد قصة مألوفة."
+        "ar": "يحكي قصة قصيرة عن يومه أو يعيد سرد قصة مألوفة.",
+        "tr": "Günü hakkında kısa bir hikaye anlatır veya tanıdık bir masalı yeniden anlatır."
       }
     },
     {
@@ -504,12 +570,14 @@
       "displayName": {
         "en": "Counts to 4",
         "ru": "Считает до 4",
-        "ar": "يعد إلى 4"
+        "ar": "يعد إلى 4",
+        "tr": "4'e kadar sayar"
       },
       "description": {
         "en": "Counts 4 objects in order — knows that the last number is how many.",
         "ru": "Считает 4 предмета по порядку — понимает, что последнее число — это «сколько».",
-        "ar": "يعد 4 أشياء بالترتيب — يفهم أن العدد الأخير يدل على الكمية."
+        "ar": "يعد 4 أشياء بالترتيب — يفهم أن العدد الأخير يدل على الكمية.",
+        "tr": "4 nesneyi sırayla sayar — son sayının kaç tane olduğunu gösterdiğini bilir."
       }
     },
     {
@@ -519,12 +587,14 @@
       "displayName": {
         "en": "Skips",
         "ru": "Прыгает на ходу",
-        "ar": "يقفز أثناء المشي"
+        "ar": "يقفز أثناء المشي",
+        "tr": "Sekmeli koşu yapar"
       },
       "description": {
         "en": "Alternates feet while skipping — a coordinated, advanced movement.",
         "ru": "Чередует ноги при прыжках — это сложное скоординированное движение.",
-        "ar": "يبدّل قدميه أثناء القفز — حركة منسقة ومتقدمة."
+        "ar": "يبدّل قدميه أثناء القفز — حركة منسقة ومتقدمة.",
+        "tr": "Sekmeli koşu sırasında ayaklarını değiştirir — koordineli, ileri düzey bir hareket."
       }
     },
     {
@@ -534,12 +604,14 @@
       "displayName": {
         "en": "Speaks clearly",
         "ru": "Говорит ясно",
-        "ar": "يتحدث بوضوح"
+        "ar": "يتحدث بوضوح",
+        "tr": "Net konuşur"
       },
       "description": {
         "en": "Strangers can understand most of what they say.",
         "ru": "Посторонние понимают большую часть того, что он говорит.",
-        "ar": "الغرباء يفهمون معظم ما يقوله."
+        "ar": "الغرباء يفهمون معظم ما يقوله.",
+        "tr": "Yabancılar söylediklerinin çoğunu anlayabilir."
       }
     },
     {
@@ -549,12 +621,14 @@
       "displayName": {
         "en": "Counts to 10",
         "ru": "Считает до 10",
-        "ar": "يعد إلى 10"
+        "ar": "يعد إلى 10",
+        "tr": "10'a kadar sayar"
       },
       "description": {
         "en": "Counts to 10 from memory and recognises a few written numbers.",
         "ru": "Считает до 10 по памяти и узнаёт несколько написанных цифр.",
-        "ar": "يعد إلى 10 من الذاكرة ويتعرف على بعض الأرقام المكتوبة."
+        "ar": "يعد إلى 10 من الذاكرة ويتعرف على بعض الأرقام المكتوبة.",
+        "tr": "Ezbere 10'a kadar sayar ve birkaç yazılı rakamı tanır."
       }
     }
   ]

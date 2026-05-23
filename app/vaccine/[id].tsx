@@ -215,7 +215,7 @@ function toneFor(status: 'done' | 'overdue' | 'due-soon' | 'upcoming' | 'far-fut
 
 function formatDate(date: Date, lang: SupportedLanguage): string {
   try {
-    const locale = lang === 'ru' ? 'ru' : lang === 'ar' ? 'ar' : 'en';
+    const locale = lang === 'ru' ? 'ru' : lang === 'ar' ? 'ar' : lang === 'tr' ? 'tr' : 'en';
     return date.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
   } catch {
     return date.toISOString().slice(0, 10);

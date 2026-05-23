@@ -110,7 +110,7 @@ export default function ChildrenSettingsScreen() {
 
 function formatDate(date: Date, lang: SupportedLanguage): string {
   try {
-    const locale = lang === 'ru' ? 'ru' : lang === 'ar' ? 'ar' : 'en';
+    const locale = lang === 'ru' ? 'ru' : lang === 'ar' ? 'ar' : lang === 'tr' ? 'tr' : 'en';
     return date.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
   } catch {
     return date.toISOString().slice(0, 10);
