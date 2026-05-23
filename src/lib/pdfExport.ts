@@ -14,6 +14,14 @@ import type {
 
 type T = (key: string, opts?: Record<string, unknown>) => string;
 
+const SEEDLING_SVG = `<svg viewBox="0 0 232 232" xmlns="http://www.w3.org/2000/svg">
+  <rect width="232" height="232" rx="51" fill="#2A7F7F"/>
+  <path d="M116 178 L116 110" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" fill="none"/>
+  <path d="M116 124 C100 110 78 110 70 96 C84 88 108 90 116 110 Z" fill="#FFFFFF"/>
+  <path d="M116 118 C132 100 156 102 168 88 C162 74 134 70 116 102 Z" fill="#FFFFFF"/>
+  <circle cx="116" cy="90" r="11" fill="#F0A848"/>
+</svg>`;
+
 export interface ExportArgs {
   child: Child;
   vaccinations: VaccinationRecord[];
@@ -86,15 +94,8 @@ function buildHtml({ child, vaccinations, growthEntries, milestones, lang, t }: 
   }
   .brand { display: flex; align-items: center; gap: 10px; }
   .brand-name { font-weight: 800; font-size: 18pt; color: #2A7F7F; letter-spacing: -0.3px; }
-  .brand-mark {
-    width: 28px; height: 28px; border-radius: 7px; background: #2A7F7F;
-    display: inline-block; position: relative;
-  }
-  .brand-mark::after {
-    content: ''; position: absolute; left: 50%; top: 50%;
-    width: 14px; height: 14px; transform: translate(-50%, -50%);
-    background: #F0A848; border-radius: 50%;
-  }
+  .brand-mark { display: inline-block; line-height: 0; }
+  .brand-mark svg { display: block; width: 28px; height: 28px; }
   .generated { color: #5A6E6E; font-size: 9pt; }
   h1 { margin: 0 0 4px; font-size: 22pt; font-weight: 800; letter-spacing: -0.4px; }
   .child-meta { color: #5A6E6E; margin-bottom: 22px; font-size: 10pt; }
@@ -129,12 +130,20 @@ function buildHtml({ child, vaccinations, growthEntries, milestones, lang, t }: 
     margin-top: 28px; padding-top: 10px; border-top: 1px solid #E0E5E5;
     font-size: 8pt; color: #8FA0A0; line-height: 1.5;
   }
+  section { page-break-inside: auto; break-inside: auto; }
+  h2 { page-break-after: avoid; break-after: avoid; }
+  table { page-break-inside: auto; break-inside: auto; }
+  tr { page-break-inside: avoid; break-inside: avoid; }
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
+  @page { size: A4; margin: 18mm 14mm; }
+  @page :first { margin-top: 12mm; }
 </style>
 </head>
 <body>
   <header>
     <div class="brand">
-      <span class="brand-mark"></span>
+      <span class="brand-mark">${SEEDLING_SVG}</span>
       <span class="brand-name">${escapeHtml(t('brand.name'))}</span>
     </div>
     <div class="generated">${escapeHtml(generatedDate)}</div>
