@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Redirect, useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,7 +8,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../src/components/Button';
 import { Card } from '../../src/components/Card';
 import { GrowthChart, type ChartPoint, type GrowthMetric } from '../../src/components/GrowthChart';
-import { Segmented } from '../../src/components/Segmented';
 import type { SupportedLanguage } from '../../src/i18n';
 import { useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
@@ -16,6 +15,7 @@ import { useFont } from '../../src/theme/useFont';
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 const DAYS_PER_MONTH = 30.4375;
+const METRICS: GrowthMetric[] = ['weight', 'height', 'head'];
 
 export default function GrowthScreen() {
   const { t, i18n } = useTranslation();
@@ -27,7 +27,6 @@ export default function GrowthScreen() {
   const growthEntries = useChildrenStore((s) => s.growthEntries);
   const removeGrowthEntry = useChildrenStore((s) => s.removeGrowthEntry);
   const child = children[0];
-  const [metric, setMetric] = useState<GrowthMetric>('weight');
 
   const entries = useMemo(() => {
     if (!child) return [];
@@ -36,24 +35,29 @@ export default function GrowthScreen() {
       .sort((a, b) => b.measuredOn.localeCompare(a.measuredOn));
   }, [child, growthEntries]);
 
-  const chartPoints = useMemo<ChartPoint[]>(() => {
+  const chartsByMetric = useMemo(() => {
     if (!child) return [];
     const dob = new Date(child.dateOfBirth).getTime();
-    return entries
-      .map((e) => {
-        const value =
-          metric === 'weight' ? e.weightKg : metric === 'height' ? e.heightCm : e.headCircumferenceCm;
-        if (value == null) return null;
-        const ageMonths =
-          (new Date(e.measuredOn).getTime() - dob) / (MS_PER_DAY * DAYS_PER_MONTH);
-        return { ageMonths: Math.max(0, ageMonths), value };
-      })
-      .filter((p): p is ChartPoint => p !== null);
-  }, [child, entries, metric]);
+    return METRICS.map((metric) => {
+      const points = entries
+        .map((e) => {
+          const value =
+            metric === 'weight'
+              ? e.weightKg
+              : metric === 'height'
+                ? e.heightCm
+                : e.headCircumferenceCm;
+          if (value == null) return null;
+          const ageMonths =
+            (new Date(e.measuredOn).getTime() - dob) / (MS_PER_DAY * DAYS_PER_MONTH);
+          return { ageMonths: Math.max(0, ageMonths), value };
+        })
+        .filter((p): p is ChartPoint => p !== null);
+      return { metric, points };
+    });
+  }, [child, entries]);
 
   if (!child) return <Redirect href="/onboarding/welcome" />;
-
-  const unit = metric === 'weight' ? t('growth.kg') : t('growth.cm');
 
   const handleDelete = (id: string) => {
     Alert.alert(t('growth.deleteConfirm'), '', [
@@ -66,11 +70,15 @@ export default function GrowthScreen() {
     ]);
   };
 
-  const metricOptions: Array<{ value: GrowthMetric; label: string }> = [
-    { value: 'weight', label: t('growth.weightLabel') },
-    { value: 'height', label: t('growth.heightLabel') },
-    { value: 'head', label: t('growth.headLabel') },
-  ];
+  const labelFor = (m: GrowthMetric): string =>
+    m === 'weight'
+      ? t('growth.weightLabel')
+      : m === 'height'
+        ? t('growth.heightLabel')
+        : t('growth.headLabel');
+
+  const unitFor = (m: GrowthMetric): string =>
+    m === 'weight' ? t('growth.kg') : t('growth.cm');
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -96,23 +104,35 @@ export default function GrowthScreen() {
       ) : (
         <>
           <ScrollView contentContainerStyle={styles.list}>
-            <View style={styles.toggleWrap}>
-              <Segmented options={metricOptions} value={metric} onChange={setMetric} />
-            </View>
-
-            <Text
-              style={[styles.eyebrow, { fontFamily: font(typography.eyebrow.weight) }]}>
-              {t('growth.chartTitle')}
-            </Text>
-            {chartPoints.length >= 2 ? (
-              <GrowthChart points={chartPoints} unit={unit} metric={metric} />
-            ) : (
-              <View style={styles.chartEmpty}>
-                <Text style={[styles.chartEmptyText, { fontFamily: font(typography.body.weight) }]}>
-                  {t('growth.chartNeedMore')}
+            {chartsByMetric.map(({ metric, points }) => (
+              <View key={metric} style={styles.chartBlock}>
+                <Text
+                  style={[
+                    styles.eyebrow,
+                    { fontFamily: font(typography.eyebrow.weight) },
+                  ]}>
+                  {labelFor(metric)}
                 </Text>
+                {points.length >= 2 ? (
+                  <GrowthChart
+                    points={points}
+                    unit={unitFor(metric)}
+                    metric={metric}
+                    height={160}
+                  />
+                ) : (
+                  <View style={styles.chartEmpty}>
+                    <Text
+                      style={[
+                        styles.chartEmptyText,
+                        { fontFamily: font(typography.body.weight) },
+                      ]}>
+                      {t('growth.chartNeedMore')}
+                    </Text>
+                  </View>
+                )}
               </View>
-            )}
+            ))}
 
             <Text
               style={[
@@ -230,16 +250,17 @@ const styles = StyleSheet.create({
     paddingBottom: 110,
     gap: spacing.md,
   },
-  toggleWrap: { marginBottom: spacing.sm },
+  chartBlock: {
+    gap: spacing.xs,
+  },
   eyebrow: {
     fontSize: typography.eyebrow.fontSize,
     color: colors.ink2,
     textTransform: 'uppercase',
     letterSpacing: typography.eyebrow.letterSpacing,
-    marginBottom: spacing.xs,
   },
   chartEmpty: {
-    height: 100,
+    height: 90,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.surface,
@@ -249,7 +270,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
   },
   chartEmptyText: {
-    fontSize: typography.body.fontSize,
+    fontSize: typography.caption.fontSize,
     color: colors.ink3,
     textAlign: 'center',
   },
