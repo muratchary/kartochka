@@ -14,8 +14,19 @@ export interface Child {
   sex: Sex;
   countryCode: string;
   photoUri?: string;
+  bloodType?: string;
+  allergyNotes?: string;
+  medicationNotes?: string;
   createdAt: IsoDateTime;
   updatedAt: IsoDateTime;
+}
+
+export interface VaccineReactions {
+  fever?: boolean;
+  fussiness?: boolean;
+  redness?: boolean;
+  drowsiness?: boolean;
+  notes?: string;
 }
 export type NewChild = Omit<Child, 'id' | 'createdAt' | 'updatedAt'>;
 
@@ -29,6 +40,7 @@ export interface VaccinationRecord {
   batchNumber?: string;
   notes?: string;
   photoUri?: string;
+  reactions?: VaccineReactions;
   createdAt: IsoDateTime;
   updatedAt: IsoDateTime;
 }

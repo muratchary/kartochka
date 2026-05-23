@@ -235,6 +235,30 @@
     "celebrationTitle": "Этап достигнут!",
     "celebrationBody": "{{name}} так быстро растёт."
   },
+  "reactions": {
+    "title": "Реакции на прививку",
+    "subtitle": "Как {{name}} перенёс(ла) прививку? Необязательно — для ваших записей.",
+    "fever": "Температура",
+    "fussiness": "Капризность / плач",
+    "redness": "Покраснение в месте укола",
+    "drowsiness": "Сонливость / вялость",
+    "notesLabel": "Другие заметки",
+    "notesPlaceholder": "Что ещё хотите запомнить",
+    "saveCta": "Сохранить",
+    "savedSection": "Реакции",
+    "noReactions": "Реакций не зафиксировано"
+  },
+  "medicalProfile": {
+    "title": "Медицинский профиль",
+    "subtitle": "Полезные данные для врача. Всё необязательно.",
+    "bloodTypeLabel": "Группа крови",
+    "bloodTypeNone": "Не указана",
+    "allergyLabel": "Аллергии",
+    "allergyPlaceholder": "напр. пенициллин, пыльца, орехи",
+    "medicationLabel": "Текущие препараты",
+    "medicationPlaceholder": "напр. витамин D, препараты железа",
+    "saveCta": "Сохранить"
+  },
   "more": {
     "title": "Ещё",
     "sections": {
@@ -246,6 +270,7 @@
     },
     "items": {
       "manageChildren": "Дети",
+      "medicalProfile": "Медицинский профиль",
       "language": "Язык",
       "notifications": "Уведомления",
       "privacy": "Конфиденциальность",
@@ -333,6 +358,20 @@
     "close": "Закрыть",
     "yes": "Да",
     "no": "Нет"
+  },
+  "birthday": {
+    "title": "С днём рождения, {{name}}!",
+    "body": "{{name}} исполняется {{age}} сегодня.",
+    "ageMoments_one": "{{count}} год",
+    "ageMoments_few": "{{count}} года",
+    "ageMoments_many": "{{count}} лет",
+    "dismiss": "Закрыть"
+  },
+  "growth": {
+    "notification": {
+      "title": "Пора измерить {{name}}",
+      "body": "Прошло 6 недель с последнего измерения. Как растёт {{name}}?"
+    }
   },
   "onboarding": {
     "welcome": {

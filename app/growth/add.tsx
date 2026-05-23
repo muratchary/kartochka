@@ -16,6 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../src/components/Button';
 import { DateField } from '../../src/components/DateField';
 import { ScreenTitle } from '../../src/components/ScreenTitle';
+import { scheduleGrowthReminder } from '../../src/lib/notifications';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
@@ -63,7 +64,7 @@ export default function AddOrEditGrowthScreen() {
     return null;
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const weightKg = parseNum(weight);
     const heightCm = parseNum(height);
     const headCircumferenceCm = parseNum(head);
@@ -89,6 +90,13 @@ export default function AddOrEditGrowthScreen() {
         notes: notes.trim() || undefined,
       });
     }
+    // Schedule a growth reminder 6 weeks from now
+    await scheduleGrowthReminder(
+      child.id,
+      date,
+      t('growth.notification.title', { name: child.name }),
+      t('growth.notification.body', { name: child.name }),
+    );
     router.back();
   };
 

@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Redirect, useRouter } from 'expo-router';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -38,6 +38,8 @@ export default function HomeScreen() {
   const milestones = useChildrenStore((s) => s.milestones);
   const tutorialSeen = useChildrenStore((s) => s.tutorialSeen);
   const markTutorialSeen = useChildrenStore((s) => s.markTutorialSeen);
+
+  const [birthdayDismissed, setBirthdayDismissed] = useState(false);
 
   const handleExportPdf = async () => {
     if (!child) return;
@@ -98,6 +100,15 @@ export default function HomeScreen() {
     if (rem === 0) return t('home.pdf.ageYears', { count: years });
     return `${t('home.pdf.ageYears', { count: years })} ${t('home.pdf.ageMonths', { count: rem })}`;
   }, [child, t]);
+
+  const { isBirthday, birthdayAgeYears } = useMemo(() => {
+    if (!child) return { isBirthday: false, birthdayAgeYears: 0 };
+    const today = new Date();
+    const dob = new Date(child.dateOfBirth);
+    const sameDay = today.getDate() === dob.getDate() && today.getMonth() === dob.getMonth();
+    const years = today.getFullYear() - dob.getFullYear();
+    return { isBirthday: sameDay && years > 0, birthdayAgeYears: years };
+  }, [child]);
 
   const monthDigest = useMemo(() => {
     if (!child) {
@@ -163,6 +174,14 @@ export default function HomeScreen() {
         </Pressable>
 
         <View style={styles.cards}>
+          {isBirthday && !birthdayDismissed && child ? (
+            <BirthdayBanner
+              name={child.name}
+              ageYears={birthdayAgeYears}
+              onDismiss={() => setBirthdayDismissed(true)}
+              font={font}
+            />
+          ) : null}
           <MonthDigestCard digest={monthDigest} />
           <NextVaccineCard nextDue={nextDue} lang={lang} />
           <GrowthCard latest={latestGrowth} lang={lang} />
@@ -452,6 +471,35 @@ export default function HomeScreen() {
       </View>
     );
   }
+
+  function BirthdayBanner({
+    name,
+    ageYears,
+    onDismiss,
+    font: f,
+  }: {
+    name: string;
+    ageYears: number;
+    onDismiss: () => void;
+    font: (w: 400 | 500 | 600 | 700 | 800) => string;
+  }) {
+    return (
+      <View style={styles.birthdayCard}>
+        <Text style={styles.birthdayEmoji}>🎂</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={[styles.birthdayTitle, { fontFamily: f(800) }]}>
+            {t('birthday.title', { name })}
+          </Text>
+          <Text style={[styles.birthdayBody, { fontFamily: f(600) }]}>
+            {t('birthday.body', { name, age: ageYears })}
+          </Text>
+        </View>
+        <Pressable onPress={onDismiss} hitSlop={12} style={styles.birthdayClose}>
+          <Ionicons name="close" size={18} color={colors.ink2} />
+        </Pressable>
+      </View>
+    );
+  }
 }
 
 function summarizeGrowth(
@@ -645,5 +693,29 @@ const styles = StyleSheet.create({
   pdfDescription: {
     fontSize: typography.body.fontSize,
     color: colors.ink2,
+  },
+  birthdayCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    backgroundColor: '#FFF7ED',
+    borderRadius: radii.lg,
+    borderWidth: 1,
+    borderColor: '#FED7AA',
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md + 2,
+  },
+  birthdayEmoji: { fontSize: 28 },
+  birthdayTitle: {
+    fontSize: typography.body.fontSize,
+    color: colors.ink,
+  },
+  birthdayBody: {
+    fontSize: typography.caption.fontSize,
+    color: colors.ink2,
+    marginTop: 2,
+  },
+  birthdayClose: {
+    padding: 4,
   },
 });

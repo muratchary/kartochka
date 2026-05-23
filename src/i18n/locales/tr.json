@@ -234,6 +234,7 @@
     },
     "items": {
       "manageChildren": "Çocuklar",
+      "medicalProfile": "Tıbbi profil",
       "language": "Dil",
       "notifications": "Bildirimler",
       "privacy": "Gizlilik",
@@ -321,6 +322,43 @@
     "close": "Kapat",
     "yes": "Evet",
     "no": "Hayır"
+  },
+  "reactions": {
+    "title": "Reaksiyon kaydı",
+    "subtitle": "{{name}} bu aşıya nasıl tepki verdi? İsteğe bağlı — kayıtlarınız için.",
+    "fever": "Ateş",
+    "fussiness": "Huzursuzluk / ağlama",
+    "redness": "Enjeksiyon bölgesinde kızarıklık",
+    "drowsiness": "Uyku hali / yorgunluk",
+    "notesLabel": "Diğer notlar",
+    "notesPlaceholder": "Hatırlamak istediğiniz başka şeyler",
+    "saveCta": "Kaydet",
+    "savedSection": "Reaksiyon kaydı",
+    "noReactions": "Kayıtlı reaksiyon yok"
+  },
+  "medicalProfile": {
+    "title": "Tıbbi profil",
+    "subtitle": "Doktor ziyaretleri için faydalı bilgiler. Tümü isteğe bağlı.",
+    "bloodTypeLabel": "Kan grubu",
+    "bloodTypeNone": "Belirtilmemiş",
+    "allergyLabel": "Alerjiler",
+    "allergyPlaceholder": "ör. penisilin, polen, fındık",
+    "medicationLabel": "Kullanılan ilaçlar",
+    "medicationPlaceholder": "ör. D vitamini, demir damlaları",
+    "saveCta": "Kaydet"
+  },
+  "birthday": {
+    "title": "İyi ki doğdun, {{name}}!",
+    "body": "{{name}} bugün {{age}} yaşına giriyor.",
+    "ageMoments_one": "{{count}} yaşında",
+    "ageMoments_other": "{{count}} yaşında",
+    "dismiss": "Kapat"
+  },
+  "growth": {
+    "notification": {
+      "title": "{{name}}'i ölçme zamanı",
+      "body": "Son ölçümden bu yana 6 hafta geçti. {{name}} nasıl büyüyor?"
+    }
   },
   "onboarding": {
     "welcome": {

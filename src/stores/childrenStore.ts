@@ -30,6 +30,7 @@ interface ChildrenState {
   removeChild: (id: string) => void;
 
   addVaccination: (input: NewVaccinationRecord) => VaccinationRecord;
+  updateVaccination: (id: string, patch: Partial<Omit<VaccinationRecord, 'id' | 'childId' | 'createdAt' | 'updatedAt'>>) => void;
   removeVaccination: (id: string) => void;
 
   addGrowthEntry: (input: NewGrowthEntry) => GrowthEntry;
@@ -104,6 +105,13 @@ export const useChildrenStore = create<ChildrenState>()(
         };
         set((state) => ({ vaccinations: [...state.vaccinations, record] }));
         return record;
+      },
+      updateVaccination: (id, patch) => {
+        set((state) => ({
+          vaccinations: state.vaccinations.map((v) =>
+            v.id === id ? { ...v, ...patch, updatedAt: now() } : v,
+          ),
+        }));
       },
       removeVaccination: (id) => {
         set((state) => ({ vaccinations: state.vaccinations.filter((v) => v.id !== id) }));

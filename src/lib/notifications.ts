@@ -91,6 +91,44 @@ function reminderIdentifier(childId: string, vaccineCode: string, doseNumber: nu
   return `vaccine-${childId}-${vaccineCode}-${doseNumber}`;
 }
 
+const GROWTH_REMINDER_WEEKS = 6;
+const GROWTH_REMINDER_ID_PREFIX = 'growth-reminder-';
+
+export async function scheduleGrowthReminder(
+  childId: string,
+  lastMeasuredDate: string | null,
+  title: string,
+  body: string,
+): Promise<void> {
+  const status = await Notifications.getPermissionsAsync();
+  if (!status.granted) return;
+
+  // Cancel any existing growth reminder for this child
+  const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+  await Promise.all(
+    scheduled
+      .filter((n) => n.identifier.startsWith(`${GROWTH_REMINDER_ID_PREFIX}${childId}`))
+      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier)),
+  );
+
+  const baseline = lastMeasuredDate ? new Date(lastMeasuredDate) : new Date();
+  const triggerAt = new Date(baseline.getTime() + GROWTH_REMINDER_WEEKS * 7 * MS_PER_DAY);
+  if (triggerAt.getTime() <= Date.now()) return;
+
+  await Notifications.scheduleNotificationAsync({
+    identifier: `${GROWTH_REMINDER_ID_PREFIX}${childId}-${Date.now()}`,
+    content: {
+      title,
+      body,
+      data: { kind: 'growth-reminder', childId },
+    },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.DATE,
+      date: triggerAt,
+    },
+  });
+}
+
 export function isNotificationsSupported(): boolean {
   return Platform.OS === 'ios' || Platform.OS === 'android';
 }

@@ -33,6 +33,11 @@ export default function MoreScreen() {
       labelKey: 'more.items.manageChildren',
       onPress: () => router.push('/more/children'),
     },
+    {
+      icon: 'medkit-outline',
+      labelKey: 'more.items.medicalProfile',
+      onPress: () => router.push('/more/medical-profile'),
+    },
   ];
 
   const appSection: RowDef[] = [

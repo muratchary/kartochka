@@ -234,6 +234,7 @@
     },
     "items": {
       "manageChildren": "الأطفال",
+      "medicalProfile": "الملف الطبي",
       "language": "اللغة",
       "notifications": "التنبيهات",
       "privacy": "الخصوصية",
@@ -321,6 +322,46 @@
     "close": "إغلاق",
     "yes": "نعم",
     "no": "لا"
+  },
+  "reactions": {
+    "title": "تسجيل التفاعلات",
+    "subtitle": "كيف تفاعل {{name}} مع هذا اللقاح؟ اختياري — لسجلاتك الخاصة.",
+    "fever": "حمى",
+    "fussiness": "بكاء / توتر",
+    "redness": "احمرار في موضع الحقن",
+    "drowsiness": "نعاس / خمول",
+    "notesLabel": "ملاحظات إضافية",
+    "notesPlaceholder": "أي شيء آخر تريد تذكره",
+    "saveCta": "حفظ",
+    "savedSection": "التفاعلات",
+    "noReactions": "لم تُسجَّل أي تفاعلات"
+  },
+  "medicalProfile": {
+    "title": "الملف الطبي",
+    "subtitle": "معلومات مفيدة لزيارات الطبيب. جميعها اختيارية.",
+    "bloodTypeLabel": "فصيلة الدم",
+    "bloodTypeNone": "غير محدد",
+    "allergyLabel": "الحساسية",
+    "allergyPlaceholder": "مثال: بنسلين، حبوب اللقاح، مكسرات",
+    "medicationLabel": "الأدوية الحالية",
+    "medicationPlaceholder": "مثال: فيتامين د، قطرات الحديد",
+    "saveCta": "حفظ"
+  },
+  "birthday": {
+    "title": "عيد ميلاد سعيد، {{name}}!",
+    "body": "{{name}} يُتمّ {{age}} اليوم.",
+    "ageMoments_one": "سنة واحدة",
+    "ageMoments_two": "سنتان",
+    "ageMoments_few": "{{count}} سنوات",
+    "ageMoments_many": "{{count}} سنة",
+    "ageMoments_other": "{{count}} سنة",
+    "dismiss": "إغلاق"
+  },
+  "growth": {
+    "notification": {
+      "title": "حان وقت قياس {{name}}",
+      "body": "مرّت 6 أسابيع منذ آخر قياس. كيف ينمو {{name}}؟"
+    }
   },
   "onboarding": {
     "welcome": {

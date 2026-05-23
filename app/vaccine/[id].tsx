@@ -9,6 +9,7 @@ import { Button } from '../../src/components/Button';
 import { Card } from '../../src/components/Card';
 import { Pill, type PillTone } from '../../src/components/Pill';
 import type { SupportedLanguage } from '../../src/i18n';
+import type { VaccineReactions } from '../../src/types';
 import { getSchedule } from '../../src/lib/schedules';
 import { useRescheduleReminders } from '../../src/lib/useReminders';
 import { dueDateForDose, statusFromDays } from '../../src/lib/vaccinationStatus';
@@ -171,6 +172,33 @@ export default function VaccineDetailScreen() {
           )}
         </Card>
 
+        {/* Reaction log section — only show if vaccination is recorded */}
+        {record ? (
+          <Card style={styles.descCard}>
+            <Text style={[styles.eyebrow, { fontFamily: font(typography.eyebrow.weight) }]}>
+              {t('reactions.savedSection')}
+            </Text>
+            {record.reactions && hasAnyReaction(record.reactions) ? (
+              <ReactionSummary reactions={record.reactions} font={font} t={t} />
+            ) : (
+              <Text style={[styles.bodyText, { fontFamily: font(typography.body.weight), color: colors.ink2 }]}>
+                {t('reactions.noReactions')}
+              </Text>
+            )}
+            <Button
+              label={t('reactions.title')}
+              variant="ghost"
+              size="sm"
+              onPress={() =>
+                router.push({
+                  pathname: '/vaccine/log-reaction',
+                  params: { recordId: record.id },
+                })
+              }
+            />
+          </Card>
+        ) : null}
+
         {!record && status === 'overdue' ? (
           <Card style={[styles.descCard, styles.catchupCard]}>
             <Text style={[styles.eyebrow, { fontFamily: font(typography.eyebrow.weight), color: '#92400E' }]}>
@@ -218,6 +246,56 @@ export default function VaccineDetailScreen() {
     </SafeAreaView>
   );
 }
+
+function hasAnyReaction(r: VaccineReactions): boolean {
+  return !!(r.fever || r.fussiness || r.redness || r.drowsiness || r.notes);
+}
+
+function ReactionSummary({
+  reactions,
+  font,
+  t,
+}: {
+  reactions: VaccineReactions;
+  font: (w: 400 | 500 | 600 | 700 | 800) => string;
+  t: (key: string) => string;
+}) {
+  const chips: string[] = [];
+  if (reactions.fever) chips.push(t('reactions.fever'));
+  if (reactions.fussiness) chips.push(t('reactions.fussiness'));
+  if (reactions.redness) chips.push(t('reactions.redness'));
+  if (reactions.drowsiness) chips.push(t('reactions.drowsiness'));
+
+  return (
+    <View style={{ gap: 6 }}>
+      {chips.length > 0 && (
+        <View style={reactionStyles.chips}>
+          {chips.map((c) => (
+            <View key={c} style={reactionStyles.chip}>
+              <Text style={[reactionStyles.chipText, { fontFamily: font(600) }]}>{c}</Text>
+            </View>
+          ))}
+        </View>
+      )}
+      {reactions.notes ? (
+        <Text style={[{ fontSize: 13, color: colors.ink2, lineHeight: 18 }, { fontFamily: font(600) }]}>
+          {reactions.notes}
+        </Text>
+      ) : null}
+    </View>
+  );
+}
+
+const reactionStyles = StyleSheet.create({
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
+  chip: {
+    backgroundColor: '#FEF3C7',
+    borderRadius: 99,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+  },
+  chipText: { fontSize: 12, color: '#92400E' },
+});
 
 function statusLabelKey(status: 'done' | 'overdue' | 'due-soon' | 'upcoming' | 'far-future'): string {
   if (status === 'done') return 'vaccines.filters.done';

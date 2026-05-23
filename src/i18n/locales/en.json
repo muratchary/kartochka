@@ -223,6 +223,30 @@
     "celebrationTitle": "Milestone reached!",
     "celebrationBody": "{{name}} is growing up so fast."
   },
+  "reactions": {
+    "title": "Reaction log",
+    "subtitle": "How did {{name}} react after this shot? Optional — for your records.",
+    "fever": "Fever",
+    "fussiness": "Fussiness / crying",
+    "redness": "Redness at injection site",
+    "drowsiness": "Drowsiness / fatigue",
+    "notesLabel": "Other notes",
+    "notesPlaceholder": "Anything else to remember",
+    "saveCta": "Save",
+    "savedSection": "Reaction log",
+    "noReactions": "No reactions logged"
+  },
+  "medicalProfile": {
+    "title": "Medical profile",
+    "subtitle": "Useful details for doctor visits. All optional.",
+    "bloodTypeLabel": "Blood type",
+    "bloodTypeNone": "Not specified",
+    "allergyLabel": "Allergies",
+    "allergyPlaceholder": "e.g. penicillin, pollen, nuts",
+    "medicationLabel": "Current medications",
+    "medicationPlaceholder": "e.g. vitamin D, iron drops",
+    "saveCta": "Save"
+  },
   "more": {
     "title": "More",
     "sections": {
@@ -234,6 +258,7 @@
     },
     "items": {
       "manageChildren": "Children",
+      "medicalProfile": "Medical profile",
       "language": "Language",
       "notifications": "Notifications",
       "privacy": "Privacy",
@@ -321,6 +346,19 @@
     "close": "Close",
     "yes": "Yes",
     "no": "No"
+  },
+  "birthday": {
+    "title": "Happy Birthday, {{name}}!",
+    "body": "{{name}} turns {{age}} today.",
+    "ageMoments_one": "{{count}} year old",
+    "ageMoments_other": "{{count}} years old",
+    "dismiss": "Close"
+  },
+  "growth": {
+    "notification": {
+      "title": "Time to measure {{name}}",
+      "body": "It's been 6 weeks since the last measurement. How is {{name}} growing?"
+    }
   },
   "onboarding": {
     "welcome": {
