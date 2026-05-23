@@ -6,16 +6,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Card } from '../src/components/Card';
 import { ScreenTitle } from '../src/components/ScreenTitle';
-import type { SupportedLanguage } from '../src/i18n';
 import { useChildrenStore } from '../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../src/theme';
 import { useFont } from '../src/theme/useFont';
 
 export default function SwitchChildScreen() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const router = useRouter();
   const font = useFont();
-  const lang = (i18n.language || 'en') as SupportedLanguage;
 
   const children = useChildrenStore((s) => s.children);
   const selectedChildId = useChildrenStore((s) => s.selectedChildId);
@@ -52,7 +50,7 @@ export default function SwitchChildScreen() {
                     <View style={{ flex: 1 }}>
                       <Text style={[styles.name, { fontFamily: font(700) }]}>{c.name}</Text>
                       <Text style={[styles.meta, { fontFamily: font(600) }]}>
-                        {formatDate(new Date(c.dateOfBirth), lang)} · {t(`countries.${c.countryCode}`)}
+                        {childAgeLabel(c.dateOfBirth, t)} · {t(`countries.${c.countryCode}`)}
                       </Text>
                     </View>
                     {active && (
@@ -69,13 +67,16 @@ export default function SwitchChildScreen() {
   );
 }
 
-function formatDate(date: Date, lang: SupportedLanguage): string {
-  try {
-    const locale = lang === 'ru' ? 'ru' : lang === 'ar' ? 'ar' : lang === 'tr' ? 'tr' : 'en';
-    return date.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
-  } catch {
-    return date.toISOString().slice(0, 10);
-  }
+function childAgeLabel(dob: string, t: (k: string, opts?: Record<string, unknown>) => string): string {
+  const totalMonths = Math.floor(
+    (Date.now() - new Date(dob).getTime()) / (1000 * 60 * 60 * 24 * 30.4375),
+  );
+  if (totalMonths <= 0) return t('home.pdf.ageDays', { count: 1 });
+  if (totalMonths < 24) return t('home.pdf.ageMonths', { count: totalMonths });
+  const years = Math.floor(totalMonths / 12);
+  const rem = totalMonths % 12;
+  if (rem === 0) return t('home.pdf.ageYears', { count: years });
+  return `${t('home.pdf.ageYears', { count: years })} ${t('home.pdf.ageMonths', { count: rem })}`;
 }
 
 const styles = StyleSheet.create({
