@@ -203,7 +203,10 @@
     },
     "tapToMark": "Tap to mark",
     "markedOn": "Reached {{date}}",
-    "unmark": "Remove"
+    "unmark": "Remove",
+    "unmarkConfirm": "Remove this milestone?",
+    "celebrationTitle": "Milestone reached!",
+    "celebrationBody": "{{name}} is growing up so fast."
   },
   "more": {
     "title": "More",

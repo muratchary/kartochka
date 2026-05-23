@@ -203,7 +203,10 @@
     },
     "tapToMark": "İşaretlemek için dokunun",
     "markedOn": "{{date}} tarihinde ulaştı",
-    "unmark": "Kaldır"
+    "unmark": "Kaldır",
+    "unmarkConfirm": "Bu aşamayı kaldır?",
+    "celebrationTitle": "Aşamaya ulaşıldı!",
+    "celebrationBody": "{{name}} çok hızlı büyüyor."
   },
   "more": {
     "title": "Diğer",

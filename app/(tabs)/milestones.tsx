@@ -1,11 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Redirect } from 'expo-router';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Card } from '../../src/components/Card';
+import { Celebration } from '../../src/components/Celebration';
 import type { SupportedLanguage } from '../../src/i18n';
 import { STANDARD_MILESTONES, groupMilestonesByAge } from '../../src/lib/milestones';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
@@ -21,6 +22,8 @@ export default function MilestonesScreen() {
   const milestoneRecords = useChildrenStore((s) => s.milestones);
   const addMilestone = useChildrenStore((s) => s.addMilestone);
   const removeMilestone = useChildrenStore((s) => s.removeMilestone);
+
+  const [celebrate, setCelebrate] = useState(false);
 
   const groups = useMemo(() => groupMilestonesByAge(), []);
 
@@ -43,10 +46,10 @@ export default function MilestonesScreen() {
   const handleToggle = (code: string) => {
     const existing = recordsByCode.get(code);
     if (existing) {
-      Alert.alert('', t('milestones.unmark'), [
+      Alert.alert(t('milestones.unmarkConfirm'), '', [
         { text: t('common.cancel'), style: 'cancel' },
         {
-          text: t('common.delete'),
+          text: t('milestones.unmark'),
           style: 'destructive',
           onPress: () => removeMilestone(existing.id),
         },
@@ -58,6 +61,7 @@ export default function MilestonesScreen() {
       milestoneCode: code,
       achievedOn: new Date().toISOString().slice(0, 10),
     });
+    setCelebrate(true);
   };
 
   return (
@@ -139,6 +143,13 @@ export default function MilestonesScreen() {
           </View>
         ))}
       </ScrollView>
+
+      <Celebration
+        visible={celebrate}
+        title={t('milestones.celebrationTitle')}
+        body={t('milestones.celebrationBody', { name: child.name })}
+        onClose={() => setCelebrate(false)}
+      />
     </SafeAreaView>
   );
 }

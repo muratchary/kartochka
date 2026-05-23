@@ -203,7 +203,10 @@
     },
     "tapToMark": "اضغط للتسجيل",
     "markedOn": "تم في {{date}}",
-    "unmark": "إزالة"
+    "unmark": "إزالة",
+    "unmarkConfirm": "إزالة هذه المرحلة؟",
+    "celebrationTitle": "تم الوصول إلى المرحلة!",
+    "celebrationBody": "{{name}} ينمو بسرعة."
   },
   "more": {
     "title": "المزيد",
