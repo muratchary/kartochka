@@ -9,7 +9,7 @@ import { Pill, type PillTone } from '../../src/components/Pill';
 import type { SupportedLanguage } from '../../src/i18n';
 import { getSchedule } from '../../src/lib/schedules';
 import { dueDateForDose, statusFromDays, type DueStatus } from '../../src/lib/vaccinationStatus';
-import { useChildrenStore } from '../../src/stores/childrenStore';
+import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -34,10 +34,9 @@ export default function VaccinesScreen() {
   const router = useRouter();
   const lang = (i18n.language || 'en') as SupportedLanguage;
 
-  const children = useChildrenStore((s) => s.children);
+  const child = useChildrenStore(selectActiveChild);
   const vaccinations = useChildrenStore((s) => s.vaccinations);
   const [filter, setFilter] = useState<Filter>('all');
-  const child = children[0];
 
   const rows = useMemo<DoseRow[]>(() => {
     if (!child) return [];

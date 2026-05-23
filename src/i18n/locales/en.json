@@ -11,6 +11,10 @@
     "more": "More"
   },
   "home": {
+    "switchChild": "Switch child",
+    "growthSummary": "{{weight}} kg · {{height}} cm",
+    "growthOn": "Last measured {{date}}",
+    "milestonesProgress": "{{done}} of {{total}} reached",
     "greeting": {
       "morning": "Good morning",
       "afternoon": "Good afternoon",
@@ -159,6 +163,9 @@
     "title": "Milestones",
     "subtitle": "Standard pediatric milestones. Tap one when your child reaches it.",
     "empty": "No milestones tracked yet.",
+    "progressTitle": "Progress",
+    "progressSummary": "{{done}} of {{total}} reached",
+    "progressByAge": "Up to age {{age}}",
     "ageMonths_one": "{{count}} month",
     "ageMonths_other": "{{count}} months",
     "ageYears_one": "{{count}} year",
@@ -179,7 +186,8 @@
       "children": "Children",
       "app": "App",
       "subscription": "Subscription",
-      "about": "About"
+      "about": "About",
+      "developer": "Testing"
     },
     "items": {
       "manageChildren": "Children",
@@ -187,7 +195,19 @@
       "notifications": "Notifications",
       "privacy": "Privacy",
       "subscription": "Subscription",
-      "supportEmail": "Contact support"
+      "supportEmail": "Contact support",
+      "loadDemo": "Load demo data",
+      "clearAll": "Clear all data"
+    },
+    "loadDemoConfirm": "Load demo data? This replaces your current children and records.",
+    "clearAllConfirm": "Delete every child and their records?",
+    "loadDemoCta": "Load",
+    "notificationsList": {
+      "title": "Notifications",
+      "subtitle": "Reminders that will fire one day before each scheduled vaccine.",
+      "empty": "No reminders scheduled.",
+      "enablePrompt": "Enable notifications in Settings → Notifications to get reminders for upcoming vaccinations.",
+      "willFire": "Fires {{date}}"
     },
     "languageSection": "Language",
     "restartRequired": "Please close and reopen the app for the language change to take full effect.",
@@ -205,6 +225,10 @@
       "enableCta": "Enable reminders",
       "rescheduleCta": "Reschedule reminders",
       "openSettings": "Open phone settings"
+    },
+    "switchChildScreen": {
+      "title": "Choose child",
+      "subtitle": "Switch between the children on this phone."
     },
     "childrenScreen": {
       "title": "Children",

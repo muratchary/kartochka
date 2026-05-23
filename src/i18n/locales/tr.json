@@ -11,6 +11,10 @@
     "more": "Diğer"
   },
   "home": {
+    "switchChild": "Çocuk değiştir",
+    "growthSummary": "{{weight}} kg · {{height}} cm",
+    "growthOn": "Son ölçüm {{date}}",
+    "milestonesProgress": "{{done}} / {{total}} ulaşıldı",
     "greeting": {
       "morning": "Günaydın",
       "afternoon": "İyi günler",
@@ -159,6 +163,9 @@
     "title": "Gelişim",
     "subtitle": "Standart pediatrik gelişim aşamaları. Çocuğunuz bir aşamaya ulaştığında dokunun.",
     "empty": "Henüz hiçbir gelişim aşaması işaretlenmedi.",
+    "progressTitle": "İlerleme",
+    "progressSummary": "{{done}} / {{total}} ulaşıldı",
+    "progressByAge": "{{age}} yaşına kadar",
     "ageMonths_one": "1 ay",
     "ageMonths_other": "{{count}} ay",
     "ageYears_one": "1 yaş",
@@ -179,7 +186,8 @@
       "children": "Çocuklar",
       "app": "Uygulama",
       "subscription": "Abonelik",
-      "about": "Hakkında"
+      "about": "Hakkında",
+      "developer": "Test"
     },
     "items": {
       "manageChildren": "Çocuklar",
@@ -187,7 +195,23 @@
       "notifications": "Bildirimler",
       "privacy": "Gizlilik",
       "subscription": "Abonelik",
-      "supportEmail": "Destek ile iletişim"
+      "supportEmail": "Destek ile iletişim",
+      "loadDemo": "Demo veri yükle",
+      "clearAll": "Tüm verileri sil"
+    },
+    "loadDemoConfirm": "Demo veri yüklensin mi? Mevcut çocuklar ve kayıtlar değiştirilecek.",
+    "clearAllConfirm": "Tüm çocuklar ve kayıtları silinsin mi?",
+    "loadDemoCta": "Yükle",
+    "notificationsList": {
+      "title": "Bildirimler",
+      "subtitle": "Her planlanmış aşıdan bir gün önce gösterilen hatırlatmalar.",
+      "empty": "Planlanmış hatırlatma yok.",
+      "enablePrompt": "Yaklaşan aşılar için hatırlatma almak üzere Diğer → Bildirimler bölümünden bildirimleri etkinleştirin.",
+      "willFire": "{{date}} tarihinde gösterilecek"
+    },
+    "switchChildScreen": {
+      "title": "Çocuk seç",
+      "subtitle": "Bu telefondaki çocuklar arasında geçiş yapın."
     },
     "languageSection": "Dil",
     "restartRequired": "Dil değişikliğinin tam olarak uygulanması için lütfen uygulamayı kapatıp yeniden açın.",

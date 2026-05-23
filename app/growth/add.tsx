@@ -16,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../src/components/Button';
 import { DateField } from '../../src/components/DateField';
 import { ScreenTitle } from '../../src/components/ScreenTitle';
-import { useChildrenStore } from '../../src/stores/childrenStore';
+import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -41,11 +41,10 @@ export default function AddOrEditGrowthScreen() {
   const font = useFont();
   const params = useLocalSearchParams<{ id?: string }>();
 
-  const children = useChildrenStore((s) => s.children);
+  const child = useChildrenStore(selectActiveChild);
   const growthEntries = useChildrenStore((s) => s.growthEntries);
   const addGrowthEntry = useChildrenStore((s) => s.addGrowthEntry);
   const updateGrowthEntry = useChildrenStore((s) => s.updateGrowthEntry);
-  const child = children[0];
 
   const existing = useMemo(
     () => (params.id ? growthEntries.find((g) => g.id === params.id) : undefined),

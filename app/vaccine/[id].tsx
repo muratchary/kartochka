@@ -12,7 +12,7 @@ import type { SupportedLanguage } from '../../src/i18n';
 import { getSchedule } from '../../src/lib/schedules';
 import { useRescheduleReminders } from '../../src/lib/useReminders';
 import { dueDateForDose, statusFromDays } from '../../src/lib/vaccinationStatus';
-import { useChildrenStore } from '../../src/stores/childrenStore';
+import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -23,11 +23,10 @@ export default function VaccineDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const lang = (i18n.language || 'en') as SupportedLanguage;
 
-  const children = useChildrenStore((s) => s.children);
+  const child = useChildrenStore(selectActiveChild);
   const vaccinations = useChildrenStore((s) => s.vaccinations);
   const removeVaccination = useChildrenStore((s) => s.removeVaccination);
   const rescheduleReminders = useRescheduleReminders();
-  const child = children[0];
 
   const parsed = useMemo(() => {
     if (!id) return null;

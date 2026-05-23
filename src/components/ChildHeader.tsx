@@ -8,25 +8,45 @@ interface Props {
   name: string;
   greeting: string;
   onBellPress?: () => void;
+  onSwitchChild?: () => void;
+  hasMultipleChildren?: boolean;
 }
 
-export function ChildHeader({ name, greeting, onBellPress }: Props) {
+export function ChildHeader({
+  name,
+  greeting,
+  onBellPress,
+  onSwitchChild,
+  hasMultipleChildren = false,
+}: Props) {
   const font = useFont();
   const letter = name.trim().charAt(0).toUpperCase() || '?';
 
   return (
     <View style={styles.row}>
-      <View style={styles.avatar}>
-        <Text style={[styles.avatarLetter, { fontFamily: font(800) }]}>{letter}</Text>
-      </View>
-      <View style={styles.text}>
-        <Text style={[styles.greeting, { fontFamily: font(typography.caption.weight) }]}>
-          {greeting}
-        </Text>
-        <Text style={[styles.name, { fontFamily: font(typography.title.weight) }]}>
-          {name}
-        </Text>
-      </View>
+      <Pressable
+        onPress={hasMultipleChildren ? onSwitchChild : undefined}
+        style={styles.identity}
+        hitSlop={6}>
+        <View style={styles.avatar}>
+          <Text style={[styles.avatarLetter, { fontFamily: font(800) }]}>{letter}</Text>
+        </View>
+        <View style={styles.text}>
+          <Text style={[styles.greeting, { fontFamily: font(typography.caption.weight) }]}>
+            {greeting}
+          </Text>
+          <View style={styles.nameRow}>
+            <Text
+              numberOfLines={1}
+              style={[styles.name, { fontFamily: font(typography.title.weight) }]}>
+              {name}
+            </Text>
+            {hasMultipleChildren && (
+              <Ionicons name="chevron-down" size={18} color={colors.ink2} style={styles.chevron} />
+            )}
+          </View>
+        </View>
+      </Pressable>
       <Pressable onPress={onBellPress} hitSlop={10} style={styles.bell}>
         <Ionicons name="notifications-outline" size={22} color={colors.ink2} />
       </Pressable>
@@ -36,6 +56,12 @@ export function ChildHeader({ name, greeting, onBellPress }: Props) {
 
 const styles = StyleSheet.create({
   row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  identity: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
@@ -57,10 +83,18 @@ const styles = StyleSheet.create({
     fontSize: typography.caption.fontSize,
     color: colors.ink2,
   },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   name: {
     fontSize: typography.title.fontSize,
     color: colors.ink,
     letterSpacing: typography.title.letterSpacing,
+    flexShrink: 1,
+  },
+  chevron: {
+    marginStart: spacing.xs,
   },
   bell: {
     width: 40,

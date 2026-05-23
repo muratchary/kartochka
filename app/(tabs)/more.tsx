@@ -2,9 +2,11 @@ import { Ionicons, type Ionicons as IoniconsType } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import type { ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { cancelAllReminders } from '../../src/lib/notifications';
+import { useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -14,12 +16,16 @@ interface RowDef {
   icon: IoniconName;
   labelKey: string;
   onPress: () => void;
+  destructive?: boolean;
 }
 
 export default function MoreScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const font = useFont();
+
+  const seedDemoData = useChildrenStore((s) => s.seedDemoData);
+  const clearAll = useChildrenStore((s) => s.clearAll);
 
   const childrenSection: RowDef[] = [
     {
@@ -42,6 +48,47 @@ export default function MoreScreen() {
     },
   ];
 
+  const handleLoadDemo = () => {
+    Alert.alert(t('more.loadDemoConfirm'), '', [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('more.loadDemoCta'),
+        onPress: async () => {
+          await cancelAllReminders();
+          seedDemoData();
+        },
+      },
+    ]);
+  };
+
+  const handleClearAll = () => {
+    Alert.alert(t('more.clearAllConfirm'), '', [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('common.delete'),
+        style: 'destructive',
+        onPress: async () => {
+          await cancelAllReminders();
+          clearAll();
+        },
+      },
+    ]);
+  };
+
+  const devSection: RowDef[] = [
+    {
+      icon: 'sparkles-outline',
+      labelKey: 'more.items.loadDemo',
+      onPress: handleLoadDemo,
+    },
+    {
+      icon: 'trash-outline',
+      labelKey: 'more.items.clearAll',
+      onPress: handleClearAll,
+      destructive: true,
+    },
+  ];
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
@@ -53,6 +100,7 @@ export default function MoreScreen() {
       <ScrollView contentContainerStyle={styles.scroll}>
         <Section title={t('more.sections.children')} font={font} rows={childrenSection} t={t} />
         <Section title={t('more.sections.app')} font={font} rows={appSection} t={t} />
+        <Section title={t('more.sections.developer')} font={font} rows={devSection} t={t} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -85,8 +133,17 @@ function Section({
               i === rows.length - 1 && styles.rowLast,
               i !== rows.length - 1 && styles.rowDivider,
             ]}>
-            <Ionicons name={row.icon} size={22} color={colors.ink2} />
-            <Text style={[styles.rowLabel, { fontFamily: font(600) }]}>
+            <Ionicons
+              name={row.icon}
+              size={22}
+              color={row.destructive ? colors.error : colors.ink2}
+            />
+            <Text
+              style={[
+                styles.rowLabel,
+                { fontFamily: font(600) },
+                row.destructive && { color: colors.error },
+              ]}>
               {t(row.labelKey)}
             </Text>
             <Ionicons name="chevron-forward" size={18} color={colors.ink3} />

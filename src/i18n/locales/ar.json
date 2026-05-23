@@ -11,6 +11,10 @@
     "more": "المزيد"
   },
   "home": {
+    "switchChild": "تبديل الطفل",
+    "growthSummary": "{{weight}} كغ · {{height}} سم",
+    "growthOn": "آخر قياس {{date}}",
+    "milestonesProgress": "{{done}} من {{total}} مُنجزة",
     "greeting": {
       "morning": "صباح الخير",
       "afternoon": "نهارك سعيد",
@@ -159,6 +163,9 @@
     "title": "النماء",
     "subtitle": "معالم تطور قياسية. اضغط على معلم عند تحقيقه.",
     "empty": "لم يتم تسجيل أي معلم بعد.",
+    "progressTitle": "التقدم",
+    "progressSummary": "{{done}} من {{total}} مُنجزة",
+    "progressByAge": "حتى عمر {{age}}",
     "ageMonths_one": "شهر واحد",
     "ageMonths_other": "{{count}} شهراً",
     "ageYears_one": "سنة واحدة",
@@ -179,7 +186,8 @@
       "children": "الأطفال",
       "app": "التطبيق",
       "subscription": "الاشتراك",
-      "about": "حول"
+      "about": "حول",
+      "developer": "اختبار"
     },
     "items": {
       "manageChildren": "الأطفال",
@@ -187,7 +195,23 @@
       "notifications": "التنبيهات",
       "privacy": "الخصوصية",
       "subscription": "الاشتراك",
-      "supportEmail": "اتصل بالدعم"
+      "supportEmail": "اتصل بالدعم",
+      "loadDemo": "تحميل بيانات تجريبية",
+      "clearAll": "مسح جميع البيانات"
+    },
+    "loadDemoConfirm": "تحميل بيانات تجريبية؟ سيؤدي ذلك إلى استبدال أطفالك وسجلاتك الحالية.",
+    "clearAllConfirm": "حذف جميع الأطفال وسجلاتهم؟",
+    "loadDemoCta": "تحميل",
+    "notificationsList": {
+      "title": "التنبيهات",
+      "subtitle": "تذكيرات تظهر قبل يوم واحد من كل تطعيم مجدول.",
+      "empty": "لا توجد تذكيرات مجدولة.",
+      "enablePrompt": "فعّل التنبيهات من المزيد → التنبيهات لتلقي تذكيرات التطعيمات القادمة.",
+      "willFire": "سيظهر في {{date}}"
+    },
+    "switchChildScreen": {
+      "title": "اختر الطفل",
+      "subtitle": "التبديل بين الأطفال المسجلين على هذا الجهاز."
     },
     "languageSection": "اللغة",
     "restartRequired": "يرجى إغلاق التطبيق وإعادة فتحه ليطبق تغيير اللغة بالكامل.",

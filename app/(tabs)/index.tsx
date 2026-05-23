@@ -10,10 +10,11 @@ import { Card } from '../../src/components/Card';
 import { ChildHeader } from '../../src/components/ChildHeader';
 import { Pill, type PillTone } from '../../src/components/Pill';
 import type { SupportedLanguage } from '../../src/i18n';
+import { STANDARD_MILESTONES } from '../../src/lib/milestones';
 import { exportChildPdf } from '../../src/lib/pdfExport';
 import { getSchedule } from '../../src/lib/schedules';
 import { nextDueVaccine, type DueStatus } from '../../src/lib/vaccinationStatus';
-import { useChildrenStore } from '../../src/stores/childrenStore';
+import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -24,11 +25,10 @@ export default function HomeScreen() {
   const lang = (i18n.language || 'en') as SupportedLanguage;
 
   const children = useChildrenStore((s) => s.children);
+  const child = useChildrenStore(selectActiveChild);
   const vaccinations = useChildrenStore((s) => s.vaccinations);
   const growthEntries = useChildrenStore((s) => s.growthEntries);
   const milestones = useChildrenStore((s) => s.milestones);
-
-  const child = children[0];
 
   const handleExportPdf = async () => {
     if (!child) return;
@@ -76,19 +76,31 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <ChildHeader name={child.name} greeting={greeting} />
+        <ChildHeader
+          name={child.name}
+          greeting={greeting}
+          hasMultipleChildren={children.length > 1}
+          onSwitchChild={() => router.push('/switch-child')}
+          onBellPress={() => router.push('/notifications')}
+        />
 
         <View style={styles.cards}>
           <NextVaccineCard nextDue={nextDue} lang={lang} />
-          <GrowthCard hasData={!!latestGrowth} />
-          <MilestonesCard count={milestonesForChild.length} />
+          <GrowthCard latest={latestGrowth} lang={lang} />
+          <MilestonesCard reachedCount={milestonesForChild.length} />
           <PdfCtaCard />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 
-  function NextVaccineCard({ nextDue, lang }: { nextDue: ReturnType<typeof nextDueVaccine>; lang: SupportedLanguage }) {
+  function NextVaccineCard({
+    nextDue,
+    lang,
+  }: {
+    nextDue: ReturnType<typeof nextDueVaccine>;
+    lang: SupportedLanguage;
+  }) {
     if (!nextDue) {
       return (
         <Card>
@@ -134,7 +146,11 @@ export default function HomeScreen() {
           {t('home.nextVaccine.doseLabel', { number: dose.doseNumber, total: vaccine.doses.length })} ·{' '}
           {formatDate(dueDate, lang)}
         </Text>
-        <Text style={[styles.cardDue, { fontFamily: font(typography.body.weight), color: tonePalette(tone).fg }]}>
+        <Text
+          style={[
+            styles.cardDue,
+            { fontFamily: font(typography.body.weight), color: tonePalette(tone).fg },
+          ]}>
           {dueText}
         </Text>
         <View style={styles.cardActions}>
@@ -160,34 +176,76 @@ export default function HomeScreen() {
     );
   }
 
-  function GrowthCard({ hasData }: { hasData: boolean }) {
+  function GrowthCard({
+    latest,
+    lang,
+  }: {
+    latest: ReturnType<typeof useMemo<typeof latestGrowth>> | null;
+    lang: SupportedLanguage;
+  }) {
     return (
       <Card>
         <Text style={[styles.cardLabel, { fontFamily: font(typography.eyebrow.weight) }]}>
           {t('home.growth.label')}
         </Text>
-        {hasData ? (
-          <Text style={[styles.empty, { fontFamily: font(typography.body.weight) }]}>
-            {t('home.growth.label')}
-          </Text>
+        {latest ? (
+          <>
+            <Text style={[styles.cardValue, { fontFamily: font(typography.h2.weight) }]}>
+              {summarizeGrowth(latest, t)}
+            </Text>
+            <Text style={[styles.cardMeta, { fontFamily: font(typography.body.weight) }]}>
+              {t('home.growth.label')
+                ? t('home.growthOn', { date: formatDate(new Date(latest.measuredOn), lang) })
+                : ''}
+            </Text>
+          </>
         ) : (
           <Text style={[styles.empty, { fontFamily: font(typography.body.weight) }]}>
             {t('home.growth.empty')}
           </Text>
         )}
+        <View style={[styles.cardActions, { marginTop: spacing.sm }]}>
+          <Button
+            label={latest ? t('home.nextVaccine.viewSchedule') : t('home.growth.addCta')}
+            variant="ghost"
+            size="sm"
+            onPress={() => router.push(latest ? '/growth' : '/growth/add')}
+          />
+        </View>
       </Card>
     );
   }
 
-  function MilestonesCard({ count }: { count: number }) {
+  function MilestonesCard({ reachedCount }: { reachedCount: number }) {
+    const total = STANDARD_MILESTONES.length;
+    const pct = total === 0 ? 0 : Math.round((reachedCount / total) * 100);
     return (
       <Card>
         <Text style={[styles.cardLabel, { fontFamily: font(typography.eyebrow.weight) }]}>
           {t('home.milestones.label')}
         </Text>
-        <Text style={[styles.empty, { fontFamily: font(typography.body.weight) }]}>
-          {count > 0 ? `${count}` : t('home.milestones.empty')}
-        </Text>
+        {reachedCount > 0 ? (
+          <>
+            <Text style={[styles.cardValue, { fontFamily: font(typography.h2.weight) }]}>
+              {t('home.milestonesProgress', { done: reachedCount, total })}
+            </Text>
+            <View style={styles.progressTrack}>
+              <View style={[styles.progressFill, { width: `${pct}%` }]} />
+            </View>
+          </>
+        ) : (
+          <Text style={[styles.empty, { fontFamily: font(typography.body.weight) }]}>
+            {t('home.milestones.empty')}
+          </Text>
+        )}
+        <View style={[styles.cardActions, { marginTop: spacing.sm }]}>
+          <Button
+            label={t('home.milestones.viewAll')}
+            variant="ghost"
+            size="sm"
+            onPress={() => router.push('/milestones')}
+          />
+        </View>
       </Card>
     );
   }
@@ -219,6 +277,19 @@ export default function HomeScreen() {
   }
 }
 
+function summarizeGrowth(
+  entry: { weightKg?: number; heightCm?: number; headCircumferenceCm?: number },
+  t: (k: string, opts?: Record<string, unknown>) => string,
+): string {
+  const parts: string[] = [];
+  if (entry.weightKg != null) parts.push(`${entry.weightKg} ${t('growth.kg')}`);
+  if (entry.heightCm != null) parts.push(`${entry.heightCm} ${t('growth.cm')}`);
+  if (entry.headCircumferenceCm != null && parts.length < 2) {
+    parts.push(`${entry.headCircumferenceCm} ${t('growth.cm')}`);
+  }
+  return parts.join(' · ');
+}
+
 function greetingSlot(): 'morning' | 'afternoon' | 'evening' | 'night' {
   const h = new Date().getHours();
   if (h < 5) return 'night';
@@ -230,7 +301,7 @@ function greetingSlot(): 'morning' | 'afternoon' | 'evening' | 'night' {
 
 function formatDate(date: Date, lang: SupportedLanguage): string {
   try {
-    const locale = lang === 'ru' ? 'ru' : lang === 'ar' ? 'ar' : 'en';
+    const locale = lang === 'ru' ? 'ru' : lang === 'ar' ? 'ar' : lang === 'tr' ? 'tr' : 'en';
     return date.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
   } catch {
     return date.toISOString().slice(0, 10);
@@ -289,6 +360,12 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: typography.eyebrow.letterSpacing,
   },
+  cardValue: {
+    fontSize: typography.h2.fontSize,
+    color: colors.ink,
+    marginTop: 2,
+    marginBottom: 2,
+  },
   vaccineName: {
     fontSize: typography.h2.fontSize,
     color: colors.ink,
@@ -312,6 +389,18 @@ const styles = StyleSheet.create({
     fontSize: typography.body.fontSize,
     color: colors.ink3,
     marginTop: spacing.xs,
+  },
+  progressTrack: {
+    height: 6,
+    borderRadius: 999,
+    backgroundColor: colors.border2,
+    overflow: 'hidden',
+    marginTop: spacing.sm,
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: colors.teal,
+    borderRadius: 999,
   },
   pdfCard: {
     backgroundColor: colors.amberSoft,

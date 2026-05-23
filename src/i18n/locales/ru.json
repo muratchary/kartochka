@@ -11,6 +11,10 @@
     "more": "Ещё"
   },
   "home": {
+    "switchChild": "Сменить ребёнка",
+    "growthSummary": "{{weight}} кг · {{height}} см",
+    "growthOn": "Последнее измерение {{date}}",
+    "milestonesProgress": "Отмечено {{done}} из {{total}}",
     "greeting": {
       "morning": "Доброе утро",
       "afternoon": "Добрый день",
@@ -164,6 +168,9 @@
     "title": "Развитие",
     "subtitle": "Стандартные этапы развития. Отмечайте, когда ребёнок их достигает.",
     "empty": "Пока ничего не отмечено.",
+    "progressTitle": "Прогресс",
+    "progressSummary": "Отмечено {{done}} из {{total}}",
+    "progressByAge": "До возраста {{age}}",
     "ageMonths_one": "{{count}} месяц",
     "ageMonths_few": "{{count}} месяца",
     "ageMonths_many": "{{count}} месяцев",
@@ -186,7 +193,8 @@
       "children": "Дети",
       "app": "Приложение",
       "subscription": "Подписка",
-      "about": "О приложении"
+      "about": "О приложении",
+      "developer": "Тестирование"
     },
     "items": {
       "manageChildren": "Дети",
@@ -194,7 +202,23 @@
       "notifications": "Уведомления",
       "privacy": "Конфиденциальность",
       "subscription": "Подписка",
-      "supportEmail": "Связаться с поддержкой"
+      "supportEmail": "Связаться с поддержкой",
+      "loadDemo": "Загрузить демо-данные",
+      "clearAll": "Очистить все данные"
+    },
+    "loadDemoConfirm": "Загрузить демо-данные? Это заменит ваших детей и записи.",
+    "clearAllConfirm": "Удалить всех детей и все записи?",
+    "loadDemoCta": "Загрузить",
+    "notificationsList": {
+      "title": "Уведомления",
+      "subtitle": "Напоминания, которые сработают за день до каждой плановой прививки.",
+      "empty": "Напоминаний пока нет.",
+      "enablePrompt": "Включите уведомления в разделе Ещё → Уведомления, чтобы получать напоминания о прививках.",
+      "willFire": "Сработает {{date}}"
+    },
+    "switchChildScreen": {
+      "title": "Выбрать ребёнка",
+      "subtitle": "Переключение между детьми, добавленными в приложение."
     },
     "languageSection": "Язык",
     "restartRequired": "Закройте и снова откройте приложение, чтобы изменение языка вступило в силу полностью.",

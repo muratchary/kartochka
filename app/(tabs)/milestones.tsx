@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Card } from '../../src/components/Card';
 import type { SupportedLanguage } from '../../src/i18n';
-import { groupMilestonesByAge } from '../../src/lib/milestones';
-import { useChildrenStore } from '../../src/stores/childrenStore';
+import { STANDARD_MILESTONES, groupMilestonesByAge } from '../../src/lib/milestones';
+import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -16,13 +17,20 @@ export default function MilestonesScreen() {
   const font = useFont();
   const lang = (i18n.language || 'en') as SupportedLanguage;
 
-  const children = useChildrenStore((s) => s.children);
+  const child = useChildrenStore(selectActiveChild);
   const milestoneRecords = useChildrenStore((s) => s.milestones);
   const addMilestone = useChildrenStore((s) => s.addMilestone);
   const removeMilestone = useChildrenStore((s) => s.removeMilestone);
-  const child = children[0];
 
   const groups = useMemo(() => groupMilestonesByAge(), []);
+
+  const reachedForChild = useMemo(
+    () => (child ? milestoneRecords.filter((m) => m.childId === child.id) : []),
+    [child, milestoneRecords],
+  );
+  const totalCount = STANDARD_MILESTONES.length;
+  const reachedCount = reachedForChild.length;
+  const pct = totalCount === 0 ? 0 : Math.round((reachedCount / totalCount) * 100);
 
   if (!child) return <Redirect href="/onboarding/welcome" />;
 
@@ -64,6 +72,18 @@ export default function MilestonesScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.scroll}>
+        <Card style={styles.progressCard}>
+          <Text style={[styles.progressEyebrow, { fontFamily: font(typography.eyebrow.weight) }]}>
+            {t('milestones.progressTitle')}
+          </Text>
+          <Text style={[styles.progressValue, { fontFamily: font(typography.h2.weight) }]}>
+            {t('milestones.progressSummary', { done: reachedCount, total: totalCount })}
+          </Text>
+          <View style={styles.progressTrack}>
+            <View style={[styles.progressFill, { width: `${pct}%` }]} />
+          </View>
+        </Card>
+
         {groups.map((group) => (
           <View key={group.ageMonths} style={styles.group}>
             <Text style={[styles.groupTitle, { fontFamily: font(typography.eyebrow.weight) }]}>
@@ -160,6 +180,34 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.xxl,
     gap: spacing.lg,
+  },
+  progressCard: {
+    backgroundColor: colors.tealSoft,
+    borderColor: colors.tealLine,
+    padding: spacing.lg,
+  },
+  progressEyebrow: {
+    fontSize: typography.eyebrow.fontSize,
+    color: colors.tealDark,
+    textTransform: 'uppercase',
+    letterSpacing: typography.eyebrow.letterSpacing,
+    marginBottom: spacing.xs,
+  },
+  progressValue: {
+    fontSize: typography.h2.fontSize,
+    color: colors.ink,
+    marginBottom: spacing.sm,
+  },
+  progressTrack: {
+    height: 8,
+    borderRadius: 999,
+    backgroundColor: colors.surface,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: colors.teal,
+    borderRadius: 999,
   },
   group: { gap: spacing.sm },
   groupTitle: {

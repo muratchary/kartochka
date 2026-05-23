@@ -9,7 +9,7 @@ import { Button } from '../../src/components/Button';
 import { Card } from '../../src/components/Card';
 import { GrowthChart, type ChartPoint, type GrowthMetric } from '../../src/components/GrowthChart';
 import type { SupportedLanguage } from '../../src/i18n';
-import { useChildrenStore } from '../../src/stores/childrenStore';
+import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -23,10 +23,9 @@ export default function GrowthScreen() {
   const router = useRouter();
   const lang = (i18n.language || 'en') as SupportedLanguage;
 
-  const children = useChildrenStore((s) => s.children);
+  const child = useChildrenStore(selectActiveChild);
   const growthEntries = useChildrenStore((s) => s.growthEntries);
   const removeGrowthEntry = useChildrenStore((s) => s.removeGrowthEntry);
-  const child = children[0];
 
   const entries = useMemo(() => {
     if (!child) return [];

@@ -16,7 +16,7 @@ import { Button } from '../../src/components/Button';
 import { DateField } from '../../src/components/DateField';
 import { ScreenTitle } from '../../src/components/ScreenTitle';
 import { useRescheduleReminders } from '../../src/lib/useReminders';
-import { useChildrenStore } from '../../src/stores/childrenStore';
+import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -30,10 +30,9 @@ export default function MarkDoneScreen() {
   const font = useFont();
   const params = useLocalSearchParams<{ code?: string; dose?: string }>();
 
-  const children = useChildrenStore((s) => s.children);
+  const child = useChildrenStore(selectActiveChild);
   const addVaccination = useChildrenStore((s) => s.addVaccination);
   const rescheduleReminders = useRescheduleReminders();
-  const child = children[0];
 
   const [date, setDate] = useState<string>(todayIso());
   const [location, setLocation] = useState('');
