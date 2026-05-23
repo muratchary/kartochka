@@ -13,14 +13,13 @@ export interface ChartPoint {
 
 interface Props {
   points: ChartPoint[];
-  unit: string;
   height?: number;
   metric: GrowthMetric;
 }
 
 const PADDING = { top: 12, right: 18, bottom: 30, left: 44 };
 
-export function GrowthChart({ points, unit, height = 220, metric }: Props) {
+export function GrowthChart({ points, height = 220, metric }: Props) {
   const font = useFont();
   const fontFamily = font(600);
   const boldFamily = font(700);
@@ -47,9 +46,7 @@ export function GrowthChart({ points, unit, height = 220, metric }: Props) {
           xMax={xMax}
           yMin={yMin}
           yMax={yMax}
-          unit={unit}
           fontFamily={fontFamily}
-          boldFamily={boldFamily}
         />
         <ChartLine
           sorted={sorted}
@@ -80,18 +77,14 @@ function ChartAxes({
   xMax,
   yMin,
   yMax,
-  unit,
   fontFamily,
-  boldFamily,
 }: {
   height: number;
   xMin: number;
   xMax: number;
   yMin: number;
   yMax: number;
-  unit: string;
   fontFamily: string;
-  boldFamily: string;
 }) {
   const width = 360;
   const plotLeft = PADDING.left;
@@ -146,15 +139,6 @@ function ChartAxes({
           </G>
         );
       })}
-      <SvgText
-        x={plotLeft - 6}
-        y={plotTop - 2}
-        fontSize={9}
-        fontFamily={boldFamily}
-        fill={colors.ink2}
-        textAnchor="end">
-        {unit}
-      </SvgText>
       {Array.from({ length: xTickCount + 1 }).map((_, i) => {
         const fraction = xTickCount === 0 ? 0 : i / xTickCount;
         const x = plotLeft + fraction * (plotRight - plotLeft);

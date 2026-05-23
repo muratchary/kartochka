@@ -110,15 +110,10 @@ export default function GrowthScreen() {
                     styles.eyebrow,
                     { fontFamily: font(typography.eyebrow.weight) },
                   ]}>
-                  {labelFor(metric)}
+                  {labelFor(metric)} ({unitFor(metric)})
                 </Text>
                 {points.length >= 2 ? (
-                  <GrowthChart
-                    points={points}
-                    unit={unitFor(metric)}
-                    metric={metric}
-                    height={160}
-                  />
+                  <GrowthChart points={points} metric={metric} height={160} />
                 ) : (
                   <View style={styles.chartEmpty}>
                     <Text
