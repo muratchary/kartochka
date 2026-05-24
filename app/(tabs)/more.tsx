@@ -38,6 +38,11 @@ export default function MoreScreen() {
       labelKey: 'more.items.medicalProfile',
       onPress: () => router.push('/more/medical-profile'),
     },
+    {
+      icon: 'person-outline',
+      labelKey: 'more.items.doctorVisits',
+      onPress: () => router.push('/doctor-visits'),
+    },
   ];
 
   const appSection: RowDef[] = [

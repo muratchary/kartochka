@@ -249,6 +249,8 @@
     "allergyPlaceholder": "e.g. penicillin, pollen, nuts",
     "medicationLabel": "Current medications",
     "medicationPlaceholder": "e.g. vitamin D, iron drops",
+    "emergencyContactLabel": "Emergency contact",
+    "emergencyContactPlaceholder": "e.g. Grandma: +7 999 123 4567",
     "saveCta": "Save"
   },
   "more": {
@@ -263,6 +265,7 @@
     "items": {
       "manageChildren": "Children",
       "medicalProfile": "Medical profile",
+      "doctorVisits": "Doctor visits",
       "language": "Language",
       "notifications": "Notifications",
       "privacy": "Privacy",
@@ -350,6 +353,70 @@
     "close": "Close",
     "yes": "Yes",
     "no": "No"
+  },
+  "timeline": {
+    "title": "Health timeline",
+    "empty": "No records yet. Vaccinations, measurements, and milestones will appear here.",
+    "kindVaccine": "Vaccine",
+    "kindGrowth": "Measurement",
+    "kindMilestone": "Milestone",
+    "kindVisit": "Doctor visit"
+  },
+  "emergencyCard": {
+    "title": "Emergency info",
+    "subtitle": "Show this screen at a clinic or hospital.",
+    "bloodType": "Blood type",
+    "allergies": "Allergies",
+    "medications": "Medications",
+    "emergencyContact": "Emergency contact",
+    "notSet": "Not set",
+    "editCta": "Edit in Medical profile"
+  },
+  "customVaccine": {
+    "title": "Log custom vaccine",
+    "subtitle": "Flu shots, private vaccines, or anything not on the national schedule.",
+    "nameLabel": "Vaccine name",
+    "namePlaceholder": "e.g. Flu shot, Varicella",
+    "dateLabel": "Date given",
+    "locationLabel": "Clinic / location",
+    "locationPlaceholder": "Optional",
+    "batchLabel": "Batch number",
+    "batchPlaceholder": "Optional",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Optional",
+    "saveCta": "Save",
+    "sectionTitle": "Additional vaccines"
+  },
+  "doctorVisits": {
+    "title": "Doctor visits",
+    "subtitle": "A log of your pediatrician and specialist visits.",
+    "empty": "No visits logged yet.",
+    "addCta": "Log a visit",
+    "visitedOn": "{{date}}",
+    "deleteConfirm": "Delete this visit record?",
+    "delete": "Delete",
+    "add": {
+      "title": "Log doctor visit",
+      "subtitle": "Record the details for your own reference.",
+      "dateLabel": "Visit date",
+      "doctorLabel": "Doctor name",
+      "doctorPlaceholder": "Optional",
+      "clinicLabel": "Clinic / hospital",
+      "clinicPlaceholder": "Optional",
+      "reasonLabel": "Reason for visit",
+      "reasonPlaceholder": "e.g. routine checkup, fever",
+      "notesLabel": "Notes",
+      "notesPlaceholder": "What was discussed, next steps…",
+      "saveCta": "Save visit",
+      "editTitle": "Edit visit"
+    }
+  },
+  "monthlyTips": {
+    "title": "This month",
+    "ageLabel_one": "{{count}} month old",
+    "ageLabel_other": "{{count}} months old",
+    "ageLabel_years_one": "{{count}} year old",
+    "ageLabel_years_other": "{{count}} years old"
   },
   "birthday": {
     "title": "Happy Birthday, {{name}}!",

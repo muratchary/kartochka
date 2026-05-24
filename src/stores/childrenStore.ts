@@ -4,9 +4,11 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 import type {
   Child,
+  DoctorVisit,
   GrowthEntry,
   MilestoneRecord,
   NewChild,
+  NewDoctorVisit,
   NewGrowthEntry,
   NewMilestoneRecord,
   NewVaccinationRecord,
@@ -19,6 +21,7 @@ interface ChildrenState {
   vaccinations: VaccinationRecord[];
   growthEntries: GrowthEntry[];
   milestones: MilestoneRecord[];
+  doctorVisits: DoctorVisit[];
   selectedChildId: string | null;
   tutorialSeen: boolean;
 
@@ -41,6 +44,10 @@ interface ChildrenState {
   removeMilestone: (id: string) => void;
   updateMilestonePhoto: (id: string, photoUri: string | null) => void;
 
+  addDoctorVisit: (input: NewDoctorVisit) => DoctorVisit;
+  updateDoctorVisit: (id: string, patch: Partial<NewDoctorVisit>) => void;
+  removeDoctorVisit: (id: string) => void;
+
   seedDemoData: () => void;
   clearAll: () => void;
 }
@@ -61,6 +68,7 @@ export const useChildrenStore = create<ChildrenState>()(
       vaccinations: [],
       growthEntries: [],
       milestones: [],
+      doctorVisits: [],
       selectedChildId: null,
       tutorialSeen: false,
 
@@ -90,6 +98,7 @@ export const useChildrenStore = create<ChildrenState>()(
             vaccinations: state.vaccinations.filter((v) => v.childId !== id),
             growthEntries: state.growthEntries.filter((g) => g.childId !== id),
             milestones: state.milestones.filter((m) => m.childId !== id),
+            doctorVisits: state.doctorVisits.filter((d) => d.childId !== id),
             selectedChildId:
               state.selectedChildId === id ? (remaining[0]?.id ?? null) : state.selectedChildId,
           };
@@ -154,6 +163,22 @@ export const useChildrenStore = create<ChildrenState>()(
               : m,
           ),
         }));
+      },
+
+      addDoctorVisit: (input) => {
+        const visit: DoctorVisit = { ...input, id: newId(), createdAt: now(), updatedAt: now() };
+        set((state) => ({ doctorVisits: [...state.doctorVisits, visit] }));
+        return visit;
+      },
+      updateDoctorVisit: (id, patch) => {
+        set((state) => ({
+          doctorVisits: state.doctorVisits.map((d) =>
+            d.id === id ? { ...d, ...patch, updatedAt: now() } : d,
+          ),
+        }));
+      },
+      removeDoctorVisit: (id) => {
+        set((state) => ({ doctorVisits: state.doctorVisits.filter((d) => d.id !== id) }));
       },
 
       seedDemoData: () => {
@@ -295,11 +320,37 @@ export const useChildrenStore = create<ChildrenState>()(
           updatedAt: t,
         }));
 
+        const doctorVisits: DoctorVisit[] = [
+          {
+            id: newId(),
+            childId: anna.id,
+            visitedOn: monthsAgo(12),
+            doctorName: 'Dr. Petrova',
+            clinicName: 'Children\'s Clinic №1',
+            reason: '12-month checkup',
+            notes: 'Growth and development on track. Discussed introducing new foods.',
+            createdAt: t,
+            updatedAt: t,
+          },
+          {
+            id: newId(),
+            childId: anna.id,
+            visitedOn: monthsAgo(2),
+            doctorName: 'Dr. Petrova',
+            clinicName: 'Children\'s Clinic №1',
+            reason: 'Routine checkup',
+            notes: 'All good. Next visit in 3 months.',
+            createdAt: t,
+            updatedAt: t,
+          },
+        ];
+
         set({
           children: [anna, arash],
           vaccinations,
           growthEntries,
           milestones,
+          doctorVisits,
           selectedChildId: anna.id,
         });
       },
@@ -310,6 +361,7 @@ export const useChildrenStore = create<ChildrenState>()(
           vaccinations: [],
           growthEntries: [],
           milestones: [],
+          doctorVisits: [],
           selectedChildId: null,
           tutorialSeen: false,
         });

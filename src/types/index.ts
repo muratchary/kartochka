@@ -17,6 +17,7 @@ export interface Child {
   bloodType?: string;
   allergyNotes?: string;
   medicationNotes?: string;
+  emergencyContact?: string;
   createdAt: IsoDateTime;
   updatedAt: IsoDateTime;
 }
@@ -41,10 +42,25 @@ export interface VaccinationRecord {
   notes?: string;
   photoUri?: string;
   reactions?: VaccineReactions;
+  isCustom?: boolean;
+  customVaccineName?: string;
   createdAt: IsoDateTime;
   updatedAt: IsoDateTime;
 }
 export type NewVaccinationRecord = Omit<VaccinationRecord, 'id' | 'createdAt' | 'updatedAt'>;
+
+export interface DoctorVisit {
+  id: string;
+  childId: string;
+  visitedOn: IsoDate;
+  doctorName?: string;
+  clinicName?: string;
+  reason?: string;
+  notes?: string;
+  createdAt: IsoDateTime;
+  updatedAt: IsoDateTime;
+}
+export type NewDoctorVisit = Omit<DoctorVisit, 'id' | 'createdAt' | 'updatedAt'>;
 
 export interface GrowthEntry {
   id: string;

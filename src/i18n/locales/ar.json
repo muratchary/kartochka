@@ -239,6 +239,7 @@
     "items": {
       "manageChildren": "الأطفال",
       "medicalProfile": "الملف الطبي",
+      "doctorVisits": "زيارات الطبيب",
       "language": "اللغة",
       "notifications": "التنبيهات",
       "privacy": "الخصوصية",
@@ -349,7 +350,79 @@
     "allergyPlaceholder": "مثال: بنسلين، حبوب اللقاح، مكسرات",
     "medicationLabel": "الأدوية الحالية",
     "medicationPlaceholder": "مثال: فيتامين د، قطرات الحديد",
+    "emergencyContactLabel": "جهة الاتصال في حالات الطوارئ",
+    "emergencyContactPlaceholder": "مثال: الجدة: +971 50 123 4567",
     "saveCta": "حفظ"
+  },
+  "timeline": {
+    "title": "السجل الصحي",
+    "empty": "لا توجد سجلات بعد. ستظهر هنا التطعيمات والقياسات ومحطات النمو.",
+    "kindVaccine": "تطعيم",
+    "kindGrowth": "قياس",
+    "kindMilestone": "معلم نمو",
+    "kindVisit": "زيارة طبيب"
+  },
+  "emergencyCard": {
+    "title": "معلومات الطوارئ",
+    "subtitle": "أظهر هذه الشاشة في العيادة أو المستشفى.",
+    "bloodType": "فصيلة الدم",
+    "allergies": "الحساسية",
+    "medications": "الأدوية",
+    "emergencyContact": "جهة الاتصال في الطوارئ",
+    "notSet": "غير محدد",
+    "editCta": "تعديل في الملف الطبي"
+  },
+  "customVaccine": {
+    "title": "تسجيل تطعيم إضافي",
+    "subtitle": "لقاحات الإنفلونزا أو الخاصة أو أي شيء خارج الجدول الوطني.",
+    "nameLabel": "اسم اللقاح",
+    "namePlaceholder": "مثال: إنفلونزا، جدري الماء",
+    "dateLabel": "تاريخ التطعيم",
+    "locationLabel": "العيادة / المكان",
+    "locationPlaceholder": "اختياري",
+    "batchLabel": "رقم الدفعة",
+    "batchPlaceholder": "اختياري",
+    "notesLabel": "ملاحظات",
+    "notesPlaceholder": "اختياري",
+    "saveCta": "حفظ",
+    "sectionTitle": "تطعيمات إضافية"
+  },
+  "doctorVisits": {
+    "title": "زيارات الطبيب",
+    "subtitle": "سجل زيارات طبيب الأطفال والمتخصصين.",
+    "empty": "لم تُسجَّل أي زيارة بعد.",
+    "addCta": "تسجيل زيارة",
+    "visitedOn": "{{date}}",
+    "deleteConfirm": "حذف سجل هذه الزيارة؟",
+    "delete": "حذف",
+    "add": {
+      "title": "تسجيل زيارة طبيب",
+      "subtitle": "احفظ التفاصيل للرجوع إليها لاحقاً.",
+      "dateLabel": "تاريخ الزيارة",
+      "doctorLabel": "اسم الطبيب",
+      "doctorPlaceholder": "اختياري",
+      "clinicLabel": "العيادة / المستشفى",
+      "clinicPlaceholder": "اختياري",
+      "reasonLabel": "سبب الزيارة",
+      "reasonPlaceholder": "مثال: فحص دوري، حمى",
+      "notesLabel": "ملاحظات",
+      "notesPlaceholder": "ما تمت مناقشته، الخطوات التالية…",
+      "saveCta": "حفظ الزيارة",
+      "editTitle": "تعديل الزيارة"
+    }
+  },
+  "monthlyTips": {
+    "title": "هذا الشهر",
+    "ageLabel_one": "شهر واحد",
+    "ageLabel_two": "شهران",
+    "ageLabel_few": "{{count}} أشهر",
+    "ageLabel_many": "{{count}} شهراً",
+    "ageLabel_other": "{{count}} شهر",
+    "ageLabel_years_one": "سنة واحدة",
+    "ageLabel_years_two": "سنتان",
+    "ageLabel_years_few": "{{count}} سنوات",
+    "ageLabel_years_many": "{{count}} سنة",
+    "ageLabel_years_other": "{{count}} سنة"
   },
   "birthday": {
     "title": "عيد ميلاد سعيد، {{name}}!",

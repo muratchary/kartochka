@@ -11,6 +11,7 @@ import { ChildHeader } from '../../src/components/ChildHeader';
 import { Pill, type PillTone } from '../../src/components/Pill';
 import { Tutorial } from '../../src/components/Tutorial';
 import type { SupportedLanguage } from '../../src/i18n';
+import { getTipsForAge } from '../../src/data/monthlyTips';
 import { STANDARD_MILESTONES } from '../../src/lib/milestones';
 import { exportChildPdf } from '../../src/lib/pdfExport';
 import { getSchedule } from '../../src/lib/schedules';
@@ -101,6 +102,16 @@ export default function HomeScreen() {
     return `${t('home.pdf.ageYears', { count: years })} ${t('home.pdf.ageMonths', { count: rem })}`;
   }, [child, t]);
 
+  const childAgeMonths = useMemo(() => {
+    if (!child) return 0;
+    return Math.max(
+      0,
+      Math.floor((Date.now() - new Date(child.dateOfBirth).getTime()) / (1000 * 60 * 60 * 24 * 30.4375)),
+    );
+  }, [child]);
+
+  const childTips = useMemo(() => getTipsForAge(childAgeMonths), [childAgeMonths]);
+
   const { isBirthday, birthdayAgeYears } = useMemo(() => {
     if (!child) return { isBirthday: false, birthdayAgeYears: 0 };
     const today = new Date();
@@ -165,13 +176,29 @@ export default function HomeScreen() {
           onBellPress={() => router.push('/notifications')}
         />
 
-        <Pressable style={styles.doctorVisitStrip} onPress={() => router.push('/doctor-card')}>
-          <Ionicons name="medkit-outline" size={16} color={colors.teal} />
-          <Text style={[styles.doctorVisitText, { fontFamily: font(600) }]}>
-            {t('home.doctorVisit')}
-          </Text>
-          <Ionicons name="chevron-forward" size={14} color={colors.teal} style={{ marginStart: 'auto' }} />
-        </Pressable>
+        <View style={styles.quickStrips}>
+          <Pressable style={[styles.strip, styles.stripTeal]} onPress={() => router.push('/doctor-card')}>
+            <Ionicons name="medkit-outline" size={15} color={colors.teal} />
+            <Text style={[styles.stripText, { fontFamily: font(600), color: colors.teal }]}>
+              {t('home.doctorVisit')}
+            </Text>
+            <Ionicons name="chevron-forward" size={13} color={colors.teal} style={{ marginStart: 'auto' }} />
+          </Pressable>
+          <Pressable style={[styles.strip, styles.stripPurple]} onPress={() => router.push('/timeline')}>
+            <Ionicons name="time-outline" size={15} color="#8B5CF6" />
+            <Text style={[styles.stripText, { fontFamily: font(600), color: '#8B5CF6' }]}>
+              {t('timeline.title')}
+            </Text>
+            <Ionicons name="chevron-forward" size={13} color="#8B5CF6" style={{ marginStart: 'auto' }} />
+          </Pressable>
+          <Pressable style={[styles.strip, styles.stripRed]} onPress={() => router.push('/emergency-card')}>
+            <Ionicons name="alert-circle-outline" size={15} color="#DC2626" />
+            <Text style={[styles.stripText, { fontFamily: font(600), color: '#DC2626' }]}>
+              {t('emergencyCard.title')}
+            </Text>
+            <Ionicons name="chevron-forward" size={13} color="#DC2626" style={{ marginStart: 'auto' }} />
+          </Pressable>
+        </View>
 
         <View style={styles.cards}>
           {isBirthday && !birthdayDismissed && child ? (
@@ -186,6 +213,7 @@ export default function HomeScreen() {
           <NextVaccineCard nextDue={nextDue} lang={lang} />
           <GrowthCard latest={latestGrowth} lang={lang} />
           <MilestonesCard reachedCount={milestonesForChild.length} nextMilestone={nextMilestone} />
+          {childTips && <MonthlyTipsCard tips={childTips} ageMonths={childAgeMonths} />}
           <PdfCtaCard />
         </View>
       </ScrollView>
@@ -446,6 +474,48 @@ export default function HomeScreen() {
     );
   }
 
+  function MonthlyTipsCard({
+    tips,
+    ageMonths,
+  }: {
+    tips: NonNullable<ReturnType<typeof getTipsForAge>>;
+    ageMonths: number;
+  }) {
+    const [tipIndex, setTipIndex] = useState(0);
+    const tip = tips.tips[tipIndex];
+    const ageLabel =
+      ageMonths < 12
+        ? t('monthlyTips.ageLabel', { count: ageMonths })
+        : t('monthlyTips.ageLabel_years', { count: Math.floor(ageMonths / 12) });
+
+    return (
+      <Card style={styles.tipsCard}>
+        <View style={styles.tipsHeader}>
+          <Ionicons name="bulb-outline" size={16} color={colors.success} />
+          <Text style={[styles.tipsEyebrow, { fontFamily: font(typography.eyebrow.weight) }]}>
+            {t('monthlyTips.title')} · {ageLabel}
+          </Text>
+          {tips.tips.length > 1 && (
+            <Pressable
+              hitSlop={8}
+              onPress={() => setTipIndex((tipIndex + 1) % tips.tips.length)}
+              style={styles.tipsNext}>
+              <Ionicons name="chevron-forward" size={14} color={colors.success} />
+            </Pressable>
+          )}
+        </View>
+        <Text style={[styles.tipsText, { fontFamily: font(typography.body.weight) }]}>
+          {tip[lang as keyof typeof tip] ?? tip.en}
+        </Text>
+        {tips.tips.length > 1 && (
+          <Text style={[styles.tipsPager, { fontFamily: font(400) }]}>
+            {tipIndex + 1} / {tips.tips.length}
+          </Text>
+        )}
+      </Card>
+    );
+  }
+
   function PdfCtaCard() {
     return (
       <View style={styles.pdfCard}>
@@ -572,21 +642,24 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xxl,
     gap: spacing.lg,
   },
-  doctorVisitStrip: {
+  quickStrips: {
+    gap: spacing.sm,
+    marginBottom: spacing.md,
+  },
+  strip: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.sm,
-    backgroundColor: colors.tealSoft,
     borderRadius: radii.md,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm + 2,
-    marginBottom: spacing.md,
     borderWidth: 1,
-    borderColor: colors.tealLine,
   },
-  doctorVisitText: {
+  stripTeal: { backgroundColor: colors.tealSoft, borderColor: colors.tealLine },
+  stripPurple: { backgroundColor: '#F5F3FF', borderColor: '#DDD6FE' },
+  stripRed: { backgroundColor: '#FEF2F2', borderColor: '#FECACA' },
+  stripText: {
     fontSize: typography.caption.fontSize,
-    color: colors.teal,
   },
   cards: { gap: spacing.md },
   cardHeader: {
@@ -693,6 +766,35 @@ const styles = StyleSheet.create({
   pdfDescription: {
     fontSize: typography.body.fontSize,
     color: colors.ink2,
+  },
+  tipsCard: {
+    backgroundColor: colors.successSoft,
+    borderColor: '#D0E5D8',
+  },
+  tipsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    marginBottom: spacing.sm,
+  },
+  tipsEyebrow: {
+    flex: 1,
+    fontSize: typography.eyebrow.fontSize,
+    color: colors.success,
+    textTransform: 'uppercase',
+    letterSpacing: typography.eyebrow.letterSpacing,
+  },
+  tipsNext: { padding: 4 },
+  tipsText: {
+    fontSize: typography.body.fontSize,
+    color: colors.ink,
+    lineHeight: 22,
+  },
+  tipsPager: {
+    fontSize: 11,
+    color: colors.ink3,
+    marginTop: spacing.sm,
+    textAlign: 'right',
   },
   birthdayCard: {
     flexDirection: 'row',

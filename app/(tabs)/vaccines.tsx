@@ -45,6 +45,11 @@ export default function VaccinesScreen() {
   const vaccinations = useChildrenStore((s) => s.vaccinations);
   const [filter, setFilter] = useState<Filter>('all');
 
+  const customVaccinations = useMemo(
+    () => vaccinations.filter((v) => v.childId === child?.id && v.isCustom),
+    [vaccinations, child],
+  );
+
   const rows = useMemo<DoseRow[]>(() => {
     if (!child) return [];
     const schedule = getSchedule(child.countryCode);
@@ -111,6 +116,12 @@ export default function VaccinesScreen() {
         <Text style={[styles.title, { fontFamily: font(typography.title.weight) }]}>
           {t('vaccines.title')}
         </Text>
+        <Pressable
+          onPress={() => router.push('/vaccine/log-custom')}
+          hitSlop={10}
+          style={styles.addBtn}>
+          <Ionicons name="add" size={26} color={colors.teal} />
+        </Pressable>
       </View>
 
       <View style={styles.filterRow}>
@@ -132,7 +143,7 @@ export default function VaccinesScreen() {
         ))}
       </View>
 
-      {groups.length === 0 ? (
+      {groups.length === 0 && customVaccinations.length === 0 ? (
         <Text style={[styles.empty, { fontFamily: font(typography.body.weight) }]}>
           {t('vaccines.empty')}
         </Text>
@@ -195,6 +206,51 @@ export default function VaccinesScreen() {
               </View>
             </View>
           ))}
+
+          {/* Custom / additional vaccines */}
+          {customVaccinations.length > 0 && (
+            <View style={styles.group}>
+              <View style={styles.groupHeader}>
+                <View style={[styles.groupDot, { backgroundColor: '#8B5CF6' }]} />
+                <Text style={[styles.groupTitle, { fontFamily: font(700) }]}>
+                  {t('customVaccine.sectionTitle')}
+                </Text>
+                <Text style={[styles.groupCount, { fontFamily: font(typography.caption.weight) }]}>
+                  {t('vaccines.groupCount', { count: customVaccinations.length })}
+                </Text>
+              </View>
+              <View style={styles.groupRows}>
+                {customVaccinations.map((v) => (
+                  <View
+                    key={v.id}
+                    style={[styles.row, { backgroundColor: '#F5F3FF', borderColor: '#DDD6FE' }]}>
+                    <View style={[styles.rowIcon, { backgroundColor: '#EDE9FE' }]}>
+                      <Ionicons name="checkmark-circle" size={18} color="#8B5CF6" />
+                    </View>
+                    <View style={styles.rowText}>
+                      <Text style={[styles.rowName, { fontFamily: font(700) }]} numberOfLines={1}>
+                        {v.customVaccineName ?? v.vaccineCode}
+                      </Text>
+                      <Text style={[styles.rowMeta, { fontFamily: font(600), color: colors.ink2 }]}>
+                        {formatDate(new Date(v.administeredOn), lang)}
+                        {v.locationOfAdministration ? ` · ${v.locationOfAdministration}` : ''}
+                      </Text>
+                    </View>
+                    <Pill label={t('vaccines.filters.done')} tone="success" />
+                  </View>
+                ))}
+              </View>
+            </View>
+          )}
+
+          <Pressable
+            style={styles.logCustomCta}
+            onPress={() => router.push('/vaccine/log-custom')}>
+            <Ionicons name="add-circle-outline" size={18} color="#8B5CF6" />
+            <Text style={[styles.logCustomCtaText, { fontFamily: font(600) }]}>
+              {t('customVaccine.title')}
+            </Text>
+          </Pressable>
         </ScrollView>
       )}
     </SafeAreaView>
@@ -308,8 +364,16 @@ function formatDate(date: Date, lang: SupportedLanguage): string {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
-  header: { paddingHorizontal: spacing.lg, paddingTop: spacing.md, paddingBottom: spacing.md },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.md,
+  },
+  addBtn: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   title: {
+    flex: 1,
     fontSize: typography.title.fontSize,
     letterSpacing: typography.title.letterSpacing,
     color: colors.ink,
@@ -382,4 +446,19 @@ const styles = StyleSheet.create({
   rowText: { flex: 1 },
   rowName: { fontSize: 15 },
   rowMeta: { fontSize: 12, marginTop: 2 },
+  logCustomCta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.sm,
+    paddingVertical: spacing.md,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    borderColor: '#DDD6FE',
+    borderStyle: 'dashed',
+  },
+  logCustomCtaText: {
+    fontSize: typography.body.fontSize,
+    color: '#8B5CF6',
+  },
 });

@@ -33,6 +33,7 @@ export default function MedicalProfileScreen() {
   const [bloodType, setBloodType] = useState<string>(child?.bloodType ?? '');
   const [allergies, setAllergies] = useState(child?.allergyNotes ?? '');
   const [medications, setMedications] = useState(child?.medicationNotes ?? '');
+  const [emergencyContact, setEmergencyContact] = useState(child?.emergencyContact ?? '');
 
   if (!child) {
     router.back();
@@ -44,6 +45,7 @@ export default function MedicalProfileScreen() {
       bloodType: bloodType || undefined,
       allergyNotes: allergies.trim() || undefined,
       medicationNotes: medications.trim() || undefined,
+      emergencyContact: emergencyContact.trim() || undefined,
     });
     router.back();
   };
@@ -122,6 +124,19 @@ export default function MedicalProfileScreen() {
             multiline
             numberOfLines={3}
             style={[styles.input, styles.multiline, { fontFamily: font(600) }]}
+          />
+
+          {/* Emergency contact */}
+          <Text style={[styles.label, { fontFamily: font(700), marginTop: spacing.xl }]}>
+            {t('medicalProfile.emergencyContactLabel')}
+          </Text>
+          <TextInput
+            value={emergencyContact}
+            onChangeText={setEmergencyContact}
+            placeholder={t('medicalProfile.emergencyContactPlaceholder')}
+            placeholderTextColor={colors.ink3}
+            keyboardType="phone-pad"
+            style={[styles.input, { fontFamily: font(600) }]}
           />
         </ScrollView>
 

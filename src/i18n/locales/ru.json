@@ -261,6 +261,8 @@
     "allergyPlaceholder": "напр. пенициллин, пыльца, орехи",
     "medicationLabel": "Текущие препараты",
     "medicationPlaceholder": "напр. витамин D, препараты железа",
+    "emergencyContactLabel": "Экстренный контакт",
+    "emergencyContactPlaceholder": "напр. Бабушка: +7 999 123 4567",
     "saveCta": "Сохранить"
   },
   "more": {
@@ -275,6 +277,7 @@
     "items": {
       "manageChildren": "Дети",
       "medicalProfile": "Медицинский профиль",
+      "doctorVisits": "Визиты к врачу",
       "language": "Язык",
       "notifications": "Уведомления",
       "privacy": "Конфиденциальность",
@@ -362,6 +365,72 @@
     "close": "Закрыть",
     "yes": "Да",
     "no": "Нет"
+  },
+  "timeline": {
+    "title": "История здоровья",
+    "empty": "Записей пока нет. Здесь появятся прививки, измерения и этапы развития.",
+    "kindVaccine": "Прививка",
+    "kindGrowth": "Измерение",
+    "kindMilestone": "Этап развития",
+    "kindVisit": "Визит к врачу"
+  },
+  "emergencyCard": {
+    "title": "Экстренная информация",
+    "subtitle": "Покажите этот экран в клинике или больнице.",
+    "bloodType": "Группа крови",
+    "allergies": "Аллергии",
+    "medications": "Препараты",
+    "emergencyContact": "Экстренный контакт",
+    "notSet": "Не указано",
+    "editCta": "Изменить в медицинском профиле"
+  },
+  "customVaccine": {
+    "title": "Добавить прививку",
+    "subtitle": "Прививки от гриппа, платные вакцины и всё, чего нет в плановом календаре.",
+    "nameLabel": "Название вакцины",
+    "namePlaceholder": "напр. Грипп, Ветряная оспа",
+    "dateLabel": "Дата",
+    "locationLabel": "Клиника",
+    "locationPlaceholder": "Необязательно",
+    "batchLabel": "Номер серии",
+    "batchPlaceholder": "Необязательно",
+    "notesLabel": "Заметки",
+    "notesPlaceholder": "Необязательно",
+    "saveCta": "Сохранить",
+    "sectionTitle": "Дополнительные прививки"
+  },
+  "doctorVisits": {
+    "title": "Визиты к врачу",
+    "subtitle": "Журнал визитов к педиатру и специалистам.",
+    "empty": "Визитов пока нет.",
+    "addCta": "Добавить визит",
+    "visitedOn": "{{date}}",
+    "deleteConfirm": "Удалить эту запись о визите?",
+    "delete": "Удалить",
+    "add": {
+      "title": "Записать визит",
+      "subtitle": "Сохраните детали для своих записей.",
+      "dateLabel": "Дата визита",
+      "doctorLabel": "Имя врача",
+      "doctorPlaceholder": "Необязательно",
+      "clinicLabel": "Клиника / больница",
+      "clinicPlaceholder": "Необязательно",
+      "reasonLabel": "Причина визита",
+      "reasonPlaceholder": "напр. плановый осмотр, температура",
+      "notesLabel": "Заметки",
+      "notesPlaceholder": "Что обсуждали, следующие шаги…",
+      "saveCta": "Сохранить",
+      "editTitle": "Изменить визит"
+    }
+  },
+  "monthlyTips": {
+    "title": "В этом месяце",
+    "ageLabel_one": "{{count}} месяц",
+    "ageLabel_few": "{{count}} месяца",
+    "ageLabel_many": "{{count}} месяцев",
+    "ageLabel_years_one": "{{count}} год",
+    "ageLabel_years_few": "{{count}} года",
+    "ageLabel_years_many": "{{count}} лет"
   },
   "birthday": {
     "title": "С днём рождения, {{name}}!",

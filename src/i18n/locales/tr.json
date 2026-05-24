@@ -239,6 +239,7 @@
     "items": {
       "manageChildren": "Çocuklar",
       "medicalProfile": "Tıbbi profil",
+      "doctorVisits": "Doktor ziyaretleri",
       "language": "Dil",
       "notifications": "Bildirimler",
       "privacy": "Gizlilik",
@@ -349,7 +350,73 @@
     "allergyPlaceholder": "ör. penisilin, polen, fındık",
     "medicationLabel": "Kullanılan ilaçlar",
     "medicationPlaceholder": "ör. D vitamini, demir damlaları",
+    "emergencyContactLabel": "Acil iletişim kişisi",
+    "emergencyContactPlaceholder": "ör. Büyükanne: +90 532 123 4567",
     "saveCta": "Kaydet"
+  },
+  "timeline": {
+    "title": "Sağlık geçmişi",
+    "empty": "Henüz kayıt yok. Aşılar, ölçümler ve gelişim adımları burada görünecek.",
+    "kindVaccine": "Aşı",
+    "kindGrowth": "Ölçüm",
+    "kindMilestone": "Gelişim adımı",
+    "kindVisit": "Doktor ziyareti"
+  },
+  "emergencyCard": {
+    "title": "Acil bilgiler",
+    "subtitle": "Bu ekranı klinik veya hastanede gösterin.",
+    "bloodType": "Kan grubu",
+    "allergies": "Alerjiler",
+    "medications": "İlaçlar",
+    "emergencyContact": "Acil iletişim",
+    "notSet": "Belirtilmemiş",
+    "editCta": "Tıbbi profilde düzenle"
+  },
+  "customVaccine": {
+    "title": "Özel aşı kaydet",
+    "subtitle": "Grip aşıları, özel aşılar veya ulusal takvimde yer almayanlar.",
+    "nameLabel": "Aşı adı",
+    "namePlaceholder": "ör. Grip, Su çiçeği",
+    "dateLabel": "Yapılma tarihi",
+    "locationLabel": "Klinik / yer",
+    "locationPlaceholder": "İsteğe bağlı",
+    "batchLabel": "Seri numarası",
+    "batchPlaceholder": "İsteğe bağlı",
+    "notesLabel": "Notlar",
+    "notesPlaceholder": "İsteğe bağlı",
+    "saveCta": "Kaydet",
+    "sectionTitle": "Ek aşılar"
+  },
+  "doctorVisits": {
+    "title": "Doktor ziyaretleri",
+    "subtitle": "Pediatri ve uzman ziyaretlerinin kaydı.",
+    "empty": "Henüz kayıtlı ziyaret yok.",
+    "addCta": "Ziyaret kaydet",
+    "visitedOn": "{{date}}",
+    "deleteConfirm": "Bu ziyaret kaydı silinsin mi?",
+    "delete": "Sil",
+    "add": {
+      "title": "Doktor ziyareti kaydet",
+      "subtitle": "Detayları kendi referansınız için saklayın.",
+      "dateLabel": "Ziyaret tarihi",
+      "doctorLabel": "Doktor adı",
+      "doctorPlaceholder": "İsteğe bağlı",
+      "clinicLabel": "Klinik / hastane",
+      "clinicPlaceholder": "İsteğe bağlı",
+      "reasonLabel": "Ziyaret nedeni",
+      "reasonPlaceholder": "ör. rutin kontrol, ateş",
+      "notesLabel": "Notlar",
+      "notesPlaceholder": "Görüşülenler, sonraki adımlar…",
+      "saveCta": "Ziyareti kaydet",
+      "editTitle": "Ziyareti düzenle"
+    }
+  },
+  "monthlyTips": {
+    "title": "Bu ay",
+    "ageLabel_one": "{{count}} aylık",
+    "ageLabel_other": "{{count}} aylık",
+    "ageLabel_years_one": "{{count}} yaşında",
+    "ageLabel_years_other": "{{count}} yaşında"
   },
   "birthday": {
     "title": "İyi ki doğdun, {{name}}!",
