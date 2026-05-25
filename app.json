@@ -14,13 +14,13 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.arabcell.kartochka",
+      "bundleIdentifier": "app.kartochka",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
-      "package": "com.arabcell.kartochka",
+      "package": "app.kartochka",
       "adaptiveIcon": {
         "backgroundColor": "#2A7F7F",
         "foregroundImage": "./assets/android-icon-foreground.png"
