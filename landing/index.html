@@ -536,26 +536,25 @@
     }
     .screenshot-frame {
       width: 210px;
-      border-radius: 22px;
+      border-radius: 46px;
       overflow: hidden;
       position: relative;
-      box-shadow: 0 28px 72px rgba(0,0,0,.22), 0 6px 20px rgba(0,0,0,.12), inset 0 0 0 1px rgba(255,255,255,.06);
-      border: 5px solid #0c0c0c;
-      background: #0c0c0c;
+      box-shadow: 0 28px 72px rgba(0,0,0,.22), 0 6px 20px rgba(0,0,0,.12), inset 0 0 0 1px rgba(255,255,255,.07);
+      border: 7px solid #111;
+      background: #111;
     }
-    /* Samsung punch-hole camera */
+    /* iPhone Dynamic Island */
     .screenshot-frame::after {
       content: '';
       position: absolute;
-      top: 10px;
+      top: 9px;
       left: 50%;
       transform: translateX(-50%);
-      width: 12px;
-      height: 12px;
-      background: #0c0c0c;
-      border-radius: 50%;
+      width: 68px;
+      height: 20px;
+      background: #111;
+      border-radius: 12px;
       z-index: 10;
-      box-shadow: 0 0 0 1.5px rgba(255,255,255,.08);
     }
     .screenshot-frame img {
       width: 100%;
@@ -646,31 +645,37 @@
     <div class="screenshots-track">
       <div class="screenshot-item">
         <div class="screenshot-frame">
-          <img src="screenshots/home.jpg" alt="Home screen showing upcoming vaccination and growth summary" loading="lazy" />
+          <img src="screenshots/ios-home.png" alt="Home screen showing upcoming vaccination and growth summary" loading="lazy" />
         </div>
         <p class="screenshot-caption">Home</p>
       </div>
       <div class="screenshot-item">
         <div class="screenshot-frame">
-          <img src="screenshots/vaccines.jpg" alt="Full vaccine schedule with upcoming and done doses" loading="lazy" />
+          <img src="screenshots/ios-vaccines.png" alt="Full vaccine schedule with upcoming and done doses" loading="lazy" />
         </div>
         <p class="screenshot-caption">Vaccines</p>
       </div>
       <div class="screenshot-item">
         <div class="screenshot-frame">
-          <img src="screenshots/growth.jpg" alt="Growth charts with WHO percentile curves" loading="lazy" />
+          <img src="screenshots/ios-growth.png" alt="Growth charts with WHO percentile curves" loading="lazy" />
         </div>
         <p class="screenshot-caption">Growth</p>
       </div>
       <div class="screenshot-item">
         <div class="screenshot-frame">
-          <img src="screenshots/milestones.jpg" alt="Developmental milestones with dates reached" loading="lazy" />
+          <img src="screenshots/ios-milestones.png" alt="Developmental milestones with dates reached" loading="lazy" />
         </div>
         <p class="screenshot-caption">Milestones</p>
       </div>
       <div class="screenshot-item">
         <div class="screenshot-frame">
-          <img src="screenshots/emergency.jpg" alt="Emergency info card with blood type and allergies" loading="lazy" />
+          <img src="screenshots/ios-timeline.png" alt="Full health timeline across vaccines, measurements and milestones" loading="lazy" />
+        </div>
+        <p class="screenshot-caption">Timeline</p>
+      </div>
+      <div class="screenshot-item">
+        <div class="screenshot-frame">
+          <img src="screenshots/ios-emergency.png" alt="Emergency info card with blood type and allergies" loading="lazy" />
         </div>
         <p class="screenshot-caption">Emergency card</p>
       </div>
