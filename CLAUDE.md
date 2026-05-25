@@ -33,9 +33,12 @@ primarily in Russia, Kazakhstan, Uzbekistan, UAE, Saudi Arabia, and Turkey.
 - Paywall hits at first PDF export attempt
 
 ## Apple Developer account
-- Team: Arabcell FZCO
+- Developer name: Agamyrat Durdymyradov (personal account)
 - Team ID: A25HWQYDGY
 - Account email: bitubixdxb@gmail.com
+
+## Google Play account
+- Developer name: MChary
 
 ## What I want from Claude Code
 - Honest pushback when I'm overcomplicating things
