@@ -517,13 +517,16 @@
     }
     .screenshots-track {
       display: flex;
-      justify-content: center;
       gap: 20px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       padding: 8px 40px 32px;
       scrollbar-width: none;
       -ms-overflow-style: none;
+    }
+    /* Only center when all 6 screenshots fit without overflow */
+    @media (min-width: 1420px) {
+      .screenshots-track { justify-content: center; }
     }
     .screenshots-track::-webkit-scrollbar { display: none; }
     .screenshot-item {
