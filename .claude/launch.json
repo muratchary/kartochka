@@ -24,7 +24,8 @@
       "name": "Expo (Web)",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "web"],
-      "port": 19006
+      "port": 8081,
+      "autoPort": false
     }
   ]
 }

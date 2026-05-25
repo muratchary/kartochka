@@ -397,6 +397,7 @@
     "notesLabel": "Заметки",
     "notesPlaceholder": "Необязательно",
     "saveCta": "Сохранить",
+    "nameRequired": "Введите название вакцины.",
     "sectionTitle": "Дополнительные прививки"
   },
   "doctorVisits": {

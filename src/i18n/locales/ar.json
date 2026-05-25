@@ -385,6 +385,7 @@
     "notesLabel": "ملاحظات",
     "notesPlaceholder": "اختياري",
     "saveCta": "حفظ",
+    "nameRequired": "يرجى إدخال اسم اللقاح.",
     "sectionTitle": "تطعيمات إضافية"
   },
   "doctorVisits": {

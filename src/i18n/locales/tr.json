@@ -385,6 +385,7 @@
     "notesLabel": "Notlar",
     "notesPlaceholder": "İsteğe bağlı",
     "saveCta": "Kaydet",
+    "nameRequired": "Lütfen aşı adını girin.",
     "sectionTitle": "Ek aşılar"
   },
   "doctorVisits": {

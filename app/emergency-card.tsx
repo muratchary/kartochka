@@ -5,12 +5,14 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ChildAvatar } from '../src/components/ChildAvatar';
+import type { SupportedLanguage } from '../src/i18n';
 import { selectActiveChild, useChildrenStore } from '../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../src/theme';
 import { useFont } from '../src/theme/useFont';
 
 export default function EmergencyCardScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || 'en') as SupportedLanguage;
   const font = useFont();
   const router = useRouter();
 
@@ -37,7 +39,7 @@ export default function EmergencyCardScreen() {
           <Text style={[styles.childName, { fontFamily: font(800) }]}>{child.name}</Text>
           {child.dateOfBirth ? (
             <Text style={[styles.childDob, { fontFamily: font(600) }]}>
-              {new Date(child.dateOfBirth).toLocaleDateString('en', { year: 'numeric', month: 'long', day: 'numeric' })}
+              {new Date(child.dateOfBirth).toLocaleDateString(lang === 'ru' ? 'ru' : lang === 'ar' ? 'ar' : lang === 'tr' ? 'tr' : 'en', { year: 'numeric', month: 'long', day: 'numeric' })}
             </Text>
           ) : null}
         </View>

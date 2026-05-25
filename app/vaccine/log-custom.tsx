@@ -46,7 +46,7 @@ export default function LogCustomVaccineScreen() {
 
   const handleSave = () => {
     if (!name.trim()) {
-      Alert.alert(t('customVaccine.nameLabel'), t('common.save'));
+      Alert.alert(t('customVaccine.nameLabel'), t('customVaccine.nameRequired'));
       return;
     }
     addVaccination({

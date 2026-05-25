@@ -385,6 +385,7 @@
     "notesLabel": "Notes",
     "notesPlaceholder": "Optional",
     "saveCta": "Save",
+    "nameRequired": "Please enter a vaccine name.",
     "sectionTitle": "Additional vaccines"
   },
   "doctorVisits": {
