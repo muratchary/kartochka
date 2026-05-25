@@ -225,7 +225,16 @@
     "unmark": "Kaldır",
     "unmarkConfirm": "Bu aşamayı kaldır?",
     "celebrationTitle": "Aşamaya ulaşıldı!",
-    "celebrationBody": "{{name}} çok hızlı büyüyor."
+    "celebrationBody": "{{name}} çok hızlı büyüyor.",
+    "share": {
+      "modalTitle": "Bu anı paylaş",
+      "reached": "bir gelişim basamağına ulaştı!",
+      "shareButton": "Paylaş",
+      "saveToPhotos": "Fotoğraflara kaydet",
+      "savedToPhotos": "Fotoğraflarına kaydedildi!",
+      "requiresBuild": "Bu özellik tam uygulama derlemesi gerektirir.",
+      "close": "Kapat"
+    }
   },
   "more": {
     "title": "Diğer",

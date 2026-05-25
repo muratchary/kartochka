@@ -225,7 +225,16 @@
     "unmark": "إزالة",
     "unmarkConfirm": "إزالة هذه المرحلة؟",
     "celebrationTitle": "تم الوصول إلى المرحلة!",
-    "celebrationBody": "{{name}} ينمو بسرعة."
+    "celebrationBody": "{{name}} ينمو بسرعة.",
+    "share": {
+      "modalTitle": "شارك هذه اللحظة",
+      "reached": "وصل إلى معلم جديد!",
+      "shareButton": "مشاركة",
+      "saveToPhotos": "حفظ في الصور",
+      "savedToPhotos": "تم الحفظ في صورك!",
+      "requiresBuild": "هذه الميزة تتطلب تطبيق كامل البناء.",
+      "close": "إغلاق"
+    }
   },
   "more": {
     "title": "المزيد",

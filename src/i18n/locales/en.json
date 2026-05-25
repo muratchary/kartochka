@@ -225,7 +225,16 @@
     "unmark": "Remove",
     "unmarkConfirm": "Remove this milestone?",
     "celebrationTitle": "Milestone reached!",
-    "celebrationBody": "{{name}} is growing up so fast."
+    "celebrationBody": "{{name}} is growing up so fast.",
+    "share": {
+      "modalTitle": "Share this moment",
+      "reached": "reached a milestone!",
+      "shareButton": "Share",
+      "saveToPhotos": "Save to Photos",
+      "savedToPhotos": "Saved to your photos!",
+      "requiresBuild": "This feature requires the full app build (not Expo Go).",
+      "close": "Close"
+    }
   },
   "reactions": {
     "title": "Reaction log",
