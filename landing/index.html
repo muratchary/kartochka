@@ -241,86 +241,6 @@
       text-align: center;
     }
 
-    /* ── Phone mockup ───────────────────────────────────────────── */
-    .hero-phone {
-      margin: 56px auto 0;
-      max-width: 320px;
-      position: relative;
-    }
-    .phone-frame {
-      background: var(--ink);
-      border-radius: 40px;
-      padding: 12px;
-      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,.06);
-      position: relative;
-    }
-    .phone-screen {
-      background: var(--bg);
-      border-radius: 30px;
-      overflow: hidden;
-      padding: 20px 16px 16px;
-      min-height: 520px;
-    }
-    .phone-notch {
-      width: 80px;
-      height: 22px;
-      background: var(--ink);
-      border-radius: 0 0 16px 16px;
-      margin: 0 auto 16px;
-    }
-
-    /* Simulated app UI inside phone */
-    .app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-    .app-greeting { font-size: 11px; color: var(--ink3); font-weight: 600; }
-    .app-name { font-size: 18px; font-weight: 900; color: var(--ink); letter-spacing: -0.5px; }
-    .app-avatar { width: 32px; height: 32px; background: var(--teal); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-    .app-strip {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 10px;
-      background: var(--teal-soft);
-      border-radius: 8px;
-      border: 1px solid var(--teal-line);
-      margin-bottom: 6px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--teal-dark);
-    }
-    .app-strip-icon { font-size: 13px; }
-    .app-card {
-      background: var(--surface);
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      padding: 12px;
-      margin-bottom: 8px;
-    }
-    .app-card-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; color: var(--ink3); margin-bottom: 5px; }
-    .app-card-title { font-size: 14px; font-weight: 800; color: var(--ink); letter-spacing: -0.3px; }
-    .app-card-meta { font-size: 11px; color: var(--ink2); font-weight: 600; margin-top: 2px; }
-    .app-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 10px;
-      font-weight: 700;
-      margin-top: 6px;
-    }
-    .pill-warn { background: #FEF3C7; color: #92400E; }
-    .pill-ok { background: #D1FAE5; color: #065F46; }
-    .app-tabs {
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0 4px;
-      border-top: 1px solid var(--border);
-      margin-top: 12px;
-    }
-    .app-tab { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; font-weight: 700; color: var(--ink3); }
-    .app-tab.active { color: var(--teal); }
-    .app-tab-icon { font-size: 18px; }
-
     /* ── Features grid ──────────────────────────────────────────── */
     .section-eyebrow {
       font-size: 12px;
@@ -568,6 +488,71 @@
       .nav-logo-text { font-size: 16px; }
     }
 
+    /* ── Screenshots strip ──────────────────────────────────────── */
+    .screenshots-section {
+      padding: 0 0 72px;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg);
+    }
+    .screenshots-section::before,
+    .screenshots-section::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .screenshots-section::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+    .screenshots-section::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+    .screenshots-eyebrow {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--teal-dark);
+      padding: 52px 0 32px;
+    }
+    .screenshots-track {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 8px 60px 32px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .screenshots-track::-webkit-scrollbar { display: none; }
+    .screenshot-item {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .screenshot-frame {
+      width: 210px;
+      border-radius: 38px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.16), 0 4px 16px rgba(0,0,0,.08);
+      border: 8px solid #1A1A2E;
+      background: #1A1A2E;
+    }
+    .screenshot-frame img {
+      width: 100%;
+      display: block;
+    }
+    .screenshot-caption {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ink3);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
     /* ── Animations ─────────────────────────────────────────────── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -636,48 +621,42 @@
       </div>
       <p class="store-coming">Coming to both stores soon</p>
 
-      <!-- Phone mockup -->
-      <div class="hero-phone fade-up fade-up-4">
-        <div class="phone-frame">
-          <div class="phone-screen">
-            <div class="phone-notch"></div>
-            <!-- Simulated home screen -->
-            <div class="app-header">
-              <div>
-                <div class="app-greeting">Good morning</div>
-                <div class="app-name">Anna, 14 mo</div>
-              </div>
-              <div class="app-avatar">👶</div>
-            </div>
-            <div class="app-strip">
-              <span class="app-strip-icon">📋</span>
-              Prepare for next doctor visit
-            </div>
-            <div class="app-strip" style="background:#F5F3FF;border-color:#DDD6FE;color:#6D28D9">
-              <span class="app-strip-icon">⏱</span>
-              Health timeline
-            </div>
-            <div class="app-card">
-              <div class="app-card-label">Next Vaccine</div>
-              <div class="app-card-title">MMR</div>
-              <div class="app-card-meta">Dose 1 of 2 · Due in 3 days</div>
-              <span class="app-pill pill-warn">⚠ Due soon</span>
-            </div>
-            <div class="app-card">
-              <div class="app-card-label">Growth</div>
-              <div class="app-card-title">9.4 kg · 76 cm</div>
-              <div class="app-card-meta">Measured May 1, 2026</div>
-              <span class="app-pill pill-ok">✓ 52nd percentile</span>
-            </div>
-            <div class="app-tabs">
-              <div class="app-tab active"><span class="app-tab-icon">🏠</span>Home</div>
-              <div class="app-tab"><span class="app-tab-icon">💉</span>Vaccines</div>
-              <div class="app-tab"><span class="app-tab-icon">📈</span>Growth</div>
-              <div class="app-tab"><span class="app-tab-icon">⭐</span>Milestones</div>
-              <div class="app-tab"><span class="app-tab-icon">⋯</span>More</div>
-            </div>
-          </div>
+    </div>
+  </section>
+
+  <!-- ── Screenshots ──────────────────────────────────────────────── -->
+  <section class="screenshots-section">
+    <p class="screenshots-eyebrow">See it in action</p>
+    <div class="screenshots-track">
+      <div class="screenshot-item">
+        <div class="screenshot-frame">
+          <img src="screenshots/home.jpg" alt="Home screen showing upcoming vaccination and growth summary" loading="lazy" />
         </div>
+        <p class="screenshot-caption">Home</p>
+      </div>
+      <div class="screenshot-item">
+        <div class="screenshot-frame">
+          <img src="screenshots/vaccines.jpg" alt="Full vaccine schedule with upcoming and done doses" loading="lazy" />
+        </div>
+        <p class="screenshot-caption">Vaccines</p>
+      </div>
+      <div class="screenshot-item">
+        <div class="screenshot-frame">
+          <img src="screenshots/growth.jpg" alt="Growth charts with WHO percentile curves" loading="lazy" />
+        </div>
+        <p class="screenshot-caption">Growth</p>
+      </div>
+      <div class="screenshot-item">
+        <div class="screenshot-frame">
+          <img src="screenshots/milestones.jpg" alt="Developmental milestones with dates reached" loading="lazy" />
+        </div>
+        <p class="screenshot-caption">Milestones</p>
+      </div>
+      <div class="screenshot-item">
+        <div class="screenshot-frame">
+          <img src="screenshots/emergency.jpg" alt="Emergency info card with blood type and allergies" loading="lazy" />
+        </div>
+        <p class="screenshot-caption">Emergency card</p>
       </div>
     </div>
   </section>
