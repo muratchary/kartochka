@@ -1,9 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
+import * as FileSystem from 'expo-file-system';
+import * as ImagePicker from 'expo-image-picker';
 import { Redirect, useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
+import * as Sharing from 'expo-sharing';
+import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { captureRef } from 'react-native-view-shot';
 
 import { Button } from '../../src/components/Button';
 import { Card } from '../../src/components/Card';
@@ -15,6 +19,7 @@ import { getTipsForAge } from '../../src/data/monthlyTips';
 import { STANDARD_MILESTONES } from '../../src/lib/milestones';
 import { exportChildPdf } from '../../src/lib/pdfExport';
 import { getSchedule } from '../../src/lib/schedules';
+import { usePurchasesStore } from '../../src/stores/purchasesStore';
 import {
   dueDateForDose,
   nextDueVaccine,
@@ -23,7 +28,7 @@ import {
 } from '../../src/lib/vaccinationStatus';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
-import type { MilestoneDefinition } from '../../src/types';
+import type { MilestoneDefinition, MilestoneRecord } from '../../src/types';
 import { useFont } from '../../src/theme/useFont';
 
 export default function HomeScreen() {
@@ -39,12 +44,50 @@ export default function HomeScreen() {
   const milestones = useChildrenStore((s) => s.milestones);
   const tutorialSeen = useChildrenStore((s) => s.tutorialSeen);
   const markTutorialSeen = useChildrenStore((s) => s.markTutorialSeen);
+  const doctorVisits = useChildrenStore((s) => s.doctorVisits);
+  const isPremium = usePurchasesStore((s) => s.isPremium);
+
+  const updateChild = useChildrenStore((s) => s.updateChild);
 
   const [birthdayDismissed, setBirthdayDismissed] = useState(false);
+
+  const handleAvatarPress = async () => {
+    if (!child) return;
+    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!perm.granted) {
+      Alert.alert('', t('common.permissionDenied'));
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8,
+    });
+    if (!result.canceled && result.assets[0]) {
+      updateChild(child.id, { photoUri: result.assets[0].uri });
+    }
+  };
 
   const handleExportPdf = async () => {
     if (!child) return;
     try {
+      // Build base64 photo array for milestone photo gallery page
+      const withPhotos = milestonesForChild.filter((m) => !!m.photoUri);
+      const milestonePhotos: Array<{ name: string; ageLabel: string; base64: string }> = [];
+      for (const m of withPhotos) {
+        try {
+          const base64 = await FileSystem.readAsStringAsync(m.photoUri!, {
+            encoding: 'base64',
+          });
+          const def = STANDARD_MILESTONES.find((d) => d.code === m.milestoneCode);
+          const name = def?.displayName[lang] ?? def?.displayName.en ?? m.milestoneCode;
+          const ageLabel = milestoneAgeLabel(m.achievedOn, child.dateOfBirth, t);
+          milestonePhotos.push({ name, ageLabel, base64 });
+        } catch {
+          // skip photos that can't be read (e.g. file deleted from device)
+        }
+      }
       await exportChildPdf({
         child,
         vaccinations,
@@ -52,6 +95,8 @@ export default function HomeScreen() {
         milestones,
         lang,
         t,
+        isPremium,
+        milestonePhotos: milestonePhotos.length > 0 ? milestonePhotos : undefined,
       });
     } catch {
       Alert.alert(t('home.pdf.errorTitle'), t('home.pdf.errorBody'));
@@ -174,6 +219,7 @@ export default function HomeScreen() {
           hasMultipleChildren={children.length > 1}
           onSwitchChild={() => router.push('/switch-child')}
           onBellPress={() => router.push('/notifications')}
+          onAvatarPress={handleAvatarPress}
         />
 
         <View style={styles.quickStrips}>
@@ -205,14 +251,18 @@ export default function HomeScreen() {
             <BirthdayBanner
               name={child.name}
               ageYears={birthdayAgeYears}
+              dateOfBirth={child.dateOfBirth}
               onDismiss={() => setBirthdayDismissed(true)}
               font={font}
+              milestones={milestonesForChild}
             />
           ) : null}
           <MonthDigestCard digest={monthDigest} />
           <NextVaccineCard nextDue={nextDue} lang={lang} />
           <GrowthCard latest={latestGrowth} lang={lang} />
           <MilestonesCard reachedCount={milestonesForChild.length} nextMilestone={nextMilestone} />
+          <DoctorVisitSummaryCard />
+          {(child?.allergyNotes || child?.medicationNotes) && <AllergyMedicationCard />}
           {childTips && <MonthlyTipsCard tips={childTips} ageMonths={childAgeMonths} />}
           <PdfCtaCard />
         </View>
@@ -406,7 +456,7 @@ export default function HomeScreen() {
         )}
         <View style={[styles.cardActions, { marginTop: spacing.sm }]}>
           <Button
-            label={latest ? t('home.nextVaccine.viewSchedule') : t('home.growth.addCta')}
+            label={latest ? t('home.growth.viewCta') : t('home.growth.addCta')}
             variant="ghost"
             size="sm"
             onPress={() => router.push(latest ? '/growth' : '/growth/add')}
@@ -542,34 +592,227 @@ export default function HomeScreen() {
     );
   }
 
+  // ── Doctor Visit Summary Card ───────────────────────────────────────────────
+  function DoctorVisitSummaryCard() {
+    const childVisits = doctorVisits
+      .filter((v) => v.childId === child?.id)
+      .sort((a, b) => b.visitedOn.localeCompare(a.visitedOn));
+    const lastVisit = childVisits[0] ?? null;
+
+    return (
+      <Card>
+        <Text style={[styles.cardLabel, { fontFamily: font(typography.eyebrow.weight) }]}>
+          {t('home.doctorVisits.label')}
+        </Text>
+        {lastVisit ? (
+          <>
+            <Text style={[styles.cardValue, { fontFamily: font(typography.h2.weight) }]}>
+              {lastVisit.doctorName ?? t('home.doctorVisits.unknownDoctor')}
+            </Text>
+            <Text style={[styles.cardMeta, { fontFamily: font(typography.body.weight) }]}>
+              {formatDate(new Date(lastVisit.visitedOn), lang)}
+              {lastVisit.clinicName ? ` · ${lastVisit.clinicName}` : ''}
+            </Text>
+            {lastVisit.reason ? (
+              <Text style={[styles.cardMeta, { fontFamily: font(typography.body.weight) }]}>
+                {lastVisit.reason}
+              </Text>
+            ) : null}
+          </>
+        ) : (
+          <Text style={[styles.empty, { fontFamily: font(typography.body.weight) }]}>
+            {t('home.doctorVisits.empty')}
+          </Text>
+        )}
+        <View style={[styles.cardActions, { marginTop: spacing.sm }]}>
+          <Button
+            label={t('home.doctorVisits.logCta')}
+            variant="ghost"
+            size="sm"
+            onPress={() => router.push('/doctor-visits/add')}
+          />
+        </View>
+      </Card>
+    );
+  }
+
+  // ── Allergy & Medication Card ───────────────────────────────────────────────
+  function AllergyMedicationCard() {
+    if (!child) return null;
+    return (
+      <Card style={{ borderColor: '#FECACA', borderWidth: 1 }}>
+        <View style={styles.allergyHeader}>
+          <Ionicons name="warning-outline" size={16} color="#DC2626" />
+          <Text style={[styles.cardLabel, { fontFamily: font(typography.eyebrow.weight), color: '#DC2626' }]}>
+            {t('home.allergyCard.label')}
+          </Text>
+        </View>
+        {child.allergyNotes ? (
+          <View style={styles.allergyRow}>
+            <Text style={[styles.allergyRowLabel, { fontFamily: font(700) }]}>
+              {t('home.allergyCard.allergies')}
+            </Text>
+            <Text style={[styles.allergyRowText, { fontFamily: font(600) }]}>
+              {child.allergyNotes}
+            </Text>
+          </View>
+        ) : null}
+        {child.medicationNotes ? (
+          <View style={styles.allergyRow}>
+            <Text style={[styles.allergyRowLabel, { fontFamily: font(700) }]}>
+              {t('home.allergyCard.medications')}
+            </Text>
+            <Text style={[styles.allergyRowText, { fontFamily: font(600) }]}>
+              {child.medicationNotes}
+            </Text>
+          </View>
+        ) : null}
+        <View style={[styles.cardActions, { marginTop: spacing.sm }]}>
+          <Button
+            label={t('home.allergyCard.editCta')}
+            variant="ghost"
+            size="sm"
+            onPress={() => router.push('/more/medical-profile')}
+          />
+        </View>
+      </Card>
+    );
+  }
+
   function BirthdayBanner({
     name,
     ageYears,
+    dateOfBirth,
     onDismiss,
     font: f,
+    milestones: allMilestones,
   }: {
     name: string;
     ageYears: number;
+    dateOfBirth: string;
     onDismiss: () => void;
     font: (w: 400 | 500 | 600 | 700 | 800) => string;
+    milestones: MilestoneRecord[];
   }) {
+    const [yearReviewOpen, setYearReviewOpen] = useState(false);
+    const yearReviewRef = useRef<View>(null);
+
+    // First-year milestones: achieved within 12 months of DoB and have a photo
+    const firstYearPhotos = useMemo(() => {
+      const dobMs = new Date(dateOfBirth).getTime();
+      const cutoff = dobMs + 12 * 30.4375 * 24 * 60 * 60 * 1000;
+      return allMilestones.filter(
+        (m) => m.photoUri && new Date(m.achievedOn).getTime() <= cutoff,
+      );
+    }, [allMilestones, dateOfBirth]);
+
+    const handleShareYearReview = async () => {
+      try {
+        if (!yearReviewRef.current) return;
+        const uri = await captureRef(yearReviewRef, { format: 'jpg', quality: 0.92 });
+        const canShare = await Sharing.isAvailableAsync();
+        if (canShare) await Sharing.shareAsync(uri);
+      } catch {
+        // ignore
+      }
+    };
+
+    const isFirstBirthday = ageYears === 1;
+
     return (
-      <View style={styles.birthdayCard}>
-        <Text style={styles.birthdayEmoji}>🎂</Text>
-        <View style={{ flex: 1 }}>
-          <Text style={[styles.birthdayTitle, { fontFamily: f(800) }]}>
-            {t('birthday.title', { name })}
-          </Text>
-          <Text style={[styles.birthdayBody, { fontFamily: f(600) }]}>
-            {t('birthday.body', { name, age: ageYears })}
-          </Text>
+      <>
+        <View style={styles.birthdayCard}>
+          <Text style={styles.birthdayEmoji}>🎂</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={[styles.birthdayTitle, { fontFamily: f(800) }]}>
+              {t('birthday.title', { name })}
+            </Text>
+            <Text style={[styles.birthdayBody, { fontFamily: f(600) }]}>
+              {t('birthday.body', { name, age: ageYears })}
+            </Text>
+            {isFirstBirthday && firstYearPhotos.length > 0 && (
+              <>
+                <Text style={[styles.birthdayGrowthText, { fontFamily: f(600) }]}>
+                  {t('milestoneAlbum.lookHowYouveGrown')}
+                </Text>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  style={styles.birthdayPhotoStrip}
+                  contentContainerStyle={styles.birthdayPhotoStripContent}>
+                  {firstYearPhotos.slice(0, 6).map((m) => (
+                    <Image
+                      key={m.id}
+                      source={{ uri: m.photoUri! }}
+                      style={styles.birthdayPhotoCircle}
+                    />
+                  ))}
+                </ScrollView>
+                <Pressable
+                  style={styles.birthdayShareBtn}
+                  onPress={() => setYearReviewOpen(true)}>
+                  <Ionicons name="share-social-outline" size={15} color={colors.teal} />
+                  <Text style={[styles.birthdayShareText, { fontFamily: f(600) }]}>
+                    {t('birthday.shareReview')}
+                  </Text>
+                </Pressable>
+              </>
+            )}
+          </View>
+          <Pressable onPress={onDismiss} hitSlop={12} style={styles.birthdayClose}>
+            <Ionicons name="close" size={18} color={colors.ink2} />
+          </Pressable>
         </View>
-        <Pressable onPress={onDismiss} hitSlop={12} style={styles.birthdayClose}>
-          <Ionicons name="close" size={18} color={colors.ink2} />
-        </Pressable>
-      </View>
+
+        {/* Year in Review modal */}
+        <Modal visible={yearReviewOpen} transparent animationType="fade" statusBarTranslucent>
+          <View style={styles.yearReviewOverlay}>
+            <View style={styles.yearReviewInner}>
+              {/* Shareable card */}
+              <View ref={yearReviewRef} style={styles.yearReviewCard} collapsable={false}>
+                <Text style={[styles.yearReviewCardTitle, { fontFamily: f(800) }]}>
+                  {name}
+                </Text>
+                <Text style={[styles.yearReviewCardSubtitle, { fontFamily: f(600) }]}>
+                  {t('milestoneAlbum.yearInReview')} · Kartochka
+                </Text>
+                <View style={styles.yearReviewGrid}>
+                  {firstYearPhotos.slice(0, 9).map((m) => (
+                    <Image
+                      key={m.id}
+                      source={{ uri: m.photoUri! }}
+                      style={styles.yearReviewThumb}
+                    />
+                  ))}
+                </View>
+              </View>
+
+              <Pressable style={styles.yearReviewShareBtn} onPress={handleShareYearReview}>
+                <Ionicons name="share-social-outline" size={20} color="#fff" />
+                <Text style={[styles.yearReviewShareBtnText, { fontFamily: f(700) }]}>
+                  {t('birthday.shareReview')}
+                </Text>
+              </Pressable>
+              <Pressable style={styles.yearReviewCloseBtn} onPress={() => setYearReviewOpen(false)}>
+                <Ionicons name="close" size={20} color={colors.ink2} />
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      </>
     );
   }
+}
+
+type TFn = (key: string, opts?: Record<string, unknown>) => string;
+
+function milestoneAgeLabel(achievedOn: string, dateOfBirth: string, t: TFn): string {
+  const ms = new Date(achievedOn).getTime() - new Date(dateOfBirth).getTime();
+  const totalDays = Math.floor(ms / (1000 * 60 * 60 * 24));
+  const months = Math.floor(totalDays / 30.4375);
+  if (months < 1) return t('home.pdf.ageDays', { count: Math.max(totalDays, 0) });
+  if (months < 24) return t('home.pdf.ageMonths', { count: months });
+  return t('home.pdf.ageYears', { count: Math.floor(months / 12) });
 }
 
 function summarizeGrowth(
@@ -798,7 +1041,7 @@ const styles = StyleSheet.create({
   },
   birthdayCard: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     gap: spacing.md,
     backgroundColor: '#FFF7ED',
     borderRadius: radii.lg,
@@ -817,7 +1060,112 @@ const styles = StyleSheet.create({
     color: colors.ink2,
     marginTop: 2,
   },
+  birthdayGrowthText: {
+    fontSize: typography.caption.fontSize,
+    color: colors.ink,
+    marginTop: spacing.sm,
+  },
+  birthdayPhotoStrip: {
+    marginTop: spacing.sm,
+    marginHorizontal: -4,
+  },
+  birthdayPhotoStripContent: {
+    gap: spacing.xs,
+    paddingHorizontal: 4,
+  },
+  birthdayPhotoCircle: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: colors.surface,
+  },
+  birthdayShareBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    marginTop: spacing.sm,
+  },
+  birthdayShareText: {
+    fontSize: typography.caption.fontSize,
+    color: colors.teal,
+  },
   birthdayClose: {
     padding: 4,
+  },
+  // Year in Review modal
+  yearReviewOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: spacing.lg,
+  },
+  yearReviewInner: {
+    width: '100%',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  yearReviewCard: {
+    backgroundColor: '#fff',
+    borderRadius: radii.lg,
+    padding: spacing.lg,
+    width: '100%',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  yearReviewCardTitle: {
+    fontSize: 22,
+    color: colors.ink,
+  },
+  yearReviewCardSubtitle: {
+    fontSize: 13,
+    color: colors.ink2,
+  },
+  yearReviewGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.xs,
+    justifyContent: 'center',
+  },
+  yearReviewThumb: {
+    width: 80,
+    height: 80,
+    borderRadius: radii.sm,
+  },
+  yearReviewShareBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    backgroundColor: colors.teal,
+    borderRadius: radii.md,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.md,
+  },
+  yearReviewShareBtnText: {
+    fontSize: typography.body.fontSize,
+    color: '#fff',
+  },
+  yearReviewCloseBtn: {
+    padding: spacing.sm,
+  },
+  allergyHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    marginBottom: spacing.sm,
+  },
+  allergyRow: {
+    marginBottom: spacing.xs,
+  },
+  allergyRowLabel: {
+    fontSize: typography.caption.fontSize,
+    color: colors.ink2,
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
+    marginBottom: 2,
+  },
+  allergyRowText: {
+    fontSize: typography.body.fontSize,
+    color: colors.ink,
   },
 });

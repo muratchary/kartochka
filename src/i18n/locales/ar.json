@@ -52,9 +52,22 @@
     "growth": {
       "label": "النمو",
       "empty": "لا توجد قياسات بعد.",
-      "addCta": "إضافة قياس"
+      "addCta": "إضافة قياس",
+      "viewCta": "عرض النمو"
     },
     "doctorVisit": "بطاقة الطبيب",
+    "doctorVisits": {
+      "label": "آخر زيارة للطبيب",
+      "unknownDoctor": "زيارة طبيب",
+      "empty": "لم تُسجَّل أي زيارات بعد.",
+      "logCta": "تسجيل زيارة"
+    },
+    "allergyCard": {
+      "label": "الحساسية والأدوية",
+      "allergies": "الحساسية",
+      "medications": "الأدوية",
+      "editCta": "تعديل الملف الصحي"
+    },
     "milestones": {
       "label": "النماء",
       "empty": "يبدأ التتبع عند تسجيل أول معلم.",
@@ -102,6 +115,7 @@
       "noVaccinations": "لا توجد تطعيمات في جدول هذه الدولة بعد.",
       "noGrowth": "لا توجد قياسات نمو بعد.",
       "noMilestones": "لم يتم تسجيل أي معلم بعد.",
+      "milestonePhotosHeading": "صور الإنجازات",
       "disclaimer": "الجدول مبني على {{source}}. هذا المستند للمعلومات فقط وليس نصيحة طبية."
     }
   },
@@ -112,6 +126,16 @@
     "nextVaccine": "التطعيم القادم",
     "allUpToDate": "كل شيء في موعده",
     "preparedWith": "أُعدّ بتطبيق كارتوشكا"
+  },
+  "notifications": {
+    "milestoneNudge": {
+      "title": "{{name}} عمرها {{ageMonths}} أشهر! 🎉",
+      "body": "تحقق من معالم {{ageMonths}} شهرًا في التطبيق."
+    },
+    "overdueVaccine": {
+      "title": "لدى {{name}} تطعيم متأخر",
+      "body": "{{vaccine}} الجرعة {{dose}} متأخرة. حان وقت حجز موعد."
+    }
   },
   "vaccines": {
     "title": "التطعيمات",
@@ -239,13 +263,18 @@
   "more": {
     "title": "المزيد",
     "sections": {
+      "account": "الحساب",
       "children": "الأطفال",
       "app": "التطبيق",
       "subscription": "الاشتراك",
       "about": "حول",
-      "developer": "اختبار"
+      "developer": "البيانات"
     },
     "items": {
+      "upgradePremium": "الترقية إلى بريميوم",
+      "premiumActive": "كارتوشكا بريميوم ✦",
+      "signIn": "تسجيل الدخول / النسخ الاحتياطي",
+      "account": "الحساب",
       "manageChildren": "الأطفال",
       "medicalProfile": "الملف الطبي",
       "doctorVisits": "زيارات الطبيب",
@@ -255,7 +284,8 @@
       "subscription": "الاشتراك",
       "supportEmail": "اتصل بالدعم",
       "loadDemo": "تحميل بيانات تجريبية",
-      "clearAll": "مسح جميع البيانات"
+      "clearAll": "مسح جميع البيانات",
+      "partnerSharing": "مشاركة مع الشريك"
     },
     "loadDemoConfirm": "تحميل بيانات تجريبية؟ سيؤدي ذلك إلى استبدال أطفالك وسجلاتك الحالية.",
     "clearAllConfirm": "حذف جميع الأطفال وسجلاتهم؟",
@@ -335,7 +365,8 @@
     "edit": "تعديل",
     "close": "إغلاق",
     "yes": "نعم",
-    "no": "لا"
+    "no": "لا",
+    "permissionDenied": "يرجى السماح بالوصول إلى الصور في إعدادات هاتفك."
   },
   "reactions": {
     "title": "تسجيل التفاعلات",
@@ -442,7 +473,8 @@
     "ageMoments_few": "{{count}} سنوات",
     "ageMoments_many": "{{count}} سنة",
     "ageMoments_other": "{{count}} سنة",
-    "dismiss": "إغلاق"
+    "dismiss": "إغلاق",
+    "shareReview": "شارك هذه اللحظة"
   },
   "onboarding": {
     "welcome": {
@@ -476,5 +508,118 @@
       "countryStripPrefix": "الجدول:",
       "saveCta": "حفظ ومتابعة"
     }
+  },
+  "paywall": {
+    "title": "كارتوشكا بريميوم",
+    "subtitle": "كل ما تحتاجه لمتابعة صحة طفلك في مكان واحد.",
+    "trialBadge": "14 يوماً مجاناً",
+    "trialNote": "جرّب 14 يوماً بدون رسوم، ثم ادفع فقط إذا أعجبك. الإلغاء في أي وقت.",
+    "benefit1": "تقرير PDF لطبيب الأطفال",
+    "benefit2": "عدد غير محدود من الأطفال",
+    "benefit3": "مشاركة مع الشريك",
+    "benefit4": "نسخ احتياطي في السحابة",
+    "monthly": "شهري",
+    "yearly": "سنوي",
+    "perMonth": "شهرياً",
+    "perYear": "سنوياً",
+    "yearlySavings": "وفّر ~48%",
+    "cta": "ابدأ مجاناً",
+    "restore": "استعادة المشتريات",
+    "devNotice": "الأسعار غير متاحة في Expo Go. ابنِ التطبيق عبر EAS لاختبار المشتريات.",
+    "successTitle": "مرحباً بك في بريميوم!",
+    "successBody": "بدأت فترة التجربة المجانية. استمتع بجميع الميزات.",
+    "errorTitle": "فشل الشراء",
+    "errorBody": "حدث خطأ. حاول مرة أخرى.",
+    "restoredTitle": "تمت استعادة المشتريات",
+    "restoredBody": "اشتراكك في بريميوم نشط.",
+    "nothingToRestore": "لم يتم العثور على مشتريات سابقة."
+  },
+  "partnerSharing": {
+    "title": "المشاركة مع الشريك",
+    "signInRequired": "سجّل الدخول لمشاركة سجلات طفلك مع شريكك.",
+    "signInCta": "تسجيل الدخول",
+    "subtitle": "شارك سجلات {{name}} مع شريكك.",
+    "shareSection": "منح الوصول",
+    "shareBody": "أنشئ رمزاً مكوناً من 6 أحرف وأرسله إلى شريكك. الرمز صالح لمدة 7 أيام.",
+    "codeCopied": "تم نسخ الرمز!",
+    "generating": "جارٍ الإنشاء…",
+    "regenerate": "رمز جديد",
+    "generateCta": "إنشاء رمز",
+    "expireNote": "الرمز صالح لمدة 7 أيام",
+    "joinSection": "الانضمام برمز",
+    "joinBody": "أدخل الرمز المكوّن من 6 أحرف الذي أرسله إليك شريكك.",
+    "codePlaceholder": "XXXXXX",
+    "joining": "جارٍ الاتصال…",
+    "joinCta": "انضمام",
+    "invalidCode": "الرمز غير صحيح أو منتهي الصلاحية. يرجى التحقق والمحاولة مجدداً.",
+    "ownCodeError": "لا يمكنك استخدام رمزك الخاص.",
+    "errorTitle": "حدث خطأ ما",
+    "errorBody": "يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
+    "joinedTitle": "تم الاتصال!",
+    "joinedBody": "أصبح لديك الآن وصول إلى سجلات طفل شريكك."
+  },
+  "milestoneAlbum": {
+    "title": "ألبوم {{name}}",
+    "noPhotos": "لا توجد صور للإنجازات بعد",
+    "noPhotosHint": "سجّل الإنجازات وأضف صوراً لملء هذا الألبوم.",
+    "photosSection_zero": "لا توجد صور",
+    "photosSection_one": "صورة واحدة",
+    "photosSection_two": "صورتان",
+    "photosSection_few": "{{count}} صور",
+    "photosSection_many": "{{count}} صورة",
+    "photosSection_other": "{{count}} صور",
+    "period0": "0–3 أشهر",
+    "period3": "3–6 أشهر",
+    "period6": "6–9 أشهر",
+    "period9": "9–12 شهراً",
+    "period12": "12–18 شهراً",
+    "period18": "18–24 شهراً",
+    "period24": "24+ شهراً",
+    "shareChapter": "مشاركة هذا الفصل",
+    "thenNow": "قبل · الآن",
+    "thenLabel": "قبل",
+    "nowLabel": "الآن",
+    "chapterTitle": "{{name}}: {{period}}",
+    "yearInReview": "السنة الأولى",
+    "lookHowYouveGrown": "انظر كم كبرت 🌟",
+    "missingSection": "أضف صوراً للإنجازات",
+    "save": "حفظ",
+    "share": "مشاركة",
+    "replace": "استبدال",
+    "savedToPhotos": "تم الحفظ في الصور!",
+    "saveError": "تعذّر حفظ الصورة.",
+    "captions": {
+      "smiles-at-people": "أيّ ابتسامة تجلب هذا القدر من الفرح؟ ❤️",
+      "smiles-spontaneously": "تلك الابتسامة هي العالم كله. 🌟",
+      "first-word": "وفجأة، تغيّر كل شيء. 💬",
+      "walks-alone": "اليوم الذي اتّسع فيه العالم. 👣",
+      "responds-to-name": "يعرف اسمه — ويعرفك أنت. 🥰",
+      "peek-a-boo": "في كل مرة، سحر حقيقي. 😄",
+      "babbles-mama-baba": "الكلمات الأولى لك وحدك. 💛",
+      "plays-with-others": "صداقات قد تدوم العمر كله. 🤝",
+      "motor": "كل حركة، انتصار صغير. 💪",
+      "language": "يجد صوته صوتاً تلو الآخر. 🗣️",
+      "social": "عالمه يكبر بابتسامة واحدة في كل مرة. ❤️",
+      "cognitive": "عقل فضولي يكتشف كل شيء. 🌟"
+    }
+  },
+  "signIn": {
+    "title": "نسخ احتياطي لبياناتك",
+    "subtitle": "سجّل الدخول للمزامنة بين الأجهزة ومشاركة السجلات مع شريكك.",
+    "apple": "تسجيل الدخول بـ Apple",
+    "google": "تسجيل الدخول بـ Google",
+    "skip": "ليس الآن",
+    "note": "بياناتك محفوظة بالفعل على هذا الجهاز. تسجيل الدخول مطلوب فقط للنسخ الاحتياطي السحابي.",
+    "signedInTitle": "أنت مسجّل الدخول",
+    "noEmail": "الحساب متصل",
+    "signOut": "تسجيل الخروج",
+    "signOutConfirmTitle": "تسجيل الخروج؟",
+    "signOutConfirmBody": "ستبقى البيانات على الجهاز. ستتوقف المزامنة السحابية.",
+    "errorTitle": "فشل تسجيل الدخول",
+    "errorBody": "حدث خطأ. حاول مرة أخرى.",
+    "notConfiguredTitle": "قريباً",
+    "notConfiguredBody": "النسخ الاحتياطي السحابي سيكون متاحاً في التحديث القادم.",
+    "expoGoTitle": "يلزم تثبيت التطبيق الكامل",
+    "expoGoBody": "تسجيل الدخول يعمل فقط في النسخة المثبتة من التطبيق. جرّبه عبر TestFlight أو App Store."
   }
 }

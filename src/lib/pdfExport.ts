@@ -29,6 +29,8 @@ export interface ExportArgs {
   milestones: MilestoneRecord[];
   lang: SupportedLanguage;
   t: T;
+  isPremium?: boolean;
+  milestonePhotos?: Array<{ name: string; ageLabel: string; base64: string }>;
 }
 
 export async function exportChildPdf(args: ExportArgs): Promise<string> {
@@ -44,7 +46,7 @@ export async function exportChildPdf(args: ExportArgs): Promise<string> {
   return uri;
 }
 
-function buildHtml({ child, vaccinations, growthEntries, milestones, lang, t }: ExportArgs): string {
+function buildHtml({ child, vaccinations, growthEntries, milestones, lang, t, isPremium, milestonePhotos }: ExportArgs): string {
   const isRtl = lang === 'ar';
   const dir = isRtl ? 'rtl' : 'ltr';
   const fontImport = isRtl
@@ -138,9 +140,28 @@ function buildHtml({ child, vaccinations, growthEntries, milestones, lang, t }: 
   tfoot { display: table-footer-group; }
   @page { size: A4; margin: 18mm 14mm; }
   @page :first { margin-top: 12mm; }
+  .photo-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
+  .photo-cell { text-align: center; }
+  .photo-cell img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 6px; display: block; }
+  .photo-cell .photo-name { font-weight: 700; font-size: 9pt; margin-top: 4px; color: #1A2E2E; }
+  .photo-cell .photo-age { font-size: 8pt; color: #8FA0A0; margin-top: 2px; }
+  .watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-35deg);
+    font-size: 52pt;
+    font-weight: 800;
+    color: rgba(0,0,0,0.045);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    letter-spacing: 2px;
+  }
 </style>
 </head>
 <body>
+  ${!isPremium ? '<div class="watermark">Kartochka Free</div>' : ''}
   <header>
     <div class="brand">
       <span class="brand-mark">${SEEDLING_SVG}</span>
@@ -165,6 +186,17 @@ function buildHtml({ child, vaccinations, growthEntries, milestones, lang, t }: 
 
   <h2>${escapeHtml(t('home.pdf.milestonesHeading'))}</h2>
   ${renderMilestones(child, milestones, lang, t, localeTag)}
+
+  ${milestonePhotos && milestonePhotos.length > 0 ? `
+  <h2>${escapeHtml(t('home.pdf.milestonePhotosHeading'))}</h2>
+  <div class="photo-gallery">
+    ${milestonePhotos.map((p) => `
+    <div class="photo-cell">
+      <img src="data:image/jpeg;base64,${p.base64}" alt="${escapeHtml(p.name)}" />
+      <div class="photo-name">${escapeHtml(p.name)}</div>
+      <div class="photo-age">${escapeHtml(p.ageLabel)}</div>
+    </div>`).join('')}
+  </div>` : ''}
 
   <footer>
     ${escapeHtml(

@@ -52,9 +52,22 @@
     "growth": {
       "label": "Growth",
       "empty": "No measurements yet.",
-      "addCta": "Add measurement"
+      "addCta": "Add measurement",
+      "viewCta": "View growth"
     },
     "doctorVisit": "Doctor visit card",
+    "doctorVisits": {
+      "label": "Last doctor visit",
+      "unknownDoctor": "Doctor visit",
+      "empty": "No visits logged yet.",
+      "logCta": "Log a visit"
+    },
+    "allergyCard": {
+      "label": "Allergies & medications",
+      "allergies": "Allergies",
+      "medications": "Medications",
+      "editCta": "Edit in profile"
+    },
     "milestones": {
       "label": "Milestones",
       "empty": "Tracking starts when you check the first one off.",
@@ -102,6 +115,7 @@
       "noVaccinations": "No vaccinations on this country's schedule yet.",
       "noGrowth": "No growth measurements yet.",
       "noMilestones": "No milestones marked as reached yet.",
+      "milestonePhotosHeading": "Milestone photos",
       "disclaimer": "Schedule based on {{source}}. This document is for informational purposes only and is not medical advice."
     }
   },
@@ -112,6 +126,16 @@
     "nextVaccine": "Next vaccine",
     "allUpToDate": "All up to date",
     "preparedWith": "Prepared with Kartochka"
+  },
+  "notifications": {
+    "milestoneNudge": {
+      "title": "{{name}} is {{ageMonths}} months old! 🎉",
+      "body": "Check off the {{ageMonths}}-month milestones in the app."
+    },
+    "overdueVaccine": {
+      "title": "{{name}} has an overdue vaccine",
+      "body": "{{vaccine}} dose {{dose}} is overdue. Time to book an appointment."
+    }
   },
   "vaccines": {
     "title": "Vaccines",
@@ -265,13 +289,18 @@
   "more": {
     "title": "More",
     "sections": {
+      "account": "Account",
       "children": "Children",
       "app": "App",
       "subscription": "Subscription",
       "about": "About",
-      "developer": "Testing"
+      "developer": "Data"
     },
     "items": {
+      "upgradePremium": "Upgrade to Premium",
+      "premiumActive": "Kartochka Premium ✦",
+      "signIn": "Sign in / Back up data",
+      "account": "Account",
       "manageChildren": "Children",
       "medicalProfile": "Medical profile",
       "doctorVisits": "Doctor visits",
@@ -281,7 +310,8 @@
       "subscription": "Subscription",
       "supportEmail": "Contact support",
       "loadDemo": "Load demo data",
-      "clearAll": "Clear all data"
+      "clearAll": "Clear all data",
+      "partnerSharing": "Partner sharing"
     },
     "loadDemoConfirm": "Load demo data? This replaces your current children and records.",
     "clearAllConfirm": "Delete every child and their records?",
@@ -361,7 +391,8 @@
     "edit": "Edit",
     "close": "Close",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "permissionDenied": "Please allow photo access in your phone's Settings."
   },
   "timeline": {
     "title": "Health timeline",
@@ -433,7 +464,8 @@
     "body": "{{name}} turns {{age}} today.",
     "ageMoments_one": "{{count}} year old",
     "ageMoments_other": "{{count}} years old",
-    "dismiss": "Close"
+    "dismiss": "Close",
+    "shareReview": "Share this moment"
   },
   "onboarding": {
     "welcome": {
@@ -467,5 +499,114 @@
       "countryStripPrefix": "Schedule:",
       "saveCta": "Save and continue"
     }
+  },
+  "paywall": {
+    "title": "Kartochka Premium",
+    "subtitle": "Everything you need to track your child's health in one place.",
+    "trialBadge": "14-day free trial",
+    "trialNote": "Try free for 14 days, then pay only if you love it. Cancel anytime.",
+    "benefit1": "PDF report for your pediatrician",
+    "benefit2": "Unlimited children",
+    "benefit3": "Partner sharing",
+    "benefit4": "Cloud backup",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "perMonth": "per month",
+    "perYear": "per year",
+    "yearlySavings": "Save ~48%",
+    "cta": "Start Free Trial",
+    "restore": "Restore purchases",
+    "devNotice": "Pricing unavailable in Expo Go. Build the app with EAS to test purchases.",
+    "successTitle": "Welcome to Premium!",
+    "successBody": "Your free trial has started. Enjoy all features.",
+    "errorTitle": "Purchase failed",
+    "errorBody": "Something went wrong. Please try again.",
+    "restoredTitle": "Purchases restored",
+    "restoredBody": "Your Premium subscription is active.",
+    "nothingToRestore": "No previous purchases found."
+  },
+  "partnerSharing": {
+    "title": "Partner sharing",
+    "signInRequired": "Sign in to share your child's records with a partner.",
+    "signInCta": "Sign in",
+    "subtitle": "Share {{name}}'s records with your partner.",
+    "shareSection": "Share access",
+    "shareBody": "Generate a 6-character code and send it to your partner. The code expires in 7 days.",
+    "codeCopied": "Code copied to clipboard!",
+    "generating": "Generating…",
+    "regenerate": "New code",
+    "generateCta": "Generate code",
+    "expireNote": "Code expires in 7 days",
+    "joinSection": "Join with a code",
+    "joinBody": "Enter the 6-character code your partner sent you.",
+    "codePlaceholder": "XXXXXX",
+    "joining": "Joining…",
+    "joinCta": "Join",
+    "invalidCode": "Invalid or expired code. Please check and try again.",
+    "ownCodeError": "You can't use your own share code.",
+    "errorTitle": "Something went wrong",
+    "errorBody": "Please check your connection and try again.",
+    "joinedTitle": "Connected!",
+    "joinedBody": "You now have access to your partner's child records."
+  },
+  "milestoneAlbum": {
+    "title": "{{name}}'s Album",
+    "noPhotos": "No milestone photos yet",
+    "noPhotosHint": "Mark milestones as reached and add a photo to fill this album.",
+    "photosSection_one": "{{count}} photo",
+    "photosSection_other": "{{count}} photos",
+    "period0": "0–3 months",
+    "period3": "3–6 months",
+    "period6": "6–9 months",
+    "period9": "9–12 months",
+    "period12": "12–18 months",
+    "period18": "18–24 months",
+    "period24": "24+ months",
+    "shareChapter": "Share this chapter",
+    "thenNow": "Then · Now",
+    "thenLabel": "Then",
+    "nowLabel": "Now",
+    "chapterTitle": "{{name}}: {{period}}",
+    "yearInReview": "First Year",
+    "lookHowYouveGrown": "Look how you've grown 🌟",
+    "missingSection": "Add photos to milestones",
+    "save": "Save",
+    "share": "Share",
+    "replace": "Replace",
+    "savedToPhotos": "Saved to your photos!",
+    "saveError": "Couldn't save the photo.",
+    "captions": {
+      "smiles-at-people": "What other smile brings this much joy? ❤️",
+      "smiles-spontaneously": "That smile is the whole world right there. 🌟",
+      "first-word": "And just like that, everything changed. 💬",
+      "walks-alone": "The day the world got bigger. 👣",
+      "responds-to-name": "They know who they are — and who you are. 🥰",
+      "peek-a-boo": "Every time, pure magic. 😄",
+      "babbles-mama-baba": "Those first words belong to you. 💛",
+      "plays-with-others": "Friendships that might last a lifetime. 🤝",
+      "motor": "Every movement, a tiny victory. 💪",
+      "language": "Finding their voice, one sound at a time. 🗣️",
+      "social": "Growing their world, one smile at a time. ❤️",
+      "cognitive": "A curious mind discovering everything. 🌟"
+    }
+  },
+  "signIn": {
+    "title": "Back up your data",
+    "subtitle": "Sign in to sync across devices and share records with a partner.",
+    "apple": "Sign in with Apple",
+    "google": "Sign in with Google",
+    "skip": "Not now",
+    "note": "Your data is already safe on this device. Sign-in is only needed for cloud backup.",
+    "signedInTitle": "You're signed in",
+    "noEmail": "Account connected",
+    "signOut": "Sign out",
+    "signOutConfirmTitle": "Sign out?",
+    "signOutConfirmBody": "Your data stays on this device. Cloud sync will pause.",
+    "errorTitle": "Sign-in failed",
+    "errorBody": "Something went wrong. Please try again.",
+    "notConfiguredTitle": "Coming soon",
+    "notConfiguredBody": "Cloud backup will be available in the next update.",
+    "expoGoTitle": "Full build required",
+    "expoGoBody": "Sign-in needs a proper install to handle the redirect from Apple or Google. It works in the TestFlight or App Store version."
   }
 }

@@ -12,15 +12,19 @@ import {
   Nunito_800ExtraBold,
 } from '@expo-google-fonts/nunito';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import * as Notifications from 'expo-notifications';
+import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { initI18n } from '../src/i18n';
+import { useAuthStore } from '../src/stores/authStore';
 import { useChildrenStore } from '../src/stores/childrenStore';
+import { usePurchasesStore } from '../src/stores/purchasesStore';
 import { colors } from '../src/theme';
 
 export default function RootLayout() {
+  const router = useRouter();
   const [i18nReady, setI18nReady] = useState(false);
   const [storeHydrated, setStoreHydrated] = useState(() =>
     useChildrenStore.persist.hasHydrated(),
@@ -37,6 +41,9 @@ export default function RootLayout() {
     IBMPlexSansArabic_700Bold,
   });
 
+  const initializePurchases = usePurchasesStore((s) => s.initialize);
+  const initializeAuth = useAuthStore((s) => s.initialize);
+
   useEffect(() => {
     initI18n().then(() => setI18nReady(true));
   }, []);
@@ -47,6 +54,24 @@ export default function RootLayout() {
     if (useChildrenStore.persist.hasHydrated()) setStoreHydrated(true);
     return unsub;
   }, [storeHydrated]);
+
+  // Initialize RevenueCat and auth after fonts + i18n are ready
+  useEffect(() => {
+    if (!i18nReady || !storeHydrated) return;
+    initializePurchases();
+    initializeAuth();
+  }, [i18nReady, storeHydrated, initializePurchases, initializeAuth]);
+
+  // Deep link from notification taps
+  useEffect(() => {
+    const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      const data = response.notification.request.content.data as Record<string, unknown> | null;
+      if (data?.url === '/milestone-album') {
+        router.push('/milestone-album');
+      }
+    });
+    return () => sub.remove();
+  }, [router]);
 
   if (!i18nReady || !fontsLoaded || !storeHydrated) {
     return (
@@ -69,6 +94,10 @@ export default function RootLayout() {
       <Stack.Screen name="more/add-child" options={{ presentation: 'modal' }} />
       <Stack.Screen name="notifications" />
       <Stack.Screen name="switch-child" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="paywall" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="sign-in" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="partner-sharing" />
+      <Stack.Screen name="milestone-album" />
     </Stack>
   );
 }

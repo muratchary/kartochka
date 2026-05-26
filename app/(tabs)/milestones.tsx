@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from 'expo-media-library';
-import { Redirect } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import * as Sharing from 'expo-sharing';
 import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -39,6 +39,7 @@ interface ShareTarget {
 
 export default function MilestonesScreen() {
   const { t, i18n } = useTranslation();
+  const router = useRouter();
   const font = useFont();
   const lang = (i18n.language || 'en') as SupportedLanguage;
 
@@ -49,6 +50,7 @@ export default function MilestonesScreen() {
   const updateMilestonePhoto = useChildrenStore((s) => s.updateMilestonePhoto);
 
   const [celebrate, setCelebrate] = useState(false);
+  const [pendingPhotoRecordId, setPendingPhotoRecordId] = useState<string | null>(null);
   const [shareTarget, setShareTarget] = useState<ShareTarget | null>(null);
   const [sharing, setSharing] = useState(false);
 
@@ -98,11 +100,12 @@ export default function MilestonesScreen() {
       ]);
       return;
     }
-    addMilestone({
+    const record = addMilestone({
       childId: child.id,
       milestoneCode: code,
       achievedOn: new Date().toISOString().slice(0, 10),
     });
+    setPendingPhotoRecordId(record.id);
     setCelebrate(true);
   };
 
@@ -122,8 +125,6 @@ export default function MilestonesScreen() {
         if (label === t('vaccines.markDone.addPhoto') || label === t('vaccines.markDone.changePhoto')) {
           const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [1, 1],
             quality: 0.85,
           });
           if (!result.canceled && result.assets[0]) {
@@ -203,9 +204,17 @@ export default function MilestonesScreen() {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
-        <Text style={[styles.title, { fontFamily: font(typography.title.weight) }]}>
-          {t('milestones.title')}
-        </Text>
+        <View style={styles.headerRow}>
+          <Text style={[styles.title, { fontFamily: font(typography.title.weight) }]}>
+            {t('milestones.title')}
+          </Text>
+          <Pressable
+            onPress={() => router.push('/milestone-album')}
+            hitSlop={10}
+            style={styles.albumBtn}>
+            <Ionicons name="images-outline" size={22} color={colors.teal} />
+          </Pressable>
+        </View>
         <Text style={[styles.subtitle, { fontFamily: font(typography.body.weight) }]}>
           {t('milestones.subtitle')}
         </Text>
@@ -331,7 +340,15 @@ export default function MilestonesScreen() {
         visible={celebrate}
         title={t('milestones.celebrationTitle')}
         body={t('milestones.celebrationBody', { name: child.name })}
-        onClose={() => setCelebrate(false)}
+        onClose={() => {
+          setCelebrate(false);
+          if (pendingPhotoRecordId) {
+            const rid = pendingPhotoRecordId;
+            setPendingPhotoRecordId(null);
+            // Small delay so the modal fully dismisses before the picker opens
+            setTimeout(() => handlePhotoPress(rid), 350);
+          }
+        }}
       />
 
       {/* ── Share modal ───────────────────────────────── */}
@@ -427,6 +444,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.md,
     paddingBottom: spacing.md,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  albumBtn: {
+    padding: 4,
   },
   title: {
     fontSize: typography.title.fontSize,

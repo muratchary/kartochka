@@ -11,6 +11,7 @@ import { GrowthChart, type ChartPoint, type GrowthMetric } from '../../src/compo
 import { computeWHOPercentile } from '../../src/data/whoGrowthStandards';
 import type { SupportedLanguage } from '../../src/i18n';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
+import { usePurchasesStore } from '../../src/stores/purchasesStore';
 import type { GrowthEntry } from '../../src/types';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
@@ -28,6 +29,7 @@ export default function GrowthScreen() {
   const child = useChildrenStore(selectActiveChild);
   const growthEntries = useChildrenStore((s) => s.growthEntries);
   const removeGrowthEntry = useChildrenStore((s) => s.removeGrowthEntry);
+  const isPremium = usePurchasesStore((s) => s.isPremium);
 
   const entries = useMemo(() => {
     if (!child) return [];
@@ -133,12 +135,19 @@ export default function GrowthScreen() {
                     ]}>
                     {labelFor(metric)} ({unitFor(metric)})
                   </Text>
-                  {latestPercentile != null && (
+                  {latestPercentile != null && isPremium && (
                     <View style={styles.percentileBadge}>
                       <Text style={[styles.percentileBadgeText, { fontFamily: font(600) }]}>
                         {t('growth.percentile', { value: latestPercentile })}
                       </Text>
                     </View>
+                  )}
+                  {latestPercentile != null && !isPremium && (
+                    <Pressable
+                      onPress={() => router.push('/paywall')}
+                      style={[styles.percentileBadge, styles.percentileBadgeLocked]}>
+                      <Ionicons name="lock-closed" size={11} color={colors.teal} />
+                    </Pressable>
                   )}
                 </View>
                 {points.length >= 2 ? (
@@ -148,6 +157,8 @@ export default function GrowthScreen() {
                       metric={metric}
                       height={160}
                       sex={child.sex ?? 'unspecified'}
+                      isPremium={isPremium}
+                      onUnlockPress={() => router.push('/paywall')}
                     />
                     <Text
                       style={[
@@ -388,6 +399,10 @@ const styles = StyleSheet.create({
   percentileBadgeText: {
     fontSize: 11,
     color: colors.teal,
+  },
+  percentileBadgeLocked: {
+    paddingHorizontal: spacing.sm + 2,
+    paddingVertical: 4,
   },
   eyebrow: {
     fontSize: typography.eyebrow.fontSize,

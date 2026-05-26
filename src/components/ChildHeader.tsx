@@ -12,6 +12,7 @@ interface Props {
   photoUri?: string | null;
   onBellPress?: () => void;
   onSwitchChild?: () => void;
+  onAvatarPress?: () => void;
   hasMultipleChildren?: boolean;
 }
 
@@ -22,6 +23,7 @@ export function ChildHeader({
   photoUri,
   onBellPress,
   onSwitchChild,
+  onAvatarPress,
   hasMultipleChildren = false,
 }: Props) {
   const font = useFont();
@@ -32,7 +34,14 @@ export function ChildHeader({
         onPress={hasMultipleChildren ? onSwitchChild : undefined}
         style={styles.identity}
         hitSlop={6}>
-        <ChildAvatar name={name} photoUri={photoUri} size={48} />
+        <Pressable onPress={onAvatarPress} hitSlop={8} style={styles.avatarWrap}>
+          <ChildAvatar name={name} photoUri={photoUri} size={48} />
+          {!photoUri && (
+            <View style={styles.cameraHint}>
+              <Ionicons name="camera" size={10} color="#fff" />
+            </View>
+          )}
+        </Pressable>
         <View style={styles.text}>
           <Text style={[styles.greeting, { fontFamily: font(typography.caption.weight) }]}>
             {greeting}
@@ -72,6 +81,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
+  },
+  avatarWrap: {
+    position: 'relative',
+  },
+  cameraHint: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: colors.teal,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1.5,
+    borderColor: colors.bg,
   },
   text: { flex: 1 },
   greeting: {

@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Circle, G, Line, Path, Text as SvgText } from 'react-native-svg';
 
 import { colors, typography } from '../theme';
@@ -17,6 +17,8 @@ interface Props {
   height?: number;
   metric: GrowthMetric;
   sex?: 'male' | 'female' | 'unspecified';
+  isPremium?: boolean;
+  onUnlockPress?: () => void;
 }
 
 const PADDING = { top: 12, right: 28, bottom: 30, left: 44 };
@@ -28,7 +30,7 @@ function whoSeriesFor(metric: GrowthMetric, sex: 'male' | 'female' | 'unspecifie
   return WHO_GROWTH[metricKey][sexKey];
 }
 
-export function GrowthChart({ points, height = 220, metric, sex = 'unspecified' }: Props) {
+export function GrowthChart({ points, height = 220, metric, sex = 'unspecified', isPremium = true, onUnlockPress }: Props) {
   const font = useFont();
   const fontFamily = font(600);
   const boldFamily = font(700);
@@ -70,6 +72,7 @@ export function GrowthChart({ points, height = 220, metric, sex = 'unspecified' 
           yMax={yMax}
           fontFamily={fontFamily}
         />
+        {/* Reference curves — always rendered, but blurred + overlaid for free users */}
         <ChartReferenceCurves
           refPoints={refPoints}
           height={height}
@@ -98,6 +101,20 @@ export function GrowthChart({ points, height = 220, metric, sex = 'unspecified' 
           metric={metric}
         />
       </Svg>
+      {/* Soft-lock overlay for free users */}
+      {!isPremium && (
+        <View style={styles.lockOverlay} pointerEvents="box-none">
+          <View style={styles.lockBadge}>
+            <Text style={styles.lockIcon}>🔒</Text>
+            <Text style={styles.lockText}>Unlock percentile curves</Text>
+            {onUnlockPress && (
+              <TouchableOpacity onPress={onUnlockPress} style={styles.lockCta}>
+                <Text style={styles.lockCtaText}>Upgrade</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      )}
     </View>
   );
 }
@@ -356,5 +373,36 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     paddingHorizontal: 2,
+    overflow: 'hidden',
+  },
+  lockOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255,255,255,0.72)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 12,
+  },
+  lockBadge: {
+    alignItems: 'center',
+    gap: 4,
+  },
+  lockIcon: { fontSize: 22 },
+  lockText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#1A2E2E',
+    letterSpacing: 0.2,
+  },
+  lockCta: {
+    marginTop: 6,
+    backgroundColor: '#2A7F7F',
+    borderRadius: 99,
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+  },
+  lockCtaText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 12,
   },
 });

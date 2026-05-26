@@ -52,9 +52,22 @@
     "growth": {
       "label": "Büyüme",
       "empty": "Henüz ölçüm yok.",
-      "addCta": "Ölçüm ekle"
+      "addCta": "Ölçüm ekle",
+      "viewCta": "Büyümeyi gör"
     },
     "doctorVisit": "Doktor ziyaret kartı",
+    "doctorVisits": {
+      "label": "Son doktor ziyareti",
+      "unknownDoctor": "Doktor ziyareti",
+      "empty": "Henüz ziyaret kaydedilmedi.",
+      "logCta": "Ziyaret kaydet"
+    },
+    "allergyCard": {
+      "label": "Alerji ve ilaçlar",
+      "allergies": "Alerjiler",
+      "medications": "İlaçlar",
+      "editCta": "Profili düzenle"
+    },
     "milestones": {
       "label": "Gelişim",
       "empty": "İlk gelişim aşamasını işaretlediğinizde başlar.",
@@ -102,6 +115,7 @@
       "noVaccinations": "Bu ülkenin takviminde henüz aşı yok.",
       "noGrowth": "Henüz büyüme ölçümü yok.",
       "noMilestones": "Henüz hiçbir gelişim aşaması işaretlenmedi.",
+      "milestonePhotosHeading": "Dönüm noktası fotoğrafları",
       "disclaimer": "Takvim {{source}} kaynağına dayanmaktadır. Bu belge sadece bilgilendirme amaçlıdır ve tıbbi tavsiye değildir."
     }
   },
@@ -112,6 +126,16 @@
     "nextVaccine": "Sonraki aşı",
     "allUpToDate": "Hepsi güncel",
     "preparedWith": "Kartochka ile hazırlandı"
+  },
+  "notifications": {
+    "milestoneNudge": {
+      "title": "{{name}} {{ageMonths}} aylık oldu! 🎉",
+      "body": "Uygulamada {{ageMonths}} aylık kilometre taşlarını işaretleyin."
+    },
+    "overdueVaccine": {
+      "title": "{{name}}'nin gecikmiş aşısı var",
+      "body": "{{vaccine}} doz {{dose}} gecikti. Randevu alın."
+    }
   },
   "vaccines": {
     "title": "Aşılar",
@@ -239,13 +263,18 @@
   "more": {
     "title": "Diğer",
     "sections": {
+      "account": "Hesap",
       "children": "Çocuklar",
       "app": "Uygulama",
       "subscription": "Abonelik",
       "about": "Hakkında",
-      "developer": "Test"
+      "developer": "Veriler"
     },
     "items": {
+      "upgradePremium": "Premium'a geç",
+      "premiumActive": "Kartochka Premium ✦",
+      "signIn": "Giriş yap / Yedekle",
+      "account": "Hesap",
       "manageChildren": "Çocuklar",
       "medicalProfile": "Tıbbi profil",
       "doctorVisits": "Doktor ziyaretleri",
@@ -255,7 +284,8 @@
       "subscription": "Abonelik",
       "supportEmail": "Destek ile iletişim",
       "loadDemo": "Demo veri yükle",
-      "clearAll": "Tüm verileri sil"
+      "clearAll": "Tüm verileri sil",
+      "partnerSharing": "Eşle paylaşım"
     },
     "loadDemoConfirm": "Demo veri yüklensin mi? Mevcut çocuklar ve kayıtlar değiştirilecek.",
     "clearAllConfirm": "Tüm çocuklar ve kayıtları silinsin mi?",
@@ -335,7 +365,8 @@
     "edit": "Düzenle",
     "close": "Kapat",
     "yes": "Evet",
-    "no": "Hayır"
+    "no": "Hayır",
+    "permissionDenied": "Lütfen telefon Ayarlarından fotoğraf erişimine izin verin."
   },
   "reactions": {
     "title": "Reaksiyon kaydı",
@@ -433,7 +464,8 @@
     "body": "{{name}} bugün {{age}} yaşına giriyor.",
     "ageMoments_one": "{{count}} yaşında",
     "ageMoments_other": "{{count}} yaşında",
-    "dismiss": "Kapat"
+    "dismiss": "Kapat",
+    "shareReview": "Bu anı paylaş"
   },
   "onboarding": {
     "welcome": {
@@ -467,5 +499,114 @@
       "countryStripPrefix": "Takvim:",
       "saveCta": "Kaydet ve devam et"
     }
+  },
+  "paywall": {
+    "title": "Kartochka Premium",
+    "subtitle": "Çocuğunuzun sağlığını takip etmek için ihtiyacınız olan her şey bir arada.",
+    "trialBadge": "14 gün ücretsiz",
+    "trialNote": "14 gün ücretsiz deneyin, beğenirseniz ödeme yapın. İstediğiniz zaman iptal.",
+    "benefit1": "Pediatrist için PDF raporu",
+    "benefit2": "Sınırsız çocuk",
+    "benefit3": "Eş ile paylaşım",
+    "benefit4": "Bulut yedekleme",
+    "monthly": "Aylık",
+    "yearly": "Yıllık",
+    "perMonth": "aylık",
+    "perYear": "yıllık",
+    "yearlySavings": "~%48 tasarruf",
+    "cta": "Ücretsiz Dene",
+    "restore": "Satın almaları geri yükle",
+    "devNotice": "Fiyatlar Expo Go'da görünmez. Satın almaları test etmek için EAS ile derleyin.",
+    "successTitle": "Premium'a hoş geldiniz!",
+    "successBody": "Ücretsiz deneme süreniz başladı. Tüm özelliklerin keyfini çıkarın.",
+    "errorTitle": "Satın alma başarısız",
+    "errorBody": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+    "restoredTitle": "Satın almalar geri yüklendi",
+    "restoredBody": "Premium aboneliğiniz aktif.",
+    "nothingToRestore": "Önceki satın alma bulunamadı."
+  },
+  "partnerSharing": {
+    "title": "Eşle paylaşım",
+    "signInRequired": "Çocuğunuzun kayıtlarını eşinizle paylaşmak için giriş yapın.",
+    "signInCta": "Giriş yap",
+    "subtitle": "{{name}}'in kayıtlarını eşinizle paylaşın.",
+    "shareSection": "Erişim ver",
+    "shareBody": "6 haneli bir kod oluşturun ve eşinize gönderin. Kod 7 gün geçerlidir.",
+    "codeCopied": "Kod kopyalandı!",
+    "generating": "Oluşturuluyor…",
+    "regenerate": "Yeni kod",
+    "generateCta": "Kod oluştur",
+    "expireNote": "Kod 7 gün geçerlidir",
+    "joinSection": "Kodla katıl",
+    "joinBody": "Eşinizin size gönderdiği 6 haneli kodu girin.",
+    "codePlaceholder": "XXXXXX",
+    "joining": "Bağlanıyor…",
+    "joinCta": "Katıl",
+    "invalidCode": "Geçersiz veya süresi dolmuş kod. Lütfen kontrol edip tekrar deneyin.",
+    "ownCodeError": "Kendi kodunuzu kullanamazsınız.",
+    "errorTitle": "Bir şeyler ters gitti",
+    "errorBody": "Bağlantınızı kontrol edip tekrar deneyin.",
+    "joinedTitle": "Bağlandı!",
+    "joinedBody": "Artık eşinizin çocuk kayıtlarına erişiminiz var."
+  },
+  "milestoneAlbum": {
+    "title": "{{name}}'in Albümü",
+    "noPhotos": "Henüz gelişim fotoğrafı yok",
+    "noPhotosHint": "Gelişim basamaklarını işaretleyin ve albümü doldurmak için fotoğraf ekleyin.",
+    "photosSection_one": "{{count}} fotoğraf",
+    "photosSection_other": "{{count}} fotoğraf",
+    "period0": "0–3 ay",
+    "period3": "3–6 ay",
+    "period6": "6–9 ay",
+    "period9": "9–12 ay",
+    "period12": "12–18 ay",
+    "period18": "18–24 ay",
+    "period24": "24+ ay",
+    "shareChapter": "Bu bölümü paylaş",
+    "thenNow": "O zaman · Şimdi",
+    "thenLabel": "O zaman",
+    "nowLabel": "Şimdi",
+    "chapterTitle": "{{name}}: {{period}}",
+    "yearInReview": "İlk Yıl",
+    "lookHowYouveGrown": "Ne kadar büyüdün 🌟",
+    "missingSection": "Gelişim basamaklarına fotoğraf ekle",
+    "save": "Kaydet",
+    "share": "Paylaş",
+    "replace": "Değiştir",
+    "savedToPhotos": "Fotoğraflara kaydedildi!",
+    "saveError": "Fotoğraf kaydedilemedi.",
+    "captions": {
+      "smiles-at-people": "Hangi gülümseme bu kadar sevinç getirir? ❤️",
+      "smiles-spontaneously": "O gülümseme, tüm dünya demek. 🌟",
+      "first-word": "Ve işte, her şey değişti. 💬",
+      "walks-alone": "Dünyanın büyüdüğü gün. 👣",
+      "responds-to-name": "Kendi adını — ve seni — biliyor. 🥰",
+      "peek-a-boo": "Her seferinde gerçek bir sihir. 😄",
+      "babbles-mama-baba": "İlk kelimeler sadece sana ait. 💛",
+      "plays-with-others": "Belki ömür boyu sürecek dostluklar. 🤝",
+      "motor": "Her hareket, küçük bir zafer. 💪",
+      "language": "Sesini bul, bir ses bir ses. 🗣️",
+      "social": "Dünyası bir gülümsemeyle büyüyor. ❤️",
+      "cognitive": "Her şeyi keşfeden meraklı bir zihin. 🌟"
+    }
+  },
+  "signIn": {
+    "title": "Verilerinizi yedekleyin",
+    "subtitle": "Cihazlar arasında senkronize etmek ve kayıtları eşinizle paylaşmak için giriş yapın.",
+    "apple": "Apple ile giriş yap",
+    "google": "Google ile giriş yap",
+    "skip": "Şimdi değil",
+    "note": "Verileriniz bu cihazda zaten güvende. Giriş yalnızca bulut yedekleme için gereklidir.",
+    "signedInTitle": "Giriş yapıldı",
+    "noEmail": "Hesap bağlandı",
+    "signOut": "Çıkış yap",
+    "signOutConfirmTitle": "Çıkış yapılsın mı?",
+    "signOutConfirmBody": "Veriler cihazda kalır. Bulut senkronizasyonu duraklatılır.",
+    "errorTitle": "Giriş başarısız",
+    "errorBody": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+    "notConfiguredTitle": "Yakında",
+    "notConfiguredBody": "Bulut yedekleme bir sonraki güncellemede kullanılabilir olacak.",
+    "expoGoTitle": "Tam kurulum gerekiyor",
+    "expoGoBody": "Giriş yalnızca yüklü uygulama sürümünde çalışır. TestFlight veya App Store sürümünden deneyin."
   }
 }

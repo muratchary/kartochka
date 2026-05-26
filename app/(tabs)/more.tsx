@@ -6,7 +6,9 @@ import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { cancelAllReminders } from '../../src/lib/notifications';
+import { useAuthStore } from '../../src/stores/authStore';
 import { useChildrenStore } from '../../src/stores/childrenStore';
+import { usePurchasesStore } from '../../src/stores/purchasesStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -17,6 +19,7 @@ interface RowDef {
   labelKey: string;
   onPress: () => void;
   destructive?: boolean;
+  highlight?: boolean;
 }
 
 export default function MoreScreen() {
@@ -26,12 +29,19 @@ export default function MoreScreen() {
 
   const seedDemoData = useChildrenStore((s) => s.seedDemoData);
   const clearAll = useChildrenStore((s) => s.clearAll);
+  const isPremium = usePurchasesStore((s) => s.isPremium);
+  const user = useAuthStore((s) => s.user);
 
   const childrenSection: RowDef[] = [
     {
       icon: 'people-outline',
       labelKey: 'more.items.manageChildren',
       onPress: () => router.push('/more/children'),
+    },
+    {
+      icon: 'person-add-outline',
+      labelKey: 'more.items.partnerSharing',
+      onPress: () => router.push('/partner-sharing'),
     },
     {
       icon: 'medkit-outline',
@@ -42,6 +52,20 @@ export default function MoreScreen() {
       icon: 'person-outline',
       labelKey: 'more.items.doctorVisits',
       onPress: () => router.push('/doctor-visits'),
+    },
+  ];
+
+  const accountSection: RowDef[] = [
+    {
+      icon: isPremium ? 'star' : 'star-outline',
+      labelKey: isPremium ? 'more.items.premiumActive' : 'more.items.upgradePremium',
+      onPress: () => router.push('/paywall'),
+      highlight: !isPremium,
+    },
+    {
+      icon: user ? 'person-circle' : 'person-circle-outline',
+      labelKey: user ? 'more.items.account' : 'more.items.signIn',
+      onPress: () => router.push('/sign-in'),
     },
   ];
 
@@ -108,6 +132,7 @@ export default function MoreScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.scroll}>
+        <Section title={t('more.sections.account')} font={font} rows={accountSection} t={t} />
         <Section title={t('more.sections.children')} font={font} rows={childrenSection} t={t} />
         <Section title={t('more.sections.app')} font={font} rows={appSection} t={t} />
         <Section title={t('more.sections.developer')} font={font} rows={devSection} t={t} />
@@ -146,13 +171,14 @@ function Section({
             <Ionicons
               name={row.icon}
               size={22}
-              color={row.destructive ? colors.error : colors.ink2}
+              color={row.destructive ? colors.error : row.highlight ? colors.teal : colors.ink2}
             />
             <Text
               style={[
                 styles.rowLabel,
                 { fontFamily: font(600) },
                 row.destructive && { color: colors.error },
+                row.highlight && { color: colors.teal },
               ]}>
               {t(row.labelKey)}
             </Text>

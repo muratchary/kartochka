@@ -20,15 +20,19 @@
       "vaccinesDue_one": "{{count}} прививка в ближайшие 30 дней",
       "vaccinesDue_few": "{{count}} прививки в ближайшие 30 дней",
       "vaccinesDue_many": "{{count}} прививок в ближайшие 30 дней",
+      "vaccinesDue_other": "{{count}} прививок в ближайшие 30 дней",
       "vaccinesOverdue_one": "{{count}} просрочена",
       "vaccinesOverdue_few": "{{count}} просрочены",
       "vaccinesOverdue_many": "{{count}} просрочено",
+      "vaccinesOverdue_other": "{{count}} просрочено",
       "growthThisMonth_one": "{{count}} измерение в этом месяце",
       "growthThisMonth_few": "{{count}} измерения в этом месяце",
       "growthThisMonth_many": "{{count}} измерений в этом месяце",
+      "growthThisMonth_other": "{{count}} измерений в этом месяце",
       "milestonesThisMonth_one": "Отмечен {{count}} этап в этом месяце",
       "milestonesThisMonth_few": "Отмечено {{count}} этапа в этом месяце",
       "milestonesThisMonth_many": "Отмечено {{count}} этапов в этом месяце",
+      "milestonesThisMonth_other": "Отмечено {{count}} этапов в этом месяце",
       "allCaughtUp": "В этом месяце ничего не запланировано — всё в графике."
     },
     "greeting": {
@@ -43,10 +47,12 @@
       "overdueDays_one": "Просрочено на {{count}} день",
       "overdueDays_few": "Просрочено на {{count}} дня",
       "overdueDays_many": "Просрочено на {{count}} дней",
+      "overdueDays_other": "Просрочено на {{count}} дней",
       "dueToday": "Сегодня",
       "dueInDays_one": "Через {{count}} день",
       "dueInDays_few": "Через {{count}} дня",
       "dueInDays_many": "Через {{count}} дней",
+      "dueInDays_other": "Через {{count}} дней",
       "statusOverdue": "Просрочено",
       "statusDueSoon": "Скоро",
       "statusUpcoming": "Запланировано",
@@ -58,9 +64,22 @@
     "growth": {
       "label": "Рост",
       "empty": "Измерений пока нет.",
-      "addCta": "Добавить измерение"
+      "addCta": "Добавить измерение",
+      "viewCta": "Смотреть рост"
     },
     "doctorVisit": "Карточка для врача",
+    "doctorVisits": {
+      "label": "Последний визит к врачу",
+      "unknownDoctor": "Визит к врачу",
+      "empty": "Визиты пока не записаны.",
+      "logCta": "Записать визит"
+    },
+    "allergyCard": {
+      "label": "Аллергии и лекарства",
+      "allergies": "Аллергии",
+      "medications": "Лекарства",
+      "editCta": "Редактировать профиль"
+    },
     "milestones": {
       "label": "Развитие",
       "empty": "Начнётся, когда отметите первый этап.",
@@ -81,12 +100,15 @@
       "ageMonths_one": "{{count}} месяц",
       "ageMonths_few": "{{count}} месяца",
       "ageMonths_many": "{{count}} месяцев",
+      "ageMonths_other": "{{count}} месяцев",
       "ageYears_one": "{{count}} год",
       "ageYears_few": "{{count}} года",
       "ageYears_many": "{{count}} лет",
+      "ageYears_other": "{{count}} лет",
       "ageDays_one": "{{count}} день",
       "ageDays_few": "{{count}} дня",
       "ageDays_many": "{{count}} дней",
+      "ageDays_other": "{{count}} дней",
       "sexMale": "Мальчик",
       "sexFemale": "Девочка",
       "sexUnspecified": "—",
@@ -111,6 +133,7 @@
       "noVaccinations": "В календаре этой страны пока нет прививок.",
       "noGrowth": "Измерений пока нет.",
       "noMilestones": "Этапы развития пока не отмечены.",
+      "milestonePhotosHeading": "Фото достижений",
       "disclaimer": "Календарь на основе {{source}}. Документ носит информационный характер и не заменяет консультацию врача."
     }
   },
@@ -121,6 +144,16 @@
     "nextVaccine": "Следующая прививка",
     "allUpToDate": "Всё по графику",
     "preparedWith": "Подготовлено в Карточке"
+  },
+  "notifications": {
+    "milestoneNudge": {
+      "title": "{{name}} исполнилось {{ageMonths}} месяцев! 🎉",
+      "body": "Отметьте этапы развития {{ageMonths}} месяцев в приложении."
+    },
+    "overdueVaccine": {
+      "title": "У {{name}} просрочена прививка",
+      "body": "{{vaccine}}, доза {{dose}} просрочена. Запишитесь к врачу."
+    }
   },
   "vaccines": {
     "title": "Прививки",
@@ -138,6 +171,7 @@
     "groupCount_one": "{{count}} доза",
     "groupCount_few": "{{count}} дозы",
     "groupCount_many": "{{count}} доз",
+    "groupCount_other": "{{count}} доз",
     "detail": {
       "protectsAgainst": "Защищает от",
       "scheduleSection": "Календарь",
@@ -222,9 +256,11 @@
     "ageMonths_one": "{{count}} месяц",
     "ageMonths_few": "{{count}} месяца",
     "ageMonths_many": "{{count}} месяцев",
+    "ageMonths_other": "{{count}} месяцев",
     "ageYears_one": "{{count}} год",
     "ageYears_few": "{{count}} года",
     "ageYears_many": "{{count}} лет",
+    "ageYears_other": "{{count}} лет",
     "categories": {
       "motor": "Моторика",
       "language": "Речь",
@@ -277,13 +313,18 @@
   "more": {
     "title": "Ещё",
     "sections": {
+      "account": "Аккаунт",
       "children": "Дети",
       "app": "Приложение",
       "subscription": "Подписка",
       "about": "О приложении",
-      "developer": "Тестирование"
+      "developer": "Данные"
     },
     "items": {
+      "upgradePremium": "Перейти на Премиум",
+      "premiumActive": "Kartochka Премиум ✦",
+      "signIn": "Войти / Резервная копия",
+      "account": "Аккаунт",
       "manageChildren": "Дети",
       "medicalProfile": "Медицинский профиль",
       "doctorVisits": "Визиты к врачу",
@@ -293,7 +334,8 @@
       "subscription": "Подписка",
       "supportEmail": "Связаться с поддержкой",
       "loadDemo": "Загрузить демо-данные",
-      "clearAll": "Очистить все данные"
+      "clearAll": "Очистить все данные",
+      "partnerSharing": "Общий доступ с партнёром"
     },
     "loadDemoConfirm": "Загрузить демо-данные? Это заменит ваших детей и записи.",
     "clearAllConfirm": "Удалить всех детей и все записи?",
@@ -373,7 +415,8 @@
     "edit": "Изменить",
     "close": "Закрыть",
     "yes": "Да",
-    "no": "Нет"
+    "no": "Нет",
+    "permissionDenied": "Разрешите доступ к фото в настройках телефона."
   },
   "timeline": {
     "title": "История здоровья",
@@ -438,9 +481,11 @@
     "ageLabel_one": "{{count}} месяц",
     "ageLabel_few": "{{count}} месяца",
     "ageLabel_many": "{{count}} месяцев",
+    "ageLabel_other": "{{count}} месяцев",
     "ageLabel_years_one": "{{count}} год",
     "ageLabel_years_few": "{{count}} года",
-    "ageLabel_years_many": "{{count}} лет"
+    "ageLabel_years_many": "{{count}} лет",
+    "ageLabel_years_other": "{{count}} лет"
   },
   "birthday": {
     "title": "С днём рождения, {{name}}!",
@@ -448,7 +493,9 @@
     "ageMoments_one": "{{count}} год",
     "ageMoments_few": "{{count}} года",
     "ageMoments_many": "{{count}} лет",
-    "dismiss": "Закрыть"
+    "ageMoments_other": "{{count}} лет",
+    "dismiss": "Закрыть",
+    "shareReview": "Поделиться моментом"
   },
   "onboarding": {
     "welcome": {
@@ -482,5 +529,116 @@
       "countryStripPrefix": "Календарь:",
       "saveCta": "Сохранить"
     }
+  },
+  "paywall": {
+    "title": "Kartochka Премиум",
+    "subtitle": "Всё для контроля здоровья ребёнка в одном приложении.",
+    "trialBadge": "14 дней бесплатно",
+    "trialNote": "14 дней без оплаты — затем платите только если понравится. Отмена в любое время.",
+    "benefit1": "PDF-отчёт для педиатра",
+    "benefit2": "Неограниченное количество детей",
+    "benefit3": "Совместный доступ для партнёра",
+    "benefit4": "Резервная копия в облаке",
+    "monthly": "В месяц",
+    "yearly": "В год",
+    "perMonth": "в месяц",
+    "perYear": "в год",
+    "yearlySavings": "Экономия ~48%",
+    "cta": "Начать бесплатно",
+    "restore": "Восстановить покупки",
+    "devNotice": "Цены недоступны в Expo Go. Соберите приложение через EAS для тестирования покупок.",
+    "successTitle": "Добро пожаловать в Премиум!",
+    "successBody": "Бесплатный пробный период начался. Пользуйтесь всеми функциями.",
+    "errorTitle": "Ошибка покупки",
+    "errorBody": "Что-то пошло не так. Попробуйте ещё раз.",
+    "restoredTitle": "Покупки восстановлены",
+    "restoredBody": "Ваша подписка Премиум активна.",
+    "nothingToRestore": "Предыдущие покупки не найдены."
+  },
+  "partnerSharing": {
+    "title": "Общий доступ",
+    "signInRequired": "Войдите, чтобы открыть доступ к записям ребёнка партнёру.",
+    "signInCta": "Войти",
+    "subtitle": "Поделитесь записями {{name}} с партнёром.",
+    "shareSection": "Открыть доступ",
+    "shareBody": "Сгенерируйте 6-значный код и отправьте его партнёру. Код действует 7 дней.",
+    "codeCopied": "Код скопирован!",
+    "generating": "Генерация…",
+    "regenerate": "Новый код",
+    "generateCta": "Сгенерировать код",
+    "expireNote": "Код действителен 7 дней",
+    "joinSection": "Войти по коду",
+    "joinBody": "Введите 6-значный код, который отправил вам партнёр.",
+    "codePlaceholder": "XXXXXX",
+    "joining": "Подключение…",
+    "joinCta": "Подключиться",
+    "invalidCode": "Неверный или устаревший код. Проверьте и попробуйте снова.",
+    "ownCodeError": "Нельзя использовать собственный код доступа.",
+    "errorTitle": "Что-то пошло не так",
+    "errorBody": "Проверьте соединение и попробуйте снова.",
+    "joinedTitle": "Подключено!",
+    "joinedBody": "Теперь у вас есть доступ к записям ребёнка партнёра."
+  },
+  "milestoneAlbum": {
+    "title": "Альбом {{name}}",
+    "noPhotos": "Фото достижений пока нет",
+    "noPhotosHint": "Отмечайте достижения и добавляйте фото, чтобы заполнить альбом.",
+    "photosSection_one": "{{count}} фото",
+    "photosSection_few": "{{count}} фото",
+    "photosSection_many": "{{count}} фото",
+    "photosSection_other": "{{count}} фото",
+    "period0": "0–3 месяца",
+    "period3": "3–6 месяцев",
+    "period6": "6–9 месяцев",
+    "period9": "9–12 месяцев",
+    "period12": "12–18 месяцев",
+    "period18": "18–24 месяца",
+    "period24": "24+ месяца",
+    "shareChapter": "Поделиться этой главой",
+    "thenNow": "Тогда · Сейчас",
+    "thenLabel": "Тогда",
+    "nowLabel": "Сейчас",
+    "chapterTitle": "{{name}}: {{period}}",
+    "yearInReview": "Первый год",
+    "lookHowYouveGrown": "Как ты вырос(ла)! 🌟",
+    "missingSection": "Добавьте фото к достижениям",
+    "save": "Сохранить",
+    "share": "Поделиться",
+    "replace": "Заменить",
+    "savedToPhotos": "Сохранено в фотоальбом!",
+    "saveError": "Не удалось сохранить фото.",
+    "captions": {
+      "smiles-at-people": "Какая улыбка ещё приносит столько радости? ❤️",
+      "smiles-spontaneously": "Эта улыбка — целый мир. 🌟",
+      "first-word": "И всё изменилось в один момент. 💬",
+      "walks-alone": "День, когда мир стал больше. 👣",
+      "responds-to-name": "Уже знает своё имя — и тебя. 🥰",
+      "peek-a-boo": "Каждый раз — настоящее волшебство. 😄",
+      "babbles-mama-baba": "Первые слова — только для тебя. 💛",
+      "plays-with-others": "Дружба, которая, может быть, навсегда. 🤝",
+      "motor": "Каждое движение — маленькая победа. 💪",
+      "language": "Голос обретается звук за звуком. 🗣️",
+      "social": "Мир растёт одной улыбкой за раз. ❤️",
+      "cognitive": "Любопытный ум открывает всё новое. 🌟"
+    }
+  },
+  "signIn": {
+    "title": "Резервная копия",
+    "subtitle": "Войдите, чтобы синхронизировать данные между устройствами и поделиться с партнёром.",
+    "apple": "Войти через Apple",
+    "google": "Войти через Google",
+    "skip": "Не сейчас",
+    "note": "Данные уже в безопасности на этом устройстве. Вход нужен только для облачной копии.",
+    "signedInTitle": "Вы вошли",
+    "noEmail": "Аккаунт подключён",
+    "signOut": "Выйти",
+    "signOutConfirmTitle": "Выйти?",
+    "signOutConfirmBody": "Данные останутся на устройстве. Синхронизация с облаком приостановится.",
+    "errorTitle": "Ошибка входа",
+    "errorBody": "Что-то пошло не так. Попробуйте ещё раз.",
+    "notConfiguredTitle": "Скоро",
+    "notConfiguredBody": "Облачная копия будет доступна в следующем обновлении.",
+    "expoGoTitle": "Требуется полная установка",
+    "expoGoBody": "Вход работает только в установленной версии приложения. Попробуйте в TestFlight или App Store."
   }
 }

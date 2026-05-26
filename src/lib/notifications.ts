@@ -6,6 +6,10 @@ import { dueDateForDose } from './vaccinationStatus';
 
 const DAYS_BEFORE_DUE = 1;
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
+const DAYS_PER_MONTH = 30.4375;
+
+// Age checkpoints (months) at which we nudge parents to check milestones
+const MILESTONE_NUDGE_AGES = [2, 4, 6, 9, 12, 15, 18];
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -127,6 +131,110 @@ export async function scheduleGrowthReminder(
       date: triggerAt,
     },
   });
+}
+
+// ─── Milestone nudge ─────────────────────────────────────────────────────────
+// Fires on the exact day the child reaches each age checkpoint.
+
+export async function scheduleMilestoneNudges(
+  child: Child,
+  buildTitle: (ageMonths: number) => string,
+  buildBody: (ageMonths: number) => string,
+): Promise<void> {
+  const status = await Notifications.getPermissionsAsync();
+  if (!status.granted) return;
+
+  await cancelMilestoneNudges(child.id);
+
+  const dob = new Date(child.dateOfBirth).getTime();
+  const now = Date.now();
+
+  for (const ageMonths of MILESTONE_NUDGE_AGES) {
+    const triggerAt = new Date(dob + ageMonths * DAYS_PER_MONTH * MS_PER_DAY);
+    if (triggerAt.getTime() <= now) continue; // already past this age
+
+    await Notifications.scheduleNotificationAsync({
+      identifier: `milestone-nudge-${child.id}-${ageMonths}`,
+      content: {
+        title: buildTitle(ageMonths),
+        body: buildBody(ageMonths),
+        data: { kind: 'milestone-nudge', childId: child.id, ageMonths, url: '/milestone-album' },
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: triggerAt,
+      },
+    });
+  }
+}
+
+export async function cancelMilestoneNudges(childId: string): Promise<void> {
+  const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+  await Promise.all(
+    scheduled
+      .filter((n) => n.identifier.startsWith(`milestone-nudge-${childId}`))
+      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier)),
+  );
+}
+
+// ─── Overdue vaccine alert ────────────────────────────────────────────────────
+// Fires 7 days after a vaccine's due date if the parent hasn't logged it yet.
+
+export async function scheduleOverdueVaccineAlerts(
+  child: Child,
+  schedule: CountryVaccinationSchedule,
+  vaccinations: VaccinationRecord[],
+  buildTitle: (vaccineNameEn: string) => string,
+  buildBody: (vaccineNameEn: string, doseNumber: number) => string,
+): Promise<void> {
+  const status = await Notifications.getPermissionsAsync();
+  if (!status.granted) return;
+
+  await cancelOverdueAlerts(child.id);
+
+  const childRecords = vaccinations.filter((v) => v.childId === child.id);
+  const now = Date.now();
+  const OVERDUE_GRACE_DAYS = 7;
+
+  for (const vaccine of schedule.vaccines) {
+    for (const dose of vaccine.doses) {
+      const done = childRecords.some(
+        (r) => r.vaccineCode === vaccine.code && r.doseNumber === dose.doseNumber,
+      );
+      if (done) continue;
+
+      const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths);
+      const triggerAt = new Date(dueDate.getTime() + OVERDUE_GRACE_DAYS * MS_PER_DAY);
+      if (triggerAt.getTime() <= now) continue; // already past the grace window
+
+      await Notifications.scheduleNotificationAsync({
+        identifier: `overdue-${child.id}-${vaccine.code}-${dose.doseNumber}`,
+        content: {
+          title: buildTitle(vaccine.displayName.en),
+          body: buildBody(vaccine.displayName.en, dose.doseNumber),
+          data: {
+            kind: 'overdue-vaccine',
+            childId: child.id,
+            vaccineCode: vaccine.code,
+            doseNumber: dose.doseNumber,
+          },
+        },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.DATE,
+          date: triggerAt,
+        },
+      });
+    }
+  }
+}
+
+export async function cancelOverdueAlerts(childId: string): Promise<void> {
+  const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+  await Promise.all(
+    scheduled
+      .filter((n) => n.identifier.startsWith(`overdue-${childId}`))
+      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier)),
+  );
 }
 
 export function isNotificationsSupported(): boolean {
