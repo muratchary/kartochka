@@ -109,12 +109,17 @@ export default function MoreScreen() {
     ]);
   };
 
-  const devSection: RowDef[] = [
-    {
-      icon: 'sparkles-outline',
-      labelKey: 'more.items.loadDemo',
-      onPress: handleLoadDemo,
-    },
+  const dataSection: RowDef[] = [
+    // Load demo data is a developer-only convenience; never show in prod.
+    ...(__DEV__
+      ? [
+          {
+            icon: 'sparkles-outline' as const,
+            labelKey: 'more.items.loadDemo',
+            onPress: handleLoadDemo,
+          },
+        ]
+      : []),
     {
       icon: 'trash-outline',
       labelKey: 'more.items.clearAll',
@@ -135,7 +140,7 @@ export default function MoreScreen() {
         <Section title={t('more.sections.account')} font={font} rows={accountSection} t={t} />
         <Section title={t('more.sections.children')} font={font} rows={childrenSection} t={t} />
         <Section title={t('more.sections.app')} font={font} rows={appSection} t={t} />
-        <Section title={t('more.sections.developer')} font={font} rows={devSection} t={t} />
+        <Section title={t('more.sections.developer')} font={font} rows={dataSection} t={t} />
       </ScrollView>
     </SafeAreaView>
   );

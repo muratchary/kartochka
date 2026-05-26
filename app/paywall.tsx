@@ -76,8 +76,9 @@ export default function PaywallScreen() {
     }
   };
 
-  // Dev-mode: RevenueCat not available in Expo Go
-  const isDevMode = !offering && !isLoading;
+  // Offering unavailable: either running in Expo Go (no native RevenueCat)
+  // or products aren't yet approved in App Store Connect for this build.
+  const offeringUnavailable = !offering && !isLoading;
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
@@ -113,7 +114,7 @@ export default function PaywallScreen() {
         {/* Plan cards */}
         {isLoading ? (
           <ActivityIndicator color={colors.teal} style={{ marginVertical: spacing.xl }} />
-        ) : isDevMode ? (
+        ) : offeringUnavailable ? (
           <View style={styles.devNotice}>
             <Ionicons name="information-circle-outline" size={16} color={colors.ink3} />
             <Text style={[styles.devText, { fontFamily: font(600) }]}>
@@ -176,9 +177,9 @@ export default function PaywallScreen() {
 
         {/* CTA */}
         <Pressable
-          style={[styles.cta, (isLoading || isDevMode) && styles.ctaDisabled]}
+          style={[styles.cta, (isLoading || offeringUnavailable) && styles.ctaDisabled]}
           onPress={handlePurchase}
-          disabled={isLoading || isDevMode || !selectedPackage}>
+          disabled={isLoading || offeringUnavailable || !selectedPackage}>
           {isLoading ? (
             <ActivityIndicator color="#fff" />
           ) : (
