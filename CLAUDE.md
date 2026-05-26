@@ -35,7 +35,7 @@ primarily in Russia, Kazakhstan, Uzbekistan, UAE, Saudi Arabia, and Turkey.
 ## Apple Developer account
 - Developer name: Agamyrat Durdymyradov (personal account)
 - Team ID: 787GCXLSTM
-- Account email: bitubixdxb@gmail.com
+- Account email: muratchary@icloud.com
 
 ## Google Play account
 - Developer name: MChary
