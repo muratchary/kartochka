@@ -527,7 +527,9 @@
       "sexGirl": "Девочка",
       "sexUnspecified": "Не указывать",
       "countryStripPrefix": "Календарь:",
-      "saveCta": "Сохранить"
+      "saveCta": "Сохранить",
+      "futureDobTitle": "Дата рождения не может быть в будущем",
+      "futureDobBody": "Выберите сегодняшний день или более раннюю дату."
     }
   },
   "paywall": {

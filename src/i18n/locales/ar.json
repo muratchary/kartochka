@@ -506,7 +506,9 @@
       "sexGirl": "بنت",
       "sexUnspecified": "غير محدد",
       "countryStripPrefix": "الجدول:",
-      "saveCta": "حفظ ومتابعة"
+      "saveCta": "حفظ ومتابعة",
+      "futureDobTitle": "لا يمكن أن يكون تاريخ الميلاد في المستقبل",
+      "futureDobBody": "يرجى اختيار تاريخ اليوم أو تاريخ سابق."
     }
   },
   "paywall": {

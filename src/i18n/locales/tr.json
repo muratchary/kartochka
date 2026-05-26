@@ -497,7 +497,9 @@
       "sexGirl": "Kız",
       "sexUnspecified": "Belirtmedim",
       "countryStripPrefix": "Takvim:",
-      "saveCta": "Kaydet ve devam et"
+      "saveCta": "Kaydet ve devam et",
+      "futureDobTitle": "Doğum tarihi gelecekte olamaz",
+      "futureDobBody": "Lütfen bugünü veya daha önceki bir tarihi seçin."
     }
   },
   "paywall": {

@@ -497,7 +497,9 @@
       "sexGirl": "Girl",
       "sexUnspecified": "Not specified",
       "countryStripPrefix": "Schedule:",
-      "saveCta": "Save and continue"
+      "saveCta": "Save and continue",
+      "futureDobTitle": "Date of birth can't be in the future",
+      "futureDobBody": "Please pick today or an earlier date."
     }
   },
   "paywall": {

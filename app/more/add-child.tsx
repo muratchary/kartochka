@@ -96,6 +96,13 @@ export default function AddOrEditChildScreen() {
 
   const handleSave = async () => {
     if (!canSave || !dob || !sex) return;
+    // Reject future birthdays — they're never valid.
+    // Compare as YYYY-MM-DD to ignore time-of-day and timezone drift.
+    const todayIso = new Date().toISOString().slice(0, 10);
+    if (dob > todayIso) {
+      Alert.alert(t('onboarding.addChild.futureDobTitle'), t('onboarding.addChild.futureDobBody'));
+      return;
+    }
     if (isEdit && existing) {
       updateChild(existing.id, {
         name: name.trim(),

@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Alert,
   Platform,
   Pressable,
   ScrollView,
@@ -69,6 +70,12 @@ export default function AddChildScreen() {
 
   const handleSave = async () => {
     if (!canSave || !country || !sex || !dateOfBirth) return;
+    // Reject future birthdays
+    const todayIso = new Date().toISOString().slice(0, 10);
+    if (dateOfBirth > todayIso) {
+      Alert.alert(t('onboarding.addChild.futureDobTitle'), t('onboarding.addChild.futureDobBody'));
+      return;
+    }
     const child = addChild({
       name: name.trim(),
       dateOfBirth,
