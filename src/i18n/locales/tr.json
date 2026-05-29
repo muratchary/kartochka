@@ -632,6 +632,16 @@
     "notConfiguredTitle": "Yakında",
     "notConfiguredBody": "Bulut yedekleme bir sonraki güncellemede kullanılabilir olacak.",
     "expoGoTitle": "Tam kurulum gerekiyor",
-    "expoGoBody": "Giriş yalnızca yüklü uygulama sürümünde çalışır. TestFlight veya App Store sürümünden deneyin."
+    "expoGoBody": "Giriş yalnızca yüklü uygulama sürümünde çalışır. TestFlight veya App Store sürümünden deneyin.",
+    "email": {
+      "or": "veya",
+      "placeholder": "your@email.com",
+      "cta": "Bana giriş bağlantısı gönder",
+      "invalidTitle": "E-postayı kontrol et",
+      "invalidBody": "Bu geçerli bir e-posta gibi görünmüyor.",
+      "sentTitle": "Gelen kutunu kontrol et",
+      "sentBody": "{{email}} adresine giriş bağlantısı gönderdik. Bu cihazdan bağlantıya dokun, giriş yapılacak.",
+      "useDifferent": "Farklı e-posta"
+    }
   }
 }

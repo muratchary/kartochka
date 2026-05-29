@@ -17,6 +17,11 @@ interface AuthState {
   initialized: boolean;
   initialize: () => Promise<void>;
   signInWithProvider: (provider: 'apple' | 'google') => Promise<void>;
+  // Send a magic-link sign-in email. The user taps the link in their
+  // inbox, which deep-links into the app at /auth/callback and exchanges
+  // for a session. Returns once Supabase has accepted the request and
+  // queued the email — does NOT wait for the user to click anything.
+  signInWithEmail: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -144,6 +149,32 @@ export const useAuthStore = create<AuthState>((set) => ({
         // User backed out of the browser sheet — silent return.
         return;
       }
+    } finally {
+      set({ isSigningIn: false });
+    }
+  },
+
+  signInWithEmail: async (email: string) => {
+    if (!isSupabaseConfigured) {
+      throw new Error('not_configured');
+    }
+    set({ isSigningIn: true });
+    try {
+      const redirectTo = Linking.createURL('/auth/callback');
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: redirectTo,
+          // Allow new sign-ups via magic link — first email creates the
+          // account, subsequent ones sign in. Same UX whether the user
+          // is new or returning.
+          shouldCreateUser: true,
+        },
+      });
+      if (error) throw error;
+      // Session won't exist yet — it lands when user clicks the link in
+      // their email and the deep link fires /auth/callback. The UI flips
+      // to a "Check your inbox" state on resolved promise.
     } finally {
       set({ isSigningIn: false });
     }

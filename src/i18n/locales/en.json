@@ -632,6 +632,16 @@
     "notConfiguredTitle": "Coming soon",
     "notConfiguredBody": "Cloud backup will be available in the next update.",
     "expoGoTitle": "Full build required",
-    "expoGoBody": "Sign-in needs a proper install to handle the redirect from Apple or Google. It works in the TestFlight or App Store version."
+    "expoGoBody": "Sign-in needs a proper install to handle the redirect from Apple or Google. It works in the TestFlight or App Store version.",
+    "email": {
+      "or": "or",
+      "placeholder": "your@email.com",
+      "cta": "Email me a sign-in link",
+      "invalidTitle": "Check the email",
+      "invalidBody": "That doesn't look like a valid email address.",
+      "sentTitle": "Check your inbox",
+      "sentBody": "We sent a sign-in link to {{email}}. Tap it from this device and you'll be signed in.",
+      "useDifferent": "Use a different email"
+    }
   }
 }

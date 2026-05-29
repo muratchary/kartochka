@@ -697,6 +697,16 @@
     "notConfiguredTitle": "قريباً",
     "notConfiguredBody": "النسخ الاحتياطي السحابي سيكون متاحاً في التحديث القادم.",
     "expoGoTitle": "يلزم تثبيت التطبيق الكامل",
-    "expoGoBody": "تسجيل الدخول يعمل فقط في النسخة المثبتة من التطبيق. جرّبه عبر TestFlight أو App Store."
+    "expoGoBody": "تسجيل الدخول يعمل فقط في النسخة المثبتة من التطبيق. جرّبه عبر TestFlight أو App Store.",
+    "email": {
+      "or": "أو",
+      "placeholder": "your@email.com",
+      "cta": "أرسل لي رابط الدخول",
+      "invalidTitle": "تحقق من البريد",
+      "invalidBody": "هذا لا يبدو بريداً صالحاً.",
+      "sentTitle": "تحقق من بريدك",
+      "sentBody": "أرسلنا رابط دخول إلى {{email}}. افتحه من هذا الجهاز لتسجيل الدخول.",
+      "useDifferent": "بريد آخر"
+    }
   }
 }
