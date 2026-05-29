@@ -19,6 +19,7 @@ import { ScreenTitle } from '../../src/components/ScreenTitle';
 import { Segmented } from '../../src/components/Segmented';
 import { StepDots } from '../../src/components/StepDots';
 import type { SupportedLanguage } from '../../src/i18n';
+import { ensureNotificationPermission } from '../../src/lib/notifications';
 import { useRescheduleReminders } from '../../src/lib/useReminders';
 import { useChildrenStore } from '../../src/stores/childrenStore';
 import { useOnboardingStore } from '../../src/stores/onboardingStore';
@@ -83,6 +84,11 @@ export default function AddChildScreen() {
       countryCode: country,
     });
     resetOnboarding();
+    // Request notification permission now — the system prompt is more
+    // meaningful here ("Reminder for {child.name}'s vaccines") than buried
+    // in a Settings screen later. If denied, reminders just won't fire;
+    // user can still re-enable from system Settings.
+    await ensureNotificationPermission();
     await rescheduleReminders(child);
     router.replace('/(tabs)');
   };

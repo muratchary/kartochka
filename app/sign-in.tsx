@@ -29,13 +29,16 @@ export default function SignInScreen() {
         router.back();
       }
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : '';
+      const msg = e instanceof Error ? e.message : String(e);
       if (msg === 'not_configured') {
         Alert.alert(t('signIn.notConfiguredTitle'), t('signIn.notConfiguredBody'));
       } else if (msg === 'expo_go') {
         Alert.alert(t('signIn.expoGoTitle'), t('signIn.expoGoBody'));
       } else {
-        Alert.alert(t('signIn.errorTitle'), t('signIn.errorBody'));
+        // Surface the actual error so we can debug Google OAuth in TestFlight.
+        // TODO: switch back to friendly generic message once we know what's
+        // failing in the wild.
+        Alert.alert(t('signIn.errorTitle'), msg || t('signIn.errorBody'));
       }
     }
   };

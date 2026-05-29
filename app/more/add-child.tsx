@@ -21,6 +21,7 @@ import { ChildAvatar } from '../../src/components/ChildAvatar';
 import { DateField } from '../../src/components/DateField';
 import { ScreenTitle } from '../../src/components/ScreenTitle';
 import { Segmented } from '../../src/components/Segmented';
+import { ensureNotificationPermission } from '../../src/lib/notifications';
 import { useRescheduleReminders } from '../../src/lib/useReminders';
 import { useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
@@ -129,6 +130,9 @@ export default function AddOrEditChildScreen() {
         countryCode: country,
         photoUri: photoUri ?? undefined,
       });
+      // Same logic as the onboarding add-child: request permission once
+      // a child exists so reminders are meaningful.
+      await ensureNotificationPermission();
       await rescheduleReminders(child);
     }
     router.back();
