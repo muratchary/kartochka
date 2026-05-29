@@ -7,12 +7,12 @@ import { Platform } from 'react-native';
 import { create } from 'zustand';
 
 // ─── Keys ────────────────────────────────────────────────────────────────────
-// Replace with production keys from RevenueCat → Project Settings → API Keys
-// before App Store / Play Store submission.
-// iOS production key starts with `appl_`, Android with `goog_`.
+// Public client keys — safe to ship in app bundles.
+// Source: RevenueCat → Project Settings → API Keys.
+// iOS keys start with `appl_`, Android with `goog_`.
 const RC_KEY = Platform.select({
   ios: 'appl_PKjJDBBAJmwnTPrkkfFytTYglgm',
-  android: 'test_RsOppJbMSDkQWfNxRcTCBbtIHMt', // replace with goog_xxx when Android is set up
+  android: 'goog_VvmJlZQlQkcuIinlDDYbwHOgfKu',
 }) ?? 'appl_PKjJDBBAJmwnTPrkkfFytTYglgm';
 
 const ENTITLEMENT_ID = 'Kartochka Pro';
