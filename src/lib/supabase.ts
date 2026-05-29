@@ -14,5 +14,10 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: false, // Expo handles deep links manually
+    // PKCE flow returns ?code=… as a query param (which our handlers
+    // parse). Implicit flow — the default — returns the tokens in the
+    // URL #fragment, which our code never inspected, so OAuth always
+    // silently dropped the session on iOS + Android.
+    flowType: 'pkce',
   },
 });
