@@ -27,7 +27,8 @@
   "submit": {
     "production": {
       "ios": {
-        "appleTeamId": "787GCXLSTM"
+        "appleTeamId": "787GCXLSTM",
+        "ascAppId": "6773370520"
       },
       "android": {
         "serviceAccountKeyPath": "./.secrets/play-service-account.json",

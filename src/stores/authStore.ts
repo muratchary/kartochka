@@ -1,7 +1,9 @@
 import type { Session, User } from '@supabase/supabase-js';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import Constants from 'expo-constants';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
+import { Platform } from 'react-native';
 import { create } from 'zustand';
 
 import { fullSync, syncDown } from '../lib/sync';
@@ -63,6 +65,42 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
     set({ isSigningIn: true });
     try {
+      // On iOS, "Sign in with Apple" must use the native API (App Store
+      // guideline 4.8). The native flow returns an identity token we hand
+      // straight to Supabase — no browser, no redirect URL, no risk of
+      // landing on Site URL = localhost.
+      if (Platform.OS === 'ios' && provider === 'apple') {
+        try {
+          const credential = await AppleAuthentication.signInAsync({
+            requestedScopes: [
+              AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+              AppleAuthentication.AppleAuthenticationScope.EMAIL,
+            ],
+          });
+          if (!credential.identityToken) {
+            throw new Error('apple_no_identity_token');
+          }
+          const { data: sessionData, error: idErr } = await supabase.auth.signInWithIdToken({
+            provider: 'apple',
+            token: credential.identityToken,
+          });
+          if (idErr) throw idErr;
+          if (sessionData.user) {
+            usePurchasesStore.getState().identify(sessionData.user.id).catch(() => {});
+            fullSync(sessionData.user.id).catch(() => {});
+          }
+          return;
+        } catch (e: unknown) {
+          // ERR_REQUEST_CANCELED = user backed out of the Apple sheet → silent
+          if (e && typeof e === 'object' && 'code' in e && (e as { code: string }).code === 'ERR_REQUEST_CANCELED') {
+            return;
+          }
+          throw e;
+        }
+      }
+
+      // Everything else (Google on iOS+Android, Apple on Android — not exposed
+      // in UI but defensive) goes through Supabase's OAuth web flow.
       const redirectTo = Linking.createURL('/auth/callback');
 
       const { data, error } = await supabase.auth.signInWithOAuth({
