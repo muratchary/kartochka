@@ -27,6 +27,7 @@ import {
 import { fullSync, syncDown } from '../src/lib/sync';
 import { useAuthStore } from '../src/stores/authStore';
 import { selectActiveChild, useChildrenStore } from '../src/stores/childrenStore';
+import { usePurchasesStore } from '../src/stores/purchasesStore';
 import { colors, radii, spacing, typography } from '../src/theme';
 import { useFont } from '../src/theme/useFont';
 
@@ -36,6 +37,7 @@ export default function PartnerSharingScreen() {
   const font = useFont();
 
   const user = useAuthStore((s) => s.user);
+  const isPremium = usePurchasesStore((s) => s.isPremium);
   const child = useChildrenStore(selectActiveChild);
 
   const [shareCode, setShareCode] = useState<string | null>(null);
@@ -43,13 +45,22 @@ export default function PartnerSharingScreen() {
   const [joinCode, setJoinCode] = useState('');
   const [joining, setJoining] = useState(false);
 
+  // Defense-in-depth: if a free-tier user somehow lands here (deep link,
+  // back-stack, expired subscription mid-session), bounce them to the
+  // paywall instead of letting them generate/use share codes.
+  useEffect(() => {
+    if (!isPremium) {
+      router.replace('/paywall');
+    }
+  }, [isPremium, router]);
+
   // Load any existing active code on mount
   useEffect(() => {
-    if (!user || !child) return;
+    if (!user || !child || !isPremium) return;
     getActiveShareCode(child.id, user.id)
       .then((code) => setShareCode(code))
       .catch(() => {});
-  }, [user, child]);
+  }, [user, child, isPremium]);
 
   if (!user) {
     return (

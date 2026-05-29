@@ -59,7 +59,9 @@ export default function MoreScreen() {
     {
       icon: 'person-add-outline',
       labelKey: 'more.items.partnerSharing',
-      onPress: () => router.push('/partner-sharing'),
+      // Premium feature per CLAUDE.md — free tier hits paywall first.
+      onPress: () =>
+        isPremium ? router.push('/partner-sharing') : router.push('/paywall'),
     },
     {
       icon: 'medkit-outline',
