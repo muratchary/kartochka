@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { fullSync } from '../../src/lib/sync';
@@ -43,6 +43,18 @@ export default function AuthCallbackScreen() {
           return;
         }
 
+        // Android's WebBrowser.openAuthSessionAsync sometimes intercepts the
+        // OAuth redirect AND the OS also routes the same deep link to this
+        // screen, so we can race a parallel exchange attempt in authStore.
+        // If a session is already set, the other path won. Skip the exchange
+        // (the code is already consumed and Supabase would throw "PKCE code
+        // verifier not found in storage") and just route home.
+        const { data: existing } = await supabase.auth.getSession();
+        if (existing.session) {
+          router.replace('/');
+          return;
+        }
+
         // exchangeCodeForSession takes the auth code string, NOT a URL.
         // Passing a URL causes "invalid flow state" because Supabase tries
         // to look up the URL itself as the code in its PKCE flow table.
@@ -53,12 +65,11 @@ export default function AuthCallbackScreen() {
           usePurchasesStore.getState().identify(data.user.id).catch(() => {});
           fullSync(data.user.id).catch(() => {});
         }
-      } catch (e: unknown) {
-        // Temporarily surface the error so we can debug Android OAuth.
-        // TODO: replace with friendly localized copy once we know what's
-        // failing in the wild.
-        const msg = e instanceof Error ? e.message : String(e);
-        Alert.alert('Sign-in failed', msg || 'Unknown error');
+      } catch {
+        // Silently route home. Genuine errors are already surfaced by the
+        // primary sign-in flow in authStore.signInWithProvider; landing
+        // here on an error means we're the *secondary* path and the user
+        // shouldn't see a second alert.
       } finally {
         router.replace('/');
       }
