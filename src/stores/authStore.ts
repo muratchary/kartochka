@@ -126,8 +126,12 @@ export const useAuthStore = create<AuthState>((set) => ({
           // Browser closed without a code — most likely user cancelled.
           return;
         }
+        // exchangeCodeForSession takes the AUTH CODE string, not the full
+        // URL. Passing the URL produces the "invalid flow state, no valid
+        // flow state found" error because Supabase tries to treat the whole
+        // URL as the code and can't find a matching PKCE flow row.
         const { data: sessionData, error: exchangeError } =
-          await supabase.auth.exchangeCodeForSession(result.url);
+          await supabase.auth.exchangeCodeForSession(code);
         if (exchangeError) throw exchangeError;
         // Push all local data to Supabase, then pull back merged state.
         // Also tie this user to their RC entitlement so the subscription

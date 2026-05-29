@@ -43,9 +43,10 @@ export default function AuthCallbackScreen() {
           return;
         }
 
-        // Reconstruct the full URL exchangeCodeForSession expects.
-        const fakeUrl = `kartochka://auth/callback?code=${encodeURIComponent(params.code)}`;
-        const { data, error } = await supabase.auth.exchangeCodeForSession(fakeUrl);
+        // exchangeCodeForSession takes the auth code string, NOT a URL.
+        // Passing a URL causes "invalid flow state" because Supabase tries
+        // to look up the URL itself as the code in its PKCE flow table.
+        const { data, error } = await supabase.auth.exchangeCodeForSession(params.code);
         if (error) throw error;
 
         if (data.user) {
