@@ -25,6 +25,11 @@
       "vaccinesOverdue_few": "{{count}} просрочены",
       "vaccinesOverdue_many": "{{count}} просрочено",
       "vaccinesOverdue_other": "{{count}} просрочено",
+      "vaccinesTypicallyDue_one": "{{count}} прививка обычно делается к этому возрасту",
+      "vaccinesTypicallyDue_few": "{{count}} прививки обычно делаются к этому возрасту",
+      "vaccinesTypicallyDue_many": "{{count}} прививок обычно делаются к этому возрасту",
+      "vaccinesTypicallyDue_other": "{{count}} прививок обычно делаются к этому возрасту",
+      "vaccinesTypicallyDueHint": "Нажмите, чтобы отметить как сделанные, если ребёнок уже их получал.",
       "growthThisMonth_one": "{{count}} измерение в этом месяце",
       "growthThisMonth_few": "{{count}} измерения в этом месяце",
       "growthThisMonth_many": "{{count}} измерений в этом месяце",
@@ -65,7 +70,9 @@
       "label": "Рост",
       "empty": "Измерений пока нет.",
       "addCta": "Добавить измерение",
-      "viewCta": "Смотреть рост"
+      "viewCta": "Смотреть рост",
+      "unlockBands": "Сравнить с нормами ВОЗ",
+      "unlockCta": "Подключить Premium"
     },
     "doctorVisit": "Карточка для врача",
     "doctorVisits": {
@@ -173,7 +180,7 @@
     "groupCount_many": "{{count}} доз",
     "groupCount_other": "{{count}} доз",
     "detail": {
-      "protectsAgainst": "Защищает от",
+      "protectsAgainst": "О вакцине",
       "scheduleSection": "Календарь",
       "doseLabel": "Доза {{number}} из {{total}}",
       "given": "Поставлена {{date}}",
@@ -307,7 +314,7 @@
     "medicationLabel": "Текущие препараты",
     "medicationPlaceholder": "напр. витамин D, препараты железа",
     "emergencyContactLabel": "Экстренный контакт",
-    "emergencyContactPlaceholder": "напр. Бабушка: +7 999 123 4567",
+    "emergencyContactPlaceholder": "напр. Бабушка: {{example}}",
     "saveCta": "Сохранить"
   },
   "more": {

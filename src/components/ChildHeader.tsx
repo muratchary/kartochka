@@ -10,6 +10,7 @@ interface Props {
   greeting: string;
   ageLabel?: string;
   photoUri?: string | null;
+  colorSeed?: string;
   onBellPress?: () => void;
   onSwitchChild?: () => void;
   onAvatarPress?: () => void;
@@ -21,6 +22,7 @@ export function ChildHeader({
   greeting,
   ageLabel,
   photoUri,
+  colorSeed,
   onBellPress,
   onSwitchChild,
   onAvatarPress,
@@ -35,7 +37,7 @@ export function ChildHeader({
         style={styles.identity}
         hitSlop={6}>
         <Pressable onPress={onAvatarPress} hitSlop={8} style={styles.avatarWrap}>
-          <ChildAvatar name={name} photoUri={photoUri} size={48} />
+          <ChildAvatar name={name} photoUri={photoUri} size={48} colorSeed={colorSeed} />
           {!photoUri && (
             <View style={styles.cameraHint}>
               <Ionicons name="camera" size={10} color="#fff" />

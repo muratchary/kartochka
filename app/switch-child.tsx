@@ -44,7 +44,7 @@ export default function SwitchChildScreen() {
               <Pressable key={c.id} onPress={() => handlePick(c.id)}>
                 <Card style={[styles.card, active && styles.cardActive]}>
                   <View style={styles.row}>
-                    <ChildAvatar name={c.name} photoUri={c.photoUri} size={48} />
+                    <ChildAvatar name={c.name} photoUri={c.photoUri} size={48} colorSeed={c.id} />
                     <View style={{ flex: 1 }}>
                       <Text style={[styles.name, { fontFamily: font(700) }]}>{c.name}</Text>
                       <Text style={[styles.meta, { fontFamily: font(600) }]}>

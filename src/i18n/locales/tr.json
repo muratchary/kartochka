@@ -21,6 +21,9 @@
       "vaccinesDue_other": "{{count}} aşı önümüzdeki 30 günde",
       "vaccinesOverdue_one": "1 gecikmiş",
       "vaccinesOverdue_other": "{{count}} gecikmiş",
+      "vaccinesTypicallyDue_one": "Bu yaşta tipik olarak 1 aşı yapılır",
+      "vaccinesTypicallyDue_other": "Bu yaşta tipik olarak {{count}} aşı yapılır",
+      "vaccinesTypicallyDueHint": "Çocuğunuz zaten yaptırdıysa dokunup 'yapıldı' olarak işaretleyin.",
       "growthThisMonth_one": "1 ölçüm bu ay",
       "growthThisMonth_other": "{{count}} ölçüm bu ay",
       "milestonesThisMonth_one": "Bu ay 1 gelişim aşamasına ulaşıldı",
@@ -53,7 +56,9 @@
       "label": "Büyüme",
       "empty": "Henüz ölçüm yok.",
       "addCta": "Ölçüm ekle",
-      "viewCta": "Büyümeyi gör"
+      "viewCta": "Büyümeyi gör",
+      "unlockBands": "DSÖ persantil eğrileriyle karşılaştır",
+      "unlockCta": "Yükselt"
     },
     "doctorVisit": "Doktor ziyaret kartı",
     "doctorVisits": {
@@ -153,7 +158,7 @@
     "groupCount_one": "1 doz",
     "groupCount_other": "{{count}} doz",
     "detail": {
-      "protectsAgainst": "Şuna karşı koruma sağlar",
+      "protectsAgainst": "Bu aşı hakkında",
       "scheduleSection": "Takvim",
       "doseLabel": "Doz {{number}} / {{total}}",
       "given": "{{date}} tarihinde yapıldı",
@@ -391,7 +396,7 @@
     "medicationLabel": "Kullanılan ilaçlar",
     "medicationPlaceholder": "ör. D vitamini, demir damlaları",
     "emergencyContactLabel": "Acil iletişim kişisi",
-    "emergencyContactPlaceholder": "ör. Büyükanne: +90 532 123 4567",
+    "emergencyContactPlaceholder": "ör. Büyükanne: {{example}}",
     "saveCta": "Kaydet"
   },
   "timeline": {

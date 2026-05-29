@@ -71,6 +71,10 @@ export default function HomeScreen() {
 
   const handleExportPdf = async () => {
     if (!child) return;
+    if (!isPremium) {
+      router.push('/paywall');
+      return;
+    }
     try {
       // Build base64 photo array for milestone photo gallery page
       const withPhotos = milestonesForChild.filter((m) => !!m.photoUri);
@@ -124,16 +128,6 @@ export default function HomeScreen() {
     return milestones.filter((m) => m.childId === child.id);
   }, [child, milestones]);
 
-  const nextMilestone = useMemo(() => {
-    if (!child) return null;
-    const reachedCodes = new Set(milestonesForChild.map((m) => m.milestoneCode));
-    return (
-      [...STANDARD_MILESTONES]
-        .sort((a, b) => a.recommendedAgeMonths - b.recommendedAgeMonths)
-        .find((m) => !reachedCodes.has(m.code)) ?? null
-    );
-  }, [child, milestonesForChild]);
-
   const childAgeLabel = useMemo(() => {
     if (!child) return '';
     const totalMonths = Math.floor(
@@ -156,6 +150,21 @@ export default function HomeScreen() {
   }, [child]);
 
   const childTips = useMemo(() => getTipsForAge(childAgeMonths), [childAgeMonths]);
+
+  const nextMilestone = useMemo(() => {
+    if (!child) return null;
+    const reachedCodes = new Set(milestonesForChild.map((m) => m.milestoneCode));
+    const sorted = [...STANDARD_MILESTONES].sort(
+      (a, b) => a.recommendedAgeMonths - b.recommendedAgeMonths,
+    );
+    // Prefer the next *future* unreached milestone (>= child's current age).
+    const future = sorted.find(
+      (m) => !reachedCodes.has(m.code) && m.recommendedAgeMonths >= childAgeMonths,
+    );
+    if (future) return future;
+    // Fallback: any older unreached milestone the parent hasn't ticked off yet.
+    return sorted.find((m) => !reachedCodes.has(m.code)) ?? null;
+  }, [child, milestonesForChild, childAgeMonths]);
 
   const { isBirthday, birthdayAgeYears } = useMemo(() => {
     if (!child) return { isBirthday: false, birthdayAgeYears: 0 };
@@ -216,6 +225,7 @@ export default function HomeScreen() {
           greeting={greeting}
           ageLabel={childAgeLabel}
           photoUri={child.photoUri}
+          colorSeed={child.id}
           hasMultipleChildren={children.length > 1}
           onSwitchChild={() => router.push('/switch-child')}
           onBellPress={() => router.push('/notifications')}
@@ -281,12 +291,20 @@ export default function HomeScreen() {
       milestonesThisMonth: number;
     };
   }) {
-    const lines: Array<{ key: string; text: string; tone: 'ink' | 'error' }> = [];
+    const lines: Array<{ key: string; text: string; tone: 'ink' | 'error' | 'amber'; subtitle?: string }> = [];
+    // Soften the overdue alarm for the first 14 days after a child is added.
+    // A parent who just added a 14-month-old hasn't had a chance to log past doses,
+    // so we say "typically due by now" in amber instead of red "overdue".
+    const justAddedMs = 14 * 24 * 60 * 60 * 1000;
+    const justAdded = !!child?.createdAt && Date.now() - new Date(child.createdAt).getTime() < justAddedMs;
     if (digest.vaccinesOverdue > 0) {
       lines.push({
         key: 'overdue',
-        text: t('home.monthDigest.vaccinesOverdue', { count: digest.vaccinesOverdue }),
-        tone: 'error',
+        text: justAdded
+          ? t('home.monthDigest.vaccinesTypicallyDue', { count: digest.vaccinesOverdue })
+          : t('home.monthDigest.vaccinesOverdue', { count: digest.vaccinesOverdue }),
+        tone: justAdded ? 'amber' : 'error',
+        subtitle: justAdded ? t('home.monthDigest.vaccinesTypicallyDueHint') : undefined,
       });
     }
     if (digest.vaccinesDue > 0) {
@@ -321,23 +339,32 @@ export default function HomeScreen() {
           </Text>
         ) : (
           <View style={styles.digestLines}>
-            {lines.map((l) => (
-              <View key={l.key} style={styles.digestLine}>
-                <View
-                  style={[
-                    styles.digestDot,
-                    { backgroundColor: l.tone === 'error' ? colors.error : colors.teal },
-                  ]}
-                />
-                <Text
-                  style={[
-                    styles.digestText,
-                    { fontFamily: font(700), color: l.tone === 'error' ? colors.error : colors.ink },
-                  ]}>
-                  {l.text}
-                </Text>
-              </View>
-            ))}
+            {lines.map((l) => {
+              const dotColor =
+                l.tone === 'error' ? colors.error : l.tone === 'amber' ? colors.amber : colors.teal;
+              const textColor =
+                l.tone === 'error' ? colors.error : l.tone === 'amber' ? colors.amberDark : colors.ink;
+              return (
+                <View key={l.key} style={styles.digestLine}>
+                  <View style={[styles.digestDot, { backgroundColor: dotColor }]} />
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={[styles.digestText, { fontFamily: font(700), color: textColor }]}>
+                      {l.text}
+                    </Text>
+                    {l.subtitle && (
+                      <Text
+                        style={[
+                          styles.digestText,
+                          { fontFamily: font(typography.caption.weight), color: colors.ink2, marginTop: 2 },
+                        ]}>
+                        {l.subtitle}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+              );
+            })}
           </View>
         )}
       </Card>

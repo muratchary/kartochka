@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -106,22 +107,24 @@ export default function SignInScreen() {
 
         {/* Buttons */}
         <View style={styles.buttonStack}>
-          {/* Apple */}
-          <Pressable
-            style={[styles.providerBtn, styles.appleBtn]}
-            onPress={() => handleSignIn('apple')}
-            disabled={isSigningIn}>
-            {isSigningIn ? (
-              <ActivityIndicator color="#fff" size="small" />
-            ) : (
-              <>
-                <Ionicons name="logo-apple" size={20} color="#fff" />
-                <Text style={[styles.appleBtnText, { fontFamily: font(600) }]}>
-                  {t('signIn.apple')}
-                </Text>
-              </>
-            )}
-          </Pressable>
+          {/* Apple — iOS only (no native Sign in with Apple on Android). */}
+          {Platform.OS === 'ios' && (
+            <Pressable
+              style={[styles.providerBtn, styles.appleBtn]}
+              onPress={() => handleSignIn('apple')}
+              disabled={isSigningIn}>
+              {isSigningIn ? (
+                <ActivityIndicator color="#fff" size="small" />
+              ) : (
+                <>
+                  <Ionicons name="logo-apple" size={20} color="#fff" />
+                  <Text style={[styles.appleBtnText, { fontFamily: font(600) }]}>
+                    {t('signIn.apple')}
+                  </Text>
+                </>
+              )}
+            </Pressable>
+          )}
 
           {/* Google */}
           <Pressable

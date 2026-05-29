@@ -121,7 +121,7 @@ export default function DoctorCardScreen() {
       <ScrollView contentContainerStyle={styles.scroll}>
         {/* Child identity block */}
         <View style={styles.identity}>
-          <ChildAvatar name={child.name} photoUri={child.photoUri} size={80} />
+          <ChildAvatar name={child.name} photoUri={child.photoUri} size={80} colorSeed={child.id} />
           <Text style={[styles.childName, { fontFamily: font(800) }]}>{child.name}</Text>
           <Text style={[styles.childAge, { fontFamily: font(typography.body.weight) }]}>
             {ageLabel}

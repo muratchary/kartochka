@@ -22,6 +22,18 @@ import { useFont } from '../../src/theme/useFont';
 
 const BLOOD_TYPES = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] as const;
 
+// Example phone numbers per country dialing code — used so the placeholder
+// reflects the child's country instead of always showing a Russian +7 number.
+const PHONE_EXAMPLE: Record<string, string> = {
+  RU: '+7 999 123 4567',
+  KZ: '+7 701 123 4567',
+  UZ: '+998 90 123 4567',
+  AE: '+971 50 123 4567',
+  SA: '+966 50 123 4567',
+  TR: '+90 532 123 4567',
+  TM: '+993 65 123 456',
+};
+
 export default function MedicalProfileScreen() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -133,7 +145,9 @@ export default function MedicalProfileScreen() {
           <TextInput
             value={emergencyContact}
             onChangeText={setEmergencyContact}
-            placeholder={t('medicalProfile.emergencyContactPlaceholder')}
+            placeholder={t('medicalProfile.emergencyContactPlaceholder', {
+              example: PHONE_EXAMPLE[child.countryCode] ?? PHONE_EXAMPLE.RU,
+            })}
             placeholderTextColor={colors.ink3}
             keyboardType="phone-pad"
             style={[styles.input, { fontFamily: font(600) }]}

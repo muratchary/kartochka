@@ -160,13 +160,15 @@ export default function GrowthScreen() {
                       isPremium={isPremium}
                       onUnlockPress={() => router.push('/paywall')}
                     />
-                    <Text
-                      style={[
-                        styles.whoCaption,
-                        { fontFamily: font(typography.caption.weight) },
-                      ]}>
-                      {t('growth.chartWhoRef')}
-                    </Text>
+                    {isPremium && (
+                      <Text
+                        style={[
+                          styles.whoCaption,
+                          { fontFamily: font(typography.caption.weight) },
+                        ]}>
+                        {t('growth.chartWhoRef')}
+                      </Text>
+                    )}
                   </>
                 ) : (
                   <View style={styles.chartEmpty}>
@@ -221,7 +223,7 @@ export default function GrowthScreen() {
                           value={`${entry.weightKg} ${t('growth.kg')}`}
                           delta={deltaFor(entries, idx, 'weightKg')}
                           unit={t('growth.kg')}
-                          percentileLabel={p != null ? t('growth.percentile', { value: p }) : null}
+                          percentileLabel={isPremium && p != null ? t('growth.percentile', { value: p }) : null}
                           font={font}
                         />
                       );
@@ -234,7 +236,7 @@ export default function GrowthScreen() {
                           value={`${entry.heightCm} ${t('growth.cm')}`}
                           delta={deltaFor(entries, idx, 'heightCm')}
                           unit={t('growth.cm')}
-                          percentileLabel={p != null ? t('growth.percentile', { value: p }) : null}
+                          percentileLabel={isPremium && p != null ? t('growth.percentile', { value: p }) : null}
                           font={font}
                         />
                       );
@@ -247,7 +249,7 @@ export default function GrowthScreen() {
                           value={`${entry.headCircumferenceCm} ${t('growth.cm')}`}
                           delta={deltaFor(entries, idx, 'headCircumferenceCm')}
                           unit={t('growth.cm')}
-                          percentileLabel={p != null ? t('growth.percentile', { value: p }) : null}
+                          percentileLabel={isPremium && p != null ? t('growth.percentile', { value: p }) : null}
                           font={font}
                         />
                       );

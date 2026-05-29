@@ -32,9 +32,23 @@ export default function NotificationsScreen() {
   const [granted, setGranted] = useState<boolean | null>(null);
 
   const load = useCallback(async () => {
-    const status = await Notifications.getPermissionsAsync();
+    let status: Awaited<ReturnType<typeof Notifications.getPermissionsAsync>>;
+    try {
+      status = await Notifications.getPermissionsAsync();
+    } catch {
+      // Native module unavailable (e.g. web) — render empty, no crash
+      setGranted(false);
+      setItems([]);
+      return;
+    }
     setGranted(status.granted);
-    const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+    let scheduled: Awaited<ReturnType<typeof Notifications.getAllScheduledNotificationsAsync>>;
+    try {
+      scheduled = await Notifications.getAllScheduledNotificationsAsync();
+    } catch {
+      setItems([]);
+      return;
+    }
     const parsed: Item[] = scheduled.map((n) => {
       const data = (n.content.data ?? {}) as {
         childId?: string;

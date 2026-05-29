@@ -49,16 +49,18 @@ export default function WelcomeScreen() {
           full
           onPress={() => router.push('/onboarding/country')}
         />
-        <Pressable
-          onPress={() => {
-            seedDemoData();
-            router.replace('/(tabs)');
-          }}
-          hitSlop={8}>
-          <Text style={[styles.demoLink, { fontFamily: font(600) }]}>
-            {t('onboarding.welcome.tryDemo')}
-          </Text>
-        </Pressable>
+        {__DEV__ && (
+          <Pressable
+            onPress={() => {
+              seedDemoData();
+              router.replace('/(tabs)');
+            }}
+            hitSlop={8}>
+            <Text style={[styles.demoLink, { fontFamily: font(600) }]}>
+              {t('onboarding.welcome.tryDemo')}
+            </Text>
+          </Pressable>
+        )}
       </View>
     </SafeAreaView>
   );

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Circle, G, Line, Path, Text as SvgText } from 'react-native-svg';
 
@@ -31,6 +32,7 @@ function whoSeriesFor(metric: GrowthMetric, sex: 'male' | 'female' | 'unspecifie
 }
 
 export function GrowthChart({ points, height = 220, metric, sex = 'unspecified', isPremium = true, onUnlockPress }: Props) {
+  const { t } = useTranslation();
   const font = useFont();
   const fontFamily = font(600);
   const boldFamily = font(700);
@@ -72,16 +74,18 @@ export function GrowthChart({ points, height = 220, metric, sex = 'unspecified',
           yMax={yMax}
           fontFamily={fontFamily}
         />
-        {/* Reference curves — always rendered, but blurred + overlaid for free users */}
-        <ChartReferenceCurves
-          refPoints={refPoints}
-          height={height}
-          xMin={xMin}
-          xRange={xRange}
-          yMin={yMin}
-          yRange={yRange}
-          fontFamily={fontFamily}
-        />
+        {/* WHO reference curves — premium only. */}
+        {isPremium && (
+          <ChartReferenceCurves
+            refPoints={refPoints}
+            height={height}
+            xMin={xMin}
+            xRange={xRange}
+            yMin={yMin}
+            yRange={yRange}
+            fontFamily={fontFamily}
+          />
+        )}
         <ChartLine
           sorted={sorted}
           height={height}
@@ -101,19 +105,21 @@ export function GrowthChart({ points, height = 220, metric, sex = 'unspecified',
           metric={metric}
         />
       </Svg>
-      {/* Soft-lock overlay for free users */}
+      {/* Free-tier upgrade CTA — clean banner below the chart instead of an overlay. */}
       {!isPremium && (
-        <View style={styles.lockOverlay} pointerEvents="box-none">
-          <View style={styles.lockBadge}>
-            <Text style={styles.lockIcon}>🔒</Text>
-            <Text style={styles.lockText}>Unlock percentile curves</Text>
-            {onUnlockPress && (
-              <TouchableOpacity onPress={onUnlockPress} style={styles.lockCta}>
-                <Text style={styles.lockCtaText}>Upgrade</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
+        <TouchableOpacity
+          onPress={onUnlockPress}
+          activeOpacity={onUnlockPress ? 0.7 : 1}
+          style={styles.upgradeCta}>
+          <Text style={[styles.upgradeText, { fontFamily }]}>
+            {t('home.growth.unlockBands')}
+          </Text>
+          {onUnlockPress && (
+            <Text style={[styles.upgradeLink, { fontFamily: boldFamily }]}>
+              {t('home.growth.unlockCta')}
+            </Text>
+          )}
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -375,34 +381,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
     overflow: 'hidden',
   },
-  lockOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255,255,255,0.72)',
+  upgradeCta: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
+    gap: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    backgroundColor: colors.tealSoft,
   },
-  lockBadge: {
-    alignItems: 'center',
-    gap: 4,
-  },
-  lockIcon: { fontSize: 22 },
-  lockText: {
+  upgradeText: {
     fontSize: 12,
-    fontWeight: '700',
-    color: '#1A2E2E',
-    letterSpacing: 0.2,
+    color: colors.ink2,
   },
-  lockCta: {
-    marginTop: 6,
-    backgroundColor: '#2A7F7F',
-    borderRadius: 99,
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-  },
-  lockCtaText: {
-    color: '#fff',
-    fontWeight: '700',
+  upgradeLink: {
     fontSize: 12,
+    color: colors.teal,
   },
 });

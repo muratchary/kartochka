@@ -21,6 +21,9 @@
       "vaccinesDue_other": "{{count}} vaccines in the next 30 days",
       "vaccinesOverdue_one": "{{count}} overdue",
       "vaccinesOverdue_other": "{{count}} overdue",
+      "vaccinesTypicallyDue_one": "{{count}} typically due by now",
+      "vaccinesTypicallyDue_other": "{{count}} typically due by now",
+      "vaccinesTypicallyDueHint": "Tap any to mark as done if your child already had it.",
       "growthThisMonth_one": "{{count}} measurement this month",
       "growthThisMonth_other": "{{count}} measurements this month",
       "milestonesThisMonth_one": "{{count}} milestone reached this month",
@@ -53,7 +56,9 @@
       "label": "Growth",
       "empty": "No measurements yet.",
       "addCta": "Add measurement",
-      "viewCta": "View growth"
+      "viewCta": "View growth",
+      "unlockBands": "Compare to WHO percentile bands",
+      "unlockCta": "Upgrade"
     },
     "doctorVisit": "Doctor visit card",
     "doctorVisits": {
@@ -153,7 +158,7 @@
     "groupCount_one": "{{count}} dose",
     "groupCount_other": "{{count}} doses",
     "detail": {
-      "protectsAgainst": "Protects against",
+      "protectsAgainst": "About this vaccine",
       "scheduleSection": "Schedule",
       "doseLabel": "Dose {{number}} of {{total}}",
       "given": "Given on {{date}}",
@@ -283,7 +288,7 @@
     "medicationLabel": "Current medications",
     "medicationPlaceholder": "e.g. vitamin D, iron drops",
     "emergencyContactLabel": "Emergency contact",
-    "emergencyContactPlaceholder": "e.g. Grandma: +7 999 123 4567",
+    "emergencyContactPlaceholder": "e.g. Grandma: {{example}}",
     "saveCta": "Save"
   },
   "more": {

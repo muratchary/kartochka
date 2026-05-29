@@ -11,6 +11,7 @@ import { ScreenTitle } from '../../src/components/ScreenTitle';
 import type { SupportedLanguage } from '../../src/i18n';
 import { cancelChildReminders } from '../../src/lib/notifications';
 import { useChildrenStore } from '../../src/stores/childrenStore';
+import { usePurchasesStore } from '../../src/stores/purchasesStore';
 import { colors, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
@@ -21,7 +22,17 @@ export default function ChildrenSettingsScreen() {
 
   const children = useChildrenStore((s) => s.children);
   const removeChild = useChildrenStore((s) => s.removeChild);
+  const isPremium = usePurchasesStore((s) => s.isPremium);
   const lang = (i18n.language || 'en') as SupportedLanguage;
+
+  const handleAddChild = () => {
+    // Free tier: one child only. Push to paywall before showing the add form.
+    if (!isPremium && children.length >= 1) {
+      router.push('/paywall');
+      return;
+    }
+    router.push('/more/add-child');
+  };
 
   const handleRemove = (id: string, name: string) => {
     Alert.alert(t('more.childrenScreen.removeConfirm', { name }), '', [
@@ -61,7 +72,7 @@ export default function ChildrenSettingsScreen() {
                 }>
                 <Card style={{ padding: spacing.lg }}>
                   <View style={styles.row}>
-                    <ChildAvatar name={c.name} photoUri={c.photoUri} size={48} />
+                    <ChildAvatar name={c.name} photoUri={c.photoUri} size={48} colorSeed={c.id} />
                     <View style={{ flex: 1 }}>
                       <Text style={[styles.name, { fontFamily: font(700) }]}>{c.name}</Text>
                       <Text style={[styles.meta, { fontFamily: font(600) }]}>
@@ -95,7 +106,7 @@ export default function ChildrenSettingsScreen() {
           variant="primary"
           size="lg"
           full
-          onPress={() => router.push('/more/add-child')}
+          onPress={handleAddChild}
         />
 
         <Text style={[styles.premiumNote, { fontFamily: font(typography.caption.weight) }]}>

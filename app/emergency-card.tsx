@@ -35,7 +35,7 @@ export default function EmergencyCardScreen() {
       <ScrollView contentContainerStyle={styles.scroll}>
         {/* Identity */}
         <View style={styles.identity}>
-          <ChildAvatar name={child.name} photoUri={child.photoUri} size={80} />
+          <ChildAvatar name={child.name} photoUri={child.photoUri} size={80} colorSeed={child.id} />
           <Text style={[styles.childName, { fontFamily: font(800) }]}>{child.name}</Text>
           {child.dateOfBirth ? (
             <Text style={[styles.childDob, { fontFamily: font(600) }]}>
