@@ -11,9 +11,10 @@ import {
   Text,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { PurchasesPackage } from 'react-native-purchases';
 
+import { useAuthStore } from '../src/stores/authStore';
 import { usePurchasesStore } from '../src/stores/purchasesStore';
 import { colors, radii, spacing } from '../src/theme';
 import { useFont } from '../src/theme/useFont';
@@ -30,8 +31,10 @@ export default function PaywallScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const font = useFont();
-  const { offering, isLoading, refreshEntitlements, purchasePackage, restorePurchases } =
+  const insets = useSafeAreaInsets();
+  const { offering, isLoading, isPremium, activePackageType, refreshEntitlements, purchasePackage, restorePurchases } =
     usePurchasesStore();
+  const user = useAuthStore((s) => s.user);
 
   const [selectedPackage, setSelectedPackage] = useState<PurchasesPackage | null>(null);
 
@@ -80,6 +83,70 @@ export default function PaywallScreen() {
   // or products aren't yet approved in App Store Connect for this build.
   const offeringUnavailable = !offering && !isLoading;
 
+  // Premium users: show their current plan + upgrade-to-yearly nudge (if monthly)
+  // instead of the full plan picker. Yearly users get a thank-you screen.
+  if (isPremium) {
+    const onAnnual = activePackageType === 'annual';
+    return (
+      <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+        <Pressable style={styles.closeBtn} onPress={() => router.back()} hitSlop={12}>
+          <Ionicons name="close" size={24} color={colors.ink2} />
+        </Pressable>
+        <ScrollView
+          contentContainerStyle={[styles.scroll, { paddingBottom: spacing.xxxl + insets.bottom }]}
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.header}>
+            <View style={styles.activeBadge}>
+              <Ionicons name="checkmark-circle" size={16} color={colors.teal} />
+              <Text style={[styles.activeBadgeText, { fontFamily: font(700) }]}>
+                {t('paywall.active.badge')}
+              </Text>
+            </View>
+            <Text style={[styles.title, { fontFamily: font(800) }]}>
+              {t(onAnnual ? 'paywall.active.titleAnnual' : 'paywall.active.titleMonthly')}
+            </Text>
+            <Text style={[styles.subtitle, { fontFamily: font(600) }]}>
+              {t(onAnnual ? 'paywall.active.bodyAnnual' : 'paywall.active.bodyMonthly')}
+            </Text>
+          </View>
+
+          {/* Upgrade to yearly nudge — only when user is on monthly */}
+          {!onAnnual && yearly && (
+            <Pressable
+              style={[styles.planCard, styles.planCardFeatured, styles.planCardSelected, { marginBottom: spacing.xl }]}
+              onPress={async () => {
+                try {
+                  await purchasePackage(yearly);
+                  Alert.alert(t('paywall.successTitle'), t('paywall.upgradedBody'));
+                } catch {
+                  Alert.alert(t('paywall.errorTitle'), t('paywall.errorBody'));
+                }
+              }}>
+              <View style={styles.savingsChip}>
+                <Text style={[styles.savingsText, { fontFamily: font(700) }]}>
+                  {t('paywall.yearlySavings')}
+                </Text>
+              </View>
+              <Text style={[styles.planLabel, { fontFamily: font(700) }]}>
+                {t('paywall.upgradeToYearly')}
+              </Text>
+              <Text style={[styles.planPrice, { fontFamily: font(800) }]}>
+                {yearly.product.priceString}
+              </Text>
+              <Text style={[styles.planPeriod, { fontFamily: font(600) }]}>
+                {t('paywall.perYear')}
+              </Text>
+            </Pressable>
+          )}
+
+          <Text style={[styles.manageNote, { fontFamily: font(500) }]}>
+            {t('paywall.active.manageNote')}
+          </Text>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       {/* Close button */}
@@ -87,7 +154,9 @@ export default function PaywallScreen() {
         <Ionicons name="close" size={24} color={colors.ink2} />
       </Pressable>
 
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={[styles.scroll, { paddingBottom: spacing.xxxl + insets.bottom }]}
+        showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
           <View style={styles.badge}>
@@ -98,6 +167,25 @@ export default function PaywallScreen() {
           <Text style={[styles.title, { fontFamily: font(800) }]}>{t('paywall.title')}</Text>
           <Text style={[styles.subtitle, { fontFamily: font(600) }]}>{t('paywall.subtitle')}</Text>
         </View>
+
+        {/* Sign-in nudge — protects the purchase from being lost on uninstall.
+            Soft, dismissible inline, doesn't block purchase. */}
+        {!user && !offeringUnavailable && (
+          <Pressable
+            style={styles.signInNudge}
+            onPress={() => router.push('/sign-in')}>
+            <Ionicons name="lock-closed-outline" size={18} color={colors.teal} />
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.signInNudgeTitle, { fontFamily: font(700) }]}>
+                {t('paywall.signInNudge.title')}
+              </Text>
+              <Text style={[styles.signInNudgeBody, { fontFamily: font(500) }]}>
+                {t('paywall.signInNudge.body')}
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color={colors.teal} />
+          </Pressable>
+        )}
 
         {/* Benefits */}
         <View style={styles.benefitsCard}>
@@ -291,4 +379,36 @@ const styles = StyleSheet.create({
 
   restoreBtn: { alignItems: 'center', paddingVertical: spacing.sm },
   restoreText: { fontSize: 14, color: colors.ink3 },
+
+  // Active-subscription view
+  activeBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    backgroundColor: colors.tealSoft,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: radii.pill,
+  },
+  activeBadgeText: { fontSize: 12, color: colors.teal },
+  manageNote: {
+    fontSize: 13,
+    color: colors.ink3,
+    textAlign: 'center',
+    paddingHorizontal: spacing.md,
+    lineHeight: 18,
+  },
+
+  // Sign-in nudge banner
+  signInNudge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    backgroundColor: colors.tealSoft,
+    borderRadius: radii.lg,
+    padding: spacing.md,
+    marginBottom: spacing.lg,
+  },
+  signInNudgeTitle: { fontSize: 14, color: colors.ink },
+  signInNudgeBody: { fontSize: 12, color: colors.ink2, marginTop: 2, lineHeight: 16 },
 });

@@ -28,6 +28,11 @@
     "production": {
       "ios": {
         "appleTeamId": "787GCXLSTM"
+      },
+      "android": {
+        "serviceAccountKeyPath": "./.secrets/play-service-account.json",
+        "track": "internal",
+        "changesNotSentForReview": false
       }
     }
   }

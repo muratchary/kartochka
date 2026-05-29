@@ -6,6 +6,7 @@ import { create } from 'zustand';
 
 import { fullSync, syncDown } from '../lib/sync';
 import { isSupabaseConfigured, supabase } from '../lib/supabase';
+import { usePurchasesStore } from './purchasesStore';
 
 interface AuthState {
   session: Session | null;
@@ -32,13 +33,19 @@ export const useAuthStore = create<AuthState>((set) => ({
       const { data } = await supabase.auth.getSession();
       set({ session: data.session, user: data.session?.user ?? null, initialized: true });
 
-      // If there's already a session, pull down any cloud data in the background.
+      // If there's already a session, pull down any cloud data + tie the
+      // RevenueCat anonymous user to this auth user so the entitlement
+      // survives reinstall / device switch.
       if (data.session?.user) {
+        usePurchasesStore.getState().identify(data.session.user.id).catch(() => {});
         syncDown(data.session.user.id).catch(() => {});
       }
 
       supabase.auth.onAuthStateChange((_event, session) => {
         set({ session, user: session?.user ?? null });
+        if (session?.user) {
+          usePurchasesStore.getState().identify(session.user.id).catch(() => {});
+        }
       });
     } catch {
       set({ initialized: true });
@@ -73,7 +80,10 @@ export const useAuthStore = create<AuthState>((set) => ({
         if (code) {
           const { data: sessionData } = await supabase.auth.exchangeCodeForSession(result.url);
           // Push all local data to Supabase, then pull back merged state.
+          // Also tie this user to their RC entitlement so the subscription
+          // survives reinstall / device switch.
           if (sessionData.user) {
+            usePurchasesStore.getState().identify(sessionData.user.id).catch(() => {});
             fullSync(sessionData.user.id).catch(() => {});
           }
         }
@@ -89,6 +99,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch {
       // ignore
     }
+    // Detach from RC's aliased user; local entitlement on this device is
+    // preserved, but new purchases on a different device won't merge until
+    // the user signs back in.
+    usePurchasesStore.getState().logOut().catch(() => {});
     set({ session: null, user: null });
   },
 }));

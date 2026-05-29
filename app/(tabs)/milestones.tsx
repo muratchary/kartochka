@@ -22,6 +22,7 @@ import { captureRef } from 'react-native-view-shot';
 import { Card } from '../../src/components/Card';
 import { Celebration } from '../../src/components/Celebration';
 import { MilestoneShareCard } from '../../src/components/MilestoneShareCard';
+import { PhotoActionSheet } from '../../src/components/PhotoActionSheet';
 import type { SupportedLanguage } from '../../src/i18n';
 import { STANDARD_MILESTONES, groupMilestonesByAge } from '../../src/lib/milestones';
 import type { MilestoneRecord } from '../../src/types';
@@ -109,30 +110,23 @@ export default function MilestonesScreen() {
     setCelebrate(true);
   };
 
-  const handlePhotoPress = (recordId: string, existingUri?: string) => {
-    const options = existingUri
-      ? [t('vaccines.markDone.changePhoto'), t('vaccines.markDone.removePhoto'), t('common.cancel')]
-      : [t('vaccines.markDone.addPhoto'), t('common.cancel')];
+  const [photoSheet, setPhotoSheet] = useState<{
+    recordId: string;
+    hasExisting: boolean;
+  } | null>(null);
 
-    Alert.alert('', '', options.map((label, index) => ({
-      text: label,
-      style: index === options.length - 1 ? 'cancel' : 'default',
-      onPress: async () => {
-        if (label === t('vaccines.markDone.removePhoto')) {
-          updateMilestonePhoto(recordId, null);
-          return;
-        }
-        if (label === t('vaccines.markDone.addPhoto') || label === t('vaccines.markDone.changePhoto')) {
-          const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            quality: 0.85,
-          });
-          if (!result.canceled && result.assets[0]) {
-            updateMilestonePhoto(recordId, result.assets[0].uri);
-          }
-        }
-      },
-    })));
+  const handlePhotoPress = (recordId: string, existingUri?: string) => {
+    setPhotoSheet({ recordId, hasExisting: !!existingUri });
+  };
+
+  const openImagePickerFor = async (recordId: string) => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.85,
+    });
+    if (!result.canceled && result.assets[0]) {
+      updateMilestonePhoto(recordId, result.assets[0].uri);
+    }
   };
 
   const handleSharePress = (
@@ -335,6 +329,38 @@ export default function MilestonesScreen() {
           );
         })}
       </ScrollView>
+
+      <PhotoActionSheet
+        visible={!!photoSheet}
+        onClose={() => setPhotoSheet(null)}
+        cancelLabel={t('common.cancel')}
+        actions={
+          photoSheet?.hasExisting
+            ? [
+                {
+                  key: 'change',
+                  label: t('vaccines.markDone.changePhoto'),
+                  icon: 'image-outline',
+                  onPress: () => photoSheet && openImagePickerFor(photoSheet.recordId),
+                },
+                {
+                  key: 'remove',
+                  label: t('vaccines.markDone.removePhoto'),
+                  icon: 'trash-outline',
+                  destructive: true,
+                  onPress: () => photoSheet && updateMilestonePhoto(photoSheet.recordId, null),
+                },
+              ]
+            : [
+                {
+                  key: 'add',
+                  label: t('vaccines.markDone.addPhoto'),
+                  icon: 'image-outline',
+                  onPress: () => photoSheet && openImagePickerFor(photoSheet.recordId),
+                },
+              ]
+        }
+      />
 
       <Celebration
         visible={celebrate}

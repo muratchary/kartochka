@@ -328,7 +328,14 @@ export default function HomeScreen() {
         tone: 'ink',
       });
     }
+    // The digest references vaccines ("tap to mark as done…"); route the
+    // whole card to the Vaccines tab so the call-to-action actually goes
+    // somewhere.
+    const hasVaccineLine = digest.vaccinesDue > 0 || digest.vaccinesOverdue > 0;
     return (
+      <Pressable
+        onPress={hasVaccineLine ? () => router.push('/vaccines') : undefined}
+        disabled={!hasVaccineLine}>
       <Card style={styles.digestCard}>
         <Text style={[styles.digestEyebrow, { fontFamily: font(typography.eyebrow.weight) }]}>
           {t('home.monthDigest.title')}
@@ -368,6 +375,7 @@ export default function HomeScreen() {
           </View>
         )}
       </Card>
+      </Pressable>
     );
   }
 

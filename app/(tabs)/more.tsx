@@ -12,6 +12,9 @@ import { usePurchasesStore } from '../../src/stores/purchasesStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 
+const truncateEmail = (email: string, max = 24): string =>
+  email.length > max ? `${email.slice(0, max - 1)}…` : email;
+
 type IoniconName = ComponentProps<typeof IoniconsType>['name'];
 
 interface RowDef {
@@ -20,6 +23,7 @@ interface RowDef {
   onPress: () => void;
   destructive?: boolean;
   highlight?: boolean;
+  subtitle?: string;
 }
 
 export default function MoreScreen() {
@@ -31,6 +35,20 @@ export default function MoreScreen() {
   const clearAll = useChildrenStore((s) => s.clearAll);
   const isPremium = usePurchasesStore((s) => s.isPremium);
   const user = useAuthStore((s) => s.user);
+  const signOut = useAuthStore((s) => s.signOut);
+
+  const handleSignOut = () => {
+    Alert.alert(t('signIn.signOutConfirmTitle'), t('signIn.signOutConfirmBody'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('signIn.signOut'),
+        style: 'destructive',
+        onPress: async () => {
+          await signOut();
+        },
+      },
+    ]);
+  };
 
   const childrenSection: RowDef[] = [
     {
@@ -65,8 +83,22 @@ export default function MoreScreen() {
     {
       icon: user ? 'person-circle' : 'person-circle-outline',
       labelKey: user ? 'more.items.account' : 'more.items.signIn',
+      // For signed-in users, show their email under the row instead of the bare label
+      subtitle: user ? truncateEmail(user.email ?? user.phone ?? '') : undefined,
       onPress: () => router.push('/sign-in'),
     },
+    // Visible sign-out row — only when signed in, so it's discoverable without
+    // having to remember the sign-in screen hides it.
+    ...(user
+      ? [
+          {
+            icon: 'log-out-outline' as const,
+            labelKey: 'more.items.signOut',
+            onPress: handleSignOut,
+            destructive: true,
+          },
+        ]
+      : []),
   ];
 
   const appSection: RowDef[] = [
@@ -178,15 +210,22 @@ function Section({
               size={22}
               color={row.destructive ? colors.error : row.highlight ? colors.teal : colors.ink2}
             />
-            <Text
-              style={[
-                styles.rowLabel,
-                { fontFamily: font(600) },
-                row.destructive && { color: colors.error },
-                row.highlight && { color: colors.teal },
-              ]}>
-              {t(row.labelKey)}
-            </Text>
+            <View style={{ flex: 1 }}>
+              <Text
+                style={[
+                  styles.rowLabel,
+                  { fontFamily: font(600) },
+                  row.destructive && { color: colors.error },
+                  row.highlight && { color: colors.teal },
+                ]}>
+                {t(row.labelKey)}
+              </Text>
+              {row.subtitle ? (
+                <Text style={[styles.rowSubtitle, { fontFamily: font(500) }]}>
+                  {row.subtitle}
+                </Text>
+              ) : null}
+            </View>
             <Ionicons name="chevron-forward" size={18} color={colors.ink3} />
           </Pressable>
         ))}
@@ -227,5 +266,6 @@ const styles = StyleSheet.create({
   rowFirst: { borderTopLeftRadius: radii.lg, borderTopRightRadius: radii.lg },
   rowLast: { borderBottomLeftRadius: radii.lg, borderBottomRightRadius: radii.lg },
   rowDivider: { borderBottomWidth: 1, borderBottomColor: colors.border2 },
-  rowLabel: { flex: 1, fontSize: typography.body.fontSize, color: colors.ink },
+  rowLabel: { fontSize: typography.body.fontSize, color: colors.ink },
+  rowSubtitle: { fontSize: 12, color: colors.ink3, marginTop: 2 },
 });

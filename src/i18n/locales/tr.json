@@ -280,6 +280,7 @@
       "premiumActive": "Kartochka Premium ✦",
       "signIn": "Giriş yap / Yedekle",
       "account": "Hesap",
+      "signOut": "Çıkış yap",
       "manageChildren": "Çocuklar",
       "medicalProfile": "Tıbbi profil",
       "doctorVisits": "Doktor ziyaretleri",
@@ -530,7 +531,21 @@
     "errorBody": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
     "restoredTitle": "Satın almalar geri yüklendi",
     "restoredBody": "Premium aboneliğiniz aktif.",
-    "nothingToRestore": "Önceki satın alma bulunamadı."
+    "nothingToRestore": "Önceki satın alma bulunamadı.",
+    "upgradeToYearly": "Yıllığa geç",
+    "upgradedBody": "Artık yıllık plandasın.",
+    "signInNudge": {
+      "title": "Aboneliğini korumak için giriş yap",
+      "body": "Bu aboneliği hesabına bağlamak için dokun — yeniden yüklemede veya yeni telefonda kaybolmaz."
+    },
+    "active": {
+      "badge": "Premium aktif",
+      "titleMonthly": "Aylık planındasın",
+      "bodyMonthly": "Yıllığa geç, ~48% tasarruf et.",
+      "titleAnnual": "Yıllık planındasın",
+      "bodyAnnual": "Teşekkürler — en avantajlı planı seçtin.",
+      "manageNote": "Aboneliği App Store veya Google Play üzerinden yönet: iOS → Ayarlar → Abonelikler; Android → Play Store → Abonelikler."
+    }
   },
   "partnerSharing": {
     "title": "Eşle paylaşım",

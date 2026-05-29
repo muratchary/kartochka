@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from './Button';
 import { colors, radii, spacing, typography } from '../theme';
@@ -27,6 +28,7 @@ const STEPS: Step[] = [
 export function Tutorial({ visible, onFinish }: Props) {
   const { t } = useTranslation();
   const font = useFont();
+  const insets = useSafeAreaInsets();
   const [stepIndex, setStepIndex] = useState(0);
 
   const step = STEPS[stepIndex];
@@ -49,7 +51,7 @@ export function Tutorial({ visible, onFinish }: Props) {
   return (
     <Modal visible={visible} animationType="fade" transparent onRequestClose={handleSkip}>
       <View style={styles.scrim}>
-        <View style={styles.sheet}>
+        <View style={[styles.sheet, { paddingBottom: spacing.xxl + insets.bottom }]}>
           <View style={styles.iconBubble}>
             <Ionicons name={`${step.icon}-outline`} size={28} color={colors.teal} />
           </View>

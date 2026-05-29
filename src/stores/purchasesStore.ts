@@ -19,20 +19,39 @@ const ENTITLEMENT_ID = 'Kartochka Pro';
 
 // ─────────────────────────────────────────────────────────────────────────────
 
+type ActivePackageType = 'monthly' | 'annual' | null;
+
 interface PurchasesState {
   isPremium: boolean;
   isLoading: boolean;
   offering: PurchasesOffering | null;
+  // Which plan the user currently holds (null if not premium or product id unknown).
+  activePackageType: ActivePackageType;
   initialize: () => Promise<void>;
   refreshEntitlements: () => Promise<void>;
   purchasePackage: (pkg: PurchasesPackage) => Promise<boolean>;
   restorePurchases: () => Promise<boolean>;
+  // Tie this RC anonymous user id to a real auth user id so the entitlement
+  // survives uninstall / device-switch. Safe to call repeatedly.
+  identify: (userId: string) => Promise<void>;
+  // Cut the link to a real auth user (called on sign-out). RC reverts to
+  // anonymous id; entitlements on this device persist until restore.
+  logOut: () => Promise<void>;
+}
+
+function packageTypeFromProductId(productId: string | undefined): ActivePackageType {
+  if (!productId) return null;
+  const id = productId.toLowerCase();
+  if (id.includes('annual') || id.includes('yearly') || id.includes('year')) return 'annual';
+  if (id.includes('month')) return 'monthly';
+  return null;
 }
 
 export const usePurchasesStore = create<PurchasesState>((set, get) => ({
   isPremium: false,
   isLoading: false,
   offering: null,
+  activePackageType: null,
 
   initialize: async () => {
     try {
@@ -51,8 +70,13 @@ export const usePurchasesStore = create<PurchasesState>((set, get) => ({
         Purchases.getCustomerInfo(),
         Purchases.getOfferings(),
       ]);
+      const entitlement = info.entitlements.active[ENTITLEMENT_ID];
+      const isPremium = !!entitlement;
       set({
-        isPremium: ENTITLEMENT_ID in info.entitlements.active,
+        isPremium,
+        activePackageType: isPremium
+          ? packageTypeFromProductId(entitlement?.productIdentifier)
+          : null,
         offering: offerings.current,
         isLoading: false,
       });
@@ -65,8 +89,15 @@ export const usePurchasesStore = create<PurchasesState>((set, get) => ({
     try {
       set({ isLoading: true });
       const { customerInfo } = await Purchases.purchasePackage(pkg);
-      const isPremium = ENTITLEMENT_ID in customerInfo.entitlements.active;
-      set({ isPremium, isLoading: false });
+      const entitlement = customerInfo.entitlements.active[ENTITLEMENT_ID];
+      const isPremium = !!entitlement;
+      set({
+        isPremium,
+        activePackageType: isPremium
+          ? packageTypeFromProductId(entitlement?.productIdentifier)
+          : null,
+        isLoading: false,
+      });
       return isPremium;
     } catch (e: unknown) {
       set({ isLoading: false });
@@ -79,12 +110,37 @@ export const usePurchasesStore = create<PurchasesState>((set, get) => ({
     try {
       set({ isLoading: true });
       const info = await Purchases.restorePurchases();
-      const isPremium = ENTITLEMENT_ID in info.entitlements.active;
-      set({ isPremium, isLoading: false });
+      const entitlement = info.entitlements.active[ENTITLEMENT_ID];
+      const isPremium = !!entitlement;
+      set({
+        isPremium,
+        activePackageType: isPremium
+          ? packageTypeFromProductId(entitlement?.productIdentifier)
+          : null,
+        isLoading: false,
+      });
       return isPremium;
     } catch {
       set({ isLoading: false });
       return false;
+    }
+  },
+
+  identify: async (userId: string) => {
+    try {
+      await Purchases.logIn(userId);
+      await get().refreshEntitlements();
+    } catch {
+      // RC unavailable (Expo Go etc.) — silent no-op
+    }
+  },
+
+  logOut: async () => {
+    try {
+      await Purchases.logOut();
+      await get().refreshEntitlements();
+    } catch {
+      // RC unavailable — silent no-op
     }
   },
 }));

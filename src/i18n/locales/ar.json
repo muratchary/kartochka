@@ -332,6 +332,7 @@
       "premiumActive": "كارتوشكا بريميوم ✦",
       "signIn": "تسجيل الدخول / النسخ الاحتياطي",
       "account": "الحساب",
+      "signOut": "تسجيل الخروج",
       "manageChildren": "الأطفال",
       "medicalProfile": "الملف الطبي",
       "doctorVisits": "زيارات الطبيب",
@@ -591,7 +592,21 @@
     "errorBody": "حدث خطأ. حاول مرة أخرى.",
     "restoredTitle": "تمت استعادة المشتريات",
     "restoredBody": "اشتراكك في بريميوم نشط.",
-    "nothingToRestore": "لم يتم العثور على مشتريات سابقة."
+    "nothingToRestore": "لم يتم العثور على مشتريات سابقة.",
+    "upgradeToYearly": "الترقية إلى السنوي",
+    "upgradedBody": "تم الانتقال إلى الخطة السنوية.",
+    "signInNudge": {
+      "title": "سجّل الدخول لحماية اشتراكك",
+      "body": "اضغط لربط الاشتراك بحسابك حتى يبقى بعد إعادة التثبيت أو تغيير الجهاز."
+    },
+    "active": {
+      "badge": "بريميوم مفعّل",
+      "titleMonthly": "أنت على الخطة الشهرية",
+      "bodyMonthly": "انتقل إلى السنوي ووفّر ~48%.",
+      "titleAnnual": "أنت على الخطة السنوية",
+      "bodyAnnual": "شكراً لاختيارك أفضل قيمة.",
+      "manageNote": "أدِر اشتراكك من App Store أو Google Play: iOS ← الإعدادات ← الاشتراكات؛ Android ← متجر Play ← الاشتراكات."
+    }
   },
   "partnerSharing": {
     "title": "المشاركة مع الشريك",

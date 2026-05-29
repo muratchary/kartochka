@@ -306,6 +306,7 @@
       "premiumActive": "Kartochka Premium ✦",
       "signIn": "Sign in / Back up data",
       "account": "Account",
+      "signOut": "Sign out",
       "manageChildren": "Children",
       "medicalProfile": "Medical profile",
       "doctorVisits": "Doctor visits",
@@ -530,7 +531,21 @@
     "errorBody": "Something went wrong. Please try again.",
     "restoredTitle": "Purchases restored",
     "restoredBody": "Your Premium subscription is active.",
-    "nothingToRestore": "No previous purchases found."
+    "nothingToRestore": "No previous purchases found.",
+    "upgradeToYearly": "Upgrade to Yearly",
+    "upgradedBody": "You're now on the yearly plan.",
+    "signInNudge": {
+      "title": "Sign in to protect your purchase",
+      "body": "Tap to link this subscription to your account so it survives reinstall or a new phone."
+    },
+    "active": {
+      "badge": "Premium active",
+      "titleMonthly": "You're on the Monthly plan",
+      "bodyMonthly": "Switch to Yearly and save ~48%.",
+      "titleAnnual": "You're on the Yearly plan",
+      "bodyAnnual": "Thanks for going all-in. You're on the best value.",
+      "manageNote": "Manage or cancel anytime from your store account: iOS → Settings → Subscriptions; Android → Play Store → Subscriptions."
+    }
   },
   "partnerSharing": {
     "title": "Partner sharing",
