@@ -18,6 +18,21 @@ import { supabase } from './supabase';
 import { useChildrenStore } from '../stores/childrenStore';
 import type { Child, DoctorVisit, GrowthEntry, MilestoneRecord, VaccinationRecord } from '../types';
 
+// Wait for the persist middleware to finish reading children/vaccines/etc from
+// AsyncStorage before running any sync. Without this, syncDown can race
+// hydration: it reads getState() while children: [] (initial), calls setState
+// with merged=[], and the empty value gets persisted before hydration can
+// restore the real data → user loses their child on next cold start.
+async function waitForHydration(): Promise<void> {
+  if (useChildrenStore.persist.hasHydrated()) return;
+  return new Promise<void>((resolve) => {
+    const unsub = useChildrenStore.persist.onFinishHydration(() => {
+      unsub();
+      resolve();
+    });
+  });
+}
+
 // ─── Field mappers ────────────────────────────────────────────────────────────
 // Supabase columns are snake_case and some names differ from local camelCase.
 
@@ -198,6 +213,7 @@ function merge<T extends { id: string; updatedAt: string }>(local: T[], remote: 
 // Push all local records to Supabase. Uses upsert so it's safe to run multiple times.
 
 export async function syncUp(userId: string): Promise<void> {
+  await waitForHydration();
   const { children, vaccinations, growthEntries, milestones, doctorVisits } =
     useChildrenStore.getState();
 
@@ -233,6 +249,7 @@ export async function syncUp(userId: string): Promise<void> {
 // Pull all Supabase records for this user and merge into the local store.
 
 export async function syncDown(userId: string): Promise<void> {
+  await waitForHydration();
   const store = useChildrenStore.getState();
 
   const [childrenRes, vaccRes, growthRes, mileRes, visitRes] = await Promise.all([

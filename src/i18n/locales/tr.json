@@ -534,6 +534,9 @@
     "nothingToRestore": "Önceki satın alma bulunamadı.",
     "upgradeToYearly": "Yıllığa geç",
     "upgradedBody": "Artık yıllık plandasın.",
+    "upgradeConfirmTitle": "Yıllığa geçilsin mi?",
+    "upgradeConfirmBody": "Bugün {{price}} tahsil edilecek, sonraki yenileme 12 ay sonra olacak. İstediğin zaman iptal edebilirsin.",
+    "upgradeConfirmCta": "Yıllığa geç",
     "signInNudge": {
       "title": "Aboneliğini korumak için giriş yap",
       "body": "Bu aboneliği hesabına bağlamak için dokun — yeniden yüklemede veya yeni telefonda kaybolmaz."

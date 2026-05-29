@@ -534,6 +534,9 @@
     "nothingToRestore": "No previous purchases found.",
     "upgradeToYearly": "Upgrade to Yearly",
     "upgradedBody": "You're now on the yearly plan.",
+    "upgradeConfirmTitle": "Switch to yearly?",
+    "upgradeConfirmBody": "You'll be charged {{price}} today and your next renewal will be in 12 months. Cancel anytime.",
+    "upgradeConfirmCta": "Switch to yearly",
     "signInNudge": {
       "title": "Sign in to protect your purchase",
       "body": "Tap to link this subscription to your account so it survives reinstall or a new phone."

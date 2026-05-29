@@ -79,16 +79,30 @@ export async function scheduleVaccineReminders(
 }
 
 export async function cancelChildReminders(childId: string): Promise<void> {
-  const scheduled = await Notifications.getAllScheduledNotificationsAsync();
-  await Promise.all(
-    scheduled
-      .filter((n) => (n.content.data as { childId?: string } | null)?.childId === childId)
-      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier)),
-  );
+  // Same defensive wrap as cancelAllReminders — removing a child shouldn't
+  // crash because the notification module is unhappy.
+  try {
+    const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+    await Promise.all(
+      scheduled
+        .filter((n) => (n.content.data as { childId?: string } | null)?.childId === childId)
+        .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier)),
+    );
+  } catch {
+    // ignore; best-effort cleanup
+  }
 }
 
 export async function cancelAllReminders(): Promise<void> {
-  await Notifications.cancelAllScheduledNotificationsAsync();
+  // Native module can throw on Android if notifications permissions are in
+  // a weird state, OS-level rate limiting hits, or the channel was revoked.
+  // Either way, the caller (e.g. More tab → Clear all data) must not crash.
+  try {
+    await Notifications.cancelAllScheduledNotificationsAsync();
+  } catch {
+    // ignore; reminder cancellation is best-effort, the local data clear
+    // proceeds regardless.
+  }
 }
 
 function reminderIdentifier(childId: string, vaccineCode: string, doseNumber: number): string {

@@ -110,17 +110,31 @@ export default function PaywallScreen() {
             </Text>
           </View>
 
-          {/* Upgrade to yearly nudge — only when user is on monthly */}
+          {/* Upgrade to yearly nudge — only when user is on monthly.
+              Tapping does NOT purchase directly; it shows a confirmation
+              Alert first so accidental taps can't charge the user. */}
           {!onAnnual && yearly && (
             <Pressable
               style={[styles.planCard, styles.planCardFeatured, styles.planCardSelected, { marginBottom: spacing.xl }]}
-              onPress={async () => {
-                try {
-                  await purchasePackage(yearly);
-                  Alert.alert(t('paywall.successTitle'), t('paywall.upgradedBody'));
-                } catch {
-                  Alert.alert(t('paywall.errorTitle'), t('paywall.errorBody'));
-                }
+              onPress={() => {
+                Alert.alert(
+                  t('paywall.upgradeConfirmTitle'),
+                  t('paywall.upgradeConfirmBody', { price: yearly.product.priceString }),
+                  [
+                    { text: t('common.cancel'), style: 'cancel' },
+                    {
+                      text: t('paywall.upgradeConfirmCta'),
+                      onPress: async () => {
+                        try {
+                          await purchasePackage(yearly);
+                          Alert.alert(t('paywall.successTitle'), t('paywall.upgradedBody'));
+                        } catch {
+                          Alert.alert(t('paywall.errorTitle'), t('paywall.errorBody'));
+                        }
+                      },
+                    },
+                  ],
+                );
               }}>
               <View style={styles.savingsChip}>
                 <Text style={[styles.savingsText, { fontFamily: font(700) }]}>
