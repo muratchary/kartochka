@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChildAvatar } from '../src/components/ChildAvatar';
 import { computeWHOPercentile } from '../src/data/whoGrowthStandards';
 import type { SupportedLanguage } from '../src/i18n';
+import { formatChildAge } from '../src/lib/childAge';
 import { getSchedule } from '../src/lib/schedules';
 import { dueDateForDose, nextDueVaccine, statusFromDays } from '../src/lib/vaccinationStatus';
 import { selectActiveChild, useChildrenStore } from '../src/stores/childrenStore';
@@ -35,18 +36,10 @@ export default function DoctorCardScreen() {
     return entries[0] ?? null;
   }, [child, growthEntries]);
 
-  const ageLabel = useMemo(() => {
-    if (!child) return '';
-    const totalMonths = Math.floor(
-      (Date.now() - new Date(child.dateOfBirth).getTime()) / (MS_PER_DAY * DAYS_PER_MONTH),
-    );
-    if (totalMonths <= 0) return t('home.pdf.ageDays', { count: 1 });
-    if (totalMonths < 24) return t('home.pdf.ageMonths', { count: totalMonths });
-    const years = Math.floor(totalMonths / 12);
-    const rem = totalMonths % 12;
-    if (rem === 0) return t('home.pdf.ageYears', { count: years });
-    return `${t('home.pdf.ageYears', { count: years })} ${t('home.pdf.ageMonths', { count: rem })}`;
-  }, [child, t]);
+  const ageLabel = useMemo(
+    () => (child ? formatChildAge(child.dateOfBirth, t) : ''),
+    [child, t],
+  );
 
   const nextDue = useMemo(() => {
     if (!child) return null;

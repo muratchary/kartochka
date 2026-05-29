@@ -40,16 +40,18 @@ export default function SignInScreen() {
         router.back();
       }
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : String(e);
+      const msg = e instanceof Error ? e.message : '';
       if (msg === 'not_configured') {
         Alert.alert(t('signIn.notConfiguredTitle'), t('signIn.notConfiguredBody'));
       } else if (msg === 'expo_go') {
         Alert.alert(t('signIn.expoGoTitle'), t('signIn.expoGoBody'));
       } else {
-        // Surface the actual error so we can debug Google OAuth in TestFlight.
-        // TODO: switch back to friendly generic message once we know what's
-        // failing in the wild.
-        Alert.alert(t('signIn.errorTitle'), msg || t('signIn.errorBody'));
+        // Generic, localized message. Real-device debugging during
+        // launch (commits 0146c29 + 26b7b8c) surfaced the actual
+        // Supabase strings via TestFlight; both iOS and Android OAuth
+        // paths are now confirmed working, so we restore the friendly
+        // copy users should see if anything ever goes wrong here again.
+        Alert.alert(t('signIn.errorTitle'), t('signIn.errorBody'));
       }
     }
   };

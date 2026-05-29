@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Card } from '../src/components/Card';
 import { ChildAvatar } from '../src/components/ChildAvatar';
 import { ScreenTitle } from '../src/components/ScreenTitle';
+import { formatChildAge } from '../src/lib/childAge';
 import { useChildrenStore } from '../src/stores/childrenStore';
 import { colors, spacing, typography } from '../src/theme';
 import { useFont } from '../src/theme/useFont';
@@ -48,7 +49,7 @@ export default function SwitchChildScreen() {
                     <View style={{ flex: 1 }}>
                       <Text style={[styles.name, { fontFamily: font(700) }]}>{c.name}</Text>
                       <Text style={[styles.meta, { fontFamily: font(600) }]}>
-                        {childAgeLabel(c.dateOfBirth, t)} · {t(`countries.${c.countryCode}`)}
+                        {formatChildAge(c.dateOfBirth, t)} · {t(`countries.${c.countryCode}`)}
                       </Text>
                     </View>
                     {active && (
@@ -65,17 +66,6 @@ export default function SwitchChildScreen() {
   );
 }
 
-function childAgeLabel(dob: string, t: (k: string, opts?: Record<string, unknown>) => string): string {
-  const totalMonths = Math.floor(
-    (Date.now() - new Date(dob).getTime()) / (1000 * 60 * 60 * 24 * 30.4375),
-  );
-  if (totalMonths <= 0) return t('home.pdf.ageDays', { count: 1 });
-  if (totalMonths < 24) return t('home.pdf.ageMonths', { count: totalMonths });
-  const years = Math.floor(totalMonths / 12);
-  const rem = totalMonths % 12;
-  if (rem === 0) return t('home.pdf.ageYears', { count: years });
-  return `${t('home.pdf.ageYears', { count: years })} ${t('home.pdf.ageMonths', { count: rem })}`;
-}
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
