@@ -141,24 +141,27 @@ export default function MoreScreen() {
     ]);
   };
 
-  const dataSection: RowDef[] = [
-    // Load demo data is a developer-only convenience; never show in prod.
-    ...(__DEV__
-      ? [
-          {
-            icon: 'sparkles-outline' as const,
-            labelKey: 'more.items.loadDemo',
-            onPress: handleLoadDemo,
-          },
-        ]
-      : []),
-    {
-      icon: 'trash-outline',
-      labelKey: 'more.items.clearAll',
-      onPress: handleClearAll,
-      destructive: true,
-    },
-  ];
+  // Both rows are developer-only conveniences for resetting tester state.
+  // In production, parents who want to delete data uninstall the app or
+  // use the web page at kartochka.app/delete-account (which is linked
+  // from Google Play Data Safety). A single-tap "wipe everything"
+  // button is too dangerous for a medical-history app where a mistap
+  // costs years of irreversible records.
+  const dataSection: RowDef[] = __DEV__
+    ? [
+        {
+          icon: 'sparkles-outline' as const,
+          labelKey: 'more.items.loadDemo',
+          onPress: handleLoadDemo,
+        },
+        {
+          icon: 'trash-outline' as const,
+          labelKey: 'more.items.clearAll',
+          onPress: handleClearAll,
+          destructive: true,
+        },
+      ]
+    : [];
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -172,7 +175,9 @@ export default function MoreScreen() {
         <Section title={t('more.sections.account')} font={font} rows={accountSection} t={t} />
         <Section title={t('more.sections.children')} font={font} rows={childrenSection} t={t} />
         <Section title={t('more.sections.app')} font={font} rows={appSection} t={t} />
-        <Section title={t('more.sections.developer')} font={font} rows={dataSection} t={t} />
+        {dataSection.length > 0 && (
+          <Section title={t('more.sections.developer')} font={font} rows={dataSection} t={t} />
+        )}
       </ScrollView>
     </SafeAreaView>
   );
