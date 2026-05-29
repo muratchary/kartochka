@@ -112,19 +112,33 @@ export const useAuthStore = create<AuthState>((set) => ({
       const result = await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
 
       if (result.type === 'success' && result.url) {
-        // Exchange the code for a session (PKCE flow)
+        // Exchange the code for a session (PKCE flow). On Android the OS
+        // often hands the deep link to the app's router instead of returning
+        // it through openAuthSessionAsync — `app/auth/callback.tsx` handles
+        // that path. On iOS we usually land here.
         const url = new URL(result.url);
         const code = url.searchParams.get('code');
-        if (code) {
-          const { data: sessionData } = await supabase.auth.exchangeCodeForSession(result.url);
-          // Push all local data to Supabase, then pull back merged state.
-          // Also tie this user to their RC entitlement so the subscription
-          // survives reinstall / device switch.
-          if (sessionData.user) {
-            usePurchasesStore.getState().identify(sessionData.user.id).catch(() => {});
-            fullSync(sessionData.user.id).catch(() => {});
-          }
+        const oauthError = url.searchParams.get('error');
+        if (oauthError) {
+          throw new Error(url.searchParams.get('error_description') || oauthError);
         }
+        if (!code) {
+          // Browser closed without a code — most likely user cancelled.
+          return;
+        }
+        const { data: sessionData, error: exchangeError } =
+          await supabase.auth.exchangeCodeForSession(result.url);
+        if (exchangeError) throw exchangeError;
+        // Push all local data to Supabase, then pull back merged state.
+        // Also tie this user to their RC entitlement so the subscription
+        // survives reinstall / device switch.
+        if (sessionData.user) {
+          usePurchasesStore.getState().identify(sessionData.user.id).catch(() => {});
+          fullSync(sessionData.user.id).catch(() => {});
+        }
+      } else if (result.type === 'dismiss' || result.type === 'cancel') {
+        // User backed out of the browser sheet — silent return.
+        return;
       }
     } finally {
       set({ isSigningIn: false });
