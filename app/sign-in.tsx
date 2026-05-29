@@ -287,11 +287,17 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
   closeBtn: { position: 'absolute', top: 56, right: spacing.lg, zIndex: 10, padding: spacing.sm },
   content: {
-    flex: 1,
+    // flexGrow (not flex) lets content vertically center when it fits AND
+    // scroll when it doesn't. With flex: 1 the contentContainer was locked
+    // to viewport height, so on shorter screens (or with the keyboard up)
+    // the email input + CTA + skip got pushed past the bottom and were
+    // unreachable — confirmed via Android tester report.
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: spacing.xl,
     gap: spacing.lg,
+    paddingTop: spacing.xxxl,
     paddingBottom: spacing.xxxl,
   },
   iconWrap: {

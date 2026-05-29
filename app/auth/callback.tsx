@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { fullSync } from '../../src/lib/sync';
@@ -53,9 +53,12 @@ export default function AuthCallbackScreen() {
           usePurchasesStore.getState().identify(data.user.id).catch(() => {});
           fullSync(data.user.id).catch(() => {});
         }
-      } catch {
-        // Swallow — the user already failed once; bouncing them home is
-        // friendlier than rendering an error page.
+      } catch (e: unknown) {
+        // Temporarily surface the error so we can debug Android OAuth.
+        // TODO: replace with friendly localized copy once we know what's
+        // failing in the wild.
+        const msg = e instanceof Error ? e.message : String(e);
+        Alert.alert('Sign-in failed', msg || 'Unknown error');
       } finally {
         router.replace('/');
       }
