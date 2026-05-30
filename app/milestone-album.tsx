@@ -137,7 +137,7 @@ export default function MilestoneAlbumScreen() {
       // Uses the Android system photo picker / iOS picker — no media-library
       // permission required.
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ['images'],
         quality: 0.85,
       });
       if (!result.canceled && result.assets[0]) {

@@ -1,13 +1,13 @@
 -- Promo code redemption for tester / launch Premium grants.
--- Run this once in the Supabase SQL editor (same as partner-sharing.sql).
+-- Run this in the Supabase SQL editor. Safe to re-run (idempotent): the table
+-- and constraint use IF-NOT-EXISTS guards and the function is CREATE OR REPLACE.
 --
--- Model: ONE shared code, server-enforced cap. The first N devices to
--- redeem the valid code get Premium; after the cap is reached, redemption
--- fails with 'exhausted'. Re-redeeming on the same device is idempotent
--- (returns ok without consuming another slot).
+-- Model: ONE shared code, server-enforced cap. The first N *devices* to redeem
+-- the valid code get Premium; after the cap, redemption returns 'exhausted'.
+-- Re-redeeming on the same device is idempotent (no extra slot consumed).
 --
--- To change the code or cap, edit v_valid_code / v_cap below and re-run
--- the CREATE OR REPLACE FUNCTION block.
+-- To change the code or cap, edit v_valid_code / v_cap below and re-run the
+-- CREATE OR REPLACE FUNCTION block.
 
 create table if not exists public.promo_redemptions (
   id         uuid primary key default gen_random_uuid(),
@@ -20,6 +20,21 @@ create table if not exists public.promo_redemptions (
 -- security-definer function below, which runs with elevated rights.
 alter table public.promo_redemptions enable row level security;
 
+-- One redemption per device (defends the cap against a same-device race too).
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'promo_redemptions_device_id_key'
+  ) then
+    alter table public.promo_redemptions
+      add constraint promo_redemptions_device_id_key unique (device_id);
+  end if;
+end $$;
+
+-- Speeds up the per-code count.
+create index if not exists promo_redemptions_code_idx
+  on public.promo_redemptions (code);
+
 create or replace function public.redeem_promo(p_code text, p_device_id text default null)
 returns jsonb
 language plpgsql
@@ -31,14 +46,23 @@ declare
   v_cap        constant int  := 100;               -- max redemptions
   v_count int;
 begin
+  -- A device id is required: without it, null-device calls would each burn a
+  -- cap slot and bypass the idempotency check.
+  if p_device_id is null or length(trim(p_device_id)) = 0 then
+    return jsonb_build_object('ok', false, 'reason', 'invalid');
+  end if;
+
   if lower(trim(p_code)) <> lower(v_valid_code) then
     return jsonb_build_object('ok', false, 'reason', 'invalid');
   end if;
 
-  -- Idempotent: a device that already redeemed stays granted, no new slot used.
-  if p_device_id is not null and exists (
-    select 1 from promo_redemptions where device_id = p_device_id
-  ) then
+  -- Serialize redemptions of this code within the transaction so two
+  -- concurrent callers can't both read count = cap-1 and both insert,
+  -- pushing past the cap. The lock releases at transaction end.
+  perform pg_advisory_xact_lock(hashtext('promo:' || v_valid_code));
+
+  -- Idempotent: a device that already redeemed stays granted, no new slot.
+  if exists (select 1 from promo_redemptions where device_id = p_device_id) then
     return jsonb_build_object('ok', true, 'reason', 'already');
   end if;
 

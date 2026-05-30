@@ -643,7 +643,8 @@
       "sentTitle": "Check your inbox",
       "sentBody": "We sent a sign-in link to {{email}}. Tap it from this device and you'll be signed in.",
       "useDifferent": "Use a different email"
-    }
+    },
+    "signingIn": "Signing you in…"
   },
   "redeem": {
     "title": "Redeem a code",

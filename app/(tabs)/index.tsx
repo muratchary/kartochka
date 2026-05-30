@@ -22,9 +22,8 @@ import { exportChildPdf } from '../../src/lib/pdfExport';
 import { getSchedule } from '../../src/lib/schedules';
 import { usePurchasesStore } from '../../src/stores/purchasesStore';
 import {
-  dueDateForDose,
+  doseDueInfo,
   nextDueVaccine,
-  statusFromDays,
   type DueStatus,
 } from '../../src/lib/vaccinationStatus';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
@@ -56,7 +55,7 @@ export default function HomeScreen() {
     if (!child) return;
     // Uses the system photo picker — no media-library permission required.
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ['images'],
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.8,
@@ -176,18 +175,15 @@ export default function HomeScreen() {
     let vaccinesDue = 0;
     let vaccinesOverdue = 0;
     if (schedule) {
-      const msNow = now.getTime();
       for (const v of schedule.vaccines) {
         for (const dose of v.doses) {
           const done = childRecords.some(
             (r) => r.vaccineCode === v.code && r.doseNumber === dose.doseNumber,
           );
           if (done) continue;
-          const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths);
-          const days = Math.round((dueDate.getTime() - msNow) / (1000 * 60 * 60 * 24));
-          const status = statusFromDays(days);
+          const { status } = doseDueInfo(child, v, dose, childRecords, now);
           if (status === 'overdue') vaccinesOverdue += 1;
-          else if (days <= 30) vaccinesDue += 1;
+          else if (status === 'due-soon') vaccinesDue += 1;
         }
       }
     }

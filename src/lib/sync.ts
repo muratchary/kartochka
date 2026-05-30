@@ -69,6 +69,9 @@ function rowToChild(row: any): Child {
     ...(row.emergency_contact ? { emergencyContact: row.emergency_contact } : {}),
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    // Remember who owns this child in the cloud so syncUp never re-uploads a
+    // partner-shared child under the wrong account.
+    ownerId: row.user_id,
   };
 }
 
@@ -217,31 +220,42 @@ export async function syncUp(userId: string): Promise<void> {
   const { children, vaccinations, growthEntries, milestones, doctorVisits } =
     useChildrenStore.getState();
 
+  // CRITICAL: only push children this user OWNS. A child acquired via partner
+  // sharing carries the owner's id in `ownerId`; re-uploading it under this
+  // user's id would duplicate or hijack the owner's cloud record. Children
+  // with no ownerId were created locally (pre-sign-in) and belong to this user.
+  const ownedChildren = children.filter((c) => !c.ownerId || c.ownerId === userId);
+  const ownedChildIds = new Set(ownedChildren.map((c) => c.id));
+  const ownedVaccinations = vaccinations.filter((v) => ownedChildIds.has(v.childId));
+  const ownedGrowth = growthEntries.filter((g) => ownedChildIds.has(g.childId));
+  const ownedMilestones = milestones.filter((m) => ownedChildIds.has(m.childId));
+  const ownedVisits = doctorVisits.filter((d) => ownedChildIds.has(d.childId));
+
   // Children must go first to satisfy FK constraints on the other tables.
-  if (children.length > 0) {
+  if (ownedChildren.length > 0) {
     await supabase
       .from('children')
-      .upsert(children.map((c) => childToRow(c, userId)), { onConflict: 'id' });
+      .upsert(ownedChildren.map((c) => childToRow(c, userId)), { onConflict: 'id' });
   }
-  if (vaccinations.length > 0) {
+  if (ownedVaccinations.length > 0) {
     await supabase
       .from('vaccination_records')
-      .upsert(vaccinations.map((v) => vaccinationToRow(v, userId)), { onConflict: 'id' });
+      .upsert(ownedVaccinations.map((v) => vaccinationToRow(v, userId)), { onConflict: 'id' });
   }
-  if (growthEntries.length > 0) {
+  if (ownedGrowth.length > 0) {
     await supabase
       .from('growth_records')
-      .upsert(growthEntries.map((g) => growthToRow(g, userId)), { onConflict: 'id' });
+      .upsert(ownedGrowth.map((g) => growthToRow(g, userId)), { onConflict: 'id' });
   }
-  if (milestones.length > 0) {
+  if (ownedMilestones.length > 0) {
     await supabase
       .from('milestone_records')
-      .upsert(milestones.map((m) => milestoneToRow(m, userId)), { onConflict: 'id' });
+      .upsert(ownedMilestones.map((m) => milestoneToRow(m, userId)), { onConflict: 'id' });
   }
-  if (doctorVisits.length > 0) {
+  if (ownedVisits.length > 0) {
     await supabase
       .from('doctor_visits')
-      .upsert(doctorVisits.map((d) => doctorVisitToRow(d, userId)), { onConflict: 'id' });
+      .upsert(ownedVisits.map((d) => doctorVisitToRow(d, userId)), { onConflict: 'id' });
   }
 }
 

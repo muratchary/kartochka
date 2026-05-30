@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
@@ -24,6 +24,7 @@ import { Segmented } from '../../src/components/Segmented';
 import { ensureNotificationPermission } from '../../src/lib/notifications';
 import { useRescheduleReminders } from '../../src/lib/useReminders';
 import { useChildrenStore } from '../../src/stores/childrenStore';
+import { usePurchasesStore } from '../../src/stores/purchasesStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
 import type { Child, Sex } from '../../src/types';
@@ -54,6 +55,16 @@ export default function AddOrEditChildScreen() {
   );
   const isEdit = !!existing;
 
+  // Defense-in-depth: unlimited children is a Premium feature. The More-tab
+  // entry already gates this, but the route is reachable by deep link, so
+  // bounce a free user with an existing child straight to the paywall.
+  const isPremium = usePurchasesStore((s) => s.isPremium);
+  useEffect(() => {
+    if (!isEdit && !isPremium && children.length >= 1) {
+      router.replace('/paywall');
+    }
+  }, [isEdit, isPremium, children.length, router]);
+
   const defaultCountry = existing?.countryCode ?? children[0]?.countryCode ?? 'RU';
 
   const [name, setName] = useState(existing?.name ?? '');
@@ -72,7 +83,7 @@ export default function AddOrEditChildScreen() {
       onPress: async () => {
         if (index === 0) {
           const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            mediaTypes: ['images'],
             allowsEditing: true,
             aspect: [1, 1],
             quality: 0.8,

@@ -1,5 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -24,6 +25,7 @@ import { useFont } from '../../src/theme/useFont';
 export default function AuthCallbackScreen() {
   const router = useRouter();
   const font = useFont();
+  const { t } = useTranslation();
   const params = useLocalSearchParams<{ code?: string; error?: string; error_description?: string }>();
   const handledRef = useRef(false);
 
@@ -80,7 +82,7 @@ export default function AuthCallbackScreen() {
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <View style={styles.inner}>
         <ActivityIndicator size="large" color={colors.teal} />
-        <Text style={[styles.label, { fontFamily: font(600) }]}>Signing you in…</Text>
+        <Text style={[styles.label, { fontFamily: font(600) }]}>{t('signIn.signingIn')}</Text>
       </View>
     </SafeAreaView>
   );

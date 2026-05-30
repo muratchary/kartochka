@@ -120,7 +120,7 @@ export default function MilestonesScreen() {
 
   const openImagePickerFor = async (recordId: string) => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ['images'],
       quality: 0.85,
     });
     if (!result.canceled && result.assets[0]) {

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
+  I18nManager,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -287,7 +288,7 @@ export default function SignInScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
-  closeBtn: { position: 'absolute', top: 56, right: spacing.lg, zIndex: 10, padding: spacing.sm },
+  closeBtn: { position: 'absolute', top: 56, [I18nManager.isRTL ? 'left' : 'right']: spacing.lg, zIndex: 10, padding: spacing.sm },
   content: {
     // flexGrow (not flex) lets content vertically center when it fits AND
     // scroll when it doesn't. With flex: 1 the contentContainer was locked

@@ -90,6 +90,10 @@ export const useAuthStore = create<AuthState>((set) => ({
             token: credential.identityToken,
           });
           if (idErr) throw idErr;
+          // Set session/user synchronously so callers that read state right
+          // after this resolves (e.g. the sign-in sheet's close check) see the
+          // signed-in user immediately, rather than waiting on onAuthStateChange.
+          set({ session: sessionData.session ?? null, user: sessionData.user ?? null });
           if (sessionData.user) {
             usePurchasesStore.getState().identify(sessionData.user.id).catch(() => {});
             fullSync(sessionData.user.id).catch(() => {});
@@ -138,6 +142,8 @@ export const useAuthStore = create<AuthState>((set) => ({
         const { data: sessionData, error: exchangeError } =
           await supabase.auth.exchangeCodeForSession(code);
         if (exchangeError) throw exchangeError;
+        // Set state synchronously (see note in the Apple path above).
+        set({ session: sessionData.session ?? null, user: sessionData.user ?? null });
         // Push all local data to Supabase, then pull back merged state.
         // Also tie this user to their RC entitlement so the subscription
         // survives reinstall / device switch.

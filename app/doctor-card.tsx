@@ -10,7 +10,7 @@ import { computeWHOPercentile } from '../src/data/whoGrowthStandards';
 import type { SupportedLanguage } from '../src/i18n';
 import { formatChildAge } from '../src/lib/childAge';
 import { getSchedule } from '../src/lib/schedules';
-import { dueDateForDose, nextDueVaccine, statusFromDays } from '../src/lib/vaccinationStatus';
+import { nextDueVaccine } from '../src/lib/vaccinationStatus';
 import { selectActiveChild, useChildrenStore } from '../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../src/theme';
 import { useFont } from '../src/theme/useFont';

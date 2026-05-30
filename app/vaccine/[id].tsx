@@ -12,7 +12,7 @@ import type { SupportedLanguage } from '../../src/i18n';
 import type { VaccineReactions } from '../../src/types';
 import { getSchedule } from '../../src/lib/schedules';
 import { useRescheduleReminders } from '../../src/lib/useReminders';
-import { dueDateForDose, statusFromDays } from '../../src/lib/vaccinationStatus';
+import { doseDueInfo } from '../../src/lib/vaccinationStatus';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
@@ -49,19 +49,9 @@ export default function VaccineDetailScreen() {
     const record = vaccinations.find(
       (r) => r.childId === child.id && r.vaccineCode === parsed.code && r.doseNumber === parsed.doseNumber,
     );
-    const prevRecord = parsed.doseNumber > 1
-      ? vaccinations.find(
-          (r) => r.childId === child.id && r.vaccineCode === parsed.code && r.doseNumber === parsed.doseNumber - 1,
-        )
-      : null;
-    const dueDate = dueDateForDose(
-      child.dateOfBirth,
-      dose.recommendedAgeMonths,
-      prevRecord?.administeredOn ?? null,
-    );
-    const now = Date.now();
-    const daysFromNow = Math.round((dueDate.getTime() - now) / (1000 * 60 * 60 * 24));
-    const status: Status = record ? 'done' : statusFromDays(daysFromNow);
+    const childRecords = vaccinations.filter((r) => r.childId === child.id);
+    const { dueDate, status: doseStatus, daysFromNow } = doseDueInfo(child, vaccine, dose, childRecords);
+    const status: Status = record ? 'done' : doseStatus;
     return { vaccine, dose, record, dueDate, status, daysFromNow };
   }, [child, parsed, vaccinations]);
 

@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Pill, type PillTone } from '../../src/components/Pill';
 import type { SupportedLanguage } from '../../src/i18n';
 import { getSchedule } from '../../src/lib/schedules';
-import { dueDateForDose, statusFromDays, type DueStatus } from '../../src/lib/vaccinationStatus';
+import { doseDueInfo, type DueStatus } from '../../src/lib/vaccinationStatus';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
 import { useFont } from '../../src/theme/useFont';
@@ -55,15 +55,14 @@ export default function VaccinesScreen() {
     const schedule = getSchedule(child.countryCode);
     if (!schedule) return [];
     const records = vaccinations.filter((v) => v.childId === child.id);
-    const now = Date.now();
+    const nowDate = new Date();
 
     const result: DoseRow[] = [];
     for (const v of schedule.vaccines) {
       for (const dose of v.doses) {
-        const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths);
-        const daysFromNow = Math.round((dueDate.getTime() - now) / MS_PER_DAY);
+        const { dueDate, status: doseStatus, daysFromNow } = doseDueInfo(child, v, dose, records, nowDate);
         const done = records.some((r) => r.vaccineCode === v.code && r.doseNumber === dose.doseNumber);
-        const status: RowStatus = done ? 'done' : normalizeStatus(statusFromDays(daysFromNow));
+        const status: RowStatus = done ? 'done' : normalizeStatus(doseStatus);
         result.push({
           vaccineCode: v.code,
           vaccineName: v.displayName[lang] ?? v.displayName.en,

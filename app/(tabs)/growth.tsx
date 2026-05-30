@@ -68,9 +68,9 @@ export default function GrowthScreen() {
         if (whoSex) {
           latestPercentile = computeWHOPercentile(latest.value, latest.ageMonths, whoMetric as 'weight' | 'length' | 'headcirc', whoSex);
         } else {
-          const b = computeWHOPercentile(latest.value, latest.ageMonths, whoMetric as 'weight' | 'length' | 'headcirc', 'boys');
-          const g = computeWHOPercentile(latest.value, latest.ageMonths, whoMetric as 'weight' | 'length' | 'headcirc', 'girls');
-          latestPercentile = b != null && g != null ? Math.round((b + g) / 2) : null;
+          // WHO curves are sex-specific; averaging boys+girls produces a
+          // meaningless number, so show nothing until a sex is set.
+          latestPercentile = null;
         }
       }
 
@@ -344,10 +344,9 @@ function entryPercentile(
   if (ageMonths < 0 || ageMonths > 60) return null;
   if (sex === 'male') return computeWHOPercentile(value, ageMonths, whoMetric, 'boys');
   if (sex === 'female') return computeWHOPercentile(value, ageMonths, whoMetric, 'girls');
-  // unspecified: average boys and girls
-  const b = computeWHOPercentile(value, ageMonths, whoMetric, 'boys');
-  const g = computeWHOPercentile(value, ageMonths, whoMetric, 'girls');
-  return b != null && g != null ? Math.round((b + g) / 2) : null;
+  // Unspecified sex: WHO curves are sex-specific, so there's no meaningful
+  // percentile to show (averaging boys+girls is not valid). Hide it.
+  return null;
 }
 
 function formatDate(date: Date, lang: SupportedLanguage): string {

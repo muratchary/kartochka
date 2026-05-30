@@ -643,7 +643,8 @@
       "sentTitle": "Gelen kutunu kontrol et",
       "sentBody": "{{email}} adresine giriş bağlantısı gönderdik. Bu cihazdan bağlantıya dokun, giriş yapılacak.",
       "useDifferent": "Farklı e-posta"
-    }
+    },
+    "signingIn": "Giriş yapılıyor…"
   },
   "redeem": {
     "title": "Kod kullan",

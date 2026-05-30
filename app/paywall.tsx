@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import {
   ActivityIndicator,
   Alert,
+  I18nManager,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -302,7 +303,7 @@ export default function PaywallScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.bg },
-  closeBtn: { position: 'absolute', top: 56, right: spacing.lg, zIndex: 10, padding: spacing.sm },
+  closeBtn: { position: 'absolute', top: 56, [I18nManager.isRTL ? 'left' : 'right']: spacing.lg, zIndex: 10, padding: spacing.sm },
   scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxxl, paddingTop: spacing.xl },
 
   header: { alignItems: 'center', gap: spacing.sm, marginBottom: spacing.xl },

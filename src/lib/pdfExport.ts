@@ -4,7 +4,7 @@ import * as Sharing from 'expo-sharing';
 import type { SupportedLanguage } from '../i18n';
 import { STANDARD_MILESTONES } from './milestones';
 import { getSchedule } from './schedules';
-import { dueDateForDose, statusFromDays } from './vaccinationStatus';
+import { doseDueInfo } from './vaccinationStatus';
 import type {
   Child,
   GrowthEntry,
@@ -228,9 +228,8 @@ function renderVaccinations(
     const name = v.displayName[lang] ?? v.displayName.en;
     for (const dose of v.doses) {
       const record = records.find((r) => r.vaccineCode === v.code && r.doseNumber === dose.doseNumber);
-      const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths);
-      const days = Math.round((dueDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-      const baseStatus = record ? 'done' : statusFromDays(days) === 'overdue' ? 'overdue' : 'scheduled';
+      const { dueDate, status } = doseDueInfo(child, v, dose, records);
+      const baseStatus = record ? 'done' : status === 'overdue' ? 'overdue' : 'scheduled';
       rows.push({
         name,
         doseLabel: `${dose.doseNumber} / ${v.doses.length}`,

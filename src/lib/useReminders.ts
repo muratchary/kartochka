@@ -11,11 +11,15 @@ import { useChildrenStore } from '../stores/childrenStore';
 
 export function useRescheduleReminders(): (child: Child) => Promise<void> {
   const { t } = useTranslation();
-  const vaccinations = useChildrenStore((s) => s.vaccinations);
 
   return async (child) => {
     const schedule = getSchedule(child.countryCode);
     if (!schedule) return;
+
+    // Read the LATEST vaccination list at call time. Reading a selector value
+    // captured at render would use a stale snapshot — callers typically add/
+    // remove a record and then immediately reschedule in the same handler.
+    const vaccinations = useChildrenStore.getState().vaccinations;
 
     // 1. Vaccine reminders — 1 day before each due dose
     await scheduleVaccineReminders(

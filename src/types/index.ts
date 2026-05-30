@@ -20,6 +20,13 @@ export interface Child {
   emergencyContact?: string;
   createdAt: IsoDateTime;
   updatedAt: IsoDateTime;
+  // Cloud-sync ownership marker (local-only; NOT a Supabase column). Holds the
+  // user_id that owns this child in the cloud. Children acquired via partner
+  // sharing carry the OWNER's id here so we never re-upload them under the
+  // partner's account (which would duplicate/hijack the owner's record).
+  // Undefined for children created locally before sign-in — treated as owned
+  // by whoever signs in.
+  ownerId?: string;
 }
 
 export interface VaccineReactions {

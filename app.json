@@ -46,7 +46,8 @@
         "expo-image-picker",
         {
           "photosPermission": "Kartochka uses your photo library to add milestone photos for your child.",
-          "cameraPermission": "Kartochka uses your camera to capture milestone photos."
+          "cameraPermission": false,
+          "microphonePermission": false
         }
       ],
       [

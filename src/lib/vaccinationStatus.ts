@@ -42,6 +42,60 @@ export function statusFromDays(daysFromNow: number): DueStatus {
   return 'far-future';
 }
 
+/**
+ * Window-aware status: a dose is only "overdue" once the LATEST acceptable
+ * date has passed. Past the recommended date but still inside the acceptable
+ * window reads as "due-soon" — not the alarming red "overdue" — so parents
+ * aren't told they're late when they're medically still on time. Falls back to
+ * the recommended-date behavior when a schedule provides no latest window.
+ */
+export function statusFromWindow(
+  daysFromNow: number,
+  latestDate: Date | null,
+  now: Date = new Date(),
+): DueStatus {
+  if (latestDate && now.getTime() > latestDate.getTime()) return 'overdue';
+  if (daysFromNow < 0) return latestDate ? 'due-soon' : 'overdue';
+  if (daysFromNow <= 30) return 'due-soon';
+  if (daysFromNow <= 90) return 'upcoming';
+  return 'far-future';
+}
+
+export interface DoseDueInfo {
+  dueDate: Date;
+  latestDate: Date | null;
+  status: DueStatus;
+  daysFromNow: number;
+}
+
+/**
+ * Single source of truth for a dose's due date + status. Accounts for catch-up
+ * (a delayed previous dose pushes this one out by the minimum interval) and
+ * uses the acceptable-age window for the overdue threshold. Pass the child's
+ * own vaccination records so the previous-dose date can be found.
+ */
+export function doseDueInfo(
+  child: Child,
+  vaccine: VaccineScheduleEntry,
+  dose: VaccineDose,
+  childRecords: VaccinationRecord[],
+  now: Date = new Date(),
+): DoseDueInfo {
+  const prevDate =
+    dose.doseNumber > 1
+      ? childRecords.find(
+          (r) => r.vaccineCode === vaccine.code && r.doseNumber === dose.doseNumber - 1,
+        )?.administeredOn ?? null
+      : null;
+  const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths, prevDate);
+  const latestDate =
+    dose.latestAgeMonths != null
+      ? dueDateForDose(child.dateOfBirth, dose.latestAgeMonths, prevDate)
+      : null;
+  const daysFromNow = Math.round((dueDate.getTime() - now.getTime()) / MS_PER_DAY);
+  return { dueDate, latestDate, status: statusFromWindow(daysFromNow, latestDate, now), daysFromNow };
+}
+
 export function nextDueVaccine(
   child: Child,
   schedule: CountryVaccinationSchedule,
@@ -59,19 +113,7 @@ export function nextDueVaccine(
       );
       if (isDone) continue;
 
-      // For catch-up: base due date on when the previous dose was actually given
-      const prevRecord = dose.doseNumber > 1
-        ? childRecords.find(
-            (r) => r.vaccineCode === vaccine.code && r.doseNumber === dose.doseNumber - 1,
-          )
-        : null;
-      const dueDate = dueDateForDose(
-        child.dateOfBirth,
-        dose.recommendedAgeMonths,
-        prevRecord?.administeredOn ?? null,
-      );
-      const daysFromNow = Math.round((dueDate.getTime() - now.getTime()) / MS_PER_DAY);
-      const status = statusFromDays(daysFromNow);
+      const { dueDate, status, daysFromNow } = doseDueInfo(child, vaccine, dose, childRecords, now);
 
       if (!best || dueDate.getTime() < best.dueDate.getTime()) {
         best = { vaccine, dose, dueDate, status, daysFromNow };

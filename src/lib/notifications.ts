@@ -2,7 +2,7 @@ import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
 import type { Child, CountryVaccinationSchedule, VaccinationRecord } from '../types';
-import { dueDateForDose } from './vaccinationStatus';
+import { doseDueInfo } from './vaccinationStatus';
 
 const DAYS_BEFORE_DUE = 1;
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -22,13 +22,19 @@ Notifications.setNotificationHandler({
 });
 
 export async function ensureNotificationPermission(): Promise<boolean> {
-  const current = await Notifications.getPermissionsAsync();
-  if (current.granted) return true;
-  if (current.canAskAgain) {
-    const result = await Notifications.requestPermissionsAsync();
-    return result.granted;
+  try {
+    const current = await Notifications.getPermissionsAsync();
+    if (current.granted) return true;
+    if (current.canAskAgain) {
+      const result = await Notifications.requestPermissionsAsync();
+      return result.granted;
+    }
+    return false;
+  } catch {
+    // Native module unhappy (Expo Go edge cases / revoked channel) — treat as
+    // "no permission" rather than crashing the caller.
+    return false;
   }
-  return false;
 }
 
 export async function scheduleVaccineReminders(
@@ -38,13 +44,14 @@ export async function scheduleVaccineReminders(
   buildBody: (vaccineNameEn: string, doseNumber: number, totalDoses: number) => string,
   reminderTitle: string,
 ): Promise<void> {
+ try {
   const status = await Notifications.getPermissionsAsync();
   if (!status.granted) return;
 
   await cancelChildReminders(child.id);
 
   const childRecords = vaccinations.filter((v) => v.childId === child.id);
-  const now = Date.now();
+  const now = new Date();
 
   for (const vaccine of schedule.vaccines) {
     for (const dose of vaccine.doses) {
@@ -53,9 +60,9 @@ export async function scheduleVaccineReminders(
       );
       if (done) continue;
 
-      const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths);
+      const { dueDate } = doseDueInfo(child, vaccine, dose, childRecords, now);
       const triggerAt = new Date(dueDate.getTime() - DAYS_BEFORE_DUE * MS_PER_DAY);
-      if (triggerAt.getTime() <= now) continue;
+      if (triggerAt.getTime() <= now.getTime()) continue;
 
       await Notifications.scheduleNotificationAsync({
         identifier: reminderIdentifier(child.id, vaccine.code, dose.doseNumber),
@@ -76,6 +83,9 @@ export async function scheduleVaccineReminders(
       });
     }
   }
+ } catch {
+   // Best-effort scheduling; never let a notification error break the caller.
+ }
 }
 
 export async function cancelChildReminders(childId: string): Promise<void> {
@@ -118,6 +128,7 @@ export async function scheduleGrowthReminder(
   title: string,
   body: string,
 ): Promise<void> {
+ try {
   const status = await Notifications.getPermissionsAsync();
   if (!status.granted) return;
 
@@ -145,6 +156,9 @@ export async function scheduleGrowthReminder(
       date: triggerAt,
     },
   });
+ } catch {
+   // Best-effort scheduling; never let a notification error break the caller.
+ }
 }
 
 // ─── Milestone nudge ─────────────────────────────────────────────────────────
@@ -155,6 +169,7 @@ export async function scheduleMilestoneNudges(
   buildTitle: (ageMonths: number) => string,
   buildBody: (ageMonths: number) => string,
 ): Promise<void> {
+ try {
   const status = await Notifications.getPermissionsAsync();
   if (!status.granted) return;
 
@@ -180,6 +195,9 @@ export async function scheduleMilestoneNudges(
       },
     });
   }
+ } catch {
+   // Best-effort scheduling; never let a notification error break the caller.
+ }
 }
 
 export async function cancelMilestoneNudges(childId: string): Promise<void> {
@@ -201,13 +219,14 @@ export async function scheduleOverdueVaccineAlerts(
   buildTitle: (vaccineNameEn: string) => string,
   buildBody: (vaccineNameEn: string, doseNumber: number) => string,
 ): Promise<void> {
+ try {
   const status = await Notifications.getPermissionsAsync();
   if (!status.granted) return;
 
   await cancelOverdueAlerts(child.id);
 
   const childRecords = vaccinations.filter((v) => v.childId === child.id);
-  const now = Date.now();
+  const now = new Date();
   const OVERDUE_GRACE_DAYS = 7;
 
   for (const vaccine of schedule.vaccines) {
@@ -217,9 +236,13 @@ export async function scheduleOverdueVaccineAlerts(
       );
       if (done) continue;
 
-      const dueDate = dueDateForDose(child.dateOfBirth, dose.recommendedAgeMonths);
-      const triggerAt = new Date(dueDate.getTime() + OVERDUE_GRACE_DAYS * MS_PER_DAY);
-      if (triggerAt.getTime() <= now) continue; // already past the grace window
+      // Base the "you're overdue" nudge on the LATEST acceptable date (so we
+      // don't cry wolf while the child is still within the window); fall back
+      // to the recommended date when no window is defined.
+      const { dueDate, latestDate } = doseDueInfo(child, vaccine, dose, childRecords, now);
+      const overdueFrom = latestDate ?? dueDate;
+      const triggerAt = new Date(overdueFrom.getTime() + OVERDUE_GRACE_DAYS * MS_PER_DAY);
+      if (triggerAt.getTime() <= now.getTime()) continue; // already past the grace window
 
       await Notifications.scheduleNotificationAsync({
         identifier: `overdue-${child.id}-${vaccine.code}-${dose.doseNumber}`,
@@ -240,6 +263,9 @@ export async function scheduleOverdueVaccineAlerts(
       });
     }
   }
+ } catch {
+   // Best-effort scheduling; never let a notification error break the caller.
+ }
 }
 
 export async function cancelOverdueAlerts(childId: string): Promise<void> {
