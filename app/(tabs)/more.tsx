@@ -180,6 +180,14 @@ export default function MoreScreen() {
         {dataSection.length > 0 && (
           <Section title={t('more.sections.developer')} font={font} rows={dataSection} t={t} />
         )}
+
+        {/* Quiet redeem-code entry — discoverable for testers ("bottom of More"),
+            but low-emphasis so it reads as a footer link, not a feature. */}
+        <Pressable onPress={() => router.push('/redeem')} hitSlop={8} style={styles.redeemLink}>
+          <Text style={[styles.redeemLinkText, { fontFamily: font(500) }]}>
+            {t('more.redeemFooter')}
+          </Text>
+        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
@@ -275,4 +283,6 @@ const styles = StyleSheet.create({
   rowDivider: { borderBottomWidth: 1, borderBottomColor: colors.border2 },
   rowLabel: { fontSize: typography.body.fontSize, color: colors.ink },
   rowSubtitle: { fontSize: 12, color: colors.ink3, marginTop: 2 },
+  redeemLink: { alignItems: 'center', paddingVertical: spacing.md },
+  redeemLinkText: { fontSize: 13, color: colors.ink3 },
 });

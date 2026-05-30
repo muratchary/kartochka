@@ -333,7 +333,8 @@
       "premiumNote": "Birden fazla çocuk eklemek premium bir özelliktir.",
       "removeConfirm": "{{name}} ve tüm kayıtları silinsin mi?",
       "remove": "Sil"
-    }
+    },
+    "redeemFooter": "Kodun mu var? Kullan"
   },
   "languages": {
     "en": "English",
@@ -643,5 +644,19 @@
       "sentBody": "{{email}} adresine giriş bağlantısı gönderdik. Bu cihazdan bağlantıya dokun, giriş yapılacak.",
       "useDifferent": "Farklı e-posta"
     }
+  },
+  "redeem": {
+    "title": "Kod kullan",
+    "subtitle": "Kartochka Premium’u açmak için kodunu gir.",
+    "placeholder": "Kodu gir",
+    "cta": "Kullan",
+    "done": "Tamam",
+    "successTitle": "Premium açıldı!",
+    "successBody": "Kartochka’yı test ettiğin için teşekkürler. Bir yıl boyunca Premium’un keyfini çıkar — PDF dışa aktarma, sınırsız çocuk, partner paylaşımı ve bulut yedekleme.",
+    "errorInvalid": "Bu kod geçerli değil. Lütfen kontrol edip tekrar dene.",
+    "errorExhausted": "Tüm kodlar kullanıldı. İlgin için teşekkürler!",
+    "errorNetwork": "Sunucuya ulaşılamadı. Bağlantını kontrol edip tekrar dene.",
+    "alreadyTitle": "Zaten açık",
+    "alreadyBody": "Bir kodu zaten kullandın — Premium bu cihazda etkin."
   }
 }

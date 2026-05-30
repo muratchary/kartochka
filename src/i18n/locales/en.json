@@ -359,7 +359,8 @@
       "premiumNote": "Adding more than one child is a premium feature.",
       "removeConfirm": "Remove {{name}} and all their records?",
       "remove": "Remove"
-    }
+    },
+    "redeemFooter": "Have a code? Redeem it"
   },
   "languages": {
     "en": "English",
@@ -643,5 +644,19 @@
       "sentBody": "We sent a sign-in link to {{email}}. Tap it from this device and you'll be signed in.",
       "useDifferent": "Use a different email"
     }
+  },
+  "redeem": {
+    "title": "Redeem a code",
+    "subtitle": "Enter your code to unlock Kartochka Premium.",
+    "placeholder": "Enter code",
+    "cta": "Redeem",
+    "done": "Done",
+    "successTitle": "Premium unlocked!",
+    "successBody": "Thanks for testing Kartochka. Enjoy a full year of Premium — PDF export, unlimited children, partner sharing, and cloud backup.",
+    "errorInvalid": "That code isn’t valid. Please check and try again.",
+    "errorExhausted": "All codes have been claimed. Thanks for your interest!",
+    "errorNetwork": "Couldn’t reach the server. Check your connection and try again.",
+    "alreadyTitle": "Already unlocked",
+    "alreadyBody": "You’ve already redeemed a code — Premium is active on this device."
   }
 }
