@@ -7,7 +7,6 @@
  */
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import * as MediaLibrary from 'expo-media-library';
 import { useRouter } from 'expo-router';
 import * as Sharing from 'expo-sharing';
 import { useRef, useState } from 'react';
@@ -135,11 +134,8 @@ export default function MilestoneAlbumScreen() {
 
   const handleAddPhoto = async (milestoneId: string) => {
     try {
-      const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (!perm.granted) {
-        Alert.alert('', t('common.permissionDenied'));
-        return;
-      }
+      // Uses the Android system photo picker / iOS picker — no media-library
+      // permission required.
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 0.85,
@@ -158,22 +154,6 @@ export default function MilestoneAlbumScreen() {
     setTimeout(() => {
       viewerRef.current?.scrollToIndex({ index: globalIndex, animated: false });
     }, 50);
-  };
-
-  const handleSavePhoto = async () => {
-    if (!brandedCardRef.current) return;
-    try {
-      const { status } = await MediaLibrary.requestPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('', t('common.permissionDenied'));
-        return;
-      }
-      const uri = await captureRef(brandedCardRef, { format: 'jpg', quality: 0.92 });
-      await MediaLibrary.saveToLibraryAsync(uri);
-      Alert.alert('', t('milestoneAlbum.savedToPhotos'));
-    } catch {
-      Alert.alert('', t('milestoneAlbum.saveError'));
-    }
   };
 
   const handleSharePhoto = async () => {
@@ -476,14 +456,6 @@ export default function MilestoneAlbumScreen() {
             <SafeAreaView edges={['bottom']} style={styles.viewerActions}>
               {withPhotos[viewerIndex] && (
                 <>
-                  <Pressable
-                    style={styles.viewerActionBtn}
-                    onPress={handleSavePhoto}>
-                    <Ionicons name="download-outline" size={22} color="#fff" />
-                    <Text style={[styles.viewerActionLabel, { fontFamily: font(600) }]}>
-                      {t('milestoneAlbum.save')}
-                    </Text>
-                  </Pressable>
                   <Pressable
                     style={styles.viewerActionBtn}
                     onPress={handleSharePhoto}>

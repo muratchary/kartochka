@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import * as MediaLibrary from 'expo-media-library';
 import { Redirect, useRouter } from 'expo-router';
 import * as Sharing from 'expo-sharing';
 import { useMemo, useRef, useState } from 'react';
@@ -150,31 +149,6 @@ export default function MilestonesScreen() {
         await Sharing.shareAsync(shareTarget.record.photoUri);
       } else {
         Alert.alert(t('milestones.share.shareButton'), t('milestones.share.requiresBuild'));
-      }
-    } finally {
-      setSharing(false);
-    }
-  };
-
-  const handleSaveToPhotos = async () => {
-    if (!cardRef.current) return;
-    setSharing(true);
-    try {
-      const { status } = await MediaLibrary.requestPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('', t('common.permissionDenied'));
-        return;
-      }
-      const uri = await captureRef(cardRef, { format: 'png', quality: 1, result: 'tmpfile' });
-      await MediaLibrary.saveToLibraryAsync(uri);
-      Alert.alert('', t('milestones.share.savedToPhotos'));
-    } catch {
-      if (shareTarget?.record.photoUri) {
-        const { status } = await MediaLibrary.requestPermissionsAsync();
-        if (status === 'granted') {
-          await MediaLibrary.saveToLibraryAsync(shareTarget.record.photoUri);
-          Alert.alert('', t('milestones.share.savedToPhotos'));
-        }
       }
     } finally {
       setSharing(false);
@@ -424,15 +398,6 @@ export default function MilestonesScreen() {
                     </Text>
                   </>
                 )}
-              </Pressable>
-              <Pressable
-                style={[styles.actionBtn, styles.actionBtnSecondary]}
-                onPress={handleSaveToPhotos}
-                disabled={sharing}>
-                <Ionicons name="download-outline" size={18} color={colors.teal} />
-                <Text style={[styles.actionBtnTextSecondary, { fontFamily: font(700) }]}>
-                  {t('milestones.share.saveToPhotos')}
-                </Text>
               </Pressable>
             </View>
 

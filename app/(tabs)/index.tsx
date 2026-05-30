@@ -54,11 +54,7 @@ export default function HomeScreen() {
 
   const handleAvatarPress = async () => {
     if (!child) return;
-    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!perm.granted) {
-      Alert.alert('', t('common.permissionDenied'));
-      return;
-    }
+    // Uses the system photo picker — no media-library permission required.
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,

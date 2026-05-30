@@ -50,14 +50,6 @@
         }
       ],
       [
-        "expo-media-library",
-        {
-          "photosPermission": "Kartochka accesses your photos to add milestone photos.",
-          "savePhotosPermission": "Kartochka saves milestone cards to your photo library.",
-          "isAccessMediaLocationEnabled": false
-        }
-      ],
-      [
         "expo-build-properties",
         {
           "ios": {
@@ -67,7 +59,8 @@
           }
         }
       ],
-      "./plugins/withDisableScriptSandboxing"
+      "./plugins/withDisableScriptSandboxing",
+      "./plugins/withStripMediaPermissions"
     ],
     "experiments": {
       "typedRoutes": true
