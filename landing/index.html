@@ -16,7 +16,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -48,6 +48,13 @@
       overflow-x: hidden;
     }
 
+    /* Arabic font + RTL */
+    html[lang="ar"] body { font-family: 'IBM Plex Sans Arabic', 'Nunito', system-ui, sans-serif; }
+    html[dir="rtl"] .plan-feat { flex-direction: row-reverse; text-align: right; }
+    html[dir="rtl"] .store-label { text-align: right; }
+    html[dir="rtl"] .vacc-card, html[dir="rtl"] .vacc-chip,
+    html[dir="rtl"] .pdf-card, html[dir="rtl"] .album-chip { direction: rtl; }
+
     /* ═══ NAV ═══ */
     .nav {
       display: flex; align-items: center; justify-content: space-between;
@@ -59,6 +66,15 @@
     .nav-links a { font-size: 14px; font-weight: 600; color: rgba(250,250,247,0.75); text-decoration: none; transition: color 0.15s; }
     .nav-links a:hover { color: var(--cream); }
     .nav-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+    .lang-select {
+      height: 40px; padding: 0 10px; border-radius: 10px;
+      background: rgba(250,250,247,0.07); border: 1px solid rgba(250,250,247,0.18);
+      color: var(--cream); font-family: inherit; font-weight: 700; font-size: 13px;
+      cursor: pointer; appearance: none; text-align: center;
+    }
+    .lang-select:hover { background: rgba(250,250,247,0.12); }
+    .lang-select option { color: #000; }
 
     .btn-amber {
       height: 40px; padding: 0 18px; border-radius: 10px; border: none;
@@ -248,17 +264,8 @@
     .pdf-row-val   { color: var(--teal); }
     .pdf-badge { margin-top: 8px; padding: 5px 8px; border-radius: 8px; background: #E4F2EB; font-size: 9px; font-weight: 800; color: #3B8C5E; }
 
-    /* Emergency illustration */
-    .emergency-ill { display: flex; justify-content: flex-end; align-items: center; }
-    .emergency-card {
-      width: 196px; padding: 18px; border-radius: 18px;
-      background: var(--emergency); color: #fff;
-      box-shadow: 0 20px 40px -10px rgba(230,69,53,0.4);
-    }
-    .emergency-kicker { font-size: 10px; font-weight: 800; letter-spacing: 1.2px; opacity: 0.8; }
-    .emergency-name   { font-size: 20px; font-weight: 900; margin-top: 4px; }
-    .emergency-lines  { font-size: 11px; font-weight: 700; margin-top: 12px; opacity: 0.9; display: flex; flex-direction: column; gap: 4px; }
-    .emergency-action { margin-top: 12px; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,0.16); font-size: 11px; font-weight: 800; }
+    /* Emergency illustration (unused block kept for parity) */
+    .emergency-card { display: none; }
 
     /* ═══ EXTRA FEATURES STRIP ═══ */
     .extras {
@@ -328,24 +335,6 @@
     }
     .btn-plan-premium:hover { background: #e09840; }
 
-    /* ═══ QUOTE ═══ */
-    .quote-section { padding: 80px 56px; background: var(--bg2); }
-    .quote-panel {
-      background: var(--cream); color: var(--ink); border-radius: 28px; padding: 56px 64px;
-      display: grid; grid-template-columns: 120px 1.6fr 1fr; gap: 40px; align-items: center;
-    }
-    .quote-avatar {
-      width: 120px; height: 120px; border-radius: 50%; background: var(--teal); color: #fff;
-      display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 900;
-    }
-    .quote-from { font-size: 11px; font-weight: 800; letter-spacing: 1.2px; color: var(--teal); text-transform: uppercase; }
-    blockquote { margin: 10px 0 0; font-size: 26px; font-weight: 700; letter-spacing: -0.4px; line-height: 1.2; color: var(--ink); }
-    .quote-attr { margin-top: 14px; font-size: 13px; font-weight: 700; color: var(--ink-2); }
-    .quote-stats { display: flex; flex-direction: column; gap: 10px; }
-    .quote-stat { display: flex; justify-content: space-between; padding: 12px 16px; border-radius: 12px; background: #F4EFE2; gap: 12px; }
-    .stat-label { font-size: 13px; font-weight: 700; color: var(--ink-2); white-space: nowrap; }
-    .stat-val   { font-size: 14px; font-weight: 800; color: var(--teal); white-space: nowrap; }
-
     /* ═══ FINAL CTA ═══ */
     .cta-section {
       padding: 88px 56px 100px; position: relative; overflow: hidden;
@@ -362,19 +351,16 @@
       display: inline-flex; align-items: center; gap: 12px; padding: 12px 22px;
       border-radius: 14px; text-decoration: none;
       border: 1px solid rgba(250,250,247,0.18); color: var(--cream); white-space: nowrap;
-      transition: background 0.15s;
+      transition: background 0.15s; background: rgba(250,250,247,0.07);
+      cursor: default; opacity: 0.7;
     }
-    .store-btn-ios { background: var(--amber); color: var(--ink); border-color: transparent; }
-    .store-btn-ios:hover { background: #e09840; }
-    .store-btn-android { background: rgba(250,250,247,0.07); }
-    .store-btn-android:hover { background: rgba(250,250,247,0.12); }
     .store-glyph  { font-size: 24px; line-height: 1; }
     .store-label { text-align: left; }
     .store-sub  { font-size: 10px; font-weight: 700; opacity: 0.7; line-height: 1; }
     .store-name { font-size: 16px; font-weight: 800; line-height: 1.3; }
 
-    .waitlist-fallback { margin-top: 20px; font-size: 14px; color: rgba(250,250,247,0.45); font-weight: 500; }
-    .waitlist-fallback a { color: rgba(250,250,247,0.65); }
+    .waitlist-fallback { margin-top: 20px; font-size: 14px; color: rgba(250,250,247,0.55); font-weight: 500; }
+    .waitlist-fallback a { color: var(--amber); font-weight: 700; }
 
     /* ═══ FOOTER ═══ */
     footer { background: #060F0F; color: rgba(255,255,255,0.5); padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.06); }
@@ -389,7 +375,7 @@
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 1280px) {
       .nav, .hero, .footer-inner { padding-left: 32px; padding-right: 32px; }
-      .features, .extras, .pricing, .quote-section, .cta-section { padding-left: 32px; padding-right: 32px; }
+      .features, .extras, .pricing, .cta-section { padding-left: 32px; padding-right: 32px; }
       .hero-h1  { font-size: 72px; }
       .section-h2 { font-size: 46px; }
       .cta-h2   { font-size: 62px; }
@@ -408,9 +394,6 @@
       .extras-grid .extra-item:nth-child(3) { border-radius: 4px 4px 4px 16px; }
       .extras-grid .extra-item:last-child    { border-radius: 4px 4px 16px 4px; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 480px; }
-      .quote-panel { grid-template-columns: 90px 1fr; }
-      .quote-stats { display: none; }
-      .quote-avatar { width: 90px; height: 90px; font-size: 36px; }
       .hero-h1 { font-size: 64px; }
     }
 
@@ -430,10 +413,6 @@
       .feat-ill { display: none; }
       .extras-grid { grid-template-columns: 1fr; }
       .extras-grid .extra-item { border-radius: 16px !important; }
-      .quote-section { padding: 48px 20px; }
-      .quote-panel { grid-template-columns: 1fr; padding: 28px 24px; }
-      .quote-avatar { display: none; }
-      blockquote { font-size: 20px; }
       .cta-section { padding: 48px 20px 64px; }
       .cta-h2 { font-size: 42px; letter-spacing: -1.2px; }
       .store-buttons { flex-direction: column; align-items: center; }
@@ -458,14 +437,19 @@
   </a>
 
   <div class="nav-links">
-    <a href="#product">Features</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#pediatricians">Pediatricians</a>
-    <a href="mailto:support@kartochka.app">Support</a>
+    <a href="#product" data-i18n="navFeatures">Features</a>
+    <a href="#pricing" data-i18n="navPricing">Pricing</a>
+    <a href="mailto:support@kartochka.app" data-i18n="navSupport">Support</a>
   </div>
 
   <div class="nav-actions">
-    <a href="#download" class="btn-amber">Download free →</a>
+    <select id="langSelect" class="lang-select" aria-label="Language">
+      <option value="en">EN</option>
+      <option value="ru">RU</option>
+      <option value="ar">AR</option>
+      <option value="tr">TR</option>
+    </select>
+    <a href="#download" class="btn-amber" data-i18n="navDownload">Download free →</a>
   </div>
 </nav>
 
@@ -479,16 +463,16 @@
     <div>
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
-        v1.0 &nbsp;·&nbsp; iOS &nbsp;·&nbsp; RU · KZ · UZ · AE · SA · TR
+        <span data-i18n="heroBadge">v1.0 &nbsp;·&nbsp; RU · KZ · UZ · AE · SA · TR</span>
       </div>
 
-      <h1 class="hero-h1">
+      <h1 class="hero-h1" data-i18n="heroH1">
         One card.<br/>
         Their whole<br/>
         <span class="hero-h1-accent">childhood.</span>
       </h1>
 
-      <p class="hero-lede">
+      <p class="hero-lede" data-i18n="heroLede">
         Vaccines, growth charts, milestone photos, and a doctor-ready PDF
         report — everything your pediatrician asks for, in the app you
         actually open. Built for parents in Russia, Central Asia, and the
@@ -496,22 +480,22 @@
       </p>
 
       <div class="hero-cta-row">
-        <a href="#download" class="btn-hero-primary">Download free →</a>
-        <a href="#pricing" class="btn-hero-ghost">See pricing</a>
+        <a href="#download" class="btn-hero-primary" data-i18n="heroCtaPrimary">Download free →</a>
+        <a href="#pricing" class="btn-hero-ghost" data-i18n="heroCtaGhost">See pricing</a>
       </div>
 
       <div class="hero-metrics">
         <div>
           <div class="metric-num">37</div>
-          <div class="metric-label">WHO milestones tracked</div>
+          <div class="metric-label" data-i18n="metric1label">WHO milestones tracked</div>
         </div>
         <div>
           <div class="metric-num">6</div>
-          <div class="metric-label">country vaccination schedules</div>
+          <div class="metric-label" data-i18n="metric2label">country vaccination schedules</div>
         </div>
         <div>
           <div class="metric-num">4</div>
-          <div class="metric-label">languages at launch</div>
+          <div class="metric-label" data-i18n="metric3label">languages at launch</div>
         </div>
       </div>
     </div>
@@ -541,9 +525,9 @@
       </div>
       <div class="callout callout-left">
         <span class="callout-dot"></span>
-        Pneumococcal due Friday
+        <span data-i18n="calloutLeft">Pneumococcal due Friday</span>
       </div>
-      <div class="callout callout-right">
+      <div class="callout callout-right" data-i18n="calloutRight">
         📸 First steps — 11 months
       </div>
     </div>
@@ -554,10 +538,10 @@
 <section class="features" id="product">
   <div class="features-header">
     <div>
-      <div class="section-eyebrow">What's inside the card</div>
-      <h2 class="section-h2">Four things,<br/>done thoroughly.</h2>
+      <div class="section-eyebrow" data-i18n="featuresEyebrow">What's inside the card</div>
+      <h2 class="section-h2" data-i18n="featuresH2">Four things,<br/>done thoroughly.</h2>
     </div>
-    <p class="features-helper">
+    <p class="features-helper" data-i18n="featuresHelper">
       Not 40 features pretending to be 4. Every screen was designed
       with a parent in one hand and a pediatrician on the phone.
     </p>
@@ -568,9 +552,9 @@
     <!-- 01 · Vaccines -->
     <div class="feature-card" id="vaccines" style="background:#F0A848;color:#0E2424;">
       <div class="feature-card-copy">
-        <div class="feature-kicker">01 · Vaccines</div>
-        <div class="feature-title">Never miss a dose again.</div>
-        <div class="feature-body">
+        <div class="feature-kicker" data-i18n="f1kicker">01 · Vaccines</div>
+        <div class="feature-title" data-i18n="f1title">Never miss a dose again.</div>
+        <div class="feature-body" data-i18n="f1body">
           National schedules for Russia, Kazakhstan, Uzbekistan, UAE,
           Saudi Arabia, and Turkey. Smart reminders fire before the due
           date, not after.
@@ -593,9 +577,9 @@
     <!-- 02 · Growth -->
     <div class="feature-card" id="growth" style="background:#1F6363;color:#FAFAF7;">
       <div class="feature-card-copy">
-        <div class="feature-kicker">02 · Growth</div>
-        <div class="feature-title">Curves the doctor reads.</div>
-        <div class="feature-body">
+        <div class="feature-kicker" data-i18n="f2kicker">02 · Growth</div>
+        <div class="feature-title" data-i18n="f2title">Curves the doctor reads.</div>
+        <div class="feature-body" data-i18n="f2body">
           WHO weight, height, and head circumference charts auto-generated
           from a single tap. Percentile bands shown on Premium.
         </div>
@@ -628,12 +612,12 @@
     <!-- 03 · Milestone Album -->
     <div class="feature-card" id="milestones" style="background:#F0EBDF;color:#0E2424;">
       <div class="feature-card-copy">
-        <div class="feature-kicker">03 · Milestones + Album</div>
-        <div class="feature-title">Every first,<br/>beautifully kept.</div>
-        <div class="feature-body">
+        <div class="feature-kicker" data-i18n="f3kicker">03 · Milestones + Album</div>
+        <div class="feature-title" data-i18n="f3title">Every first,<br/>beautifully kept.</div>
+        <div class="feature-body" data-i18n="f3body">
           Mark 37 developmental milestones as reached, then add a photo.
           The app organises them into an age-grouped album with emotional
-          captions — ready to share or save.
+          captions — ready to share.
         </div>
       </div>
       <div class="feat-ill album-ill" style="justify-content:center;">
@@ -645,16 +629,16 @@
           <div class="album-cell"><div class="album-cell-img">🏃</div><div class="album-chip">Runs! · 14m</div></div>
           <div class="album-cell" style="background:rgba(0,0,0,0.04);display:flex;align-items:center;justify-content:center;font-size:20px;border-radius:8px;">+</div>
         </div>
-        <div class="album-caption">"What smile brings this much joy? ❤️"</div>
+        <div class="album-caption" data-i18n="albumCaption">"What smile brings this much joy? ❤️"</div>
       </div>
     </div>
 
     <!-- 04 · PDF Report -->
     <div class="feature-card" id="pdf" style="background:#0E2424;color:#FAFAF7;border:1px solid #243C3C;">
       <div class="feature-card-copy">
-        <div class="feature-kicker">04 · Doctor PDF</div>
-        <div class="feature-title">One tap to your<br/>pediatrician.</div>
-        <div class="feature-body">
+        <div class="feature-kicker" data-i18n="f4kicker">04 · Doctor PDF</div>
+        <div class="feature-title" data-i18n="f4title">One tap to your<br/>pediatrician.</div>
+        <div class="feature-body" data-i18n="f4body">
           One tap generates a clean, printable PDF with vaccines, growth
           measurements, reached milestones, and milestone photos.
           Your pediatrician gets everything before you sit down.
@@ -696,26 +680,26 @@
 
     <div class="extra-item">
       <div class="extra-icon">🚨</div>
-      <div class="extra-title">Emergency Card</div>
-      <div class="extra-body">Blood type, allergies, current meds, and last doctor's contact — one tap from the lock screen.</div>
+      <div class="extra-title" data-i18n="e1title">Emergency Card</div>
+      <div class="extra-body" data-i18n="e1body">Blood type, allergies, current meds, and last doctor's contact — always one tap away.</div>
     </div>
 
     <div class="extra-item">
       <div class="extra-icon">🩺</div>
-      <div class="extra-title">Doctor Visits Log</div>
-      <div class="extra-body">Log every visit with doctor name, clinic, reason, and notes. Never reconstruct history again.</div>
+      <div class="extra-title" data-i18n="e2title">Doctor Visits Log</div>
+      <div class="extra-body" data-i18n="e2body">Log every visit with doctor name, clinic, reason, and notes. Never reconstruct history again.</div>
     </div>
 
     <div class="extra-item">
       <div class="extra-icon">👫</div>
-      <div class="extra-title">Partner Sharing</div>
-      <div class="extra-body">Share full access with your partner via a 6-digit code. Both parents stay in sync — Premium.</div>
+      <div class="extra-title" data-i18n="e3title">Partner Sharing</div>
+      <div class="extra-body" data-i18n="e3body">Share full access with your partner via a 6-character code. Both parents stay in sync — Premium.</div>
     </div>
 
     <div class="extra-item">
       <div class="extra-icon">☁️</div>
-      <div class="extra-title">Cloud Backup</div>
-      <div class="extra-body">Data lives on your device first. Sign in with Apple or Google to back up and restore — Premium.</div>
+      <div class="extra-title" data-i18n="e4title">Cloud Backup</div>
+      <div class="extra-body" data-i18n="e4body">Data lives on your device first. Sign in to back up and restore — Premium.</div>
     </div>
 
   </div>
@@ -724,9 +708,9 @@
 <!-- ════════════════════════════════ PRICING ═════════════════════════════════ -->
 <section class="pricing" id="pricing">
   <div class="pricing-header">
-    <div class="section-eyebrow">Pricing</div>
-    <h2 class="section-h2" style="text-align:center;margin-top:10px;">Free to start.<br/>Premium when you need it.</h2>
-    <p style="text-align:center;margin-top:16px;font-size:16px;color:rgba(250,250,247,0.6);font-weight:500;max-width:440px;margin-left:auto;margin-right:auto;">
+    <div class="section-eyebrow" data-i18n="pricingEyebrow">Pricing</div>
+    <h2 class="section-h2" style="text-align:center;margin-top:10px;" data-i18n="pricingH2">Free to start.<br/>Premium when you need it.</h2>
+    <p style="text-align:center;margin-top:16px;font-size:16px;color:rgba(250,250,247,0.6);font-weight:500;max-width:440px;margin-left:auto;margin-right:auto;" data-i18n="pricingSub">
       All the tracking is free, forever. Premium unlocks sharing and export.
     </p>
   </div>
@@ -736,78 +720,48 @@
     <!-- Free -->
     <div class="plan-card plan-card-free">
       <div>
-        <div class="plan-label">Free</div>
+        <div class="plan-label" data-i18n="freeLabel">Free</div>
         <div class="plan-price">
           <span class="plan-price-free">$0</span>
         </div>
         <div class="plan-price-yearly" style="opacity:0;">–</div>
       </div>
       <div class="plan-features">
-        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span>1 child profile</span></div>
-        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span>All vaccine tracking + reminders</span></div>
-        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span>Growth measurements + charts</span></div>
-        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span>Milestone tracking + photo album</span></div>
-        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span>Doctor visits log</span></div>
-        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span>Emergency card</span></div>
+        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span data-i18n="free1">1 child profile</span></div>
+        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span data-i18n="free2">All vaccine tracking + reminders</span></div>
+        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span data-i18n="free3">Growth measurements + charts</span></div>
+        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span data-i18n="free4">Milestone tracking + photo album</span></div>
+        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span data-i18n="free5">Doctor visits log</span></div>
+        <div class="plan-feat"><span class="plan-feat-check plan-feat-check-free">✓</span><span data-i18n="free6">Emergency card</span></div>
       </div>
       <div class="plan-cta">
-        <a href="#download" class="btn-plan-free">Download free</a>
+        <a href="#download" class="btn-plan-free" data-i18n="freeCta">Download free</a>
       </div>
     </div>
 
     <!-- Premium -->
     <div class="plan-card plan-card-premium">
       <div>
-        <div class="plan-label" style="color:rgba(255,255,255,0.7);">Premium</div>
+        <div class="plan-label" style="color:rgba(255,255,255,0.7);" data-i18n="premiumLabel">Premium</div>
         <div class="plan-price">
           <span class="plan-price-num" style="color:#fff;">$3.99</span>
-          <span class="plan-price-sub" style="color:rgba(255,255,255,0.7);">/ month</span>
+          <span class="plan-price-sub" style="color:rgba(255,255,255,0.7);" data-i18n="premiumPriceSub">/ month</span>
         </div>
-        <div class="plan-price-yearly" style="color:rgba(255,255,255,0.6);">or $24.99 / year &nbsp;·&nbsp; save 48%</div>
+        <div class="plan-price-yearly" style="color:rgba(255,255,255,0.6);" data-i18n="premiumYearly">or $24.99 / year &nbsp;·&nbsp; save 48%</div>
       </div>
       <div class="plan-features">
-        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span>Everything in Free</span></div>
-        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span>Unlimited children</span></div>
-        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span>PDF export for pediatrician visits</span></div>
-        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span>Partner sharing</span></div>
-        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span>Cloud backup &amp; restore</span></div>
-        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span>WHO percentile bands on charts</span></div>
+        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span data-i18n="prem1">Everything in Free</span></div>
+        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span data-i18n="prem2">Unlimited children</span></div>
+        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span data-i18n="prem3">PDF export for pediatrician visits</span></div>
+        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span data-i18n="prem4">Partner sharing</span></div>
+        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span data-i18n="prem5">Cloud backup &amp; restore</span></div>
+        <div class="plan-feat" style="color:#fff;"><span class="plan-feat-check plan-feat-check-premium">✦</span><span data-i18n="prem6">WHO percentile bands on charts</span></div>
       </div>
       <div class="plan-cta">
-        <a href="#download" class="btn-plan-premium">Start free trial →</a>
+        <a href="#download" class="btn-plan-premium" data-i18n="premiumCta">Start free trial →</a>
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- ════════════════════════════════ QUOTE ═══════════════════════════════════ -->
-<section class="quote-section" id="pediatricians">
-  <div class="quote-panel">
-    <div class="quote-avatar">А</div>
-    <div>
-      <div class="quote-from">From the field</div>
-      <blockquote>
-        "Half the time I'm stitching together a paper card, a Telegram chat,
-        and a parent's memory. Kartochka is the first thing that gives me
-        all three in one screen."
-      </blockquote>
-      <div class="quote-attr">Dr. Aigul Karimova · Pediatrician, Almaty · 14 years</div>
-    </div>
-    <div class="quote-stats">
-      <div class="quote-stat">
-        <span class="stat-label">Faster visits</span>
-        <span class="stat-val">−6 min average</span>
-      </div>
-      <div class="quote-stat">
-        <span class="stat-label">Vaccine compliance</span>
-        <span class="stat-val">+22 pts</span>
-      </div>
-      <div class="quote-stat">
-        <span class="stat-label">Missed milestones</span>
-        <span class="stat-val">−3 / yr</span>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -824,35 +778,35 @@
       </svg>
     </div>
 
-    <h2 class="cta-h2">
+    <h2 class="cta-h2" data-i18n="ctaH2">
       Open the card.<br/>
       <span class="cta-h2-accent">Watch them grow.</span>
     </h2>
 
-    <p class="cta-lede">
+    <p class="cta-lede" data-i18n="ctaLede">
       Free to download. Free to use for one child. No account required
       to start — data stays on your device until you choose to back it up.
     </p>
 
     <div class="store-buttons">
-      <a href="https://apps.apple.com/app/kartochka/id000000000" class="store-btn store-btn-ios">
+      <div class="store-btn">
         <span class="store-glyph">🍎</span>
         <div class="store-label">
-          <div class="store-sub">Download on the</div>
+          <div class="store-sub" data-i18n="storeComingSoon">Coming soon to</div>
           <div class="store-name">App Store</div>
         </div>
-      </a>
-      <div class="store-btn store-btn-android" style="cursor:default;opacity:0.6;">
+      </div>
+      <div class="store-btn">
         <span class="store-glyph">▶</span>
         <div class="store-label">
-          <div class="store-sub">Coming soon to</div>
+          <div class="store-sub" data-i18n="storeComingSoon2">Coming soon to</div>
           <div class="store-name">Google Play</div>
         </div>
       </div>
     </div>
 
     <p class="waitlist-fallback">
-      Android not here yet? <a href="mailto:support@kartochka.app?subject=Android waitlist">Join the waitlist →</a>
+      <a href="mailto:support@kartochka.app?subject=Launch waitlist" data-i18n="waitlist">Want launch news? Join the waitlist →</a>
     </p>
 
   </div>
@@ -872,13 +826,182 @@
       <span class="footer-logo-text">Kartochka</span>
     </a>
     <div class="footer-links">
-      <a href="mailto:support@kartochka.app">Contact</a>
-      <a href="/privacy">Privacy policy</a>
-      <a href="/terms">Terms</a>
+      <a href="mailto:support@kartochka.app" data-i18n="footerContact">Contact</a>
+      <a href="/privacy" data-i18n="footerPrivacy">Privacy policy</a>
+      <a href="/terms" data-i18n="footerTerms">Terms</a>
     </div>
-    <p class="footer-copy">&copy; 2026 Kartochka. All rights reserved.</p>
+    <p class="footer-copy" data-i18n="footerCopy">&copy; 2026 Kartochka. All rights reserved.</p>
   </div>
 </footer>
+
+<script>
+  var I18N = {
+    en: {
+      navFeatures: "Features", navPricing: "Pricing", navSupport: "Support", navDownload: "Download free →",
+      heroBadge: "v1.0 &nbsp;·&nbsp; RU · KZ · UZ · AE · SA · TR",
+      heroH1: "One card.<br/>Their whole<br/><span class=\"hero-h1-accent\">childhood.</span>",
+      heroLede: "Vaccines, growth charts, milestone photos, and a doctor-ready PDF report — everything your pediatrician asks for, in the app you actually open. Built for parents in Russia, Central Asia, and the Middle East.",
+      heroCtaPrimary: "Download free →", heroCtaGhost: "See pricing",
+      metric1label: "WHO milestones tracked", metric2label: "country vaccination schedules", metric3label: "languages at launch",
+      calloutLeft: "Pneumococcal due Friday", calloutRight: "📸 First steps — 11 months",
+      featuresEyebrow: "What's inside the card", featuresH2: "Four things,<br/>done thoroughly.",
+      featuresHelper: "Not 40 features pretending to be 4. Every screen was designed with a parent in one hand and a pediatrician on the phone.",
+      f1kicker: "01 · Vaccines", f1title: "Never miss a dose again.",
+      f1body: "National schedules for Russia, Kazakhstan, Uzbekistan, UAE, Saudi Arabia, and Turkey. Smart reminders fire before the due date, not after.",
+      f2kicker: "02 · Growth", f2title: "Curves the doctor reads.",
+      f2body: "WHO weight, height, and head circumference charts auto-generated from a single tap. Percentile bands shown on Premium.",
+      f3kicker: "03 · Milestones + Album", f3title: "Every first,<br/>beautifully kept.",
+      f3body: "Mark 37 developmental milestones as reached, then add a photo. The app organises them into an age-grouped album with emotional captions — ready to share.",
+      albumCaption: "\"What smile brings this much joy? ❤️\"",
+      f4kicker: "04 · Doctor PDF", f4title: "One tap to your<br/>pediatrician.",
+      f4body: "One tap generates a clean, printable PDF with vaccines, growth measurements, reached milestones, and milestone photos. Your pediatrician gets everything before you sit down.",
+      e1title: "Emergency Card", e1body: "Blood type, allergies, current meds, and last doctor's contact — always one tap away.",
+      e2title: "Doctor Visits Log", e2body: "Log every visit with doctor name, clinic, reason, and notes. Never reconstruct history again.",
+      e3title: "Partner Sharing", e3body: "Share full access with your partner via a 6-character code. Both parents stay in sync — Premium.",
+      e4title: "Cloud Backup", e4body: "Data lives on your device first. Sign in to back up and restore — Premium.",
+      pricingEyebrow: "Pricing", pricingH2: "Free to start.<br/>Premium when you need it.",
+      pricingSub: "All the tracking is free, forever. Premium unlocks sharing and export.",
+      freeLabel: "Free", free1: "1 child profile", free2: "All vaccine tracking + reminders", free3: "Growth measurements + charts", free4: "Milestone tracking + photo album", free5: "Doctor visits log", free6: "Emergency card", freeCta: "Download free",
+      premiumLabel: "Premium", premiumPriceSub: "/ month", premiumYearly: "or $24.99 / year &nbsp;·&nbsp; save 48%",
+      prem1: "Everything in Free", prem2: "Unlimited children", prem3: "PDF export for pediatrician visits", prem4: "Partner sharing", prem5: "Cloud backup &amp; restore", prem6: "WHO percentile bands on charts", premiumCta: "Start free trial →",
+      ctaH2: "Open the card.<br/><span class=\"cta-h2-accent\">Watch them grow.</span>",
+      ctaLede: "Free to download. Free to use for one child. No account required to start — data stays on your device until you choose to back it up.",
+      storeComingSoon: "Coming soon to", storeComingSoon2: "Coming soon to", waitlist: "Want launch news? Join the waitlist →",
+      footerContact: "Contact", footerPrivacy: "Privacy policy", footerTerms: "Terms", footerCopy: "&copy; 2026 Kartochka. All rights reserved."
+    },
+    ru: {
+      navFeatures: "Возможности", navPricing: "Цены", navSupport: "Поддержка", navDownload: "Скачать бесплатно →",
+      heroBadge: "v1.0 &nbsp;·&nbsp; RU · KZ · UZ · AE · SA · TR",
+      heroH1: "Одна карточка.<br/>Всё их<br/><span class=\"hero-h1-accent\">детство.</span>",
+      heroLede: "Прививки, графики роста, фото важных моментов и готовый PDF для врача — всё, что спрашивает педиатр, в приложении, которое вы действительно открываете. Создано для родителей в России, Центральной Азии и на Ближнем Востоке.",
+      heroCtaPrimary: "Скачать бесплатно →", heroCtaGhost: "Смотреть цены",
+      metric1label: "этапов развития по ВОЗ", metric2label: "национальных календаря прививок", metric3label: "языка на старте",
+      calloutLeft: "Пневмококк в пятницу", calloutRight: "📸 Первые шаги — 11 месяцев",
+      featuresEyebrow: "Что внутри карточки", featuresH2: "Четыре вещи,<br/>сделанные тщательно.",
+      featuresHelper: "Не 40 функций, притворяющихся четырьмя. Каждый экран продуман для родителей вместе с педиатрами.",
+      f1kicker: "01 · Прививки", f1title: "Не пропустите ни одной прививки.",
+      f1body: "Национальные календари России, Казахстана, Узбекистана, ОАЭ, Саудовской Аравии и Турции. Умные напоминания приходят до срока, а не после.",
+      f2kicker: "02 · Рост", f2title: "Графики, понятные врачу.",
+      f2body: "Графики веса, роста и окружности головы по ВОЗ — одним касанием. Перцентильные коридоры — в Premium.",
+      f3kicker: "03 · Развитие + Альбом", f3title: "Каждое «впервые»,<br/>бережно сохранено.",
+      f3body: "Отмечайте 37 этапов развития и добавляйте фото. Приложение собирает их в альбом по возрасту с тёплыми подписями — готово поделиться.",
+      albumCaption: "«Чья улыбка дарит столько радости? ❤️»",
+      f4kicker: "04 · PDF для врача", f4title: "Одно касание —<br/>и всё у педиатра.",
+      f4body: "Одно касание создаёт аккуратный PDF с прививками, измерениями роста, достигнутыми этапами и фотографиями. Педиатр получает всё ещё до приёма.",
+      e1title: "Карта экстренной помощи", e1body: "Группа крови, аллергии, текущие лекарства и контакт врача — всегда в одно касание.",
+      e2title: "Журнал визитов к врачу", e2body: "Записывайте каждый визит: врач, клиника, причина, заметки. Больше не вспоминайте историю по памяти.",
+      e3title: "Доступ для партнёра", e3body: "Делитесь полным доступом с партнёром по коду из 6 символов. Оба родителя синхронизированы — Premium.",
+      e4title: "Резервная копия в облаке", e4body: "Данные сначала хранятся на устройстве. Войдите, чтобы сделать резервную копию и восстановить — Premium.",
+      pricingEyebrow: "Цены", pricingH2: "Бесплатно для старта.<br/>Premium — когда нужно.",
+      pricingSub: "Всё отслеживание бесплатно навсегда. Premium открывает обмен и экспорт.",
+      freeLabel: "Бесплатно", free1: "1 профиль ребёнка", free2: "Все прививки + напоминания", free3: "Измерения роста + графики", free4: "Этапы развития + фотоальбом", free5: "Журнал визитов", free6: "Карта экстренной помощи", freeCta: "Скачать бесплатно",
+      premiumLabel: "Premium", premiumPriceSub: "/ месяц", premiumYearly: "или $24.99 / год &nbsp;·&nbsp; экономия 48%",
+      prem1: "Всё из бесплатного", prem2: "Неограниченно детей", prem3: "Экспорт PDF для визитов к врачу", prem4: "Доступ для партнёра", prem5: "Резервное копирование и восстановление", prem6: "Перцентильные коридоры ВОЗ", premiumCta: "Начать бесплатный период →",
+      ctaH2: "Откройте карточку.<br/><span class=\"cta-h2-accent\">Смотрите, как они растут.</span>",
+      ctaLede: "Скачивание бесплатно. Бесплатно для одного ребёнка. Аккаунт не нужен — данные остаются на устройстве, пока вы не решите создать копию.",
+      storeComingSoon: "Скоро в", storeComingSoon2: "Скоро в", waitlist: "Хотите узнать о запуске? Записаться →",
+      footerContact: "Связаться", footerPrivacy: "Политика конфиденциальности", footerTerms: "Условия", footerCopy: "&copy; 2026 Kartochka. Все права защищены."
+    },
+    ar: {
+      navFeatures: "المميزات", navPricing: "الأسعار", navSupport: "الدعم", navDownload: "تحميل مجاني ←",
+      heroBadge: "v1.0 &nbsp;·&nbsp; RU · KZ · UZ · AE · SA · TR",
+      heroH1: "بطاقة واحدة.<br/>طفولتهم<br/><span class=\"hero-h1-accent\">كاملةً.</span>",
+      heroLede: "اللقاحات، ومخططات النمو، وصور لحظات التطور، وتقرير PDF جاهز للطبيب — كل ما يطلبه طبيب الأطفال، في تطبيق تفتحه فعلاً. صُمم للآباء في روسيا وآسيا الوسطى والشرق الأوسط.",
+      heroCtaPrimary: "تحميل مجاني ←", heroCtaGhost: "عرض الأسعار",
+      metric1label: "معالم تطوّر وفق منظمة الصحة", metric2label: "جداول تطعيم وطنية", metric3label: "لغات عند الإطلاق",
+      calloutLeft: "المكوّرات الرئوية يوم الجمعة", calloutRight: "📸 الخطوات الأولى — 11 شهراً",
+      featuresEyebrow: "ماذا داخل البطاقة", featuresH2: "أربعة أشياء،<br/>بإتقان.",
+      featuresHelper: "ليست 40 ميزة تتظاهر بأنها 4. صُممت كل شاشة بمشاركة الآباء وأطباء الأطفال.",
+      f1kicker: "01 · اللقاحات", f1title: "لا تفوّت أي جرعة بعد الآن.",
+      f1body: "جداول وطنية لروسيا وكازاخستان وأوزبكستان والإمارات والسعودية وتركيا. تنبيهات ذكية قبل موعد الجرعة، لا بعده.",
+      f2kicker: "02 · النمو", f2title: "منحنيات يقرأها الطبيب.",
+      f2body: "مخططات الوزن والطول ومحيط الرأس وفق منظمة الصحة العالمية بضغطة واحدة. نطاقات النسب المئوية في Premium.",
+      f3kicker: "03 · المعالم + الألبوم", f3title: "كل لحظة أولى،<br/>محفوظة بجمال.",
+      f3body: "سجّل 37 معلماً تطورياً، ثم أضف صورة. ينظّمها التطبيق في ألبوم مرتب حسب العمر مع تعليقات مؤثرة — جاهز للمشاركة.",
+      albumCaption: "«أي ابتسامة تجلب كل هذه السعادة؟ ❤️»",
+      f4kicker: "04 · ملف PDF للطبيب", f4title: "بضغطة واحدة إلى<br/>طبيب أطفالك.",
+      f4body: "بضغطة واحدة يُنشأ ملف PDF أنيق قابل للطباعة يضم اللقاحات وقياسات النمو والمعالم المُنجزة والصور. يحصل الطبيب على كل شيء قبل أن تجلس.",
+      e1title: "بطاقة الطوارئ", e1body: "فصيلة الدم والحساسية والأدوية الحالية وجهة اتصال آخر طبيب — دائماً بضغطة واحدة.",
+      e2title: "سجل زيارات الطبيب", e2body: "سجّل كل زيارة باسم الطبيب والعيادة والسبب والملاحظات. لا حاجة لتذكّر التاريخ مرة أخرى.",
+      e3title: "المشاركة مع الشريك", e3body: "شارك الوصول الكامل مع شريكك عبر رمز من 6 أحرف. يبقى الوالدان متزامنين — Premium.",
+      e4title: "النسخ الاحتياطي السحابي", e4body: "تُخزَّن البيانات على جهازك أولاً. سجّل الدخول للنسخ الاحتياطي والاستعادة — Premium.",
+      pricingEyebrow: "الأسعار", pricingH2: "مجاني للبداية.<br/>Premium عند الحاجة.",
+      pricingSub: "كل التتبّع مجاني للأبد. يفتح Premium المشاركة والتصدير.",
+      freeLabel: "مجاني", free1: "ملف طفل واحد", free2: "كل تتبّع اللقاحات + التذكيرات", free3: "قياسات النمو + المخططات", free4: "تتبّع المعالم + ألبوم الصور", free5: "سجل زيارات الطبيب", free6: "بطاقة الطوارئ", freeCta: "تحميل مجاني",
+      premiumLabel: "Premium", premiumPriceSub: "/ شهر", premiumYearly: "أو $24.99 / سنة &nbsp;·&nbsp; وفّر 48%",
+      prem1: "كل ما في المجاني", prem2: "عدد غير محدود من الأطفال", prem3: "تصدير PDF لزيارات الطبيب", prem4: "المشاركة مع الشريك", prem5: "النسخ الاحتياطي والاستعادة", prem6: "نطاقات النسب المئوية لمنظمة الصحة", premiumCta: "ابدأ التجربة المجانية ←",
+      ctaH2: "افتح البطاقة.<br/><span class=\"cta-h2-accent\">وراقبهم يكبرون.</span>",
+      ctaLede: "التحميل مجاني. مجاني لطفل واحد. لا حاجة لحساب للبدء — تبقى البيانات على جهازك حتى تختار نسخها احتياطياً.",
+      storeComingSoon: "قريباً على", storeComingSoon2: "قريباً على", waitlist: "تريد أخبار الإطلاق؟ انضم لقائمة الانتظار ←",
+      footerContact: "تواصل", footerPrivacy: "سياسة الخصوصية", footerTerms: "الشروط", footerCopy: "&copy; 2026 Kartochka. جميع الحقوق محفوظة."
+    },
+    tr: {
+      navFeatures: "Özellikler", navPricing: "Fiyatlar", navSupport: "Destek", navDownload: "Ücretsiz indir →",
+      heroBadge: "v1.0 &nbsp;·&nbsp; RU · KZ · UZ · AE · SA · TR",
+      heroH1: "Tek kart.<br/>Tüm<br/><span class=\"hero-h1-accent\">çocuklukları.</span>",
+      heroLede: "Aşılar, büyüme grafikleri, gelişim fotoğrafları ve doktora hazır PDF raporu — çocuk doktorunuzun istediği her şey, gerçekten açtığınız uygulamada. Rusya, Orta Asya ve Orta Doğu'daki ebeveynler için tasarlandı.",
+      heroCtaPrimary: "Ücretsiz indir →", heroCtaGhost: "Fiyatları gör",
+      metric1label: "DSÖ gelişim basamağı", metric2label: "ülke aşı takvimi", metric3label: "lansmanda dil",
+      calloutLeft: "Pnömokok Cuma günü", calloutRight: "📸 İlk adımlar — 11 ay",
+      featuresEyebrow: "Kartın içinde ne var", featuresH2: "Dört şey,<br/>özenle yapılmış.",
+      featuresHelper: "4 gibi görünen 40 özellik değil. Her ekran, ebeveynler ve çocuk doktorlarıyla birlikte tasarlandı.",
+      f1kicker: "01 · Aşılar", f1title: "Bir dozu bir daha kaçırmayın.",
+      f1body: "Rusya, Kazakistan, Özbekistan, BAE, Suudi Arabistan ve Türkiye için ulusal takvimler. Akıllı hatırlatıcılar tarihten sonra değil, önce gelir.",
+      f2kicker: "02 · Büyüme", f2title: "Doktorun okuduğu eğriler.",
+      f2body: "DSÖ kilo, boy ve baş çevresi grafikleri tek dokunuşla otomatik oluşur. Persentil bantları Premium'da.",
+      f3kicker: "03 · Gelişim + Albüm", f3title: "Her ilk,<br/>özenle saklanır.",
+      f3body: "37 gelişim basamağını işaretleyin, sonra fotoğraf ekleyin. Uygulama bunları yaşa göre, duygusal başlıklarla bir albümde toplar — paylaşmaya hazır.",
+      albumCaption: "\"Bu kadar mutluluk veren gülümseme kimin? ❤️\"",
+      f4kicker: "04 · Doktor PDF'i", f4title: "Tek dokunuşla<br/>doktorunuza.",
+      f4body: "Tek dokunuş; aşılar, büyüme ölçümleri, ulaşılan basamaklar ve fotoğraflarla temiz, yazdırılabilir bir PDF oluşturur. Doktorunuz siz oturmadan her şeye sahip olur.",
+      e1title: "Acil Durum Kartı", e1body: "Kan grubu, alerjiler, mevcut ilaçlar ve son doktorun iletişimi — her zaman tek dokunuş uzakta.",
+      e2title: "Doktor Ziyaret Günlüğü", e2body: "Her ziyareti doktor adı, klinik, neden ve notlarla kaydedin. Geçmişi bir daha baştan oluşturmayın.",
+      e3title: "Partner Paylaşımı", e3body: "6 karakterli bir kodla partnerinizle tam erişim paylaşın. İki ebeveyn de senkronize kalır — Premium.",
+      e4title: "Bulut Yedekleme", e4body: "Veriler önce cihazınızda kalır. Yedeklemek ve geri yüklemek için giriş yapın — Premium.",
+      pricingEyebrow: "Fiyatlar", pricingH2: "Başlamak ücretsiz.<br/>Gerektiğinde Premium.",
+      pricingSub: "Tüm takip sonsuza dek ücretsiz. Premium paylaşım ve dışa aktarmayı açar.",
+      freeLabel: "Ücretsiz", free1: "1 çocuk profili", free2: "Tüm aşı takibi + hatırlatıcılar", free3: "Büyüme ölçümleri + grafikler", free4: "Gelişim takibi + fotoğraf albümü", free5: "Doktor ziyaret günlüğü", free6: "Acil durum kartı", freeCta: "Ücretsiz indir",
+      premiumLabel: "Premium", premiumPriceSub: "/ ay", premiumYearly: "veya $24.99 / yıl &nbsp;·&nbsp; %48 tasarruf",
+      prem1: "Ücretsizdeki her şey", prem2: "Sınırsız çocuk", prem3: "Doktor ziyaretleri için PDF dışa aktarma", prem4: "Partner paylaşımı", prem5: "Bulut yedekleme ve geri yükleme", prem6: "Grafiklerde DSÖ persentil bantları", premiumCta: "Ücretsiz denemeyi başlat →",
+      ctaH2: "Kartı aç.<br/><span class=\"cta-h2-accent\">Büyümelerini izle.</span>",
+      ctaLede: "İndirmesi ücretsiz. Bir çocuk için ücretsiz. Başlamak için hesap gerekmez — verileriniz, yedeklemeyi seçene kadar cihazınızda kalır.",
+      storeComingSoon: "Yakında", storeComingSoon2: "Yakında", waitlist: "Lansman haberleri ister misiniz? Listeye katılın →",
+      footerContact: "İletişim", footerPrivacy: "Gizlilik politikası", footerTerms: "Şartlar", footerCopy: "&copy; 2026 Kartochka. Tüm hakları saklıdır."
+    }
+  };
+
+  function applyLang(lang) {
+    if (!I18N[lang]) lang = 'en';
+    var dict = I18N[lang];
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+    var nodes = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < nodes.length; i++) {
+      var k = nodes[i].getAttribute('data-i18n');
+      if (dict[k] != null) nodes[i].innerHTML = dict[k];
+    }
+    var sel = document.getElementById('langSelect');
+    if (sel) sel.value = lang;
+    try { localStorage.setItem('kartochka_lang', lang); } catch (e) {}
+  }
+
+  (function initLang() {
+    var lang = null;
+    try { lang = localStorage.getItem('kartochka_lang'); } catch (e) {}
+    if (!lang) {
+      var n = (navigator.language || 'en').slice(0, 2).toLowerCase();
+      lang = (['ru', 'ar', 'tr'].indexOf(n) !== -1) ? n : 'en';
+    }
+    function wire() {
+      var sel = document.getElementById('langSelect');
+      if (sel) sel.addEventListener('change', function (e) { applyLang(e.target.value); });
+      applyLang(lang);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', wire);
+    } else { wire(); }
+  })();
+</script>
 
 </body>
 </html>
