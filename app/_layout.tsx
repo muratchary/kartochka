@@ -14,7 +14,7 @@ import {
 import { useFonts } from 'expo-font';
 import * as Notifications from 'expo-notifications';
 import { Stack, useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { initI18n } from '../src/i18n';
@@ -62,16 +62,49 @@ export default function RootLayout() {
     initializeAuth();
   }, [i18nReady, storeHydrated, initializePurchases, initializeAuth]);
 
-  // Deep link from notification taps
-  useEffect(() => {
-    const sub = Notifications.addNotificationResponseReceivedListener((response) => {
-      const data = response.notification.request.content.data as Record<string, unknown> | null;
-      if (data?.url === '/milestone-album') {
+  // Route a notification tap to the screen it's about. Previously only the
+  // milestone nudge was handled, so every other tap (vaccine reminder, overdue
+  // alert, growth reminder) just dropped the user on the home tab.
+  const routeFromNotification = useCallback(
+    (data: Record<string, unknown> | null | undefined) => {
+      if (!data) return;
+      // Switch to the child the notification is about so the destination shows
+      // the right child's data. (If the id no longer exists, the store falls
+      // back to the first child.)
+      if (typeof data.childId === 'string') {
+        try {
+          useChildrenStore.getState().setSelectedChild(data.childId);
+        } catch {
+          // ignore — navigation still proceeds
+        }
+      }
+
+      const kind = typeof data.kind === 'string' ? data.kind : null;
+      const code = typeof data.vaccineCode === 'string' ? data.vaccineCode : null;
+      const dose = typeof data.doseNumber === 'number' ? data.doseNumber : null;
+
+      if (kind === 'vaccine-reminder' || kind === 'overdue-vaccine') {
+        // Vaccine detail route is /vaccine/<code>_<doseNumber>.
+        if (code && dose != null) router.push(`/vaccine/${code}_${dose}`);
+        else router.push('/(tabs)/vaccines');
+      } else if (kind === 'growth-reminder') {
+        router.push('/(tabs)/growth');
+      } else if (kind === 'milestone-nudge' || data.url === '/milestone-album') {
         router.push('/milestone-album');
       }
+    },
+    [router],
+  );
+
+  // Deep link from notification taps (while the app is running or backgrounded).
+  useEffect(() => {
+    const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      routeFromNotification(
+        response.notification.request.content.data as Record<string, unknown> | null,
+      );
     });
     return () => sub.remove();
-  }, [router]);
+  }, [routeFromNotification]);
 
   if (!i18nReady || !fontsLoaded || !storeHydrated) {
     return (
