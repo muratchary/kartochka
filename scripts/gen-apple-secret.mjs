@@ -1,19 +1,42 @@
 /**
- * Generates the Apple client_secret JWT required by Supabase.
- * Run once: node scripts/gen-apple-secret.mjs
- * The output expires in 6 months — regenerate before it does.
+ * Generates the Apple client_secret JWT required by Supabase (Sign in with Apple).
+ *
+ * The private key (.p8) is NEVER stored in this repo — it lives in the
+ * gitignored .secrets/ folder. Run:
+ *
+ *   node scripts/gen-apple-secret.mjs
+ *
+ * Override the key path if needed:
+ *   APPLE_KEY_PATH=/path/to/AuthKey_XXXX.p8 node scripts/gen-apple-secret.mjs
+ *
+ * Paste the output into Supabase → Authentication → Providers → Apple → Secret Key.
+ * The JWT expires in 6 months — regenerate before it does.
+ *
+ * Note: TEAM_ID / KEY_ID / CLIENT_ID are identifiers, not secrets — only the
+ * .p8 private key is sensitive, which is why it is read from disk, not committed.
  */
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const TEAM_ID   = '787GCXLSTM';
-const KEY_ID    = '562R6X7228';
-const CLIENT_ID = 'app.kartochka.signin';
-const PRIVATE_KEY = `-----BEGIN PRIVATE KEY-----
-MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgWSDGzSO0eqPca1bx
-AoJD5Jb565cDA3ewRUTTF+xNdfigCgYIKoZIzj0DAQehRANCAARvO+jYZRc+oCee
-AnOC2NjHRrvgkskzFcV0z4M3HEj+q0uVpSopDpD/55Olc9Tfij9KHCTIQ4BgnwhU
-u9dI00py
------END PRIVATE KEY-----`;
+const KEY_ID    = 'LND4MJSSRQ';            // Apple Key ID for the Sign in with Apple key
+const CLIENT_ID = 'app.kartochka.signin';  // Services ID
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const KEY_PATH =
+  process.env.APPLE_KEY_PATH ||
+  path.join(__dirname, '..', '.secrets', `AuthKey_${KEY_ID}.p8`);
+
+let PRIVATE_KEY;
+try {
+  PRIVATE_KEY = fs.readFileSync(KEY_PATH, 'utf8');
+} catch {
+  console.error(`\n✖ Could not read the Apple key at:\n  ${KEY_PATH}\n` +
+    `Place the .p8 there (it is gitignored) or set APPLE_KEY_PATH.\n`);
+  process.exit(1);
+}
 
 const b64url = (obj) =>
   Buffer.from(typeof obj === 'string' ? obj : JSON.stringify(obj))
