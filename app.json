@@ -13,7 +13,7 @@
       "backgroundColor": "#2A7F7F"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "app.kartochka",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
