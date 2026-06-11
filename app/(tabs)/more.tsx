@@ -46,15 +46,30 @@ export default function MoreScreen() {
         style: 'destructive',
         onPress: async () => {
           try {
-            await deleteAccount();
-            // Cloud account is gone — also wipe everything stored on-device
-            // so deletion is complete from the user's perspective.
+            // Cancel local notifications while the UI is still static (the
+            // confirm dialog is dismissing) — keeps native calls away from
+            // the data-wipe re-render that follows.
             await cancelAllReminders();
-            clearAll();
-            Alert.alert(t('more.deleteAccountDoneTitle'), t('more.deleteAccountDoneBody'));
+            // Server-side: delete the account + all cloud data, sign out,
+            // detach RevenueCat. Sets user -> null (a small re-render here).
+            await deleteAccount();
           } catch {
             Alert.alert(t('more.deleteAccountErrorTitle'), t('more.deleteAccountErrorBody'));
+            return;
           }
+          // Leave the tabs for the simple onboarding/welcome screen BEFORE
+          // wiping local data. This unmounts the whole tab tree (the heavy
+          // mount source) up front, so clearAll() then re-renders only the
+          // welcome screen — not five tabs + a presented Alert on a screen
+          // that's mid-teardown, which crashes on iOS 26 (RN issue #54859).
+          // It's also the right destination: a deleted user starts fresh.
+          router.replace('/onboarding/welcome');
+          setTimeout(() => {
+            clearAll();
+            setTimeout(() => {
+              Alert.alert(t('more.deleteAccountDoneTitle'), t('more.deleteAccountDoneBody'));
+            }, 300);
+          }, 400);
         },
       },
     ]);
