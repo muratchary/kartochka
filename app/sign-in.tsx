@@ -33,8 +33,12 @@ export default function SignInScreen() {
 
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
+  // Which button the user tapped — so only that one shows a spinner.
+  // (isSigningIn is global, which previously lit up all three at once.)
+  const [pending, setPending] = useState<'apple' | 'google' | 'email' | null>(null);
 
   const handleSignIn = async (provider: 'apple' | 'google') => {
+    setPending(provider);
     try {
       await signInWithProvider(provider);
       if (useAuthStore.getState().user) {
@@ -54,6 +58,8 @@ export default function SignInScreen() {
         // copy users should see if anything ever goes wrong here again.
         Alert.alert(t('signIn.errorTitle'), t('signIn.errorBody'));
       }
+    } finally {
+      setPending(null);
     }
   };
 
@@ -63,6 +69,7 @@ export default function SignInScreen() {
       Alert.alert(t('signIn.email.invalidTitle'), t('signIn.email.invalidBody'));
       return;
     }
+    setPending('email');
     try {
       await signInWithEmail(trimmed);
       setEmailSent(true);
@@ -73,6 +80,8 @@ export default function SignInScreen() {
       } else {
         Alert.alert(t('signIn.errorTitle'), msg || t('signIn.errorBody'));
       }
+    } finally {
+      setPending(null);
     }
   };
 
@@ -197,7 +206,7 @@ export default function SignInScreen() {
                 style={[styles.providerBtn, styles.appleBtn]}
                 onPress={() => handleSignIn('apple')}
                 disabled={isSigningIn}>
-                {isSigningIn ? (
+                {pending === 'apple' ? (
                   <ActivityIndicator color="#fff" size="small" />
                 ) : (
                   <>
@@ -215,7 +224,7 @@ export default function SignInScreen() {
               style={[styles.providerBtn, styles.googleBtn]}
               onPress={() => handleSignIn('google')}
               disabled={isSigningIn}>
-              {isSigningIn ? (
+              {pending === 'google' ? (
                 <ActivityIndicator color={colors.ink} size="small" />
               ) : (
                 <>
@@ -261,7 +270,7 @@ export default function SignInScreen() {
               ]}
               onPress={handleEmailSignIn}
               disabled={!email.trim() || isSigningIn}>
-              {isSigningIn ? (
+              {pending === 'email' ? (
                 <ActivityIndicator color="#fff" size="small" />
               ) : (
                 <Text style={[styles.emailBtnText, { fontFamily: font(700) }]}>
