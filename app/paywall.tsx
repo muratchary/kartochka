@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -19,6 +20,11 @@ import { useAuthStore } from '../src/stores/authStore';
 import { usePurchasesStore } from '../src/stores/purchasesStore';
 import { colors, radii, spacing } from '../src/theme';
 import { useFont } from '../src/theme/useFont';
+
+// Required by App Store guideline 3.1.2(c): functional links to the
+// Terms of Use (EULA) and Privacy Policy must appear in the purchase flow.
+const TERMS_URL = 'https://kartochka.app/terms';
+const PRIVACY_URL = 'https://kartochka.app/privacy';
 
 // What Premium unlocks — shown as benefit rows
 const BENEFITS: Array<{ icon: string; labelKey: string }> = [
@@ -296,6 +302,26 @@ export default function PaywallScreen() {
             {t('paywall.restore')}
           </Text>
         </Pressable>
+
+        {/* Auto-renew disclosure + required legal links (App Store 3.1.2c).
+            Subscription title, length, and price are shown on the plan cards
+            above; these complete the required purchase-flow information. */}
+        <Text style={[styles.disclosure, { fontFamily: font(500) }]}>
+          {t('paywall.disclosure')}
+        </Text>
+        <View style={styles.legalRow}>
+          <Pressable onPress={() => WebBrowser.openBrowserAsync(TERMS_URL)} hitSlop={8}>
+            <Text style={[styles.legalLink, { fontFamily: font(600) }]}>
+              {t('paywall.terms')}
+            </Text>
+          </Pressable>
+          <Text style={[styles.legalDot, { fontFamily: font(500) }]}>·</Text>
+          <Pressable onPress={() => WebBrowser.openBrowserAsync(PRIVACY_URL)} hitSlop={8}>
+            <Text style={[styles.legalLink, { fontFamily: font(600) }]}>
+              {t('paywall.privacy')}
+            </Text>
+          </Pressable>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -394,6 +420,24 @@ const styles = StyleSheet.create({
 
   restoreBtn: { alignItems: 'center', paddingVertical: spacing.sm },
   restoreText: { fontSize: 14, color: colors.ink3 },
+
+  disclosure: {
+    fontSize: 11,
+    color: colors.ink3,
+    textAlign: 'center',
+    lineHeight: 16,
+    marginTop: spacing.md,
+    paddingHorizontal: spacing.sm,
+  },
+  legalRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: spacing.sm,
+    marginTop: spacing.sm,
+  },
+  legalLink: { fontSize: 13, color: colors.teal, textDecorationLine: 'underline' },
+  legalDot: { fontSize: 13, color: colors.ink3 },
 
   // Active-subscription view
   activeBadge: {

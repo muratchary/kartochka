@@ -23,6 +23,10 @@ interface AuthState {
   // queued the email — does NOT wait for the user to click anything.
   signInWithEmail: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
+  // Permanently delete the signed-in user's cloud account and all server
+  // data (App Store guideline 5.1.1(v)). Throws on failure so the caller
+  // can surface an error instead of silently clearing local state.
+  deleteAccount: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -195,6 +199,26 @@ export const useAuthStore = create<AuthState>((set) => ({
     // Detach from RC's aliased user; local entitlement on this device is
     // preserved, but new purchases on a different device won't merge until
     // the user signs back in.
+    usePurchasesStore.getState().logOut().catch(() => {});
+    set({ session: null, user: null });
+  },
+
+  deleteAccount: async () => {
+    if (!isSupabaseConfigured) {
+      throw new Error('not_configured');
+    }
+    // delete_my_account() runs as SECURITY DEFINER and deletes the row in
+    // auth.users for the calling user. Every app table FKs to auth.users(id)
+    // ON DELETE CASCADE, so this wipes all of the user's cloud data in one go.
+    const { error } = await supabase.rpc('delete_my_account');
+    if (error) throw error;
+    // The auth user is gone; our JWT now points at nothing. Sign out locally
+    // (best-effort — the server session is already invalid) and detach RC.
+    try {
+      await supabase.auth.signOut();
+    } catch {
+      // ignore — user already deleted server-side
+    }
     usePurchasesStore.getState().logOut().catch(() => {});
     set({ session: null, user: null });
   },

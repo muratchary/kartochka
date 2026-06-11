@@ -291,7 +291,8 @@
       "supportEmail": "Destek ile iletişim",
       "loadDemo": "Demo veri yükle",
       "clearAll": "Tüm verileri sil",
-      "partnerSharing": "Eşle paylaşım"
+      "partnerSharing": "Eşle paylaşım",
+      "deleteAccount": "Hesabı sil"
     },
     "loadDemoConfirm": "Demo veri yüklensin mi? Mevcut çocuklar ve kayıtlar değiştirilecek.",
     "clearAllConfirm": "Tüm çocuklar ve kayıtları silinsin mi?",
@@ -334,7 +335,14 @@
       "removeConfirm": "{{name}} ve tüm kayıtları silinsin mi?",
       "remove": "Sil"
     },
-    "redeemFooter": "Kodun mu var? Kullan"
+    "redeemFooter": "Kodun mu var? Kullan",
+    "deleteAccountConfirmTitle": "Hesabınız silinsin mi?",
+    "deleteAccountConfirmBody": "Bu işlem hesabınızı ve tüm bulut verilerinizi — çocuklar, aşılar, büyüme, gelişim, fotoğraflar ve notlar — kalıcı olarak siler. Geri alınamaz.",
+    "deleteAccountCta": "Hesabı sil",
+    "deleteAccountDoneTitle": "Hesap silindi",
+    "deleteAccountDoneBody": "Hesabınız ve ilişkili tüm veriler kalıcı olarak silindi.",
+    "deleteAccountErrorTitle": "Hesap silinemedi",
+    "deleteAccountErrorBody": "Bir şeyler ters gitti. Bağlantınızı kontrol edip tekrar deneyin veya support@kartochka.app adresine yazın."
   },
   "languages": {
     "en": "English",
@@ -549,7 +557,10 @@
       "titleAnnual": "Yıllık planındasın",
       "bodyAnnual": "Teşekkürler — en avantajlı planı seçtin.",
       "manageNote": "Aboneliği App Store veya Google Play üzerinden yönet: iOS → Ayarlar → Abonelikler; Android → Play Store → Abonelikler."
-    }
+    },
+    "terms": "Kullanım Koşulları",
+    "privacy": "Gizlilik Politikası",
+    "disclosure": "Abonelik, mevcut dönem bitmeden en az 24 saat önce iptal edilmezse otomatik olarak yenilenir. App Store ayarlarından istediğiniz zaman yönetebilir veya iptal edebilirsiniz."
   },
   "partnerSharing": {
     "title": "Eşle paylaşım",

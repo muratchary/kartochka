@@ -16,6 +16,16 @@ const APP = '6773370520';
 const MARKETING_URL = 'https://kartochka.app';
 const SUPPORT_URL = 'https://kartochka.app';
 const PRIVACY_URL = 'https://kartochka.app/privacy';
+const TERMS_URL = 'https://kartochka.app/terms';
+
+// App Store 3.1.2(c): subscription apps must include a functional Terms of Use
+// (EULA) link in the App Description. Appended per-locale below.
+const EULA_LINE = {
+  'en-US': `\n\nTerms of Use (EULA): ${TERMS_URL}`,
+  ru: `\n\nУсловия использования (EULA): ${TERMS_URL}`,
+  'ar-SA': `\n\nشروط الاستخدام (EULA): ${TERMS_URL}`,
+  tr: `\n\nKullanım Koşulları (EULA): ${TERMS_URL}`,
+};
 
 const env = Object.fromEntries(
   fs.readFileSync('.secrets/asc-api.env', 'utf8').split('\n')
@@ -178,7 +188,7 @@ function req(method, path, body) {
   for (const [loc, c] of Object.entries(C)) {
     // ---- Version localization (description, keywords, promo, urls) ----
     const vl = existVL.find((x) => x.attributes.locale === loc);
-    const vlAttrs = { description: c.description, keywords: c.keywords, promotionalText: c.promo, marketingUrl: MARKETING_URL, supportUrl: SUPPORT_URL };
+    const vlAttrs = { description: c.description + (EULA_LINE[loc] || ''), keywords: c.keywords, promotionalText: c.promo, marketingUrl: MARKETING_URL, supportUrl: SUPPORT_URL };
     if (vl) {
       const r = await req('PATCH', `/v1/appStoreVersionLocalizations/${vl.id}`, { data: { type: 'appStoreVersionLocalizations', id: vl.id, attributes: vlAttrs } });
       console.log(`  [${loc}] version-loc PATCH:`, r.s === 200 ? 'OK' : r.s + ' ' + JSON.stringify(r.j).slice(0, 160));

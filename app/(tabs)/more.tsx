@@ -36,6 +36,29 @@ export default function MoreScreen() {
   const isPremium = usePurchasesStore((s) => s.isPremium);
   const user = useAuthStore((s) => s.user);
   const signOut = useAuthStore((s) => s.signOut);
+  const deleteAccount = useAuthStore((s) => s.deleteAccount);
+
+  const handleDeleteAccount = () => {
+    Alert.alert(t('more.deleteAccountConfirmTitle'), t('more.deleteAccountConfirmBody'), [
+      { text: t('common.cancel'), style: 'cancel' },
+      {
+        text: t('more.deleteAccountCta'),
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await deleteAccount();
+            // Cloud account is gone — also wipe everything stored on-device
+            // so deletion is complete from the user's perspective.
+            await cancelAllReminders();
+            clearAll();
+            Alert.alert(t('more.deleteAccountDoneTitle'), t('more.deleteAccountDoneBody'));
+          } catch {
+            Alert.alert(t('more.deleteAccountErrorTitle'), t('more.deleteAccountErrorBody'));
+          }
+        },
+      },
+    ]);
+  };
 
   const handleSignOut = () => {
     Alert.alert(t('signIn.signOutConfirmTitle'), t('signIn.signOutConfirmBody'), [
@@ -97,6 +120,14 @@ export default function MoreScreen() {
             icon: 'log-out-outline' as const,
             labelKey: 'more.items.signOut',
             onPress: handleSignOut,
+            destructive: true,
+          },
+          // Required by App Store guideline 5.1.1(v): apps that support
+          // account creation must offer in-app account deletion.
+          {
+            icon: 'trash-outline' as const,
+            labelKey: 'more.items.deleteAccount',
+            onPress: handleDeleteAccount,
             destructive: true,
           },
         ]

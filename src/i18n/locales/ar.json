@@ -343,7 +343,8 @@
       "supportEmail": "اتصل بالدعم",
       "loadDemo": "تحميل بيانات تجريبية",
       "clearAll": "مسح جميع البيانات",
-      "partnerSharing": "مشاركة مع الشريك"
+      "partnerSharing": "مشاركة مع الشريك",
+      "deleteAccount": "حذف الحساب"
     },
     "loadDemoConfirm": "تحميل بيانات تجريبية؟ سيؤدي ذلك إلى استبدال أطفالك وسجلاتك الحالية.",
     "clearAllConfirm": "حذف جميع الأطفال وسجلاتهم؟",
@@ -386,7 +387,14 @@
       "removeConfirm": "حذف {{name}} وجميع سجلاته؟",
       "remove": "حذف"
     },
-    "redeemFooter": "لديك رمز؟ فعّله"
+    "redeemFooter": "لديك رمز؟ فعّله",
+    "deleteAccountConfirmTitle": "حذف حسابك؟",
+    "deleteAccountConfirmBody": "سيؤدي هذا إلى حذف حسابك وجميع بياناتك السحابية نهائياً — الأطفال واللقاحات والنمو والمعالم والصور والملاحظات. لا يمكن التراجع عن هذا.",
+    "deleteAccountCta": "حذف الحساب",
+    "deleteAccountDoneTitle": "تم حذف الحساب",
+    "deleteAccountDoneBody": "تم حذف حسابك وجميع البيانات المرتبطة به نهائياً.",
+    "deleteAccountErrorTitle": "تعذّر حذف الحساب",
+    "deleteAccountErrorBody": "حدث خطأ ما. تحقق من اتصالك وحاول مرة أخرى، أو راسلنا على support@kartochka.app."
   },
   "languages": {
     "en": "English",
@@ -610,7 +618,10 @@
       "titleAnnual": "أنت على الخطة السنوية",
       "bodyAnnual": "شكراً لاختيارك أفضل قيمة.",
       "manageNote": "أدِر اشتراكك من App Store أو Google Play: iOS ← الإعدادات ← الاشتراكات؛ Android ← متجر Play ← الاشتراكات."
-    }
+    },
+    "terms": "شروط الاستخدام",
+    "privacy": "سياسة الخصوصية",
+    "disclosure": "يتجدد الاشتراك تلقائياً ما لم يتم إلغاؤه قبل 24 ساعة على الأقل من نهاية الفترة الحالية. يمكنك الإدارة أو الإلغاء في أي وقت من إعدادات App Store."
   },
   "partnerSharing": {
     "title": "المشاركة مع الشريك",

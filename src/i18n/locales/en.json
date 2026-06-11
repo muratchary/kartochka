@@ -317,7 +317,8 @@
       "supportEmail": "Contact support",
       "loadDemo": "Load demo data",
       "clearAll": "Clear all data",
-      "partnerSharing": "Partner sharing"
+      "partnerSharing": "Partner sharing",
+      "deleteAccount": "Delete account"
     },
     "loadDemoConfirm": "Load demo data? This replaces your current children and records.",
     "clearAllConfirm": "Delete every child and their records?",
@@ -360,7 +361,14 @@
       "removeConfirm": "Remove {{name}} and all their records?",
       "remove": "Remove"
     },
-    "redeemFooter": "Have a code? Redeem it"
+    "redeemFooter": "Have a code? Redeem it",
+    "deleteAccountConfirmTitle": "Delete your account?",
+    "deleteAccountConfirmBody": "This permanently deletes your account and all cloud data — children, vaccinations, growth, milestones, photos, and notes. This cannot be undone.",
+    "deleteAccountCta": "Delete account",
+    "deleteAccountDoneTitle": "Account deleted",
+    "deleteAccountDoneBody": "Your account and all associated data have been permanently deleted.",
+    "deleteAccountErrorTitle": "Couldn’t delete account",
+    "deleteAccountErrorBody": "Something went wrong. Please check your connection and try again, or email support@kartochka.app."
   },
   "languages": {
     "en": "English",
@@ -549,7 +557,10 @@
       "titleAnnual": "You're on the Yearly plan",
       "bodyAnnual": "Thanks for going all-in. You're on the best value.",
       "manageNote": "Manage or cancel anytime from your store account: iOS → Settings → Subscriptions; Android → Play Store → Subscriptions."
-    }
+    },
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "disclosure": "Subscription renews automatically unless cancelled at least 24 hours before the current period ends. Manage or cancel anytime in your App Store settings."
   },
   "partnerSharing": {
     "title": "Partner sharing",
