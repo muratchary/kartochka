@@ -1,4 +1,4 @@
-# Apple resubmission — v1.0 (build 21)
+# Apple resubmission — v1.0 (build 24)
 
 Responds to the June 10, 2026 rejection (Submission ID 5d3e7818-cae0-4ed2-af49-70d378425e1d):
 - Guideline 3.1.2(c) — subscription links
@@ -8,7 +8,7 @@ Responds to the June 10, 2026 rejection (Submission ID 5d3e7818-cae0-4ed2-af49-7
 
 ## Paste into: App Review Information → Notes
 
-Thank you for the review. Both issues are addressed in this build (1.0, build 21):
+Thank you for the review. Both issues are addressed in this build (1.0, build 24):
 
 GUIDELINE 3.1.2(c) — SUBSCRIPTIONS
 • The paywall now shows functional "Terms of Use" and "Privacy Policy" links at
@@ -34,7 +34,7 @@ This permanently deletes the user's account and all server-side data immediately
 
 Hello, and thank you for the detailed feedback.
 
-We have addressed both items in build 21:
+We have addressed both items in build 24:
 
 1) Guideline 3.1.2(c): The in-app paywall now includes functional links to our
 Terms of Use (EULA) and Privacy Policy, along with the auto-renewal disclosure;
