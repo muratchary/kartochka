@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -29,6 +29,13 @@ export default function RedeemScreen() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Promo redemption is Android-only (Apple guideline 3.1.1). If this route is
+  // ever reached on iOS (e.g. a deep link), send the user back — there is no
+  // non-IAP unlock path on iOS.
+  if (Platform.OS === 'ios') {
+    return <Redirect href="/(tabs)/more" />;
+  }
 
   // Already redeemed on this device (and not a fresh redemption this session)
   // → show a confirmation state instead of the input form.
@@ -62,9 +69,7 @@ export default function RedeemScreen() {
         </Text>
       </View>
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={styles.body}>
+      <KeyboardAvoidingView behavior={undefined} style={styles.body}>
         {success || showAlready ? (
           <View style={styles.successBox}>
             <Ionicons name="checkmark-circle" size={64} color={colors.teal} />

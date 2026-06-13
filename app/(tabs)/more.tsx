@@ -2,7 +2,7 @@ import { Ionicons, type Ionicons as IoniconsType } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import type { ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { cancelAllReminders } from '../../src/lib/notifications';
@@ -228,12 +228,16 @@ export default function MoreScreen() {
         )}
 
         {/* Quiet redeem-code entry — discoverable for testers ("bottom of More"),
-            but low-emphasis so it reads as a footer link, not a feature. */}
-        <Pressable onPress={() => router.push('/redeem')} hitSlop={8} style={styles.redeemLink}>
-          <Text style={[styles.redeemLinkText, { fontFamily: font(500) }]}>
-            {t('more.redeemFooter')}
-          </Text>
-        </Pressable>
+            but low-emphasis so it reads as a footer link, not a feature.
+            Android only: Apple guideline 3.1.1 forbids unlocking paid features
+            outside In-App Purchase, so the promo code is not offered on iOS. */}
+        {Platform.OS !== 'ios' && (
+          <Pressable onPress={() => router.push('/redeem')} hitSlop={8} style={styles.redeemLink}>
+            <Text style={[styles.redeemLinkText, { fontFamily: font(500) }]}>
+              {t('more.redeemFooter')}
+            </Text>
+          </Pressable>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

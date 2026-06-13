@@ -87,8 +87,12 @@ export const usePurchasesStore = create<PurchasesState>((set, get) => ({
     // Load any persisted promo grant first so Premium is correct even if RC
     // is unavailable (e.g. Expo Go) or returns no entitlement.
     try {
-      const granted = (await AsyncStorage.getItem(PROMO_KEY)) === 'true';
-      if (granted) set({ promoGranted: true, isPremium: true });
+      // Promo unlock is Android-only (Apple guideline 3.1.1 forbids unlocking
+      // paid features outside In-App Purchase). Never apply it on iOS.
+      if (Platform.OS !== 'ios') {
+        const granted = (await AsyncStorage.getItem(PROMO_KEY)) === 'true';
+        if (granted) set({ promoGranted: true, isPremium: true });
+      }
     } catch {
       // ignore storage errors — fall through to RC
     }
@@ -166,6 +170,9 @@ export const usePurchasesStore = create<PurchasesState>((set, get) => ({
   },
 
   redeemCode: async (code: string): Promise<RedeemResult> => {
+    // Android-only. On iOS, unlocking Premium via a code instead of In-App
+    // Purchase violates App Store guideline 3.1.1, so this path is inert.
+    if (Platform.OS === 'ios') return { ok: false, reason: 'invalid' };
     const trimmed = code.trim();
     if (!trimmed) return { ok: false, reason: 'invalid' };
     try {
