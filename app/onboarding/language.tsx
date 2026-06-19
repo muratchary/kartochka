@@ -1,7 +1,8 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, I18nManager, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button } from '../../src/components/Button';
@@ -39,6 +40,13 @@ export default function LanguageScreen() {
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <View style={styles.stepRow}>
+        <Pressable onPress={() => router.back()} hitSlop={12} style={styles.backBtn}>
+          <Ionicons
+            name={I18nManager.isRTL ? 'chevron-forward' : 'chevron-back'}
+            size={24}
+            color={colors.ink}
+          />
+        </Pressable>
         <StepDots step={3} total={4} />
         <Text style={[styles.stepLabel, { fontFamily: font(700) }]}>
           {t('onboarding.language.stepLabel')}
@@ -100,6 +108,7 @@ const styles = StyleSheet.create({
     gap: spacing.md,
     marginBottom: spacing.lg,
   },
+  backBtn: { marginStart: -spacing.xs },
   stepLabel: { fontSize: typography.caption.fontSize, color: colors.ink2 },
   list: { gap: spacing.sm },
   row: {

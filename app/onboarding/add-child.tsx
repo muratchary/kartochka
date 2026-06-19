@@ -1,9 +1,11 @@
+import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
+  I18nManager,
   Platform,
   Pressable,
   ScrollView,
@@ -96,6 +98,13 @@ export default function AddChildScreen() {
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <View style={styles.stepRow}>
+        <Pressable onPress={() => router.back()} hitSlop={12} style={styles.backBtn}>
+          <Ionicons
+            name={I18nManager.isRTL ? 'chevron-forward' : 'chevron-back'}
+            size={24}
+            color={colors.ink}
+          />
+        </Pressable>
         <StepDots step={4} total={4} />
         <Text style={[styles.stepLabel, { fontFamily: font(700) }]}>
           {t('onboarding.addChild.stepLabel')}
@@ -180,7 +189,7 @@ export default function AddChildScreen() {
               {country ? t(`countries.${country}`) : ''}
             </Text>
           </Text>
-          <Pressable onPress={() => router.back()}>
+          <Pressable onPress={() => router.dismissTo('/onboarding/country')}>
             <Text style={[styles.countryStripLink, { fontFamily: font(700) }]}>
               {t('common.change')}
             </Text>
@@ -214,6 +223,7 @@ const styles = StyleSheet.create({
     gap: spacing.md,
     marginBottom: spacing.lg,
   },
+  backBtn: { marginStart: -spacing.xs },
   stepLabel: { fontSize: typography.caption.fontSize, color: colors.ink2 },
   label: {
     fontSize: typography.caption.fontSize,
