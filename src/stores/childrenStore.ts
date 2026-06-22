@@ -3,10 +3,12 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 import type {
+  CareLog,
   Child,
   DoctorVisit,
   GrowthEntry,
   MilestoneRecord,
+  NewCareLog,
   NewChild,
   NewDoctorVisit,
   NewGrowthEntry,
@@ -22,6 +24,7 @@ interface ChildrenState {
   growthEntries: GrowthEntry[];
   milestones: MilestoneRecord[];
   doctorVisits: DoctorVisit[];
+  careLogs: CareLog[];
   selectedChildId: string | null;
   tutorialSeen: boolean;
 
@@ -48,6 +51,10 @@ interface ChildrenState {
   updateDoctorVisit: (id: string, patch: Partial<NewDoctorVisit>) => void;
   removeDoctorVisit: (id: string) => void;
 
+  addCareLog: (input: NewCareLog) => CareLog;
+  updateCareLog: (id: string, patch: Partial<Omit<CareLog, 'id' | 'childId' | 'createdAt' | 'updatedAt'>>) => void;
+  removeCareLog: (id: string) => void;
+
   seedDemoData: () => void;
   clearAll: () => void;
 }
@@ -69,6 +76,7 @@ export const useChildrenStore = create<ChildrenState>()(
       growthEntries: [],
       milestones: [],
       doctorVisits: [],
+      careLogs: [],
       selectedChildId: null,
       tutorialSeen: false,
 
@@ -99,6 +107,7 @@ export const useChildrenStore = create<ChildrenState>()(
             growthEntries: state.growthEntries.filter((g) => g.childId !== id),
             milestones: state.milestones.filter((m) => m.childId !== id),
             doctorVisits: state.doctorVisits.filter((d) => d.childId !== id),
+            careLogs: state.careLogs.filter((l) => l.childId !== id),
             selectedChildId:
               state.selectedChildId === id ? (remaining[0]?.id ?? null) : state.selectedChildId,
           };
@@ -179,6 +188,22 @@ export const useChildrenStore = create<ChildrenState>()(
       },
       removeDoctorVisit: (id) => {
         set((state) => ({ doctorVisits: state.doctorVisits.filter((d) => d.id !== id) }));
+      },
+
+      addCareLog: (input) => {
+        const log: CareLog = { ...input, id: newId(), createdAt: now(), updatedAt: now() };
+        set((state) => ({ careLogs: [...state.careLogs, log] }));
+        return log;
+      },
+      updateCareLog: (id, patch) => {
+        set((state) => ({
+          careLogs: state.careLogs.map((l) =>
+            l.id === id ? { ...l, ...patch, updatedAt: now() } : l,
+          ),
+        }));
+      },
+      removeCareLog: (id) => {
+        set((state) => ({ careLogs: state.careLogs.filter((l) => l.id !== id) }));
       },
 
       seedDemoData: () => {
@@ -345,12 +370,23 @@ export const useChildrenStore = create<ChildrenState>()(
           },
         ];
 
+        // A day of care logs for Arash (3 mo) so the Daily tab has content.
+        const hoursAgo = (h: number) => new Date(Date.now() - h * 3600000).toISOString();
+        const careLogs: CareLog[] = [
+          { id: newId(), childId: arash.id, type: 'feed', startAt: hoursAgo(1), feedType: 'bottle', amountMl: 120, createdAt: t, updatedAt: t },
+          { id: newId(), childId: arash.id, type: 'diaper', startAt: hoursAgo(1.5), diaperType: 'wet', createdAt: t, updatedAt: t },
+          { id: newId(), childId: arash.id, type: 'sleep', startAt: hoursAgo(4), endAt: hoursAgo(2.5), createdAt: t, updatedAt: t },
+          { id: newId(), childId: arash.id, type: 'feed', startAt: hoursAgo(4.5), feedType: 'breast', createdAt: t, updatedAt: t },
+          { id: newId(), childId: arash.id, type: 'diaper', startAt: hoursAgo(5), diaperType: 'both', createdAt: t, updatedAt: t },
+        ];
+
         set({
           children: [anna, arash],
           vaccinations,
           growthEntries,
           milestones,
           doctorVisits,
+          careLogs,
           selectedChildId: anna.id,
         });
       },
@@ -362,6 +398,7 @@ export const useChildrenStore = create<ChildrenState>()(
           growthEntries: [],
           milestones: [],
           doctorVisits: [],
+          careLogs: [],
           selectedChildId: null,
           tutorialSeen: false,
         });

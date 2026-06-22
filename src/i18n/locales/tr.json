@@ -122,6 +122,11 @@
       "noMilestones": "Henüz hiçbir gelişim aşaması işaretlenmedi.",
       "milestonePhotosHeading": "Dönüm noktası fotoğrafları",
       "disclaimer": "Takvim {{source}} kaynağına dayanmaktadır. Bu belge sadece bilgilendirme amaçlıdır ve tıbbi tavsiye değildir."
+    },
+    "quick": {
+      "doctor": "Doktor",
+      "timeline": "Geçmiş",
+      "emergency": "Acil"
     }
   },
   "doctorCard": {
@@ -670,5 +675,37 @@
     "errorNetwork": "Sunucuya ulaşılamadı. Bağlantını kontrol edip tekrar dene.",
     "alreadyTitle": "Zaten açık",
     "alreadyBody": "Bir kodu zaten kullandın — Premium bu cihazda etkin."
+  },
+  "care": {
+    "title": "Günlük",
+    "feed": "Beslenme",
+    "sleep": "Uyku",
+    "diaper": "Bez",
+    "wake": "Uyandı",
+    "breast": "Emzirme",
+    "bottle": "Biberon",
+    "solids": "Katı gıda",
+    "ml": "ml",
+    "wet": "Islak",
+    "dirty": "Kirli",
+    "both": "İkisi de",
+    "sleepingSince": "{{time}}'den beri uyuyor",
+    "inProgress": "devam ediyor",
+    "justNow": "az önce",
+    "agoMin": "{{n}} dk önce",
+    "agoHr": "{{n}} sa önce",
+    "durH": "{{n}}sa",
+    "durM": "{{n}}dk",
+    "summaryFeed": "Son beslenme",
+    "summarySleep": "Son uyku",
+    "summaryDiaper": "Son bez",
+    "none": "—",
+    "today": "Bugün",
+    "emptyToday": "Bugün kayıt yok. Beslenme, uyku veya bez kaydetmek için yukarıya dokunun.",
+    "amountMl": "Miktar (ml)",
+    "notePlaceholder": "Not (isteğe bağlı)",
+    "longPressHint": "Silmek için bir kayda uzun basın.",
+    "deleteConfirm": "Bu kayıt silinsin mi?",
+    "homeStrip": "Günlük kayıt"
   }
 }

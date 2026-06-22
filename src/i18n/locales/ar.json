@@ -162,6 +162,11 @@
       "noMilestones": "لم يتم تسجيل أي معلم بعد.",
       "milestonePhotosHeading": "صور الإنجازات",
       "disclaimer": "الجدول مبني على {{source}}. هذا المستند للمعلومات فقط وليس نصيحة طبية."
+    },
+    "quick": {
+      "doctor": "طبيب",
+      "timeline": "السجل",
+      "emergency": "طوارئ"
     }
   },
   "doctorCard": {
@@ -735,5 +740,37 @@
     "errorNetwork": "تعذّر الاتصال بالخادم. تحقق من اتصالك وحاول مرة أخرى.",
     "alreadyTitle": "مُفعّل بالفعل",
     "alreadyBody": "لقد فعّلت رمزًا بالفعل — Premium مُفعّل على هذا الجهاز."
+  },
+  "care": {
+    "title": "اليوم",
+    "feed": "رضعة",
+    "sleep": "نوم",
+    "diaper": "حفاض",
+    "wake": "استيقظ",
+    "breast": "رضاعة طبيعية",
+    "bottle": "زجاجة",
+    "solids": "طعام صلب",
+    "ml": "مل",
+    "wet": "مبلل",
+    "dirty": "متسخ",
+    "both": "كلاهما",
+    "sleepingSince": "نائم منذ {{time}}",
+    "inProgress": "جارٍ",
+    "justNow": "الآن",
+    "agoMin": "قبل {{n}} د",
+    "agoHr": "قبل {{n}} س",
+    "durH": "{{n}} س",
+    "durM": "{{n}} د",
+    "summaryFeed": "آخر رضعة",
+    "summarySleep": "آخر نوم",
+    "summaryDiaper": "آخر حفاض",
+    "none": "—",
+    "today": "اليوم",
+    "emptyToday": "لا توجد سجلات اليوم. اضغط بالأعلى لتسجيل رضعة أو نوم أو حفاض.",
+    "amountMl": "الكمية (مل)",
+    "notePlaceholder": "ملاحظة (اختياري)",
+    "longPressHint": "اضغط مطولاً على السجل لحذفه.",
+    "deleteConfirm": "حذف هذا السجل؟",
+    "homeStrip": "سجل اليوم"
   }
 }

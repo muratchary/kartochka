@@ -122,6 +122,11 @@
       "noMilestones": "No milestones marked as reached yet.",
       "milestonePhotosHeading": "Milestone photos",
       "disclaimer": "Schedule based on {{source}}. This document is for informational purposes only and is not medical advice."
+    },
+    "quick": {
+      "doctor": "Doctor",
+      "timeline": "Timeline",
+      "emergency": "Emergency"
     }
   },
   "doctorCard": {
@@ -670,5 +675,37 @@
     "errorNetwork": "Couldn’t reach the server. Check your connection and try again.",
     "alreadyTitle": "Already unlocked",
     "alreadyBody": "You’ve already redeemed a code — Premium is active on this device."
+  },
+  "care": {
+    "title": "Daily",
+    "feed": "Feed",
+    "sleep": "Sleep",
+    "diaper": "Diaper",
+    "wake": "Wake",
+    "breast": "Breast",
+    "bottle": "Bottle",
+    "solids": "Solids",
+    "ml": "ml",
+    "wet": "Wet",
+    "dirty": "Dirty",
+    "both": "Both",
+    "sleepingSince": "Sleeping since {{time}}",
+    "inProgress": "in progress",
+    "justNow": "just now",
+    "agoMin": "{{n}} min ago",
+    "agoHr": "{{n}} h ago",
+    "durH": "{{n}}h",
+    "durM": "{{n}}m",
+    "summaryFeed": "Last feed",
+    "summarySleep": "Last sleep",
+    "summaryDiaper": "Last diaper",
+    "none": "—",
+    "today": "Today",
+    "emptyToday": "No entries today. Tap above to log a feed, sleep, or diaper.",
+    "amountMl": "Amount (ml)",
+    "notePlaceholder": "Note (optional)",
+    "longPressHint": "Long-press an entry to delete it.",
+    "deleteConfirm": "Delete this entry?",
+    "homeStrip": "Daily log"
   }
 }

@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
-import { Redirect, useRouter } from 'expo-router';
+import { Redirect, useRouter, type Href } from 'expo-router';
 import * as Sharing from 'expo-sharing';
 import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -217,27 +217,40 @@ export default function HomeScreen() {
           onAvatarPress={handleAvatarPress}
         />
 
-        <View style={styles.quickStrips}>
-          <Pressable style={[styles.strip, styles.stripTeal]} onPress={() => router.push('/doctor-card')}>
-            <Ionicons name="medkit-outline" size={15} color={colors.teal} />
-            <Text style={[styles.stripText, { fontFamily: font(600), color: colors.teal }]}>
-              {t('home.doctorVisit')}
+        <View style={styles.quickRow}>
+          {childAgeMonths < 24 && (
+            <Pressable style={styles.quickAction} onPress={() => router.push('/daily' as Href)}>
+              <View style={[styles.quickActionIcon, { backgroundColor: colors.amberSoft }]}>
+                <Ionicons name="sunny-outline" size={20} color={colors.amberDark} />
+              </View>
+              <Text numberOfLines={1} style={[styles.quickActionLabel, { fontFamily: font(600) }]}>
+                {t('care.title')}
+              </Text>
+            </Pressable>
+          )}
+          <Pressable style={styles.quickAction} onPress={() => router.push('/doctor-card')}>
+            <View style={[styles.quickActionIcon, { backgroundColor: colors.tealSoft }]}>
+              <Ionicons name="medkit-outline" size={20} color={colors.teal} />
+            </View>
+            <Text numberOfLines={1} style={[styles.quickActionLabel, { fontFamily: font(600) }]}>
+              {t('home.quick.doctor')}
             </Text>
-            <Ionicons name="chevron-forward" size={13} color={colors.teal} style={{ marginStart: 'auto' }} />
           </Pressable>
-          <Pressable style={[styles.strip, styles.stripPurple]} onPress={() => router.push('/timeline')}>
-            <Ionicons name="time-outline" size={15} color="#8B5CF6" />
-            <Text style={[styles.stripText, { fontFamily: font(600), color: '#8B5CF6' }]}>
-              {t('timeline.title')}
+          <Pressable style={styles.quickAction} onPress={() => router.push('/timeline')}>
+            <View style={[styles.quickActionIcon, { backgroundColor: '#F5F3FF' }]}>
+              <Ionicons name="time-outline" size={20} color="#8B5CF6" />
+            </View>
+            <Text numberOfLines={1} style={[styles.quickActionLabel, { fontFamily: font(600) }]}>
+              {t('home.quick.timeline')}
             </Text>
-            <Ionicons name="chevron-forward" size={13} color="#8B5CF6" style={{ marginStart: 'auto' }} />
           </Pressable>
-          <Pressable style={[styles.strip, styles.stripRed]} onPress={() => router.push('/emergency-card')}>
-            <Ionicons name="alert-circle-outline" size={15} color="#DC2626" />
-            <Text style={[styles.stripText, { fontFamily: font(600), color: '#DC2626' }]}>
-              {t('emergencyCard.title')}
+          <Pressable style={styles.quickAction} onPress={() => router.push('/emergency-card')}>
+            <View style={[styles.quickActionIcon, { backgroundColor: '#FEF2F2' }]}>
+              <Ionicons name="alert-circle-outline" size={20} color="#DC2626" />
+            </View>
+            <Text numberOfLines={1} style={[styles.quickActionLabel, { fontFamily: font(600) }]}>
+              {t('home.quick.emergency')}
             </Text>
-            <Ionicons name="chevron-forward" size={13} color="#DC2626" style={{ marginStart: 'auto' }} />
           </Pressable>
         </View>
 
@@ -905,24 +918,22 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xxl,
     gap: spacing.lg,
   },
-  quickStrips: {
+  quickRow: {
+    flexDirection: 'row',
     gap: spacing.sm,
     marginBottom: spacing.md,
   },
-  strip: {
-    flexDirection: 'row',
+  quickAction: { flex: 1, alignItems: 'center', gap: spacing.xs },
+  quickActionIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: radii.lg,
     alignItems: 'center',
-    gap: spacing.sm,
-    borderRadius: radii.md,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm + 2,
-    borderWidth: 1,
+    justifyContent: 'center',
   },
-  stripTeal: { backgroundColor: colors.tealSoft, borderColor: colors.tealLine },
-  stripPurple: { backgroundColor: '#F5F3FF', borderColor: '#DDD6FE' },
-  stripRed: { backgroundColor: '#FEF2F2', borderColor: '#FECACA' },
-  stripText: {
-    fontSize: typography.caption.fontSize,
+  quickActionLabel: {
+    fontSize: 11,
+    color: colors.ink2,
   },
   cards: { gap: spacing.md },
   cardHeader: {

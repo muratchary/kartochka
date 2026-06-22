@@ -131,6 +131,7 @@ export default function RootLayout() {
       <Stack.Screen name="sign-in" options={{ presentation: 'modal' }} />
       <Stack.Screen name="partner-sharing" />
       <Stack.Screen name="milestone-album" />
+      <Stack.Screen name="daily" />
       <Stack.Screen name="redeem" />
     </Stack>
   );
