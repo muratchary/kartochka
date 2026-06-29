@@ -565,7 +565,9 @@
     },
     "terms": "Kullanım Koşulları",
     "privacy": "Gizlilik Politikası",
-    "disclosure": "Abonelik, mevcut dönem bitmeden en az 24 saat önce iptal edilmezse otomatik olarak yenilenir. App Store ayarlarından istediğiniz zaman yönetebilir veya iptal edebilirsiniz."
+    "disclosure": "Abonelik, mevcut dönem bitmeden en az 24 saat önce iptal edilmezse otomatik olarak yenilenir. App Store ayarlarından istediğiniz zaman yönetebilir veya iptal edebilirsiniz.",
+    "codeUnlockNotice": "Bu sürümde Premium satın alınamaz, ancak bir kodla açabilirsiniz.",
+    "redeemCta": "Kodu kullan"
   },
   "partnerSharing": {
     "title": "Eşle paylaşım",

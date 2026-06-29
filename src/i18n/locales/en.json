@@ -565,7 +565,9 @@
     },
     "terms": "Terms of Use",
     "privacy": "Privacy Policy",
-    "disclosure": "Subscription renews automatically unless cancelled at least 24 hours before the current period ends. Manage or cancel anytime in your App Store settings."
+    "disclosure": "Subscription renews automatically unless cancelled at least 24 hours before the current period ends. Manage or cancel anytime in your App Store settings.",
+    "codeUnlockNotice": "Premium isn't available for purchase in this version - but you can unlock it with a code.",
+    "redeemCta": "Redeem a code"
   },
   "partnerSharing": {
     "title": "Partner sharing",

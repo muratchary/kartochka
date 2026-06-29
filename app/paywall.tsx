@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Alert,
   I18nManager,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -89,6 +90,12 @@ export default function PaywallScreen() {
   // Offering unavailable: either running in Expo Go (no native RevenueCat)
   // or products aren't yet approved in App Store Connect for this build.
   const offeringUnavailable = !offering && !isLoading;
+
+  // On stores without Google Play billing (e.g. RuStore / Play-less devices)
+  // offerings never load, so there's no way to *buy* Premium — but the promo
+  // code still unlocks it (Android-only, server-side, no billing). In that
+  // case point the user at the redeem screen instead of a dead paywall.
+  const codeUnlock = offeringUnavailable && Platform.OS !== 'ios';
 
   // Premium users: show their current plan + upgrade-to-yearly nudge (if monthly)
   // instead of the full plan picker. Yearly users get a thank-you screen.
@@ -225,9 +232,13 @@ export default function PaywallScreen() {
           <ActivityIndicator color={colors.teal} style={{ marginVertical: spacing.xl }} />
         ) : offeringUnavailable ? (
           <View style={styles.devNotice}>
-            <Ionicons name="information-circle-outline" size={16} color={colors.ink3} />
+            <Ionicons
+              name={codeUnlock ? 'pricetag-outline' : 'information-circle-outline'}
+              size={16}
+              color={colors.ink3}
+            />
             <Text style={[styles.devText, { fontFamily: font(600) }]}>
-              {t('paywall.devNotice')}
+              {t(codeUnlock ? 'paywall.codeUnlockNotice' : 'paywall.devNotice')}
             </Text>
           </View>
         ) : (
@@ -284,17 +295,25 @@ export default function PaywallScreen() {
         {/* Trial note */}
         <Text style={[styles.trialNote, { fontFamily: font(600) }]}>{t('paywall.trialNote')}</Text>
 
-        {/* CTA */}
-        <Pressable
-          style={[styles.cta, (isLoading || offeringUnavailable) && styles.ctaDisabled]}
-          onPress={handlePurchase}
-          disabled={isLoading || offeringUnavailable || !selectedPackage}>
-          {isLoading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={[styles.ctaText, { fontFamily: font(700) }]}>{t('paywall.cta')}</Text>
-          )}
-        </Pressable>
+        {/* CTA — on no-billing stores, redeem a code instead of buying */}
+        {codeUnlock ? (
+          <Pressable style={styles.cta} onPress={() => router.push('/redeem')}>
+            <Text style={[styles.ctaText, { fontFamily: font(700) }]}>
+              {t('paywall.redeemCta')}
+            </Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            style={[styles.cta, (isLoading || offeringUnavailable) && styles.ctaDisabled]}
+            onPress={handlePurchase}
+            disabled={isLoading || offeringUnavailable || !selectedPackage}>
+            {isLoading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={[styles.ctaText, { fontFamily: font(700) }]}>{t('paywall.cta')}</Text>
+            )}
+          </Pressable>
+        )}
 
         {/* Restore */}
         <Pressable onPress={handleRestore} style={styles.restoreBtn} hitSlop={8}>
