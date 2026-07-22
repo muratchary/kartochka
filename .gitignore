@@ -47,3 +47,6 @@ yarn-error.*
 
 # Service account keys — never commit
 .secrets/
+
+# local build artifacts (56MB aab once broke push)
+build/
