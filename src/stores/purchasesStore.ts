@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Crypto from 'expo-crypto';
+import { getLocales } from 'expo-localization';
 import Purchases, {
   LOG_LEVEL,
   type PurchasesOffering,
@@ -26,6 +27,14 @@ const ENTITLEMENT_ID = 'Kartochka Pro';
 // RevenueCat on purpose — works even before the Paid Apps Agreement is live.
 const PROMO_KEY = 'kartochka.promoGranted';
 const PROMO_DEVICE_KEY = 'kartochka.promoDeviceId';
+
+// Apple suspended IAP for the Russian storefront (2022), so Russian iOS users
+// cannot subscribe at all. Rather than show a purchase UI that can never
+// complete, Premium is simply free there during launch (traction decision
+// 2026-07-22). Region comes from device settings — approximate, but the only
+// signal available offline, and the worst case is a free unlock.
+const RU_LAUNCH_FREE =
+  Platform.OS === 'ios' && getLocales()[0]?.regionCode?.toUpperCase() === 'RU';
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -77,7 +86,7 @@ function packageTypeFromProductId(productId: string | undefined): ActivePackageT
 }
 
 export const usePurchasesStore = create<PurchasesState>((set, get) => ({
-  isPremium: false,
+  isPremium: RU_LAUNCH_FREE,
   isLoading: false,
   offering: null,
   promoGranted: false,
@@ -116,7 +125,7 @@ export const usePurchasesStore = create<PurchasesState>((set, get) => ({
       const isPremium = !!entitlement;
       set({
         // Promo grant keeps Premium on even when RC reports no entitlement.
-        isPremium: isPremium || get().promoGranted,
+        isPremium: isPremium || get().promoGranted || RU_LAUNCH_FREE,
         activePackageType: isPremium
           ? packageTypeFromProductId(entitlement?.productIdentifier)
           : null,
@@ -135,7 +144,7 @@ export const usePurchasesStore = create<PurchasesState>((set, get) => ({
       const entitlement = customerInfo.entitlements.active[ENTITLEMENT_ID];
       const isPremium = !!entitlement;
       set({
-        isPremium: isPremium || get().promoGranted,
+        isPremium: isPremium || get().promoGranted || RU_LAUNCH_FREE,
         activePackageType: isPremium
           ? packageTypeFromProductId(entitlement?.productIdentifier)
           : null,
@@ -156,7 +165,7 @@ export const usePurchasesStore = create<PurchasesState>((set, get) => ({
       const entitlement = info.entitlements.active[ENTITLEMENT_ID];
       const isPremium = !!entitlement;
       set({
-        isPremium: isPremium || get().promoGranted,
+        isPremium: isPremium || get().promoGranted || RU_LAUNCH_FREE,
         activePackageType: isPremium
           ? packageTypeFromProductId(entitlement?.productIdentifier)
           : null,

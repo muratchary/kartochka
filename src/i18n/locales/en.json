@@ -323,7 +323,8 @@
       "loadDemo": "Load demo data",
       "clearAll": "Clear all data",
       "partnerSharing": "Partner sharing",
-      "deleteAccount": "Delete account"
+      "deleteAccount": "Delete account",
+      "rateApp": "Rate Kartochka"
     },
     "loadDemoConfirm": "Load demo data? This replaces your current children and records.",
     "clearAllConfirm": "Delete every child and their records?",
@@ -709,5 +710,11 @@
     "longPressHint": "Long-press an entry to delete it.",
     "deleteConfirm": "Delete this entry?",
     "homeStrip": "Daily log"
+  },
+  "rating": {
+    "preTitle": "Enjoying Kartochka?",
+    "preBody": "A quick rating helps other parents find the app.",
+    "preYes": "Yes, rate it",
+    "preNo": "Not really"
   }
 }

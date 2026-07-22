@@ -13,6 +13,8 @@ import {
 } from '@expo-google-fonts/nunito';
 import { useFonts } from 'expo-font';
 import * as Notifications from 'expo-notifications';
+
+import { registerAppSession } from '../src/lib/ratingPrompt';
 import { Stack, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
@@ -60,6 +62,7 @@ export default function RootLayout() {
     if (!i18nReady || !storeHydrated) return;
     initializePurchases();
     initializeAuth();
+    registerAppSession();
   }, [i18nReady, storeHydrated, initializePurchases, initializeAuth]);
 
   // Route a notification tap to the screen it's about. Previously only the

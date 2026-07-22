@@ -27,7 +27,6 @@ import {
 import { fullSync, syncDown } from '../src/lib/sync';
 import { useAuthStore } from '../src/stores/authStore';
 import { selectActiveChild, useChildrenStore } from '../src/stores/childrenStore';
-import { usePurchasesStore } from '../src/stores/purchasesStore';
 import { colors, radii, spacing, typography } from '../src/theme';
 import { useFont } from '../src/theme/useFont';
 
@@ -37,7 +36,6 @@ export default function PartnerSharingScreen() {
   const font = useFont();
 
   const user = useAuthStore((s) => s.user);
-  const isPremium = usePurchasesStore((s) => s.isPremium);
   const child = useChildrenStore(selectActiveChild);
 
   const [shareCode, setShareCode] = useState<string | null>(null);
@@ -45,22 +43,17 @@ export default function PartnerSharingScreen() {
   const [joinCode, setJoinCode] = useState('');
   const [joining, setJoining] = useState(false);
 
-  // Defense-in-depth: if a free-tier user somehow lands here (deep link,
-  // back-stack, expired subscription mid-session), bounce them to the
-  // paywall instead of letting them generate/use share codes.
-  useEffect(() => {
-    if (!isPremium) {
-      router.replace('/paywall');
-    }
-  }, [isPremium, router]);
+  // Partner sharing is free for one partner (traction decision 2026-07-22) —
+  // it's the app's only person-to-person invite loop, so it must not sit
+  // behind the paywall.
 
   // Load any existing active code on mount
   useEffect(() => {
-    if (!user || !child || !isPremium) return;
+    if (!user || !child) return;
     getActiveShareCode(child.id, user.id)
       .then((code) => setShareCode(code))
       .catch(() => {});
-  }, [user, child, isPremium]);
+  }, [user, child]);
 
   if (!user) {
     return (

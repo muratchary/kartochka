@@ -297,7 +297,8 @@
       "loadDemo": "Demo veri yükle",
       "clearAll": "Tüm verileri sil",
       "partnerSharing": "Eşle paylaşım",
-      "deleteAccount": "Hesabı sil"
+      "deleteAccount": "Hesabı sil",
+      "rateApp": "Kartochka'yı değerlendir"
     },
     "loadDemoConfirm": "Demo veri yüklensin mi? Mevcut çocuklar ve kayıtlar değiştirilecek.",
     "clearAllConfirm": "Tüm çocuklar ve kayıtları silinsin mi?",
@@ -709,5 +710,11 @@
     "longPressHint": "Silmek için bir kayda uzun basın.",
     "deleteConfirm": "Bu kayıt silinsin mi?",
     "homeStrip": "Günlük kayıt"
+  },
+  "rating": {
+    "preTitle": "Kartochka'yı beğeniyor musunuz?",
+    "preBody": "Hızlı bir değerlendirme diğer ebeveynlerin uygulamayı bulmasına yardımcı olur.",
+    "preYes": "Evet, değerlendireyim",
+    "preNo": "Pek değil"
   }
 }

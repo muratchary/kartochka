@@ -19,6 +19,8 @@ import { getTipsForAge } from '../../src/data/monthlyTips';
 import { formatChildAge } from '../../src/lib/childAge';
 import { STANDARD_MILESTONES } from '../../src/lib/milestones';
 import { exportChildPdf } from '../../src/lib/pdfExport';
+import { maybePromptForReview } from '../../src/lib/ratingPrompt';
+import { logPdfExport } from '../../src/lib/usageStats';
 import { getSchedule } from '../../src/lib/schedules';
 import { usePurchasesStore } from '../../src/stores/purchasesStore';
 import {
@@ -46,6 +48,8 @@ export default function HomeScreen() {
   const markTutorialSeen = useChildrenStore((s) => s.markTutorialSeen);
   const doctorVisits = useChildrenStore((s) => s.doctorVisits);
   const isPremium = usePurchasesStore((s) => s.isPremium);
+  const pdfExportCounts = useChildrenStore((s) => s.pdfExportCounts);
+  const incrementPdfExport = useChildrenStore((s) => s.incrementPdfExport);
 
   const updateChild = useChildrenStore((s) => s.updateChild);
 
@@ -67,7 +71,10 @@ export default function HomeScreen() {
 
   const handleExportPdf = async () => {
     if (!child) return;
-    if (!isPremium) {
+    // First export per child is free — the PDF is the app's word-of-mouth
+    // artifact (traction decision 2026-07-22). Paywall gates the 2nd onward.
+    const firstExportFree = (pdfExportCounts[child.id] ?? 0) === 0;
+    if (!isPremium && !firstExportFree) {
       router.push('/paywall');
       return;
     }
@@ -95,9 +102,12 @@ export default function HomeScreen() {
         milestones,
         lang,
         t,
-        isPremium,
         milestonePhotos: milestonePhotos.length > 0 ? milestonePhotos : undefined,
       });
+      incrementPdfExport(child.id);
+      logPdfExport(lang);
+      // High-value moment: they just produced the doctor report.
+      maybePromptForReview(t);
     } catch {
       Alert.alert(t('home.pdf.errorTitle'), t('home.pdf.errorBody'));
     }

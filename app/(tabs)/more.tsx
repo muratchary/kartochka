@@ -6,6 +6,7 @@ import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from '
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { cancelAllReminders } from '../../src/lib/notifications';
+import { openWriteReview } from '../../src/lib/ratingPrompt';
 import { useAuthStore } from '../../src/stores/authStore';
 import { useChildrenStore } from '../../src/stores/childrenStore';
 import { usePurchasesStore } from '../../src/stores/purchasesStore';
@@ -97,9 +98,9 @@ export default function MoreScreen() {
     {
       icon: 'person-add-outline',
       labelKey: 'more.items.partnerSharing',
-      // Premium feature per CLAUDE.md — free tier hits paywall first.
-      onPress: () =>
-        isPremium ? router.push('/partner-sharing') : router.push('/paywall'),
+      // Free for one partner (traction decision 2026-07-22) — this is the
+      // app's only person-to-person invite loop.
+      onPress: () => router.push('/partner-sharing'),
     },
     {
       icon: 'medkit-outline',
@@ -159,6 +160,11 @@ export default function MoreScreen() {
       icon: 'notifications-outline',
       labelKey: 'more.items.notifications',
       onPress: () => router.push('/more/notifications'),
+    },
+    {
+      icon: 'heart-outline',
+      labelKey: 'more.items.rateApp',
+      onPress: openWriteReview,
     },
   ];
 

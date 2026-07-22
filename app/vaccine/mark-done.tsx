@@ -21,6 +21,7 @@ import { Button } from '../../src/components/Button';
 import { Celebration } from '../../src/components/Celebration';
 import { DateField } from '../../src/components/DateField';
 import { ScreenTitle } from '../../src/components/ScreenTitle';
+import { maybePromptForReview } from '../../src/lib/ratingPrompt';
 import { useRescheduleReminders } from '../../src/lib/useReminders';
 import { selectActiveChild, useChildrenStore } from '../../src/stores/childrenStore';
 import { colors, radii, spacing, typography } from '../../src/theme';
@@ -194,6 +195,10 @@ export default function MarkDoneScreen() {
         onClose={() => {
           setCelebrate(false);
           router.back();
+          // 3rd meaningful record is a proven-habit moment (guards inside).
+          if (useChildrenStore.getState().vaccinations.length >= 3) {
+            maybePromptForReview(t);
+          }
         }}
       />
     </SafeAreaView>

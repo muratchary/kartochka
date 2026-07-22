@@ -27,9 +27,13 @@ interface ChildrenState {
   careLogs: CareLog[];
   selectedChildId: string | null;
   tutorialSeen: boolean;
+  // Per-child count of completed PDF exports. The first export per child is
+  // free (traction decision 2026-07-22); the paywall gates the second onward.
+  pdfExportCounts: Record<string, number>;
 
   setSelectedChild: (id: string) => void;
   markTutorialSeen: () => void;
+  incrementPdfExport: (childId: string) => void;
 
   addChild: (input: NewChild) => Child;
   updateChild: (id: string, patch: Partial<NewChild>) => void;
@@ -79,9 +83,18 @@ export const useChildrenStore = create<ChildrenState>()(
       careLogs: [],
       selectedChildId: null,
       tutorialSeen: false,
+      pdfExportCounts: {},
 
       setSelectedChild: (id) => set({ selectedChildId: id }),
       markTutorialSeen: () => set({ tutorialSeen: true }),
+      incrementPdfExport: (childId) => {
+        set((state) => ({
+          pdfExportCounts: {
+            ...state.pdfExportCounts,
+            [childId]: (state.pdfExportCounts[childId] ?? 0) + 1,
+          },
+        }));
+      },
 
       addChild: (input) => {
         const child: Child = { ...input, id: newId(), createdAt: now(), updatedAt: now() };
@@ -401,6 +414,7 @@ export const useChildrenStore = create<ChildrenState>()(
           careLogs: [],
           selectedChildId: null,
           tutorialSeen: false,
+          pdfExportCounts: {},
         });
       },
     }),
