@@ -50,3 +50,6 @@ yarn-error.*
 
 # local build artifacts (56MB aab once broke push)
 build/
+
+# tool logs
+excalidraw.log

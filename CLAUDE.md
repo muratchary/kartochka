@@ -66,3 +66,37 @@ primarily in Russia, Kazakhstan, Uzbekistan, UAE, Saudi Arabia, and Turkey.
 - Saudi Arabia (SA)
 - Turkey (TR)
 - Turkmenistan (TM) — v1.1
+
+
+---
+
+<!-- AGENT-FIRST-STANDARDS:v1 — shared org standard, propagated to every project. Edit the canonical copy and re-run propagation; do not diverge per project. -->
+# Agent-First Development Standards
+
+> Org-wide standard for every project we develop with Claude Code, so AI agents can discover and work on our projects consistently.
+
+## 1. Machine Comprehension & API Design
+- **API-First:** Every feature must be defined as an API contract before implementation.
+- **OpenAPI/JSON Schema:** All endpoints must be documented with OpenAPI v3.1 schemas (stored in /docs/openapi.yaml).
+- **No Ambiguity:** Avoid descriptive prose in function comments. Use strict JSDoc/TSDoc or Python type hints.
+- **Idempotency:** Mark all state-changing endpoints with explicit idempotency keys and describe potential side effects.
+
+## 2. Agent Discovery
+- **llms.txt:** Maintain an `llms.txt` at the root that summarizes the project architecture, entry points, and current API capabilities.
+- **Consistency:** Use standardized naming for entities (e.g., `user_id` instead of `account_ref`).
+- **Directory Metadata:** Include a `README.md` in every significant sub-folder summarizing its contents, purpose, and key exports.
+
+## 3. Workflow & Constraints
+- **Modularization:** Prefer small, single-purpose functions over large monolithic modules to reduce context window usage.
+- **Error Handling:** Every API endpoint must have a documented error schema.
+- **Safety:** Always verify auth/permission scopes for any state-changing agent action.
+
+## 4. Agent-Sync Protocol (Crucial)
+- **Source of Truth:** Code is the primary source; `openapi.yaml` and `llms.txt` are the "interfaces of truth."
+- **Atomic Updates:** No commit may be merged if it alters an API signature without a corresponding update to the OpenAPI spec and `llms.txt`.
+- **Validation:** Every change must trigger a check to ensure `openapi.yaml` matches the implementation.
+- **AI-Reflective Comments:** When modifying a business-critical function, update the associated `llms.txt` snippet to reflect the capability change immediately.
+
+## 5. Reference
+- Refer to `docs/architecture.md` for high-level design.
+- Use `npm run validate:schema` (or equivalent) to ensure API consistency.
